@@ -1,19 +1,469 @@
-const CONFIG = {
-  formAction: "https://docs.google.com/forms/d/e/1FAIpQLSel90YooMKauxUFbpDCCChMDzPNwNK6afu6aeOzaTCZj8yDlQ/formResponse",
-  entries: {
-    date: "entry.1385671731",
-    name: "entry.395995697",
-    call: "entry.2000202078",
-    apo: "entry.1188769595",
-    ff: "entry.1994109546",
-    pd: "entry.2079172066",
-    c: "entry.43940827",
-    s: "entry.226768089",
-    r: "entry.510759642",
-    policy: "entry.293498911",
-    cases: "entry.1789008136",
-    fyc: "entry.627573208",
-    fyp: "",
-    note: "entry.1773975414"
-  }
-};
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>活動量管理｜每日回報</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      background: linear-gradient(135deg, #eef4ff, #f8f5ff);
+      color: #1f2937;
+    }
+
+    .page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #253b80, #7c3aed);
+      color: white;
+      padding: 28px 22px;
+      border-radius: 28px;
+      box-shadow: 0 18px 40px rgba(60, 60, 120, 0.25);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: 1px;
+    }
+
+    .hero p {
+      margin: 10px 0 0;
+      opacity: 0.92;
+      line-height: 1.6;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.1);
+      margin-bottom: 18px;
+      backdrop-filter: blur(10px);
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin: 0 0 16px;
+      color: #253b80;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: 700;
+      color: #374151;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid #dbe3f0;
+      background: #f9fbff;
+      border-radius: 16px;
+      padding: 13px 14px;
+      font-size: 16px;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #7c3aed;
+      background: white;
+      box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.12);
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .metric-box {
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .metric-box input {
+      text-align: center;
+      font-weight: 800;
+      font-size: 20px;
+      background: white;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .summary-item {
+      background: linear-gradient(135deg, #f0f7ff, #f7f0ff);
+      padding: 16px;
+      border-radius: 18px;
+      text-align: center;
+    }
+
+    .summary-item .num {
+      font-size: 26px;
+      font-weight: 900;
+      color: #4f46e5;
+    }
+
+    .summary-item .text {
+      font-size: 13px;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+
+    .btn {
+      width: 100%;
+      border: none;
+      border-radius: 20px;
+      padding: 17px 18px;
+      font-size: 18px;
+      font-weight: 900;
+      color: white;
+      cursor: pointer;
+      background: linear-gradient(135deg, #253b80, #7c3aed);
+      box-shadow: 0 12px 26px rgba(79, 70, 229, 0.32);
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 32px rgba(79, 70, 229, 0.38);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .success {
+      display: none;
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+      border-radius: 18px;
+      padding: 14px;
+      text-align: center;
+      font-weight: 800;
+      margin-top: 14px;
+    }
+
+    .hint {
+      font-size: 13px;
+      color: #6b7280;
+      line-height: 1.6;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    .footer {
+      text-align: center;
+      color: #6b7280;
+      font-size: 13px;
+      margin-top: 20px;
+    }
+
+    iframe {
+      display: none;
+    }
+
+    @media (max-width: 720px) {
+      .hero h1 {
+        font-size: 24px;
+      }
+
+      .grid,
+      .grid-4,
+      .summary {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <section class="hero">
+      <h1>活動量管理｜每日回報</h1>
+      <p>
+        每日紀錄 CALL、APO、FF、PD、成交與服務活動量，協助團隊做日統計、週統計、月統計與排行榜追蹤。
+      </p>
+    </section>
+
+    <form id="activityForm" target="hiddenFrame" method="POST">
+      <div class="card">
+        <h2 class="section-title">一、基本資料</h2>
+        <div class="grid">
+          <div>
+            <label for="date">日期</label>
+            <input id="date" type="date" required />
+          </div>
+          <div>
+            <label for="name">姓名</label>
+            <input id="name" type="text" placeholder="請輸入姓名" required />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">二、今日活動量</h2>
+        <div class="grid-4">
+          <div class="metric-box">
+            <label for="call">CALL 建立關係</label>
+            <input id="call" type="number" min="0" value="0" />
+          </div>
+          <div class="metric-box">
+            <label for="apo">APO 約訪</label>
+            <input id="apo" type="number" min="0" value="0" />
+          </div>
+          <div class="metric-box">
+            <label for="ff">FF 需求面談</label>
+            <input id="ff" type="number" min="0" value="0" />
+          </div>
+          <div class="metric-box">
+            <label for="pd">PD 建議書</label>
+            <input id="pd" type="number" min="0" value="0" />
+          </div>
+          <div class="metric-box">
+            <label for="c">C 成交</label>
+            <input id="c" type="number" min="0" value="0" />
+          </div>
+          <div class="metric-box">
+            <label for="s">S 服務</label>
+            <input id="s" type="number" min="0" value="0" />
+          </div>
+          <div class="metric-box">
+            <label for="r">R 轉介紹</label>
+            <input id="r" type="number" min="0" value="0" />
+          </div>
+          <div class="metric-box">
+            <label for="policy">送保單</label>
+            <input id="policy" type="number" min="0" value="0" />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">三、成交與業績</h2>
+        <div class="grid">
+          <div>
+            <label for="cases">成交件數</label>
+            <input id="cases" type="number" min="0" value="0" />
+          </div>
+          <div>
+            <label for="fyc">FYC</label>
+            <input id="fyc" type="number" min="0" value="0" />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">四、今日摘要</h2>
+        <div class="summary">
+          <div class="summary-item">
+            <div class="num" id="totalActivity">0</div>
+            <div class="text">今日總活動量</div>
+          </div>
+          <div class="summary-item">
+            <div class="num" id="meetRate">0%</div>
+            <div class="text">CALL → APO</div>
+          </div>
+          <div class="summary-item">
+            <div class="num" id="closeRate">0%</div>
+            <div class="text">PD → C</div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;">
+          <label for="note">今日重點 / 備註</label>
+          <textarea id="note" placeholder="例如：今天主要約訪名單、客戶回饋、明日追蹤重點"></textarea>
+        </div>
+      </div>
+
+      <button class="btn" type="submit">☁️ 送出今日活動量</button>
+
+      <div class="success" id="successMsg">
+        ✅ 已成功送出！資料會自動進入 Google Sheet 統計表。
+      </div>
+
+      <div class="hint">
+        建議每日固定時間填寫，讓活動量成為可追蹤、可檢視、可優化的成長系統。
+      </div>
+    </form>
+
+    <iframe name="hiddenFrame"></iframe>
+
+    <div class="footer">
+      馥芸財富學苑｜活動量管理系統
+    </div>
+  </div>
+
+  <script>
+    const CONFIG = {
+      formAction: "https://docs.google.com/forms/d/e/1FAIpQLSel90YooMKauxUFbpDCCChMDzPNwNK6afu6aeOzaTCZj8yDlQ/formResponse",
+      entries: {
+        date: "entry.1385671731",
+        name: "entry.395995697",
+        call: "entry.2000202078",
+        apo: "entry.1188769595",
+        ff: "entry.1994109546",
+        pd: "entry.2079172066",
+        c: "entry.43940827",
+        s: "entry.226768089",
+        r: "entry.510759642",
+        policy: "entry.293498911",
+        cases: "entry.1789008136",
+        fyc: "entry.627573208",
+        fyp: "",
+        note: "entry.1773975414"
+      }
+    };
+
+    const form = document.getElementById("activityForm");
+    form.action = CONFIG.formAction;
+
+    const fields = [
+      "call", "apo", "ff", "pd", "c", "s", "r", "policy", "cases", "fyc"
+    ];
+
+    function setToday() {
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, "0");
+      const dd = String(today.getDate()).padStart(2, "0");
+      document.getElementById("date").value = `${yyyy}-${mm}-${dd}`;
+    }
+
+    function num(id) {
+      return Number(document.getElementById(id).value || 0);
+    }
+
+    function percent(a, b) {
+      if (!b || b === 0) return "0%";
+      return Math.round((a / b) * 100) + "%";
+    }
+
+    function updateSummary() {
+      const total =
+        num("call") +
+        num("apo") +
+        num("ff") +
+        num("pd") +
+        num("c") +
+        num("s") +
+        num("r") +
+        num("policy");
+
+      document.getElementById("totalActivity").textContent = total;
+      document.getElementById("meetRate").textContent = percent(num("apo"), num("call"));
+      document.getElementById("closeRate").textContent = percent(num("c"), num("pd"));
+    }
+
+    function buildHiddenInputs() {
+      document.querySelectorAll(".google-entry").forEach(el => el.remove());
+
+      const mapping = {
+        date: document.getElementById("date").value,
+        name: document.getElementById("name").value,
+        call: num("call"),
+        apo: num("apo"),
+        ff: num("ff"),
+        pd: num("pd"),
+        c: num("c"),
+        s: num("s"),
+        r: num("r"),
+        policy: num("policy"),
+        cases: num("cases"),
+        fyc: num("fyc"),
+        note: document.getElementById("note").value
+      };
+
+      Object.keys(mapping).forEach(key => {
+        const entryName = CONFIG.entries[key];
+        if (!entryName) return;
+
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = entryName;
+        input.value = mapping[key];
+        input.className = "google-entry";
+        form.appendChild(input);
+      });
+    }
+
+    fields.forEach(id => {
+      document.getElementById(id).addEventListener("input", updateSummary);
+    });
+
+    form.addEventListener("submit", function(e) {
+      const name = document.getElementById("name").value.trim();
+
+      if (!name) {
+        alert("請先輸入姓名");
+        e.preventDefault();
+        return;
+      }
+
+      buildHiddenInputs();
+
+      setTimeout(() => {
+        document.getElementById("successMsg").style.display = "block";
+
+        const keepName = document.getElementById("name").value;
+        const keepDate = document.getElementById("date").value;
+
+        fields.forEach(id => {
+          document.getElementById(id).value = 0;
+        });
+
+        document.getElementById("note").value = "";
+        document.getElementById("name").value = keepName;
+        document.getElementById("date").value = keepDate;
+
+        updateSummary();
+
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth"
+        });
+      }, 700);
+    });
+
+    setToday();
+    updateSummary();
+  </script>
+</body>
+</html>
