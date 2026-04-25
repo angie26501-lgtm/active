@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>活動量管理｜每日回報</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800">
+  <main class="max-w-4xl mx-auto p-4 md:p-8">
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
+      <p class="text-sm text-emerald-700 font-semibold">PRP績效評估管理表｜網頁版</p>
+      <h1 class="text-2xl md:text-3xl font-bold mt-1">每日活動量管理</h1>
+      <p class="text-slate-500 mt-2">每日填寫一次，自動計算今日總活動量。可對應 Google 表單 / Google Sheet 做日、週、月統計。</p>
+    </section>
+
+    <section class="grid md:grid-cols-3 gap-4 mb-6">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+        <p class="text-sm text-slate-500">今日總活動量</p>
+        <p id="totalScore" class="text-4xl font-bold text-emerald-700 mt-2">0</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+        <p class="text-sm text-slate-500">CALL → APO</p>
+        <p id="rateCallApo" class="text-4xl font-bold text-slate-800 mt-2">0%</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+        <p class="text-sm text-slate-500">PD → C</p>
+        <p id="ratePdC" class="text-4xl font-bold text-slate-800 mt-2">0%</p>
+      </div>
+    </section>
+
+    <form id="activityForm" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+      <div class="grid md:grid-cols-2 gap-4 mb-6">
+        <label class="block">
+          <span class="text-sm font-semibold">日期</span>
+          <input name="date" type="date" required class="mt-1 w-full rounded-xl border-slate-300 p-3 border" />
+        </label>
+        <label class="block">
+          <span class="text-sm font-semibold">姓名</span>
+          <input name="name" type="text" required placeholder="請輸入姓名" class="mt-1 w-full rounded-xl border-slate-300 p-3 border" />
+        </label>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <label class="block"><span class="text-sm font-semibold">CALL 建立關係</span><input name="call" type="number" min="0" value="0" class="num mt-1 w-full rounded-xl border p-3" /></label>
+        <label class="block"><span class="text-sm font-semibold">APO 約訪</span><input name="apo" type="number" min="0" value="0" class="num mt-1 w-full rounded-xl border p-3" /></label>
+        <label class="block"><span class="text-sm font-semibold">FF 需求面談</span><input name="ff" type="number" min="0" value="0" class="num mt-1 w-full rounded-xl border p-3" /></label>
+        <label class="block"><span class="text-sm font-semibold">PD 建議書</span><input name="pd" type="number" min="0" value="0" class="num mt-1 w-full rounded-xl border p-3" /></label>
+        <label class="block"><span class="text-sm font-semibold">C 成交</span><input name="c" type="number" min="0" value="0" class="num mt-1 w-full rounded-xl border p-3" /></label>
+        <label class="block"><span class="text-sm font-semibold">S 服務</span><input name="s" type="number" min="0" value="0" class="num mt-1 w-full rounded-xl border p-3" /></label>
+        <label class="block"><span class="text-sm font-semibold">R 轉介紹</span><input name="r" type="number" min="0" value="0" class="num mt-1 w-full rounded-xl border p-3" /></label>
+        <label class="block"><span class="text-sm font-semibold">送保單</span><input name="policy" type="number" min="0" value="0" class="num mt-1 w-full rounded-xl border p-3" /></label>
+        <label class="block"><span class="text-sm font-semibold">成交件數</span><input name="cases" type="number" min="0" value="0" class="num mt-1 w-full rounded-xl border p-3" /></label>
+        <label class="block"><span class="text-sm font-semibold">FYC</span><input name="fyc" type="number" min="0" value="0" class="mt-1 w-full rounded-xl border p-3" /></label>
+        <label class="block"><span class="text-sm font-semibold">FYP</span><input name="fyp" type="number" min="0" value="0" class="mt-1 w-full rounded-xl border p-3" /></label>
+      </div>
+
+      <label class="block mt-4">
+        <span class="text-sm font-semibold">今日重點 / 備註</span>
+        <textarea name="note" rows="4" class="mt-1 w-full rounded-xl border p-3" placeholder="例如：今天新增名單、卡關客戶、需要協助的地方"></textarea>
+      </label>
+
+      <div class="flex flex-col md:flex-row gap-3 mt-6">
+        <button type="submit" class="flex-1 bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 rounded-xl">同步並儲存資料</button>
+        <button type="button" id="saveLocal" class="flex-1 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-xl">先暫存本機</button>
+        <button type="reset" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 rounded-xl">清空</button>
+      </div>
+      <p id="message" class="mt-4 text-sm text-slate-500"></p>
+    </form>
+
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mt-6">
+      <h2 class="text-lg font-bold">Google 表單串接設定</h2>
+      <p class="text-slate-500 mt-2">請把 Google Form 的 formResponse 網址與 entry ID 填進程式碼最上方的 CONFIG。尚未設定前，本頁可先做本機暫存與試算。</p>
+    </section>
+  </main>
+
+<script>
+const CONFIG = {
+  formAction: "請貼上 Google Form 的 formResponse 網址",
+  entries: {
+    date: "entry.xxxxxx",
+    name: "entry.xxxxxx",
+    call: "entry.xxxxxx",
+    apo: "entry.xxxxxx",
+    ff: "entry.xxxxxx",
+    pd: "entry.xxxxxx",
+    c: "entry.xxxxxx",
+    s: "entry.xxxxxx",
+    r: "entry.xxxxxx",
+    policy: "entry.xxxxxx",
+    cases: "entry.xxxxxx",
+    fyc: "entry.xxxxxx",
+    fyp: "entry.xxxxxx",
+    note: "entry.xxxxxx"
+  }
+};
+
+const form = document.getElementById("activityForm");
+const nums = [...document.querySelectorAll(".num")];
+const today = new Date().toISOString().slice(0,10);
+form.date.value = today;
+
+function n(name){ return Number(form[name].value || 0); }
+function pct(a,b){ return b ? Math.round((a/b)*100) + "%" : "0%"; }
+function updateStats(){
+  const total = n("call")+n("apo")+n("ff")+n("pd")+n("c")+n("s")+n("r")+n("policy");
+  document.getElementById("totalScore").textContent = total;
+  document.getElementById("rateCallApo").textContent = pct(n("apo"), n("call"));
+  document.getElementById("ratePdC").textContent = pct(n("c"), n("pd"));
+}
+nums.forEach(el => el.addEventListener("input", updateStats));
+updateStats();
+
+document.getElementById("saveLocal").addEventListener("click", () => {
+  const data = Object.fromEntries(new FormData(form).entries());
+  localStorage.setItem("activityDraft", JSON.stringify(data));
+  document.getElementById("message").textContent = "已暫存於本機。";
+});
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (!CONFIG.formAction.includes("formResponse")) {
+    document.getElementById("message").textContent = "尚未設定 Google Form 連結，目前無法同步。請先填入 CONFIG。";
+    return;
+  }
+  const fd = new FormData();
+  Object.keys(CONFIG.entries).forEach(key => fd.append(CONFIG.entries[key], form[key].value || ""));
+  await fetch(CONFIG.formAction, { method: "POST", mode: "no-cors", body: fd });
+  document.getElementById("message").textContent = "已送出到 Google 表單。";
+  form.reset();
+  form.date.value = today;
+  updateStats();
+});
+</script>
+</body>
+</html>
