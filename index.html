@@ -1,208 +1,198 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>活動量管理系統 | 馥芸財富管理學苑</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
-        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f3f4f6; }
-        .tab-active { border-bottom: 4px solid #4f46e5; color: #4f46e5; font-weight: bold; }
-        .architect-gradient { background: linear-gradient(135deg, #1e3a8a 0%, #4338ca 50%, #6d28d9 100%); }
-    </style>
-</head>
-<body class="pb-20">
+請你扮演一位專業前端工程師與 Google Sheet / Google Form 系統整合顧問。
 
-    <header class="architect-gradient text-white py-10 px-6 shadow-xl text-center">
-        <h1 class="text-3xl font-bold">馥芸財富管理學苑</h1>
-        <p class="mt-2 opacity-90">AI 賦能財務建築師 — 成功方程式導航系統</p>
-    </header>
+我要將目前這個活動量管理網頁升級成「完整版活動量管理系統」。
 
-    <nav class="bg-white sticky top-0 z-50 shadow-md mb-6">
-        <div class="max-w-6xl mx-auto flex justify-around">
-            <button onclick="showTab('tab-prp')" id="btn-prp" class="py-4 px-2 text-sm md:text-base tab-active">PRP 績效週報</button>
-            <button onclick="showTab('tab-month')" id="btn-month" class="py-4 px-2 text-sm md:text-base">月活動紀錄</button>
-            <button onclick="showTab('tab-goal')" id="btn-goal" class="py-4 px-2 text-sm md:text-base">成功方程式</button>
-        </div>
-    </nav>
+請務必保留目前網頁的整體版面、配色、卡片風格與標題結構，不要重新設計成另一個版型。
 
-    <main class="max-w-6xl mx-auto px-4">
+請在原本基礎上，完成以下功能，並最後輸出「完整 index.html 程式碼」。
 
-        <section id="tab-prp" class="tab-content space-y-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white p-6 rounded-3xl shadow-lg">
-                    <h2 class="text-xl font-bold mb-4 text-indigo-900 border-b pb-2">本週實際達成</h2>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs text-gray-500">新訪 (位)</label>
-                            <input type="number" id="act_new" class="w-full p-2 bg-gray-50 rounded-lg border-none" value="0">
-                        </div>
-                        <div>
-                            <label class="block text-xs text-gray-500">需求面談 (位)</label>
-                            <input type="number" id="act_ff" class="w-full p-2 bg-gray-50 rounded-lg border-none" value="0">
-                        </div>
-                        <div>
-                            <label class="block text-xs text-gray-500">建議書&促成 (位)</label>
-                            <input type="number" id="act_pd" class="w-full p-2 bg-gray-50 rounded-lg border-none" value="0">
-                        </div>
-                        <div>
-                            <label class="block text-xs text-gray-500">完成 FYC</label>
-                            <input type="number" id="act_fyc" class="w-full p-2 bg-gray-50 rounded-lg border-none" value="0">
-                        </div>
-                    </div>
-                </div>
+【一、系統目的】
 
-                <div class="bg-white p-6 rounded-3xl shadow-lg">
-                    <h2 class="text-xl font-bold mb-4 text-indigo-900 border-b pb-2">檢討與回饋 (考古題區)</h2>
-                    <div class="space-y-3">
-                        <label class="block text-sm font-medium">1. 最滿意的 2 件事？為什麼？</label>
-                        <textarea id="feedback_1" class="w-full p-2 bg-indigo-50/50 rounded-lg text-sm" rows="2"></textarea>
-                        <label class="block text-sm font-medium">2. 無法解決的反對問題？</label>
-                        <textarea id="feedback_2" class="w-full p-2 bg-indigo-50/50 rounded-lg text-sm" rows="2"></textarea>
-                    </div>
-                </div>
-            </div>
-        </section>
+這個系統是給業務團隊每日填寫活動量使用，資料未同步前可以先暫存在本機，之後再同步到 Google 表單，並透過 Google Sheet 做日、週、月統計與排行榜。
 
-        <section id="tab-month" class="tab-content hidden space-y-6">
-            <div class="bg-white p-6 rounded-3xl shadow-lg overflow-x-auto">
-                <h2 class="text-xl font-bold mb-4 text-indigo-900 flex justify-between items-center">
-                    <span>每月活動紀錄表</span>
-                    <span class="text-xs font-normal text-gray-400">CALL-APO-FF-PD-C-S-R</span>
-                </h2>
-                <table class="w-full text-center border-collapse">
-                    <thead>
-                        <tr class="bg-gray-100 text-xs">
-                            <th class="p-2 border">類別</th>
-                            <th class="p-2 border">CALL (關係)</th>
-                            <th class="p-2 border">APO (首談)</th>
-                            <th class="p-2 border">FF (需面)</th>
-                            <th class="p-2 border">PD (建議)</th>
-                            <th class="p-2 border">C (簽約)</th>
-                            <th class="p-2 border">R (轉介)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="text-sm">
-                            <td class="p-2 border font-bold">本週目標</td>
-                            <td class="p-2 border"><input type="number" class="w-12 text-center" value="10"></td>
-                            <td class="p-2 border"><input type="number" class="w-12 text-center" value="5"></td>
-                            <td class="p-2 border"><input type="number" class="w-12 text-center" value="3"></td>
-                            <td class="p-2 border"><input type="number" class="w-12 text-center" value="2"></td>
-                            <td class="p-2 border"><input type="number" class="w-12 text-center" value="1"></td>
-                            <td class="p-2 border"><input type="number" class="w-12 text-center" value="2"></td>
-                        </tr>
-                        <tr class="text-sm bg-indigo-50">
-                            <td class="p-2 border font-bold">實際達成</td>
-                            <td class="p-2 border"><input type="number" id="m_call" class="w-12 text-center bg-transparent" value="0"></td>
-                            <td class="p-2 border"><input type="number" id="m_apo" class="w-12 text-center bg-transparent" value="0"></td>
-                            <td class="p-2 border"><input type="number" id="m_ff" class="w-12 text-center bg-transparent" value="0"></td>
-                            <td class="p-2 border"><input type="number" id="m_pd" class="w-12 text-center bg-transparent" value="0"></td>
-                            <td class="p-2 border"><input type="number" id="m_c" class="w-12 text-center bg-transparent" value="0"></td>
-                            <td class="p-2 border"><input type="number" id="m_r" class="w-12 text-center bg-transparent" value="0"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+【二、請保留原本主視覺內容】
 
-            <div class="bg-indigo-900 text-white p-6 rounded-3xl shadow-xl">
-                <h3 class="font-bold mb-4 flex items-center"><i class="fas fa-tools mr-2 text-yellow-400"></i> 本週分享專業觀念</h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
-                    <label class="flex items-center space-x-2"><input type="checkbox" class="rounded"> <span>財富水庫</span></label>
-                    <label class="flex items-center space-x-2"><input type="checkbox" class="rounded"> <span>帆船理論</span></label>
-                    <label class="flex items-center space-x-2"><input type="checkbox" class="rounded"> <span>創富三階段</span></label>
-                    <label class="flex items-center space-x-2"><input type="checkbox" class="rounded"> <span>三盞燈風險</span></label>
-                    <label class="flex items-center space-x-2"><input type="checkbox" class="rounded"> <span>通貨膨脹</span></label>
-                    <label class="flex items-center space-x-2"><input type="checkbox" class="rounded"> <span>籃子理論</span></label>
-                    <label class="flex items-center space-x-2"><input type="checkbox" class="rounded"> <span>財務三角</span></label>
-                    <label class="flex items-center space-x-2"><input type="checkbox" class="rounded"> <span>賓士圖</span></label>
-                </div>
-            </div>
-        </section>
+請保留或延續以下內容：
 
-        <section id="tab-goal" class="tab-content hidden">
-            <div class="bg-white p-6 rounded-3xl shadow-lg border-t-8 border-indigo-600">
-                <h2 class="text-2xl font-bold mb-6 text-center">🎯 您的成功方程式</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block font-bold text-gray-700">希望每月收入</label>
-                            <input type="number" id="goal_income" class="w-full p-4 text-2xl font-bold text-indigo-600 border-2 border-indigo-100 rounded-2xl" value="40000">
-                        </div>
-                        <div class="bg-gray-50 p-4 rounded-xl">
-                            <p class="text-sm text-gray-500">對應目標 (FYC)</p>
-                            <p id="calc_fyc" class="text-3xl font-black text-indigo-800">73,000</p>
-                        </div>
-                    </div>
-                    <div class="space-y-4">
-                        <h3 class="font-bold border-l-4 border-indigo-500 pl-2">每月行動標竿</h3>
-                        <ul class="space-y-2 text-gray-600 text-sm">
-                            <li class="flex justify-between"><span>成交件數：</span><span class="font-bold">4 件</span></li>
-                            <li class="flex justify-between"><span>建議書：</span><span class="font-bold">8 份</span></li>
-                            <li class="flex justify-between"><span>名單建立關係：</span><span class="font-bold">40 位</span></li>
-                            <li class="flex justify-between"><span>潛在名單數量：</span><span class="font-bold">100 位</span></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
+1. 馥芸財富管理學苑
+2. AI 賦能財務建築師
+3. PRP 績效週報
+4. 每月活動紀錄
+5. 成功方程式
+6. 卡片式儀表板
+7. 專業、簡約、財務顧問風格
+8. 草本綠 / 深藍 / 米白 / 金色點綴的品牌感
 
-        <div class="fixed bottom-0 left-0 right-0 p-4 bg-white/80 backdrop-blur-md shadow-2xl z-50">
-            <div class="max-w-6xl mx-auto">
-                <button onclick="saveAllData()" class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-bold shadow-lg hover:bg-indigo-700 transition active:scale-95">
-                    <i class="fas fa-cloud-upload-alt mr-2"></i> 同步並儲存所有數據
-                </button>
-            </div>
-        </div>
+【三、每日活動量輸入欄位】
 
-    </main>
+請建立每日活動量表單，欄位包含：
 
-    <script>
-        function showTab(tabId) {
-            // 隱藏所有內容
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            // 顯示目標內容
-            document.getElementById(tabId).classList.remove('hidden');
-            // 更新頁籤樣式
-            document.querySelectorAll('nav button').forEach(el => el.classList.remove('tab-active'));
-            document.getElementById('btn-' + tabId.split('-')[1]).classList.add('tab-active');
-        }
+1. 日期
+2. 姓名
+3. CALL 建立關係
+4. APO 約訪
+5. FF 需求面談
+6. PD 建議書
+7. C 成交
+8. S 服務
+9. R 轉介紹
+10. 送保單
+11. 成交件數
+12. FYC
+13. FYP
+14. 今日重點 / 備註
 
-        function saveAllData() {
-            const data = {
-                act_new: document.getElementById('act_new').value,
-                act_ff: document.getElementById('act_ff').value,
-                act_pd: document.getElementById('act_pd').value,
-                act_fyc: document.getElementById('act_fyc').value,
-                fb1: document.getElementById('feedback_1').value,
-                fb2: document.getElementById('feedback_2').value,
-                m_call: document.getElementById('m_call').value,
-                goal: document.getElementById('goal_income').value,
-                time: new Date().toISOString()
-            };
-            
-            localStorage.setItem('fuyun_system_data', JSON.stringify(data));
-            alert('✅ 所有活動紀錄與成功方程式數據已安全儲存！');
-        }
+數字欄位請預設為 0，並設定 min="0"。
 
-        // 自動計算邏輯 (範例比例)
-        document.getElementById('goal_income').addEventListener('input', function(e) {
-            const income = e.target.value;
-            document.getElementById('calc_fyc').innerText = Math.round(income * 1.825).toLocaleString();
-        });
+【四、即時計算功能】
 
-        // 初始加載
-        window.onload = function() {
-            const saved = JSON.parse(localStorage.getItem('fuyun_system_data'));
-            if(saved) {
-                document.getElementById('act_new').value = saved.act_new || 0;
-                document.getElementById('feedback_1').value = saved.fb1 || '';
-                document.getElementById('goal_income').value = saved.goal || 40000;
-            }
-        };
-    </script>
-</body>
-</html>
+請用 JavaScript 即時計算並顯示：
+
+1. 今日總活動量
+計算欄位：
+CALL + APO + FF + PD + C + S + R + 送保單
+
+2. CALL → APO 轉換率
+APO / CALL
+
+3. APO → FF 轉換率
+FF / APO
+
+4. FF → PD 轉換率
+PD / FF
+
+5. PD → C 成交率
+C / PD
+
+若分母為 0，請顯示 0%。
+
+【五、本機暫存功能 localStorage】
+
+請完整加入本機暫存功能：
+
+1. 使用 localStorage 儲存所有表單欄位
+2. 按下「先暫存本機」時，將目前所有欄位存入 localStorage
+3. 重新開啟網頁時，自動載入上次暫存資料
+4. 顯示「已載入上次暫存」與暫存時間
+5. 顯示「已暫存於本機」與暫存時間
+6. 增加一顆「清除暫存」按鈕
+7. 按下「清除暫存」時，刪除 localStorage 裡的資料
+8. 清除後顯示「已清除本機暫存」
+9. 同步成功送出 Google 表單後，自動清除本機暫存
+10. 清空表單按鈕只清空畫面，不要自動刪除暫存，除非使用者按「清除暫存」
+
+localStorage key 請使用：
+activityDraft
+activityDraftTime
+
+【六、Google Form 串接功能】
+
+請設計成未來可以串接 Google 表單。
+
+請在程式碼上方建立 CONFIG：
+
+const CONFIG = {
+  formAction: "請貼上 Google Form 的 formResponse 網址",
+  entries: {
+    date: "entry.xxxxxx",
+    name: "entry.xxxxxx",
+    call: "entry.xxxxxx",
+    apo: "entry.xxxxxx",
+    ff: "entry.xxxxxx",
+    pd: "entry.xxxxxx",
+    c: "entry.xxxxxx",
+    s: "entry.xxxxxx",
+    r: "entry.xxxxxx",
+    policy: "entry.xxxxxx",
+    cases: "entry.xxxxxx",
+    fyc: "entry.xxxxxx",
+    fyp: "entry.xxxxxx",
+    note: "entry.xxxxxx"
+  }
+};
+
+送出時請使用：
+
+fetch(CONFIG.formAction, {
+  method: "POST",
+  mode: "no-cors",
+  body: fd
+});
+
+如果 formAction 尚未設定，請不要送出，並顯示：
+「尚未設定 Google Form 連結，目前無法同步。請先填入 CONFIG。」
+
+【七、按鈕設計】
+
+請在表單下方設計四顆按鈕：
+
+1. 同步並儲存資料
+2. 先暫存本機
+3. 清除暫存
+4. 清空表單
+
+按鈕在手機版要上下排列，在桌機版可橫向排列。
+
+【八、排行榜區塊】
+
+請新增「本週排行榜」區塊，先用靜態範例資料呈現，未來可替換成 Google Sheet iframe。
+
+請包含：
+
+1. 行動王
+2. 面談王
+3. 成交王
+4. 轉介紹王
+
+請在區塊下方保留 iframe 註解：
+
+<!-- 未來可將 Google Sheet 發布成網頁後，將排行榜 iframe 放在這裡 -->
+
+【九、月統計與成功方程式】
+
+請新增或保留成功方程式區塊：
+
+名單 → CALL → APO → FF → PD → C
+
+請用卡片或流程樣式呈現，並顯示每一階段代表意義：
+
+CALL：建立關係
+APO：約訪
+FF：需求面談
+PD：建議書
+C：成交
+R：轉介紹
+
+【十、使用者體驗要求】
+
+1. 頁面載入時，日期自動帶入今天
+2. 若有暫存資料，優先載入暫存資料
+3. 所有數字輸入時，即時更新統計
+4. 表單同步成功後：
+   - 顯示「已送出到 Google 表單」
+   - 清除本機暫存
+   - 清空表單
+   - 日期重新帶入今天
+   - 數字欄位回到 0
+5. 所有訊息顯示在 message 區塊
+6. 請避免跳出 alert，用頁面文字提示即可
+
+【十一、技術限制】
+
+1. 只使用 HTML、Tailwind CSS、原生 JavaScript
+2. 不要使用後端
+3. 不要使用資料庫
+4. 不要使用 React
+5. 不要拆成多個檔案
+6. 請輸出單一完整 index.html
+
+【十二、輸出要求】
+
+請直接輸出完整 index.html 程式碼。
+
+不要只給片段。
+不要省略 JavaScript。
+不要省略 CONFIG。
+不要省略 localStorage。
+不要省略排行榜區塊。
+不要省略成功方程式區塊。
