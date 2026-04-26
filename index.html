@@ -2,495 +2,137 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>活動量管理系統｜馥芸財富學苑</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>活動量管理｜馥芸財富學苑</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body {
-      font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
-    }
-    .glass {
-      background: rgba(255, 255, 255, 0.78);
-      backdrop-filter: blur(18px);
-      border: 1px solid rgba(255, 255, 255, 0.55);
-    }
-    .soft-gradient {
-      background:
-        radial-gradient(circle at top left, rgba(209, 250, 229, 0.75), transparent 36%),
-        radial-gradient(circle at bottom right, rgba(245, 222, 179, 0.75), transparent 38%),
-        linear-gradient(135deg, #f8faf7 0%, #eef6ef 45%, #f7efe2 100%);
-    }
-    input, textarea {
-      outline: none;
-    }
-  </style>
 </head>
 
-<body class="soft-gradient min-h-screen text-slate-800">
-  <main class="max-w-6xl mx-auto px-5 py-8 md:py-12">
+<body class="bg-gradient-to-br from-emerald-50 to-amber-50 min-h-screen text-gray-800">
 
-    <section class="glass rounded-[2rem] shadow-xl p-6 md:p-10 overflow-hidden relative">
-      <div class="absolute -right-16 -top-16 w-56 h-56 bg-emerald-200/40 rounded-full blur-3xl"></div>
-      <div class="absolute -left-16 -bottom-16 w-56 h-56 bg-amber-200/40 rounded-full blur-3xl"></div>
+<div class="max-w-3xl mx-auto p-6">
 
-      <div class="relative z-10 grid md:grid-cols-2 gap-8 items-center">
-        <div>
-          <p class="inline-flex items-center px-4 py-1.5 rounded-full bg-emerald-900 text-white text-sm tracking-wide shadow">
-            馥芸財富學苑｜團隊活動量管理
-          </p>
-          <h1 class="mt-6 text-3xl md:text-5xl font-black leading-tight text-slate-900">
-            每天 3 分鐘，<br />讓成交變得可追蹤
-          </h1>
-          <p class="mt-5 text-base md:text-lg leading-8 text-slate-600">
-            透過每日活動量紀錄，掌握 CALL、APO、FF、PD、成交、服務與轉介紹，
-            讓努力被看見，也讓團隊成長有數據依據。
-          </p>
+  <h1 class="text-3xl font-black mb-6 text-center">
+    活動量每日回報
+  </h1>
 
-          <div class="mt-7 flex flex-col sm:flex-row gap-3">
-            <a href="#quick-form"
-               class="text-center rounded-2xl bg-emerald-800 hover:bg-emerald-900 text-white px-6 py-4 font-bold shadow-lg transition">
-              📝 填寫今日活動量
-            </a>
-            <a href="https://docs.google.com/spreadsheets/d/1E0U1x9MkBXAABjsdeiQcaeWAejFLWcZfWllvxIdkWHE/edit" target="_blank"
-               class="text-center rounded-2xl bg-white hover:bg-slate-50 text-emerald-900 px-6 py-4 font-bold shadow-lg border border-emerald-100 transition">
-              📊 查看統計報表
-            </a>
-          </div>
-        </div>
+  <form id="form" class="bg-white rounded-3xl p-6 shadow space-y-4">
 
-        <div class="glass rounded-[1.75rem] p-5 md:p-7 shadow-lg">
-          <div class="grid grid-cols-2 gap-4">
-            <div class="rounded-2xl bg-white/80 p-4 shadow-sm">
-              <p class="text-sm text-slate-500">今日目標</p>
-              <p class="text-3xl font-black text-emerald-900 mt-1">穩定輸出</p>
-            </div>
-            <div class="rounded-2xl bg-white/80 p-4 shadow-sm">
-              <p class="text-sm text-slate-500">核心追蹤</p>
-              <p class="text-3xl font-black text-amber-700 mt-1">8 項</p>
-            </div>
-            <div class="rounded-2xl bg-white/80 p-4 shadow-sm">
-              <p class="text-sm text-slate-500">填寫時間</p>
-              <p class="text-3xl font-black text-slate-900 mt-1">3 分鐘</p>
-            </div>
-            <div class="rounded-2xl bg-white/80 p-4 shadow-sm">
-              <p class="text-sm text-slate-500">回饋方式</p>
-              <p class="text-3xl font-black text-emerald-900 mt-1">KPI</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <input id="date" type="date" class="w-full p-3 rounded-xl border" required>
+    <input id="name" type="text" placeholder="姓名" class="w-full p-3 rounded-xl border" required>
 
-    <section class="mt-8 grid md:grid-cols-3 gap-5">
-      <a href="#quick-form"
-         class="group glass rounded-[1.5rem] p-6 shadow-lg hover:-translate-y-1 transition block">
-        <div class="text-4xl">📝</div>
-        <h2 class="mt-4 text-xl font-black text-slate-900">每日填寫</h2>
-        <p class="mt-2 text-slate-600 leading-7">記錄今日 CALL、APO、FF、PD、成交、服務、轉介紹與送保單。</p>
-        <p class="mt-5 font-bold text-emerald-800 group-hover:underline">前往填寫 →</p>
-      </a>
+    <div class="grid grid-cols-2 gap-3">
+      <input id="call" type="number" value="0" class="p-3 rounded-xl border">
+      <input id="apo" type="number" value="0" class="p-3 rounded-xl border">
+      <input id="ff" type="number" value="0" class="p-3 rounded-xl border">
+      <input id="pd" type="number" value="0" class="p-3 rounded-xl border">
+      <input id="c" type="number" value="0" class="p-3 rounded-xl border">
+      <input id="s" type="number" value="0" class="p-3 rounded-xl border">
+      <input id="r" type="number" value="0" class="p-3 rounded-xl border">
+      <input id="policy" type="number" value="0" class="p-3 rounded-xl border">
+    </div>
 
-      <a href="https://docs.google.com/spreadsheets/d/1E0U1x9MkBXAABjsdeiQcaeWAejFLWcZfWllvxIdkWHE/edit" target="_blank"
-         class="group glass rounded-[1.5rem] p-6 shadow-lg hover:-translate-y-1 transition block">
-        <div class="text-4xl">📊</div>
-        <h2 class="mt-4 text-xl font-black text-slate-900">統計報表</h2>
-        <p class="mt-2 text-slate-600 leading-7">查看日統計、週統計、月統計、個人表現與團隊排行榜。</p>
-        <p class="mt-5 font-bold text-emerald-800 group-hover:underline">查看報表 →</p>
-      </a>
+    <input id="cases" type="number" value="0" placeholder="成交件數" class="w-full p-3 rounded-xl border">
+    <input id="fyc" type="number" value="0" placeholder="FYC" class="w-full p-3 rounded-xl border">
+    <input id="fyp" type="number" value="0" placeholder="FYP" class="w-full p-3 rounded-xl border">
 
-      <a href="https://docs.google.com/spreadsheets/d/1E0U1x9MkBXAABjsdeiQcaeWAejFLWcZfWllvxIdkWHE/edit" target="_blank"
-         class="group glass rounded-[1.5rem] p-6 shadow-lg hover:-translate-y-1 transition block">
-        <div class="text-4xl">🏆</div>
-        <h2 class="mt-4 text-xl font-black text-slate-900">排行榜</h2>
-        <p class="mt-2 text-slate-600 leading-7">用數據看見努力，透過正向回饋讓團隊更願意持續行動。</p>
-        <p class="mt-5 font-bold text-emerald-800 group-hover:underline">查看排名 →</p>
-      </a>
-    </section>
+    <textarea id="note" placeholder="備註" class="w-full p-3 rounded-xl border"></textarea>
 
-    <section id="quick-form" class="mt-8 glass rounded-[2rem] shadow-xl p-6 md:p-9">
-      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-        <div>
-          <p class="text-sm font-bold text-emerald-800 tracking-widest">DAILY CHECK-IN</p>
-          <h2 class="mt-2 text-2xl md:text-3xl font-black text-slate-900">快速填寫今日活動量</h2>
-          <p class="mt-2 text-slate-500">輸入會自動暫存在本機，關掉頁面再回來也不會消失。</p>
-        </div>
-        <button type="button" onclick="clearDraft()"
-          class="rounded-2xl bg-white text-slate-600 px-5 py-3 font-bold shadow border hover:bg-slate-50">
-          清除暫存
-        </button>
-      </div>
+    <button class="w-full bg-emerald-700 text-white p-4 rounded-xl font-bold">
+      送出
+    </button>
 
-      <form id="activityForm" class="mt-7">
-        <div class="grid md:grid-cols-2 gap-4">
-          <div>
-            <label class="font-bold text-slate-700">日期</label>
-            <input id="date" type="date" class="mt-2 w-full rounded-2xl bg-white/90 border border-emerald-100 px-4 py-3 shadow-sm" required>
-          </div>
-          <div>
-            <label class="font-bold text-slate-700">姓名</label>
-            <input id="name" type="text" placeholder="請輸入姓名"
-              class="mt-2 w-full rounded-2xl bg-white/90 border border-emerald-100 px-4 py-3 shadow-sm" required>
-          </div>
-        </div>
+    <div id="msg" class="text-center text-green-600 font-bold hidden">
+      ✅ 已送出
+    </div>
 
-        <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="rounded-2xl bg-white/80 p-4 shadow-sm">
-            <label class="text-sm text-slate-500">CALL 建立關係</label>
-            <input id="call" type="number" min="0" value="0" class="mt-2 w-full text-2xl font-black text-emerald-900 bg-transparent">
-          </div>
-          <div class="rounded-2xl bg-white/80 p-4 shadow-sm">
-            <label class="text-sm text-slate-500">APO 約訪</label>
-            <input id="apo" type="number" min="0" value="0" class="mt-2 w-full text-2xl font-black text-emerald-900 bg-transparent">
-          </div>
-          <div class="rounded-2xl bg-white/80 p-4 shadow-sm">
-            <label class="text-sm text-slate-500">FF 需求面談</label>
-            <input id="ff" type="number" min="0" value="0" class="mt-2 w-full text-2xl font-black text-emerald-900 bg-transparent">
-          </div>
-          <div class="rounded-2xl bg-white/80 p-4 shadow-sm">
-            <label class="text-sm text-slate-500">PD 建議書</label>
-            <input id="pd" type="number" min="0" value="0" class="mt-2 w-full text-2xl font-black text-emerald-900 bg-transparent">
-          </div>
-          <div class="rounded-2xl bg-white/80 p-4 shadow-sm">
-            <label class="text-sm text-slate-500">C 成交</label>
-            <input id="c" type="number" min="0" value="0" class="mt-2 w-full text-2xl font-black text-emerald-900 bg-transparent">
-          </div>
-          <div class="rounded-2xl bg-white/80 p-4 shadow-sm">
-            <label class="text-sm text-slate-500">S 服務</label>
-            <input id="s" type="number" min="0" value="0" class="mt-2 w-full text-2xl font-black text-emerald-900 bg-transparent">
-          </div>
-          <div class="rounded-2xl bg-white/80 p-4 shadow-sm">
-            <label class="text-sm text-slate-500">R 轉介紹</label>
-            <input id="r" type="number" min="0" value="0" class="mt-2 w-full text-2xl font-black text-emerald-900 bg-transparent">
-          </div>
-          <div class="rounded-2xl bg-white/80 p-4 shadow-sm">
-            <label class="text-sm text-slate-500">送保單</label>
-            <input id="policy" type="number" min="0" value="0" class="mt-2 w-full text-2xl font-black text-emerald-900 bg-transparent">
-          </div>
-        </div>
+  </form>
 
-        <div class="mt-6 grid md:grid-cols-3 gap-4">
-          <div>
-            <label class="font-bold text-slate-700">成交件數</label>
-            <input id="cases" type="number" min="0" value="0" class="mt-2 w-full rounded-2xl bg-white/90 border border-emerald-100 px-4 py-3 shadow-sm">
-          </div>
-          <div>
-            <label class="font-bold text-slate-700">FYC</label>
-            <input id="fyc" type="number" min="0" value="0" class="mt-2 w-full rounded-2xl bg-white/90 border border-emerald-100 px-4 py-3 shadow-sm">
-          </div>
-          <div>
-            <label class="font-bold text-slate-700">FYP</label>
-            <input id="fyp" type="number" min="0" value="0" class="mt-2 w-full rounded-2xl bg-white/90 border border-emerald-100 px-4 py-3 shadow-sm">
-          </div>
-        </div>
+</div>
 
-        <div class="mt-6">
-          <label class="font-bold text-slate-700">今日重點 / 備註</label>
-          <textarea id="note" rows="4" placeholder="請記錄今日重點、客戶回饋、明日跟進事項"
-            class="mt-2 w-full rounded-2xl bg-white/90 border border-emerald-100 px-4 py-3 shadow-sm"></textarea>
-        </div>
+<script>
+const CONFIG = {
+  formAction: "https://docs.google.com/forms/d/e/1FAIpQLSfIWCo6ywRDfgpm9UUSPjGFA8pe2bB5e1m46r4sSrHQrz5H6A/formResponse",
+  entries: {
+    date: "entry.919879348",
+    name: "entry.337035848",
+    call: "entry.151478796",
+    apo: "entry.2016416450",
+    ff: "entry.328881420",
+    pd: "entry.136604677",
+    c: "entry.1402626868",
+    s: "entry.1839597626",
+    r: "entry.2137473605",
+    policy: "entry.286475001",
+    cases: "entry.1425354552",
+    fyc: "entry.845303929",
+    fyp: "entry.1289571681",
+    note: "entry.1999587977"
+  }
+};
 
-        <div class="mt-6 grid md:grid-cols-3 gap-4">
-          <div class="rounded-2xl bg-emerald-900 text-white p-5 shadow">
-            <p class="text-sm opacity-80">今日總活動量</p>
-            <p id="totalActivity" class="text-4xl font-black mt-1">0</p>
-          </div>
-          <div class="rounded-2xl bg-white/80 p-5 shadow-sm">
-            <p class="text-sm text-slate-500">CALL → APO</p>
-            <p id="callApoRate" class="text-4xl font-black text-emerald-900 mt-1">0%</p>
-          </div>
-          <div class="rounded-2xl bg-white/80 p-5 shadow-sm">
-            <p class="text-sm text-slate-500">PD → C</p>
-            <p id="pdCRate" class="text-4xl font-black text-amber-700 mt-1">0%</p>
-          </div>
-        </div>
+const STORAGE_KEY = "activity";
 
-        <button type="submit"
-          class="mt-7 w-full rounded-2xl bg-emerald-800 hover:bg-emerald-900 text-white px-6 py-4 font-black text-lg shadow-lg transition">
-          ☁️ 送出今日活動量
-        </button>
+function save() {
+  const data = {};
+  document.querySelectorAll("input,textarea").forEach(el=>{
+    data[el.id]=el.value;
+  });
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
+}
 
-        <p id="successMsg" class="hidden mt-4 text-center font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-2xl py-3">
-          ✅ 已成功送出！資料會進入 Google Sheet。
-        </p>
-
-        <p id="draftMsg" class="mt-3 text-center text-sm text-slate-500">
-          本頁已啟用本機暫存。
-        </p>
-      </form>
-    </section>
-
-    <section class="mt-8 glass rounded-[2rem] shadow-xl p-6 md:p-9">
-      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-        <div>
-          <p class="text-sm font-bold text-emerald-800 tracking-widest">KPI TRACKING</p>
-          <h2 class="mt-2 text-2xl md:text-3xl font-black text-slate-900">活動量不是壓力，是成長地圖</h2>
-        </div>
-        <p class="text-slate-500">建議每天下班前完成填寫</p>
-      </div>
-
-      <div class="mt-7 grid md:grid-cols-4 gap-4">
-        <div class="rounded-2xl bg-white/80 p-5 shadow-sm">
-          <p class="text-sm text-slate-500">約訪率</p>
-          <p class="text-2xl font-black text-emerald-900 mt-1">APO / CALL</p>
-          <p class="mt-2 text-sm text-slate-500">看建立關係是否轉成約訪</p>
-        </div>
-        <div class="rounded-2xl bg-white/80 p-5 shadow-sm">
-          <p class="text-sm text-slate-500">面談率</p>
-          <p class="text-2xl font-black text-emerald-900 mt-1">FF / APO</p>
-          <p class="mt-2 text-sm text-slate-500">看約訪品質與需求開發</p>
-        </div>
-        <div class="rounded-2xl bg-white/80 p-5 shadow-sm">
-          <p class="text-sm text-slate-500">建議書率</p>
-          <p class="text-2xl font-black text-emerald-900 mt-1">PD / FF</p>
-          <p class="mt-2 text-sm text-slate-500">看需求是否能進入規劃</p>
-        </div>
-        <div class="rounded-2xl bg-white/80 p-5 shadow-sm">
-          <p class="text-sm text-slate-500">成交率</p>
-          <p class="text-2xl font-black text-emerald-900 mt-1">C / PD</p>
-          <p class="mt-2 text-sm text-slate-500">看建議書到成交的轉換</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="mt-8 grid md:grid-cols-2 gap-6">
-      <div class="glass rounded-[2rem] shadow-xl p-6 md:p-8">
-        <h2 class="text-2xl font-black text-slate-900">今日填寫提醒</h2>
-        <ul class="mt-5 space-y-3 text-slate-700">
-          <li class="flex gap-3"><span>✅</span><span>未執行的項目請填 0，不要留空。</span></li>
-          <li class="flex gap-3"><span>✅</span><span>今日重點請寫一句真實紀錄，方便日後追蹤。</span></li>
-          <li class="flex gap-3"><span>✅</span><span>特殊案件可記錄客戶需求、異議、下次跟進重點。</span></li>
-          <li class="flex gap-3"><span>✅</span><span>填寫目的不是檢討，而是幫助自己看見下一步。</span></li>
-        </ul>
-      </div>
-
-      <div class="glass rounded-[2rem] shadow-xl p-6 md:p-8">
-        <h2 class="text-2xl font-black text-slate-900">活動量定義</h2>
-        <div class="mt-5 grid grid-cols-2 gap-3 text-sm">
-          <div class="rounded-xl bg-white/80 p-3"><b>CALL</b><br><span class="text-slate-500">建立關係</span></div>
-          <div class="rounded-xl bg-white/80 p-3"><b>APO</b><br><span class="text-slate-500">約訪</span></div>
-          <div class="rounded-xl bg-white/80 p-3"><b>FF</b><br><span class="text-slate-500">需求面談</span></div>
-          <div class="rounded-xl bg-white/80 p-3"><b>PD</b><br><span class="text-slate-500">建議書</span></div>
-          <div class="rounded-xl bg-white/80 p-3"><b>C</b><br><span class="text-slate-500">成交</span></div>
-          <div class="rounded-xl bg-white/80 p-3"><b>S</b><br><span class="text-slate-500">服務</span></div>
-          <div class="rounded-xl bg-white/80 p-3"><b>R</b><br><span class="text-slate-500">轉介紹</span></div>
-          <div class="rounded-xl bg-white/80 p-3"><b>送保單</b><br><span class="text-slate-500">保單交付</span></div>
-        </div>
-      </div>
-    </section>
-
-    <footer class="py-8 text-center text-sm text-slate-500">
-      <p>© 馥芸財富學苑｜活動量管理系統</p>
-      <p class="mt-1">把每日行動累積成可被看見的成長曲線</p>
-    </footer>
-  </main>
-
-  <script>
-    const CONFIG = {
-      formAction: "https://docs.google.com/forms/d/e/1FAIpQLSfIWCo6ywRDfgpm9UUSPjGFA8pe2bB5e1m46r4sSrHQrz5H6A/formResponse",
-      entries: {
-        date: "entry.919879348",
-        name: "entry.337035848",
-        call: "entry.151478796",
-        apo: "entry.2016416450",
-        ff: "entry.328881420",
-        pd: "entry.136604677",
-        c: "entry.1402626868",
-        s: "entry.1839597626",
-        r: "entry.2137473605",
-        policy: "entry.286475001",
-        cases: "entry.1425354552",
-        fyc: "entry.845303929",
-        fyp: "entry.1289571681",
-        note: "entry.1999587977"
-      }
-    };
-
-    const STORAGE_KEY = "fuyun_activity_draft_v1";
-
-    const fieldIds = [
-      "date", "name", "call", "apo", "ff", "pd", "c", "s", "r",
-      "policy", "cases", "fyc", "fyp", "note"
-    ];
-
-    const numberIds = [
-      "call", "apo", "ff", "pd", "c", "s", "r",
-      "policy", "cases", "fyc", "fyp"
-    ];
-
-    function todayString() {
-      const today = new Date();
-      const yyyy = today.getFullYear();
-      const mm = String(today.getMonth() + 1).padStart(2, "0");
-      const dd = String(today.getDate()).padStart(2, "0");
-      return `${yyyy}-${mm}-${dd}`;
+function load() {
+  const data=JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}");
+  Object.keys(data).forEach(k=>{
+    if(document.getElementById(k)){
+      document.getElementById(k).value=data[k];
     }
+  });
+}
 
-    function getValue(id) {
-      const el = document.getElementById(id);
-      return el ? el.value : "";
+function today(){
+  const d=new Date();
+  return d.toISOString().split("T")[0];
+}
+
+if(!document.getElementById("date").value){
+  document.getElementById("date").value=today();
+}
+
+load();
+
+document.querySelectorAll("input,textarea").forEach(el=>{
+  el.addEventListener("input",save);
+});
+
+document.getElementById("form").addEventListener("submit",e=>{
+  e.preventDefault();
+
+  const formData=new FormData();
+
+  Object.keys(CONFIG.entries).forEach(key=>{
+    const el=document.getElementById(key);
+    if(el){
+      formData.append(CONFIG.entries[key],el.value);
     }
+  });
 
-    function getNumber(id) {
-      return Number(getValue(id) || 0);
-    }
+  fetch(CONFIG.formAction,{
+    method:"POST",
+    mode:"no-cors",
+    body:formData
+  });
 
-    function setValue(id, value) {
-      const el = document.getElementById(id);
-      if (el) el.value = value;
-    }
+  localStorage.removeItem(STORAGE_KEY);
 
-    function percent(numerator, denominator) {
-      if (!denominator) return "0%";
-      return Math.round((numerator / denominator) * 100) + "%";
-    }
+  document.getElementById("msg").classList.remove("hidden");
 
-    function updateSummary() {
-      const total =
-        getNumber("call") +
-        getNumber("apo") +
-        getNumber("ff") +
-        getNumber("pd") +
-        getNumber("c") +
-        getNumber("s") +
-        getNumber("r") +
-        getNumber("policy");
+  document.querySelectorAll("input").forEach(el=>{
+    if(el.type==="number") el.value=0;
+  });
 
-      document.getElementById("totalActivity").textContent = total;
-      document.getElementById("callApoRate").textContent = percent(getNumber("apo"), getNumber("call"));
-      document.getElementById("pdCRate").textContent = percent(getNumber("c"), getNumber("pd"));
-    }
+  document.getElementById("note").value="";
+});
+</script>
 
-    function saveDraft() {
-      const draft = {};
-      fieldIds.forEach(id => {
-        draft[id] = getValue(id);
-      });
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
-      document.getElementById("draftMsg").textContent = "已自動暫存於本機。";
-    }
-
-    function loadDraft() {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (!saved) {
-        setValue("date", todayString());
-        updateSummary();
-        return;
-      }
-
-      try {
-        const draft = JSON.parse(saved);
-        fieldIds.forEach(id => {
-          if (draft[id] !== undefined) setValue(id, draft[id]);
-        });
-      } catch (e) {
-        setValue("date", todayString());
-      }
-
-      if (!getValue("date")) setValue("date", todayString());
-      updateSummary();
-    }
-
-    function clearDraft() {
-      localStorage.removeItem(STORAGE_KEY);
-      fieldIds.forEach(id => {
-        if (id === "date") {
-          setValue(id, todayString());
-        } else if (numberIds.includes(id)) {
-          setValue(id, 0);
-        } else {
-          setValue(id, "");
-        }
-      });
-      updateSummary();
-      document.getElementById("successMsg").classList.add("hidden");
-      document.getElementById("draftMsg").textContent = "已清除本機暫存。";
-    }
-
-    function submitToGoogleForm(data) {
-      const formData = new FormData();
-
-      Object.keys(CONFIG.entries).forEach(key => {
-        if (CONFIG.entries[key] && data[key] !== undefined) {
-          formData.append(CONFIG.entries[key], data[key]);
-        }
-      });
-
-      return fetch(CONFIG.formAction, {
-        method: "POST",
-        mode: "no-cors",
-        body: formData
-      });
-    }
-
-    function collectData() {
-      return {
-        date: getValue("date") || todayString(),
-        name: getValue("name").trim(),
-        call: getNumber("call"),
-        apo: getNumber("apo"),
-        ff: getNumber("ff"),
-        pd: getNumber("pd"),
-        c: getNumber("c"),
-        s: getNumber("s"),
-        r: getNumber("r"),
-        policy: getNumber("policy"),
-        cases: getNumber("cases"),
-        fyc: getNumber("fyc"),
-        fyp: getNumber("fyp"),
-        note: getValue("note")
-      };
-    }
-
-    document.getElementById("activityForm").addEventListener("submit", async function(e) {
-      e.preventDefault();
-
-      const data = collectData();
-
-      if (!data.name) {
-        alert("請先填寫姓名");
-        return;
-      }
-
-      try {
-        await submitToGoogleForm(data);
-
-        localStorage.removeItem(STORAGE_KEY);
-
-        document.getElementById("successMsg").classList.remove("hidden");
-        document.getElementById("draftMsg").textContent = "送出成功，暫存已清除。";
-
-        const keepName = data.name;
-        setValue("date", todayString());
-        setValue("name", keepName);
-        numberIds.forEach(id => setValue(id, 0));
-        setValue("note", "");
-        updateSummary();
-
-        window.scrollTo({
-          top: document.getElementById("quick-form").offsetTop - 20,
-          behavior: "smooth"
-        });
-
-      } catch (error) {
-        alert("送出時發生問題，請稍後再試。");
-      }
-    });
-
-    fieldIds.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) {
-        el.addEventListener("input", () => {
-          updateSummary();
-          saveDraft();
-        });
-        el.addEventListener("change", () => {
-          updateSummary();
-          saveDraft();
-        });
-      }
-    });
-
-    loadDraft();
-  </script>
 </body>
 </html>
