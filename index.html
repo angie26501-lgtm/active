@@ -11,9 +11,18 @@
 
 <div class="max-w-3xl mx-auto p-6">
 
-  <h1 class="text-3xl font-black mb-6 text-center">
+  <h1 class="text-3xl font-black text-center mb-4">
     活動量每日回報
   </h1>
+
+  <!-- 🔗 原始表單入口（已幫你加入） -->
+  <div class="text-center mb-6">
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfIWCo6ywRDfgpm9UUSPjGFA8pe2bB5e1m46r4sSrHQrz5H6A/viewform" 
+       target="_blank"
+       class="inline-block bg-white border px-5 py-3 rounded-xl shadow font-bold text-emerald-700 hover:bg-gray-50">
+       🔗 開啟原始 Google 表單
+    </a>
+  </div>
 
   <form id="form" class="bg-white rounded-3xl p-6 shadow space-y-4">
 
@@ -21,14 +30,14 @@
     <input id="name" type="text" placeholder="姓名" class="w-full p-3 rounded-xl border" required>
 
     <div class="grid grid-cols-2 gap-3">
-      <input id="call" type="number" value="0" class="p-3 rounded-xl border">
-      <input id="apo" type="number" value="0" class="p-3 rounded-xl border">
-      <input id="ff" type="number" value="0" class="p-3 rounded-xl border">
-      <input id="pd" type="number" value="0" class="p-3 rounded-xl border">
-      <input id="c" type="number" value="0" class="p-3 rounded-xl border">
-      <input id="s" type="number" value="0" class="p-3 rounded-xl border">
-      <input id="r" type="number" value="0" class="p-3 rounded-xl border">
-      <input id="policy" type="number" value="0" class="p-3 rounded-xl border">
+      <input id="call" type="number" value="0" class="p-3 rounded-xl border" placeholder="CALL">
+      <input id="apo" type="number" value="0" class="p-3 rounded-xl border" placeholder="APO">
+      <input id="ff" type="number" value="0" class="p-3 rounded-xl border" placeholder="FF">
+      <input id="pd" type="number" value="0" class="p-3 rounded-xl border" placeholder="PD">
+      <input id="c" type="number" value="0" class="p-3 rounded-xl border" placeholder="C">
+      <input id="s" type="number" value="0" class="p-3 rounded-xl border" placeholder="S">
+      <input id="r" type="number" value="0" class="p-3 rounded-xl border" placeholder="R">
+      <input id="policy" type="number" value="0" class="p-3 rounded-xl border" placeholder="送保單">
     </div>
 
     <input id="cases" type="number" value="0" placeholder="成交件數" class="w-full p-3 rounded-xl border">
@@ -38,7 +47,7 @@
     <textarea id="note" placeholder="備註" class="w-full p-3 rounded-xl border"></textarea>
 
     <button class="w-full bg-emerald-700 text-white p-4 rounded-xl font-bold">
-      送出
+      ☁️ 送出
     </button>
 
     <div id="msg" class="text-center text-green-600 font-bold hidden">
@@ -70,47 +79,44 @@ const CONFIG = {
   }
 };
 
-const STORAGE_KEY = "activity";
+const KEY = "activity_draft";
 
-function save() {
-  const data = {};
-  document.querySelectorAll("input,textarea").forEach(el=>{
-    data[el.id]=el.value;
-  });
-  localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
+// 👉 自動今天日期
+const today = new Date().toISOString().split("T")[0];
+if(!document.getElementById("date").value){
+  document.getElementById("date").value = today;
 }
 
-function load() {
-  const data=JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}");
+// 👉 載入暫存
+function load(){
+  const data = JSON.parse(localStorage.getItem(KEY)||"{}");
   Object.keys(data).forEach(k=>{
     if(document.getElementById(k)){
-      document.getElementById(k).value=data[k];
+      document.getElementById(k).value = data[k];
     }
   });
 }
-
-function today(){
-  const d=new Date();
-  return d.toISOString().split("T")[0];
-}
-
-if(!document.getElementById("date").value){
-  document.getElementById("date").value=today();
-}
-
 load();
 
+// 👉 儲存暫存
 document.querySelectorAll("input,textarea").forEach(el=>{
-  el.addEventListener("input",save);
+  el.addEventListener("input",()=>{
+    const data = {};
+    document.querySelectorAll("input,textarea").forEach(i=>{
+      data[i.id]=i.value;
+    });
+    localStorage.setItem(KEY,JSON.stringify(data));
+  });
 });
 
+// 👉 送出
 document.getElementById("form").addEventListener("submit",e=>{
   e.preventDefault();
 
-  const formData=new FormData();
+  const formData = new FormData();
 
   Object.keys(CONFIG.entries).forEach(key=>{
-    const el=document.getElementById(key);
+    const el = document.getElementById(key);
     if(el){
       formData.append(CONFIG.entries[key],el.value);
     }
@@ -122,7 +128,7 @@ document.getElementById("form").addEventListener("submit",e=>{
     body:formData
   });
 
-  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(KEY);
 
   document.getElementById("msg").classList.remove("hidden");
 
