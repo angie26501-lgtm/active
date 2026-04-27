@@ -1,0 +1,155 @@
+// ===== 初始化 =====
+document.getElementById('date').valueAsDate = new Date();
+let currentStage = "";
+
+// ===== 流程圖（只高亮，不計算）=====
+function highlightStage(el, stage){
+    document.querySelectorAll('.stage-card').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    currentStage = stage;
+}
+
+// ===== 計算分數 =====
+function calculateScore(){
+    const v = id => parseInt(document.getElementById(id).value) || 0;
+
+    let score =
+        v('call')*1 +
+        v('apo')*5 +
+        v('ff')*10 +
+        v('pd')*15 +
+        v('c_act')*30 +
+        v('s_act')*5 +
+        v('r_act')*20 +
+        v('policy')*10;
+
+    document.getElementById('totalScore').innerText = score;
+
+    // 分數視覺
+    const hero = document.getElementById('hero');
+    if(score >= 80) hero.className = "score-hero high";
+    else hero.className = "score-hero";
+
+    return score;
+}
+
+// ===== 監聽輸入 =====
+document.querySelectorAll("input").forEach(i=>{
+    i.addEventListener("input", calculateScore);
+});
+
+// ===== 送出資料 =====
+function submitData(){
+    const name = document.getElementById('name').value;
+    if(!name) return alert("請填寫姓名");
+
+    const v = id => document.getElementById(id).value;
+
+    let data = {
+        date: v('date'),
+        name: v('name'),
+        stage: currentStage,
+        score: calculateScore(),
+
+        call: v('call'),
+        apo: v('apo'),
+        ff: v('ff'),
+        pd: v('pd'),
+        c_act: v('c_act'),
+        s_act: v('s_act'),
+        r_act: v('r_act'),
+        policy: v('policy'),
+
+        caseNum: v('caseNum'),
+        fyc: v('fyc'),
+        fyp: v('fyp'),
+        referral: v('referral')
+    };
+
+    // ===== 傳送 Google 表單 =====
+    const GOOGLE_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe7khDG8Kz5MaxI9q6Vr4LO1O1i-jOQrGVogVxnQw8YanKOqQ/formResponse";
+    const f = new FormData();
+
+    f.append("entry.1690664133", data.date);
+    f.append("entry.1317826185", data.name);
+    f.append("entry.1367187796", data.stage);
+
+    f.append("entry.1822444713", data.call);
+    f.append("entry.1491536107", data.apo);
+    f.append("entry.1485885569", data.ff);
+    f.append("entry.1813740552", data.pd);
+    f.append("entry.1759215822", data.c_act);
+    f.append("entry.80872650", data.s_act);
+    f.append("entry.1431252305", data.r_act);
+    f.append("entry.485676242", data.policy);
+
+    fetch(GOOGLE_URL, {method:"POST", mode:"no-cors", body:f});
+
+    // ===== 存本機 =====
+    let history = JSON.parse(localStorage.getItem('fuyun_data') || "[]");
+    history.unshift(data);
+    localStorage.setItem('fuyun_data', JSON.stringify(history));
+
+    alert("✅ 紀錄完成");
+
+    resetToday();
+    updateUI();
+}
+
+// ===== 更新統計 =====
+function updateUI(){
+    const history = JSON.parse(localStorage.getItem('fuyun_data') || "[]");
+    const list = document.getElementById('historyList');
+
+    const thisMonth = new Date().toISOString().substring(0,7);
+
+    let mScore=0, mFYC=0, mFYP=0, mCase=0, mFF=0;
+
+    list.innerHTML="";
+
+    history.forEach((h,i)=>{
+        if(h.date.startsWith(thisMonth)){
+            mScore += h.score || 0;
+            mFYC += parseInt(h.fyc||0);
+            mFYP += parseInt(h.fyp||0);
+            mCase += parseInt(h.caseNum||0);
+            mFF += parseInt(h.ff||0);
+        }
+
+        if(i<10){
+            let item=document.createElement('div');
+            item.className="history-item";
+            item.innerHTML=`
+                <strong>${h.date}</strong> ｜ ${h.name}
+                <br>
+                分數：<span style="color:#c9a66b">${h.score}</span>
+                ｜ 面談：${h.ff}
+                ｜ 成交：${h.caseNum}
+            `;
+            list.appendChild(item);
+        }
+    });
+
+    document.getElementById('mScore').innerText=mScore;
+    document.getElementById('mFYC').innerText=mFYC;
+    document.getElementById('mFYP').innerText=mFYP;
+    document.getElementById('mCase').innerText=mCase;
+    document.getElementById('mFF').innerText=mFF;
+}
+
+// ===== 重置 =====
+function resetToday(){
+    currentStage="";
+    document.querySelectorAll('.stage-card').forEach(c=>c.classList.remove('active'));
+
+    ['call','apo','ff','pd','c_act','s_act','r_act','policy','caseNum','fyc','fyp','referral']
+    .forEach(id=>{
+        let el=document.getElementById(id);
+        if(el) el.value=0;
+    });
+
+    calculateScore();
+}
+
+// ===== 啟動 =====
+updateUI();
