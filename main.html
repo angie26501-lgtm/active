@@ -1042,6 +1042,85 @@ function renderMonthlyScore(){
   });
 }
 </script>
+function calculateScore(){
+  const score =
+    (getNum('call') * 1) +
+    (getNum('apo') * 5) +
+    (getNum('ff') * 10) +
+    (getNum('pd') * 15) +
+    (getNum('c_act') * 30) +
+    (getNum('s_act') * 5) +
+    (getNum('r_act') * 20) +
+    (getNum('policy') * 10);
 
+  document.getElementById('scoreValue').innerText = score;
+
+  const scoreBox = document.getElementById('scoreBox');
+  const phaseLabel = document.getElementById('phaseLabel');
+  const phaseText = document.getElementById('phaseText');
+  const qualityText = document.getElementById('qualityText');
+  const actionAdvice = document.getElementById("actionAdvice");
+
+  scoreBox.className = "score-box";
+
+  if(score < 30){
+    phaseLabel.innerText = "醞釀期";
+    phaseText.innerText = "今天你在播種，這些分數正在為未來的爆發做準備。";
+
+    if(actionAdvice){
+      actionAdvice.innerHTML = `
+      🔍【當前策略】<br>
+      👉 增加接觸量<br><br>
+      ✔ 補 3 CALL 或 1 APO
+      `;
+    }
+
+  } else if(score < 80){
+    scoreBox.classList.add("green");
+    phaseLabel.innerText = "行動期";
+    phaseText.innerText = "你正在穩健前進，持續累積就會看見轉換。";
+
+    if(actionAdvice){
+      actionAdvice.innerHTML = `
+      🔍【當前策略】<br>
+      👉 推進流程<br><br>
+      ✔ APO → FF
+      `;
+    }
+
+  } else if(score < 150){
+    scoreBox.classList.add("gold");
+    phaseLabel.innerText = "轉換期";
+    phaseText.innerText = "你已經接近成交，關鍵在最後一哩。";
+
+    if(actionAdvice){
+      actionAdvice.innerHTML = `
+      🔍【當前策略】<br>
+      👉 準備成交<br><br>
+      ✔ 追蹤 PD / Closing
+      `;
+    }
+
+  } else {
+    scoreBox.classList.add("gold");
+    phaseLabel.innerText = "豐收期";
+    phaseText.innerText = "你正處於高動能狀態，開始放大成果。";
+
+    if(actionAdvice){
+      actionAdvice.innerHTML = `
+      🔍【當前策略】<br>
+      👉 擴大成果<br><br>
+      ✔ 轉介紹 / 服務延伸
+      `;
+    }
+  }
+
+  qualityText.innerText =
+    currentStage && behaviorInsights[currentStage]
+      ? behaviorInsights[currentStage]
+      : "尚未選擇財顧階段。完成一個關鍵訪談，也是一種高品質行動。";
+
+  return score;
+}
 </body>
 </html>
