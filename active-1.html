@@ -1,151 +1,215 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>馥芸活動量系統</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>馥芸財富學苑｜全能活動量管理系統</title>
+    <style>
+        :root {
+            --green: #2f5d50;
+            --gold: #c9a66b;
+            --light-gold: #f4eee1;
+            --bg: #f8f6f2;
+            --white: #ffffff;
+            --gray: #666;
+        }
 
-<style>
-body{font-family:sans-serif;background:#f5f3ef;margin:0;padding:20px;}
-.container{max-width:720px;margin:auto;}
-.card{background:#fff;border-radius:16px;padding:18px;margin-bottom:15px;box-shadow:0 4px 10px rgba(0,0,0,0.05);}
-h2{color:#2f5d50;}
-input,select,textarea{width:100%;padding:10px;margin-top:5px;margin-bottom:10px;border-radius:10px;border:1px solid #ddd;}
-.score{font-size:40px;text-align:center;color:#c9a66b;font-weight:bold;}
-button{width:100%;padding:15px;border:none;border-radius:12px;background:linear-gradient(90deg,#4caf88,#c9a66b);color:white;font-size:16px;}
-</style>
+        body {
+            font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 1. 品牌標題 */
+        header {
+            text-align: center;
+            padding: 20px 0;
+        }
+        header h1 {
+            color: var(--green);
+            font-size: 1.5rem;
+            margin: 0;
+            letter-spacing: 2px;
+        }
+        header p {
+            color: var(--gold);
+            font-size: 0.9rem;
+            margin: 5px 0 0;
+        }
+
+        /* 卡片設計 */
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(47, 93, 80, 0.05);
+            border: 1px solid rgba(201, 166, 107, 0.2);
+        }
+
+        h2 {
+            color: var(--green);
+            font-size: 1.1rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--gold);
+            padding-left: 10px;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: var(--green);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            box-sizing: border-box;
+            background: #fafafa;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: #fff;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        /* 5. 今日總分大字 */
+        .score-display {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--green), #3d7a6a);
+            color: white;
+            border-radius: 20px;
+            margin: 20px 0;
+        }
+        .score-display .label { font-size: 0.9rem; opacity: 0.9; }
+        .score-display .value { font-size: 3.5rem; font-weight: bold; color: var(--gold); }
+
+        /* 6. 按鈕 */
+        .btn-group { display: flex; flex-direction: column; gap: 10px; }
+        button {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, var(--green), var(--gold));
+            color: white;
+            box-shadow: 0 4px 10px rgba(47, 93, 80, 0.2);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--green);
+            color: var(--green);
+            font-size: 0.9rem;
+            padding: 10px;
+        }
+        .btn-danger {
+            background: #fff;
+            border: 1px solid #e74c3c;
+            color: #e74c3c;
+            font-size: 0.8rem;
+            padding: 8px;
+        }
+
+        /* 7. 統計儀表板 */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .stat-card {
+            background: var(--light-gold);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        .stat-card .stat-label { font-size: 0.75rem; color: var(--green); }
+        .stat-card .stat-value { font-size: 1.2rem; font-weight: bold; color: #333; display: block; margin-top: 5px;}
+        .full-width { grid-column: span 2; }
+
+        /* 8. 最近紀錄表 */
+        .history-list {
+            margin-top: 10px;
+            font-size: 0.85rem;
+        }
+        .history-item {
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+        }
+        .history-item:last-child { border: none; }
+        .history-meta { color: #888; font-size: 0.75rem; }
+
+    </style>
 </head>
-
 <body>
+
 <div class="container">
+    <header>
+        <h1>馥芸財富學苑</h1>
+        <p>全能活動量管理系統</p>
+    </header>
 
-<div class="card">
-<h2>基本資料</h2>
-日期<input type="date" id="date">
-姓名<input type="text" id="name">
-模式<select id="mode">
-<option>日活動量</option>
-<option>客戶紀錄</option>
-</select>
-</div>
+    <form id="activeForm">
+        <div class="card">
+            <h2>1. 基本資料</h2>
+            <div class="grid">
+                <div><label>日期</label><input type="date" id="date" required></div>
+                <div><label>姓名</label><input type="text" id="name" placeholder="顧問姓名" required></div>
+            </div>
+            <label>紀錄模式</label>
+            <select id="mode">
+                <option value="客戶紀錄">客戶紀錄 (含流程推進)</option>
+                <option value="日活動量">日活動量 (純數據回報)</option>
+            </select>
+        </div>
 
-<div class="card">
-<h2>財顧流程</h2>
-客戶姓名<input type="text" id="client">
-階段<select id="stage" onchange="syncStage()">
-<option value="">不選</option>
-<option value="C1">C1</option>
-<option value="C2">C2</option>
-<option value="C3">C3</option>
-<option value="C5">C5</option>
-<option value="C6">C6</option>
-<option value="C7">C7</option>
-</select>
-</div>
+        <div class="card">
+            <h2>2. 財顧流程紀錄</h2>
+            <label>客戶姓名</label>
+            <input type="text" id="clientName" placeholder="輸入客戶姓名">
+            <label>財顧階段 (自動換算活動量)</label>
+            <select id="stage" onchange="autoSyncStage()">
+                <option value="">-- 請選擇階段 --</option>
+                <option value="C1 初步接觸">C1 初步接觸</option>
+                <option value="C2 預約諮詢">C2 預約諮詢</option>
+                <option value="C3 需求訪談">C3 需求訪談</option>
+                <option value="C4 分析診斷">C4 分析診斷</option>
+                <option value="C5 建議書說明">C5 建議書說明</option>
+                <option value="C6 成交委託">C6 成交委託</option>
+                <option value="C7 服務/轉介紹">C7 服務/轉介紹</option>
+            </select>
+        </div>
 
-<div class="card">
-<h2>活動量</h2>
-CALL<input type="number" id="call" value="0">
-APO<input type="number" id="apo" value="0">
-FF<input type="number" id="ff" value="0">
-PD<input type="number" id="pd" value="0">
-C<input type="number" id="c_act" value="0">
-S<input type="number" id="s_act" value="0">
-R<input type="number" id="r_act" value="0">
-保單<input type="number" id="policy" value="0">
-</div>
-
-<div class="card">
-<div class="score" id="totalScore">0</div>
-</div>
-
-<div class="card">
-成交件數<input type="number" id="caseNum">
-FYC<input type="number" id="fyc">
-<textarea id="note" placeholder="今日重點"></textarea>
-<button onclick="sendData()">送出</button>
-</div>
-
-</div>
-
-<script>
-// 初始化日期
-document.getElementById('date').valueAsDate = new Date();
-
-// 防重複
-let stageApplied = false;
-
-// 財顧轉活動量
-function syncStage(){
-let stage=document.getElementById("stage").value;
-if(stageApplied) return alert("已套用過");
-
-if(stage==="C1") call.value++;
-if(stage==="C2") apo.value++;
-if(stage==="C3") ff.value++;
-if(stage==="C5") pd.value++;
-if(stage==="C6") c_act.value++;
-if(stage==="C7") s_act.value++;
-
-stageApplied=true;
-calc();
-}
-
-// 計分
-function calc(){
-let score=call.value*1+apo.value*5+ff.value*10+pd.value*15+c_act.value*30+s_act.value*5+r_act.value*20+policy.value*10;
-let el=document.getElementById("totalScore");
-el.innerText=score;
-
-if(score<30) el.style.color="#999";
-else if(score<80) el.style.color="#4caf88";
-else el.style.color="#c9a66b";
-
-localStorage.setItem("data",JSON.stringify({
-call:call.value,apo:apo.value,ff:ff.value,pd:pd.value,
-c:c_act.value,s:s_act.value,r:r_act.value,policy:policy.value
-}));
-}
-
-// 載入
-window.onload=function(){
-let d=JSON.parse(localStorage.getItem("data"));
-if(!d) return;
-call.value=d.call;apo.value=d.apo;ff.value=d.ff;pd.value=d.pd;
-c_act.value=d.c;s_act.value=d.s;r_act.value=d.r;policy.value=d.policy;
-calc();
-}
-
-// 監聽
-document.querySelectorAll("input").forEach(i=>i.addEventListener("input",calc));
-
-// 送出
-function sendData(){
-let url="https://docs.google.com/forms/d/e/1FAIpQLSe7khDG8Kz5MaxI9q6Vr4LO1O1i-jOQrGVogVxnQw8YanKOqQ/formResponse";
-let f=new FormData();
-
-f.append("entry.1690664133",date.value);
-f.append("entry.1317826185",name.value);
-f.append("entry.296587685",mode.value);
-f.append("entry.1822444713",call.value);
-f.append("entry.1491536107",apo.value);
-f.append("entry.1485885569",ff.value);
-f.append("entry.1813740552",pd.value);
-f.append("entry.1759215822",c_act.value);
-f.append("entry.80872650",s_act.value);
-f.append("entry.1431252305",r_act.value);
-f.append("entry.485676242",policy.value);
-f.append("entry.1886949465",client.value);
-f.append("entry.1367187796",stage.value);
-f.append("entry.1322180337",caseNum.value);
-f.append("entry.1895807166",fyc.value);
-f.append("entry.1165378879",note.value);
-
-fetch(url,{method:"POST",mode:"no-cors",body:f});
-
-alert("已送出");
-}
-</script>
-
-</body>
-</html>
+        <div class="card">
+            <h2>3. 保經活動量數據</h2>
+            <div class="grid">
+                <div><label
