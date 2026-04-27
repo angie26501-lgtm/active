@@ -8,19 +8,18 @@
         :root {
             --green: #2f5d50;
             --gold: #c9a66b;
-            --light-gold: #f4eee1;
-            --bg: #f8f6f2;
+            --cream: #f8f6f2;
             --white: #ffffff;
-            --gray: #666;
+            --soft-gold: #f4eee1;
         }
 
         body {
             font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
-            background-color: var(--bg);
+            background-color: var(--cream);
             margin: 0;
             padding: 0;
             color: #333;
-            line-height: 1.6;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .container {
@@ -32,142 +31,178 @@
         /* 1. 品牌標題 */
         header {
             text-align: center;
-            padding: 20px 0;
+            padding: 30px 0;
         }
         header h1 {
             color: var(--green);
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             margin: 0;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+            font-weight: 600;
         }
         header p {
             color: var(--gold);
             font-size: 0.9rem;
-            margin: 5px 0 0;
+            margin: 8px 0 0;
+            letter-spacing: 1px;
         }
 
-        /* 卡片設計 */
+        /* 通用卡片設計 */
         .card {
             background: var(--white);
-            border-radius: 20px;
-            padding: 20px;
+            border-radius: 24px;
+            padding: 24px;
             margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(47, 93, 80, 0.05);
-            border: 1px solid rgba(201, 166, 107, 0.2);
+            box-shadow: 0 10px 30px rgba(47, 93, 80, 0.05);
+            border: 1px solid rgba(201, 166, 107, 0.15);
         }
 
         h2 {
             color: var(--green);
             font-size: 1.1rem;
-            margin-top: 0;
-            margin-bottom: 15px;
-            border-left: 4px solid var(--gold);
-            padding-left: 10px;
+            margin: 0 0 20px 0;
+            display: flex;
+            align-items: center;
+        }
+        h2::before {
+            content: "";
+            width: 4px;
+            height: 18px;
+            background: var(--gold);
+            margin-right: 10px;
+            border-radius: 2px;
         }
 
         label {
             display: block;
-            margin-top: 12px;
-            font-weight: bold;
+            margin-top: 15px;
+            font-weight: 600;
             font-size: 0.9rem;
             color: var(--green);
         }
 
         input, select, textarea {
             width: 100%;
-            padding: 12px;
-            margin-top: 6px;
-            border-radius: 12px;
-            border: 1px solid #ddd;
+            padding: 14px;
+            margin-top: 8px;
+            border-radius: 14px;
+            border: 1.5px solid #eee;
             font-size: 16px;
             box-sizing: border-box;
             background: #fafafa;
+            transition: all 0.3s ease;
         }
 
-        input:focus {
+        input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: var(--gold);
             background: #fff;
+            box-shadow: 0 0 0 4px rgba(201, 166, 107, 0.1);
         }
 
         .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 15px;
         }
 
-        /* 5. 今日總分大字 */
-        .score-display {
+        /* 5. 今日總分展示 */
+        .score-hero {
             text-align: center;
-            padding: 20px;
+            padding: 30px;
             background: linear-gradient(135deg, var(--green), #3d7a6a);
             color: white;
-            border-radius: 20px;
-            margin: 20px 0;
+            border-radius: 28px;
+            margin: 25px 0;
+            position: relative;
+            overflow: hidden;
         }
-        .score-display .label { font-size: 0.9rem; opacity: 0.9; }
-        .score-display .value { font-size: 3.5rem; font-weight: bold; color: var(--gold); }
+        .score-hero .label { font-size: 1rem; opacity: 0.8; }
+        .score-hero .value { 
+            font-size: 4rem; 
+            font-weight: 700; 
+            color: var(--gold); 
+            margin: 10px 0;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
 
-        /* 6. 按鈕 */
-        .btn-group { display: flex; flex-direction: column; gap: 10px; }
-        button {
+        /* 6. 送出按鈕 */
+        .btn-submit {
             width: 100%;
-            padding: 16px;
+            padding: 18px;
             border: none;
-            border-radius: 15px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .btn-primary {
+            border-radius: 18px;
             background: linear-gradient(90deg, var(--green), var(--gold));
             color: white;
-            box-shadow: 0 4px 10px rgba(47, 93, 80, 0.2);
+            font-size: 1.15rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(47, 93, 80, 0.2);
+            transition: transform 0.2s;
         }
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--green);
-            color: var(--green);
-            font-size: 0.9rem;
-            padding: 10px;
-        }
-        .btn-danger {
-            background: #fff;
-            border: 1px solid #e74c3c;
-            color: #e74c3c;
-            font-size: 0.8rem;
-            padding: 8px;
-        }
+        .btn-submit:active { transform: scale(0.98); }
 
-        /* 7. 統計儀表板 */
-        .dashboard {
+        .btn-secondary-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
+            margin-top: 15px;
         }
-        .stat-card {
-            background: var(--light-gold);
+        .btn-minor {
+            background: var(--soft-gold);
+            color: var(--green);
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* 7. 統計儀表板 */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .stat-item {
+            background: var(--soft-gold);
             padding: 15px;
-            border-radius: 15px;
+            border-radius: 18px;
             text-align: center;
         }
-        .stat-card .stat-label { font-size: 0.75rem; color: var(--green); }
-        .stat-card .stat-value { font-size: 1.2rem; font-weight: bold; color: #333; display: block; margin-top: 5px;}
-        .full-width { grid-column: span 2; }
+        .stat-item.full { grid-column: span 2; }
+        .stat-item .s-label { font-size: 0.75rem; color: var(--green); opacity: 0.8; }
+        .stat-item .s-value { font-size: 1.2rem; font-weight: 700; color: #333; display: block; margin-top: 4px; }
+        .activity-summary { font-size: 0.8rem; line-height: 1.8; color: var(--green); }
 
         /* 8. 最近紀錄表 */
-        .history-list {
-            margin-top: 10px;
+        .history-container { margin-top: 10px; }
+        .history-card {
+            border-bottom: 1px solid #f0f0f0;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .history-info { font-size: 0.9rem; }
+        .history-info .h-date { font-size: 0.75rem; color: #999; }
+        .history-score {
+            background: var(--green);
+            color: var(--gold);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: bold;
             font-size: 0.85rem;
         }
-        .history-item {
-            border-bottom: 1px solid #eee;
-            padding: 10px 0;
-        }
-        .history-item:last-child { border: none; }
-        .history-meta { color: #888; font-size: 0.75rem; }
 
+        /* 管理工具 */
+        .admin-tools {
+            margin-top: 40px;
+            padding: 20px;
+            text-align: center;
+        }
+        .btn-danger { background: #fcecea; color: #e74c3c; border: none; padding: 10px 20px; border-radius: 10px; font-size: 0.8rem; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -178,27 +213,27 @@
         <p>全能活動量管理系統</p>
     </header>
 
-    <form id="activeForm">
+    <form id="activityForm">
         <div class="card">
             <h2>1. 基本資料</h2>
             <div class="grid">
                 <div><label>日期</label><input type="date" id="date" required></div>
-                <div><label>姓名</label><input type="text" id="name" placeholder="顧問姓名" required></div>
+                <div><label>姓名</label><input type="text" id="name" placeholder="您的姓名" required></div>
             </div>
             <label>紀錄模式</label>
             <select id="mode">
                 <option value="客戶紀錄">客戶紀錄 (含流程推進)</option>
-                <option value="日活動量">日活動量 (純數據回報)</option>
+                <option value="日活動量回報">日活動量回報 (純數據)</option>
             </select>
         </div>
 
         <div class="card">
             <h2>2. 財顧流程紀錄</h2>
             <label>客戶姓名</label>
-            <input type="text" id="clientName" placeholder="輸入客戶姓名">
-            <label>財顧階段 (自動換算活動量)</label>
-            <select id="stage" onchange="autoSyncStage()">
-                <option value="">-- 請選擇階段 --</option>
+            <input type="text" id="clientName" placeholder="本案客戶姓名">
+            <label>財顧階段 (選擇後自動加成活動量)</label>
+            <select id="stage" onchange="handleStageAutoFill()">
+                <option value="">-- 請選擇目前進度 --</option>
                 <option value="C1 初步接觸">C1 初步接觸</option>
                 <option value="C2 預約諮詢">C2 預約諮詢</option>
                 <option value="C3 需求訪談">C3 需求訪談</option>
@@ -212,4 +247,251 @@
         <div class="card">
             <h2>3. 保經活動量數據</h2>
             <div class="grid">
-                <div><label
+                <div><label>CALL</label><input type="number" id="call" value="0" min="0"></div>
+                <div><label>APO</label><input type="number" id="apo" value="0" min="0"></div>
+                <div><label>FF</label><input type="number" id="ff" value="0" min="0"></div>
+                <div><label>PD</label><input type="number" id="pd" value="0" min="0"></div>
+                <div><label>C (成交)</label><input type="number" id="c_act" value="0" min="0"></div>
+                <div><label>S (服務)</label><input type="number" id="s_act" value="0" min="0"></div>
+                <div><label>R (轉介)</label><input type="number" id="r_act" value="0" min="0"></div>
+                <div><label>送保單</label><input type="number" id="policy" value="0" min="0"></div>
+            </div>
+            <div class="grid">
+                <div><label>成交件數</label><input type="number" id="caseNum" value="0" min="0"></div>
+                <div><label>FYC</label><input type="number" id="fyc" value="0" min="0"></div>
+            </div>
+            <label>FYP</label><input type="number" id="fyp" value="0" min="0">
+        </div>
+
+        <div class="card">
+            <h2>4. 行動計畫</h2>
+            <label>今日重點</label>
+            <textarea id="note" rows="2" placeholder="簡述今日關鍵事項..."></textarea>
+            <div class="grid">
+                <div><label>下一步行動</label><input type="text" id="nextAction"></div>
+                <div><label>追蹤日期</label><input type="date" id="followUpDate"></div>
+            </div>
+        </div>
+
+        <div class="score-hero">
+            <div class="label">本次紀錄得分</div>
+            <div class="value" id="liveScore">0</div>
+        </div>
+
+        <button type="button" class="btn-submit" onclick="submitEntry()">確認送出並同步資料</button>
+        <div class="btn-secondary-group">
+            <button type="button" class="btn-minor" onclick="resetForm()">清除今日輸入</button>
+            <button type="button" class="btn-minor" onclick="exportToCSV()">匯出資料 (CSV)</button>
+        </div>
+    </form>
+
+    <div class="card" style="margin-top: 30px;">
+        <h2>5. 統計儀表板</h2>
+        <div class="stat-grid">
+            <div class="stat-item"><span class="s-label">今日總得分</span><span class="s-value" id="statTodayScore">0</span></div>
+            <div class="stat-item"><span class="s-label">本月總得分</span><span class="s-value" id="statMonthScore">0</span></div>
+            <div class="stat-item"><span class="s-label">本月件數</span><span class="s-value" id="statMonthCase">0</span></div>
+            <div class="stat-item"><span class="s-label">本月 FYC</span><span class="s-value" id="statMonthFYC">0</span></div>
+            <div class="stat-item full">
+                <span class="s-label">本月活動合計 (C/A/F/P/C/S/R/保)</span>
+                <div class="activity-summary" id="statMonthTotalList">0 / 0 / 0 / 0 / 0 / 0 / 0 / 0</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>6. 最近 10 筆紀錄</h2>
+        <div id="historyList" class="history-container">
+            </div>
+    </div>
+
+    <div class="admin-tools">
+        <button class="btn-danger" onclick="clearLocalStorage()">⚠️ 清除本機所有紀錄</button>
+    </div>
+</div>
+
+<script>
+    // --- 配置區 ---
+    const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe7khDG8Kz5MaxI9q6Vr4LO1O1i-jOQrGVogVxnQw8YanKOqQ/formResponse";
+    
+    // 請確認下方的 entry ID 是否正確對應你的 Google 表單
+    const FORM_MAP = {
+        date: "entry.1690664133",
+        name: "entry.1317826185",
+        mode: "entry.296587685",
+        call: "entry.1822444713",
+        apo: "entry.1491536107",
+        ff: "entry.1485885569",
+        pd: "entry.1813740552",
+        c_act: "entry.1759215822",
+        s_act: "entry.80872650",
+        r_act: "entry.1431252305",
+        policy: "entry.485676242",
+        client: "entry.1886949465",
+        stage: "entry.1367187796",
+        caseNum: "entry.1322180337",
+        fyc: "entry.1895807166",
+        note: "entry.1165378879"
+    };
+
+    // --- 初始化 ---
+    document.getElementById('date').valueAsDate = new Date();
+    updateUI();
+
+    // 監聽所有數字欄位變動即時算分 (函數優化：自動綁定監聽)
+    document.querySelectorAll('input[type="number"]').forEach(input => {
+        input.addEventListener('input', () => {
+            document.getElementById('liveScore').innerText = calculateScoreFromInputs();
+        });
+    });
+
+    // --- 四、財顧階段自動對應 ---
+    function handleStageAutoFill() {
+        const stage = document.getElementById('stage').value;
+        if (!stage) return;
+
+        // 重置為 0 再加 1 (或依需求累加)
+        const mappings = { "C1": "call", "C2": "apo", "C3": "ff", "C5": "pd", "C6": "c_act", "C7": "s_act" };
+        Object.keys(mappings).forEach(key => {
+            if (stage.startsWith(key)) {
+                const el = document.getElementById(mappings[key]);
+                el.value = parseInt(el.value) + 1;
+            }
+        });
+        document.getElementById('liveScore').innerText = calculateScoreFromInputs();
+    }
+
+    // 計算分數核心邏輯
+    function calculateScoreFromInputs() {
+        const val = (id) => parseInt(document.getElementById(id).value) || 0;
+        return (val('call') * 1) + (val('apo') * 5) + (val('ff') * 10) + (val('pd') * 15) + (val('c_act') * 30) + (val('s_act') * 5) + (val('r_act') * 20) + (val('policy') * 10);
+    }
+
+    // --- 送出與儲存邏輯 ---
+    async function submitEntry() {
+        const score = calculateScoreFromInputs();
+        const entry = {
+            id: Date.now(),
+            date: document.getElementById('date').value,
+            name: document.getElementById('name').value,
+            mode: document.getElementById('mode').value,
+            call: parseInt(document.getElementById('call').value) || 0,
+            apo: parseInt(document.getElementById('apo').value) || 0,
+            ff: parseInt(document.getElementById('ff').value) || 0,
+            pd: parseInt(document.getElementById('pd').value) || 0,
+            c_act: parseInt(document.getElementById('c_act').value) || 0,
+            s_act: parseInt(document.getElementById('s_act').value) || 0,
+            r_act: parseInt(document.getElementById('r_act').value) || 0,
+            policy: parseInt(document.getElementById('policy').value) || 0,
+            clientName: document.getElementById('clientName').value,
+            stage: document.getElementById('stage').value,
+            caseNum: parseInt(document.getElementById('caseNum').value) || 0,
+            fyc: parseInt(document.getElementById('fyc').value) || 0,
+            fyp: parseInt(document.getElementById('fyp').value) || 0,
+            note: document.getElementById('note').value,
+            nextAction: document.getElementById('nextAction').value,
+            followUpDate: document.getElementById('followUpDate').value,
+            score: score
+        };
+
+        if (!entry.name) { alert("請填寫姓名"); return; }
+
+        // 1. 同步 Google Form
+        const formData = new FormData();
+        Object.keys(FORM_MAP).forEach(key => {
+            formData.append(FORM_MAP[key], entry[key] !== undefined ? entry[key] : "");
+        });
+
+        fetch(GOOGLE_FORM_URL, { method: 'POST', mode: 'no-cors', body: formData })
+            .then(() => console.log("Google Form Synced"))
+            .catch(e => console.error("Form Sync Error", e));
+
+        // 2. 存入 localStorage
+        const history = JSON.parse(localStorage.getItem('fuyun_data') || "[]");
+        history.unshift(entry);
+        localStorage.setItem('fuyun_data', JSON.stringify(history));
+
+        alert("🎉 資料已儲存並同步至雲端！");
+        resetForm();
+        updateUI();
+    }
+
+    // --- 介面統計與歷史顯示 ---
+    function updateUI() {
+        const history = JSON.parse(localStorage.getItem('fuyun_data') || "[]");
+        const today = new Date().toISOString().split('T')[0];
+        const thisMonth = today.substring(0, 7);
+
+        let tScore = 0, mScore = 0, mCase = 0, mFYC = 0;
+        let act = { c:0, a:0, f:0, p:0, ca:0, s:0, r:0, po:0 };
+
+        const historyList = document.getElementById('historyList');
+        historyList.innerHTML = "";
+
+        history.forEach((item, index) => {
+            // 統計
+            if (item.date === today) tScore += item.score;
+            if (item.date.startsWith(thisMonth)) {
+                mScore += item.score;
+                mCase += item.caseNum;
+                mFYC += item.fyc;
+                act.c += item.call; act.a += item.apo; act.f += item.ff; act.p += item.pd;
+                act.ca += item.c_act; act.s += item.s_act; act.r += item.r_act; act.po += item.policy;
+            }
+
+            // 顯示前10筆
+            if (index < 10) {
+                const div = document.createElement('div');
+                div.className = "history-card";
+                div.innerHTML = `
+                    <div class="history-info">
+                        <div class="h-date">${item.date} | ${item.clientName || '日活動'}</div>
+                        <strong>${item.stage || item.mode}</strong>
+                    </div>
+                    <div class="history-score">${item.score} 分</div>
+                `;
+                historyList.appendChild(div);
+            }
+        });
+
+        // 渲染統計卡片
+        document.getElementById('statTodayScore').innerText = tScore;
+        document.getElementById('statMonthScore').innerText = mScore;
+        document.getElementById('statMonthCase').innerText = mCase;
+        document.getElementById('statMonthFYC').innerText = mFYC.toLocaleString();
+        document.getElementById('statMonthTotalList').innerText = `${act.c} / ${act.a} / ${act.f} / ${act.p} / ${act.ca} / ${act.s} / ${act.r} / ${act.po}`;
+    }
+
+    // --- 管理函數 ---
+    function resetForm() {
+        document.getElementById('activityForm').reset();
+        document.getElementById('date').valueAsDate = new Date();
+        document.getElementById('liveScore').innerText = "0";
+    }
+
+    function clearLocalStorage() {
+        if (confirm("⚠️ 確定要清除「手機上」的所有歷史紀錄嗎？（不影響雲端表單）")) {
+            localStorage.removeItem('fuyun_data');
+            updateUI();
+        }
+    }
+
+    function exportToCSV() {
+        const history = JSON.parse(localStorage.getItem('fuyun_data') || "[]");
+        if (history.length === 0) return alert("尚無資料可匯出");
+
+        let csv = "\uFEFF日期,姓名,紀錄模式,客戶,財顧階段,CALL,APO,FF,PD,C成交,S服務,R轉介,送保單,件數,FYC,FYP,得分,備註\n";
+        history.forEach(r => {
+            csv += `${r.date},${r.name},${r.mode},${r.clientName},${r.stage},${r.call},${r.apo},${r.ff},${r.pd},${r.c_act},${r.s_act},${r.r_act},${r.policy},${r.caseNum},${r.fyc},${r.fyp},${r.score},${r.note}\n`;
+        });
+
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = `馥芸紀錄_${new Date().toLocaleDateString()}.csv`;
+        link.click();
+    }
+</script>
+
+</body>
+</html>
