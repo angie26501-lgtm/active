@@ -1,8 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>活動量管理系統</title>
+
+<style>
+body{
+  font-family:Arial;
+  padding:20px;
+  background:#f7f3e9;
+}
+
+.card{
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  margin-bottom:15px;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin:5px 0;
+}
+
+.score{
+  font-size:40px;
+  font-weight:bold;
+}
+
+.green{color:green}
+.gold{color:gold}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h2>活動量輸入</h2>
+
+  CALL <input type="number" id="call" value="0">
+  APO <input type="number" id="apo" value="0">
+  FF <input type="number" id="ff" value="0">
+  PD <input type="number" id="pd" value="0">
+  成交 <input type="number" id="c_act" value="0">
+  服務 <input type="number" id="s_act" value="0">
+  轉介紹 <input type="number" id="r_act" value="0">
+  保單 <input type="number" id="policy" value="0">
+
+  <button onclick="calculateScore()">計算分數</button>
+</div>
+
+<div class="card">
+  <h2>分數</h2>
+  <div id="scoreValue" class="score">0</div>
+  <div id="phaseText"></div>
+  <div id="actionAdvice"></div>
+</div>
+
+<script>
+
 function calculateScore(){
 
   const getNum = (id) => {
-    const el = document.getElementById(id);
-    return el ? (parseInt(el.value) || 0) : 0;
+    return parseInt(document.getElementById(id).value) || 0;
   };
 
   const score =
@@ -15,102 +77,51 @@ function calculateScore(){
     (getNum('r_act') * 20) +
     (getNum('policy') * 10);
 
-  // 👉 分數顯示
-  const scoreValue = document.getElementById('scoreValue');
-  if(scoreValue) scoreValue.innerText = score;
+  document.getElementById("scoreValue").innerText = score;
 
-  const scoreBox = document.getElementById('scoreBox');
-  const phaseLabel = document.getElementById('phaseLabel');
-  const phaseText = document.getElementById('phaseText');
-  const qualityText = document.getElementById('qualityText');
+  const phaseText = document.getElementById("phaseText");
   const actionAdvice = document.getElementById("actionAdvice");
 
-  if(scoreBox) scoreBox.className = "score-box";
-
-  // 🎯 分數區間＋策略整合
   if(score < 30){
 
-    if(phaseLabel) phaseLabel.innerText = "醞釀期";
-    if(phaseText) phaseText.innerText = "今天你在播種，這些分數正在為未來的爆發做準備。";
+    phaseText.innerText = "醞釀期";
 
-    if(actionAdvice){
-      actionAdvice.innerHTML = `
-      🔍【當前策略】<br>
-      👉 增加接觸量是關鍵<br><br>
-
-      ✔ 補 3 個 CALL 或 1 個 APO<br>
-      ✔ 建立名單池<br><br>
-
-      🎯 目標：讓流程開始動
-      `;
-    }
+    actionAdvice.innerHTML = `
+    🔍增加接觸量<br>
+    ✔ 補 3 CALL 或 1 APO
+    `;
 
   } else if(score < 80){
 
-    if(scoreBox) scoreBox.classList.add("green");
-    if(phaseLabel) phaseLabel.innerText = "行動期";
-    if(phaseText) phaseText.innerText = "你正在穩健前進，持續累積就會看見轉換。";
+    phaseText.innerText = "行動期";
 
-    if(actionAdvice){
-      actionAdvice.innerHTML = `
-      🔍【當前策略】<br>
-      👉 推進流程，避免停留聊天<br><br>
-
-      ✔ APO → FF<br>
-      ✔ 完成需求訪談<br>
-      ✔ 建立 PD<br><br>
-
-      🎯 目標：進入成交機會階段
-      `;
-    }
+    actionAdvice.innerHTML = `
+    🔍推進流程<br>
+    ✔ APO → FF
+    `;
 
   } else if(score < 150){
 
-    if(scoreBox) scoreBox.classList.add("gold");
-    if(phaseLabel) phaseLabel.innerText = "轉換期";
-    if(phaseText) phaseText.innerText = "你已經接近成交，關鍵在最後一哩。";
+    phaseText.innerText = "轉換期";
 
-    if(actionAdvice){
-      actionAdvice.innerHTML = `
-      🔍【當前策略】<br>
-      👉 成交前最後一哩<br><br>
-
-      ✔ 追蹤 PD<br>
-      ✔ 安排 closing<br>
-      ✔ 解決客戶疑慮<br><br>
-
-      🎯 目標：成交或明確決策
-      `;
-    }
+    actionAdvice.innerHTML = `
+    🔍準備成交<br>
+    ✔ 追蹤 PD / Closing
+    `;
 
   } else {
 
-    if(scoreBox) scoreBox.classList.add("gold");
-    if(phaseLabel) phaseLabel.innerText = "豐收期";
-    if(phaseText) phaseText.innerText = "你正處於高動能狀態，開始放大成果。";
+    phaseText.innerText = "豐收期";
 
-    if(actionAdvice){
-      actionAdvice.innerHTML = `
-      🔍【當前策略】<br>
-      👉 擴大成果<br><br>
-
-      ✔ 要轉介紹<br>
-      ✔ 做服務追蹤<br>
-      ✔ 建立長期關係<br><br>
-
-      🎯 目標：開下一輪名單
-      `;
-    }
+    actionAdvice.innerHTML = `
+    🔍擴大成果<br>
+    ✔ 轉介紹 / 服務延伸
+    `;
   }
 
-  // 🧠 財顧階段洞察
-  if(qualityText){
-    if(currentStage && behaviorInsights[currentStage]){
-      qualityText.innerText = behaviorInsights[currentStage];
-    }else{
-      qualityText.innerText = "尚未選擇財顧階段。完成一個關鍵訪談，也是一種高品質行動。";
-    }
-  }
-
-  return score;
 }
+
+</script>
+
+</body>
+</html>
