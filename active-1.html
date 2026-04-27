@@ -94,4 +94,177 @@
         <h2>2. 財顧流程｜階段推進</h2>
         <input type="text" id="clientName" placeholder="本案客戶姓名" style="width:100%; padding:10px; margin-bottom:10px; border-radius:10px; border:1px solid #ddd;">
         <div class="stage-container">
-            <div class="
+            <div class="stage-card" onclick="selectStage(this,'C1','建議約訪','建立關係是專業的基石')"><span class="tag">C1</span><span class="name">初步接觸</span><span class="info">聊天破冰</span></div>
+            <div class="stage-card" onclick="selectStage(this,'C2','需求訪談','成功預約代表建立了初步信任')"><span class="tag">C2</span><span class="name">預約諮詢</span><span class="info">約定時間</span></div>
+            <div class="stage-card" onclick="selectStage(this,'C3','分析診斷','傾聽是顧問最重要的能力')"><span class="tag">C3</span><span class="name">需求訪談</span><span class="info">填寫CN表</span></div>
+            <div class="stage-card" onclick="selectStage(this,'C5','推進成交','好的方案能解決客戶的擔憂')"><span class="tag">C5</span><span class="name">建議書說明</span><span class="info">方案呈現</span></div>
+            <div class="stage-card" onclick="selectStage(this,'C6','做好服務','恭喜！這是一份託付的開始')"><span class="tag">C6</span><span class="name">成交委託</span><span class="info">正式簽約</span></div>
+            <div class="stage-card" onclick="selectStage(this,'C7','關係經營','服務是為了下一次的信任')"><span class="tag">C7</span><span class="name">服務轉介</span><span class="info">售後服務</span></div>
+        </div>
+        <div id="suggestBox" class="suggestion-box">
+            <strong>💡 下一步：</strong><span id="suggestText"></span><br>
+            <small id="valueText" style="opacity:0.8; font-style:italic;"></small>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>3. 保經活動量｜今日紀錄</h2>
+        <div class="activity-grid">
+            <div class="mini-card"><label>建立關係</label><span class="sub">CALL</span><input type="number" id="call" value="0" oninput="calculateScore()"></div>
+            <div class="mini-card"><label>約訪</label><span class="sub">APO</span><input type="number" id="apo" value="0" oninput="calculateScore()"></div>
+            <div class="mini-card"><label>面談</label><span class="sub">FF</span><input type="number" id="ff" value="0" oninput="calculateScore()"></div>
+            <div class="mini-card"><label>建議書</label><span class="sub">PD</span><input type="number" id="pd" value="0" oninput="calculateScore()"></div>
+            <div class="mini-card"><label>成交</label><span class="sub">C</span><input type="number" id="c_act" value="0" oninput="calculateScore()"></div>
+            <div class="mini-card"><label>服務</label><span class="sub">S</span><input type="number" id="s_act" value="0" oninput="calculateScore()"></div>
+            <div class="mini-card"><label>轉介紹</label><span class="sub">R</span><input type="number" id="r_act" value="0" oninput="calculateScore()"></div>
+            <div class="mini-card"><label>送保單</label><span class="sub">POLICY</span><input type="number" id="policy" value="0" oninput="calculateScore()"></div>
+        </div>
+    </div>
+
+    <div class="score-hero" id="hero">
+        <span style="font-size:0.9rem; opacity:0.8;">今日活動價值分</span>
+        <span class="val" id="totalScore">0</span>
+    </div>
+
+    <button class="btn-main" onclick="submitData()">確認送出並同步</button>
+    <button style="background:none; color:var(--green); font-size:0.8rem; text-decoration:underline;" onclick="resetToday()">清除今日輸入</button>
+
+    <div class="card" style="margin-top:30px;">
+        <h2>4. 本月數據統計</h2>
+        <div class="activity-grid">
+            <div style="text-align:center;"><span style="font-size:0.7rem; color:#888;">本月總分</span><br><strong id="mScore" style="color:var(--gold); font-size:1.2rem;">0</strong></div>
+            <div style="text-align:center;"><span style="font-size:0.7rem; color:#888;">本月面談</span><br><strong id="mFF" style="color:var(--green); font-size:1.2rem;">0</strong></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>5. 最近紀錄 (10筆)</h2>
+        <div id="historyList"></div>
+    </div>
+</div>
+
+<script>
+    // 1. 初始化
+    document.getElementById('date').valueAsDate = new Date();
+    let currentStage = "";
+    updateUI();
+
+    // 2. 財顧階段選擇 (自動連動量)
+    function selectStage(el, code, suggest, valMsg) {
+        document.querySelectorAll('.stage-card').forEach(c => c.classList.remove('active'));
+        el.classList.add('active');
+        currentStage = code;
+
+        // 顯示建議與行為意義
+        document.getElementById('suggestBox').style.display = 'block';
+        document.getElementById('suggestText').innerText = suggest;
+        document.getElementById('valueText').innerText = "✨ " + valMsg;
+
+        // 自動加活動量 (+1)
+        const map = {'C1':'call','C2':'apo','C3':'ff','C5':'pd','C6':'c_act','C7':'s_act'};
+        if(map[code]) {
+            const input = document.getElementById(map[code]);
+            input.value = parseInt(input.value) + 1;
+            input.style.backgroundColor = "#fff3cd";
+            setTimeout(()=> input.style.backgroundColor = "#fffdf8", 500);
+        }
+        calculateScore();
+    }
+
+    // 3. 計算分數
+    function calculateScore() {
+        const getV = (id) => parseInt(document.getElementById(id).value) || 0;
+        const score = (getV('call')*1) + (getV('apo')*5) + (getV('ff')*10) + (getV('pd')*15) + (getV('c_act')*30) + (getV('s_act')*5) + (getV('r_act')*20) + (getV('policy')*10);
+        document.getElementById('totalScore').innerText = score;
+        
+        const hero = document.getElementById('hero');
+        if(score >= 80) hero.className = "score-hero high";
+        else hero.className = "score-hero";
+        return score;
+    }
+
+    // 4. 送出與儲存
+    function submitData() {
+        const name = document.getElementById('name').value;
+        if(!name) return alert("請填寫姓名");
+
+        const data = {
+            date: document.getElementById('date').value,
+            name: name,
+            client: document.getElementById('clientName').value,
+            stage: currentStage,
+            score: calculateScore(),
+            // 抓取各項活動量
+            call: document.getElementById('call').value,
+            apo: document.getElementById('apo').value,
+            ff: document.getElementById('ff').value,
+            pd: document.getElementById('pd').value,
+            c_act: document.getElementById('c_act').value,
+            s_act: document.getElementById('s_act').value,
+            r_act: document.getElementById('r_act').value,
+            policy: document.getElementById('policy').value
+        };
+
+        // A. 送至 Google Form (請確認 entry ID 是否需要微調)
+        const GOOGLE_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe7khDG8Kz5MaxI9q6Vr4LO1O1i-jOQrGVogVxnQw8YanKOqQ/formResponse";
+        const f = new FormData();
+        f.append("entry.1690664133", data.date);
+        f.append("entry.1317826185", data.name);
+        f.append("entry.1886949465", data.client);
+        f.append("entry.1367187796", data.stage);
+        f.append("entry.1822444713", data.call);
+        f.append("entry.1491536107", data.apo);
+        f.append("entry.1485885569", data.ff);
+        f.append("entry.1813740552", data.pd);
+        f.append("entry.1759215822", data.c_act);
+        f.append("entry.80872650", data.s_act);
+        f.append("entry.1431252305", data.r_act);
+        f.append("entry.485676242", data.policy);
+
+        fetch(GOOGLE_URL, { method: "POST", mode: "no-cors", body: f });
+
+        // B. 存入 localStorage
+        let history = JSON.parse(localStorage.getItem('fuyun_data') || "[]");
+        history.unshift(data);
+        localStorage.setItem('fuyun_data', JSON.stringify(history));
+
+        alert("🎉 紀錄成功！資料已同步至雲端。");
+        resetToday();
+        updateUI();
+    }
+
+    function updateUI() {
+        const history = JSON.parse(localStorage.getItem('fuyun_data') || "[]");
+        const list = document.getElementById('historyList');
+        const thisMonth = new Date().toISOString().substring(0, 7);
+        
+        let mScore = 0, mFF = 0;
+        list.innerHTML = "";
+
+        history.forEach((h, i) => {
+            if(h.date.startsWith(thisMonth)) {
+                mScore += h.score;
+                mFF += parseInt(h.ff || 0);
+            }
+            if(i < 10) {
+                const item = document.createElement('div');
+                item.className = "history-item";
+                item.innerHTML = `<strong>${h.date}</strong> | ${h.client || '日活動'} | <span style="color:var(--gold)">${h.score}分</span><br><small>${h.stage || '一般回報'}</small>`;
+                list.appendChild(item);
+            }
+        });
+        document.getElementById('mScore').innerText = mScore;
+        document.getElementById('mFF').innerText = mFF;
+    }
+
+    function resetToday() {
+        document.getElementById('clientName').value = "";
+        document.getElementById('stageContainer').querySelectorAll('.stage-card').forEach(c => c.classList.remove('active'));
+        document.getElementById('suggestBox').style.display = 'none';
+        ['call','apo','ff','pd','c_act','s_act','r_act','policy'].forEach(id => document.getElementById(id).value = 0);
+        calculateScore();
+    }
+</script>
+
+</body>
+</html>
