@@ -1,6 +1,5 @@
-from pathlib import Path
 
-html = r'''<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8" />
@@ -19,6 +18,7 @@ html = r'''<!DOCTYPE html>
   --muted:#776f63;
   --gray:#a8a8a8;
   --line:#e4ddcf;
+  --red:#b94a48;
   --shadow:0 10px 30px rgba(31,91,67,.10);
 }
 
@@ -277,11 +277,13 @@ button{
 }
 
 button:hover{transform:translateY(-1px)}
+button:disabled{opacity:.55;cursor:not-allowed;transform:none}
 
 .btn-main{background:var(--green);color:white}
 .btn-gold{background:var(--gold);color:white}
 .btn-soft{background:#efe5cf;color:#5a4b24}
 .btn-gray{background:#888;color:white}
+.btn-red{background:#f3dddd;color:var(--red)}
 
 .history-item{
   border-bottom:1px solid var(--line);
@@ -313,16 +315,6 @@ button:hover{transform:translateY(-1px)}
   line-height:1.7;
 }
 
-.badge{
-  display:inline-flex;
-  padding:3px 9px;
-  border-radius:999px;
-  background:#f0e3c0;
-  color:#7a5f13;
-  font-size:12px;
-  font-weight:900;
-}
-
 .flash{
   animation:flash .55s ease;
 }
@@ -331,6 +323,91 @@ button:hover{transform:translateY(-1px)}
   0%{background:#f2d9a0}
   100%{background:#fffdf8}
 }
+
+/* 每日 / 週 / 月分數檢視 */
+.month-toolbar{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:12px;
+  align-items:end;
+  margin-bottom:12px;
+}
+
+.month-summary{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:10px;
+  margin:12px 0;
+}
+
+.summary-box{
+  background:#faf4e8;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:14px;
+  text-align:center;
+}
+
+.summary-box span{
+  display:block;
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+}
+
+.summary-box b{
+  display:block;
+  color:var(--green);
+  font-size:24px;
+  margin-top:4px;
+}
+
+.week-block{
+  background:#faf4e8;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:14px;
+  margin-top:14px;
+}
+
+.week-title{
+  font-weight:900;
+  color:var(--green);
+  margin-bottom:10px;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.day-score-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(118px,1fr));
+  gap:10px;
+}
+
+.day-score-card{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:12px;
+  text-align:center;
+}
+
+.day-score-card b{
+  display:block;
+  font-size:25px;
+  margin:4px 0;
+}
+
+.day-score-card small{
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.day-gray b{color:#9b9b9b}
+.day-green b{color:var(--green2)}
+.day-gold b{color:var(--gold)}
 
 .footer{
   text-align:center;
@@ -350,404 +427,621 @@ button:hover{transform:translateY(-1px)}
 <body>
 <div class="wrap">
 
-  <section class="hero">
-    <small>FUYUN WEALTH ACADEMY</small>
-    <h1>活動量管理成長系統</h1>
-    <p>每日三訪是必然｜財顧流程 × 保經活動量 × 專業成長紀錄</p>
-  </section>
+<section class="hero">
+  <small>FUYUN WEALTH ACADEMY</small>
+  <h1>活動量管理成長系統</h1>
+  <p>每日三訪是必然｜財顧流程 × 保經活動量 × 專業成長紀錄</p>
+</section>
 
-  <section class="two">
+<section class="two">
+<div>
+
+<div class="card">
+  <h2>基本資料</h2>
+  <div class="grid">
     <div>
-      <div class="card">
-        <h2>基本資料</h2>
-        <div class="grid">
-          <div>
-            <label class="label">日期</label>
-            <input type="date" id="date">
-          </div>
-          <div>
-            <label class="label">姓名</label>
-            <input type="text" id="name" placeholder="請輸入姓名">
-          </div>
-          <div>
-            <label class="label">客戶 / 案件名稱</label>
-            <input type="text" id="clientName" placeholder="可空白，不列公開排名">
-          </div>
-          <div>
-            <label class="label">下一步行動</label>
-            <input type="text" id="nextAction" placeholder="例：下週約 C3 / 補資料">
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>財顧階段｜點擊即自動換算活動量</h2>
-        <p class="small">此區會連動下方保經活動量。點錯可直接手動修正數字。</p>
-
-        <div class="stage-grid">
-          <div class="stage-card" onclick="selectStage(this,'C1','下一步：從關係建立開始，先讓客戶知道你是誰、能幫他整理什麼。')">
-            <span class="stage-code">C1</span><span class="stage-title">建立關係</span>
-          </div>
-          <div class="stage-card" onclick="selectStage(this,'C2','下一步：完成約訪，讓客戶願意坐下來談真正的財務現況。')">
-            <span class="stage-code">C2</span><span class="stage-title">約訪</span>
-          </div>
-          <div class="stage-card" onclick="selectStage(this,'C3','下一步：完成需求訪談與 CN 盤點，抓出真正的財務缺口。')">
-            <span class="stage-code">C3</span><span class="stage-title">需求訪談</span>
-          </div>
-          <div class="stage-card" onclick="selectStage(this,'C4','下一步：整理資訊、確認目標，準備進入建議書設計。')">
-            <span class="stage-code">C4</span><span class="stage-title">資料整理</span>
-          </div>
-          <div class="stage-card" onclick="selectStage(this,'C5','下一步：提交建議書，讓客戶看懂方案背後的邏輯。')">
-            <span class="stage-code">C5</span><span class="stage-title">建議書</span>
-          </div>
-          <div class="stage-card" onclick="selectStage(this,'C6','下一步：完成成交或委託，進入真正的責任關係。')">
-            <span class="stage-code">C6</span><span class="stage-title">成交委託</span>
-          </div>
-          <div class="stage-card" onclick="selectStage(this,'C7','下一步：服務、追蹤、轉介紹，讓價值繼續延伸。')">
-            <span class="stage-code">C7</span><span class="stage-title">服務延伸</span>
-          </div>
-        </div>
-
-        <div id="nextBox" class="next-box">
-          <div id="nextText"></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>保經活動量數據</h2>
-        <div class="grid">
-          <div><label class="label">CALL 建立關係</label><input type="number" id="call" value="0"></div>
-          <div><label class="label">APO 約訪</label><input type="number" id="apo" value="0"></div>
-          <div><label class="label">FF 面談</label><input type="number" id="ff" value="0"></div>
-          <div><label class="label">PD 建議書</label><input type="number" id="pd" value="0"></div>
-          <div><label class="label">C 成交</label><input type="number" id="c_act" value="0"></div>
-          <div><label class="label">S 服務</label><input type="number" id="s_act" value="0"></div>
-          <div><label class="label">R 轉介紹 / 增員</label><input type="number" id="r_act" value="0"></div>
-          <div><label class="label">POLICY 送保單</label><input type="number" id="policy" value="0"></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>產值與備註</h2>
-        <div class="grid">
-          <div><label class="label">本日成交件數</label><input type="number" id="caseNum" value="0"></div>
-          <div><label class="label">本日成交 FYP</label><input type="number" id="fyp" value="0"></div>
-          <div><label class="label">本日成交 FYC</label><input type="number" id="fyc" value="0"></div>
-          <div><label class="label">推薦介紹數</label><input type="number" id="referral" value="0"></div>
-        </div>
-        <label class="label">今日重點 / 特殊案件 / 客戶狀況</label>
-        <textarea id="note" placeholder="例：今天完成 C3 需求訪談，客戶開始願意談退休現金流。"></textarea>
-      </div>
-
-      <div class="card">
-        <div class="btn-row">
-          <button class="btn-main" id="submitBtn" onclick="submitData()">☁️ 儲存並同步 Google</button>
-          <button class="btn-gold" onclick="exportToCSV()">匯出 CSV</button>
-          <button class="btn-soft" onclick="resetForm()">重新填寫</button>
-          <button class="btn-gray" onclick="clearLocalStorage()">清除本機紀錄</button>
-        </div>
-        <p class="small">提醒：Google 表單採靜默送出，不會跳頁；本機紀錄只存在目前裝置，Google Sheet 才是雲端資料庫。</p>
-      </div>
+      <label class="label">日期</label>
+      <input type="date" id="date">
     </div>
-
-    <aside>
-      <div id="scoreBox" class="score-box">
-        <span class="phase" id="phaseLabel">醞釀期</span>
-        <div class="score-num" id="scoreValue">0</div>
-        <div id="phaseText">今天你在播種，這些分數正在為未來的爆發做準備。</div>
-        <div class="insight" id="qualityText">尚未選擇財顧階段。完成一個關鍵訪談，也是一種高品質行動。</div>
-      </div>
-
-      <div class="card">
-        <h2>統計儀表板</h2>
-        <div class="stat-grid">
-          <div class="stat"><span>今日總分</span><b id="statTodayScore">0</b></div>
-          <div class="stat"><span>本月總分</span><b id="statMonthScore">0</b></div>
-          <div class="stat"><span>本月成交件數</span><b id="statMonthCase">0</b></div>
-          <div class="stat"><span>本月 FYP</span><b id="statMonthFYP">0</b></div>
-          <div class="stat"><span>本月 FYC</span><b id="statMonthFYC">0</b></div>
-          <div class="stat"><span>活動量 C/A/F/P/C/S/R/P</span><b id="statMonthTotalList" style="font-size:18px">0/0/0/0/0/0/0/0</b></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>最近 10 筆紀錄</h2>
-        <div id="historyList"></div>
-      </div>
-    </aside>
-  </section>
-
-  <div class="footer">
-    馥芸財富學苑｜活動量不是評分表，而是專業成長紀錄。
+    <div>
+      <label class="label">姓名</label>
+      <input type="text" id="name" placeholder="請輸入姓名">
+    </div>
+    <div>
+      <label class="label">客戶 / 案件名稱</label>
+      <input type="text" id="clientName" placeholder="可空白，不列公開排名">
+    </div>
+    <div>
+      <label class="label">下一步行動</label>
+      <input type="text" id="nextAction" placeholder="例：下週約 C3 / 補資料">
+    </div>
   </div>
+</div>
+
+<div class="card">
+  <h2>財顧階段｜點擊即自動換算活動量</h2>
+  <p class="small">此區會連動下方保經活動量。點錯可直接手動修正數字。</p>
+
+  <div class="stage-grid">
+    <div class="stage-card" onclick="selectStage(this,'C1','下一步：從關係建立開始，先讓客戶知道你是誰、能幫他整理什麼。')">
+      <span class="stage-code">C1</span><span class="stage-title">建立關係</span>
+    </div>
+    <div class="stage-card" onclick="selectStage(this,'C2','下一步：完成約訪，讓客戶願意坐下來談真正的財務現況。')">
+      <span class="stage-code">C2</span><span class="stage-title">約訪</span>
+    </div>
+    <div class="stage-card" onclick="selectStage(this,'C3','下一步：完成需求訪談與 CN 盤點，抓出真正的財務缺口。')">
+      <span class="stage-code">C3</span><span class="stage-title">需求訪談</span>
+    </div>
+    <div class="stage-card" onclick="selectStage(this,'C4','下一步：整理資訊、確認目標，準備進入建議書設計。')">
+      <span class="stage-code">C4</span><span class="stage-title">資料整理</span>
+    </div>
+    <div class="stage-card" onclick="selectStage(this,'C5','下一步：提交建議書，讓客戶看懂方案背後的邏輯。')">
+      <span class="stage-code">C5</span><span class="stage-title">建議書</span>
+    </div>
+    <div class="stage-card" onclick="selectStage(this,'C6','下一步：完成成交或委託，進入真正的責任關係。')">
+      <span class="stage-code">C6</span><span class="stage-title">成交委託</span>
+    </div>
+    <div class="stage-card" onclick="selectStage(this,'C7','下一步：服務、追蹤、轉介紹，讓價值繼續延伸。')">
+      <span class="stage-code">C7</span><span class="stage-title">服務延伸</span>
+    </div>
+  </div>
+
+  <div id="nextBox" class="next-box">
+    <div id="nextText"></div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>保經活動量數據</h2>
+  <div class="grid">
+    <div><label class="label">CALL 建立關係</label><input type="number" id="call" value="0" min="0"></div>
+    <div><label class="label">APO 約訪</label><input type="number" id="apo" value="0" min="0"></div>
+    <div><label class="label">FF 面談</label><input type="number" id="ff" value="0" min="0"></div>
+    <div><label class="label">PD 建議書</label><input type="number" id="pd" value="0" min="0"></div>
+    <div><label class="label">C 成交</label><input type="number" id="c_act" value="0" min="0"></div>
+    <div><label class="label">S 服務</label><input type="number" id="s_act" value="0" min="0"></div>
+    <div><label class="label">R 轉介紹 / 增員</label><input type="number" id="r_act" value="0" min="0"></div>
+    <div><label class="label">POLICY 送保單</label><input type="number" id="policy" value="0" min="0"></div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>產值與備註</h2>
+  <div class="grid">
+    <div><label class="label">本日成交件數</label><input type="number" id="caseNum" value="0" min="0"></div>
+    <div><label class="label">本日成交 FYP</label><input type="number" id="fyp" value="0" min="0"></div>
+    <div><label class="label">本日成交 FYC</label><input type="number" id="fyc" value="0" min="0"></div>
+    <div><label class="label">推薦介紹數</label><input type="number" id="referral" value="0" min="0"></div>
+  </div>
+  <label class="label">今日重點 / 特殊案件 / 客戶狀況</label>
+  <textarea id="note" placeholder="例：今天完成 C3 需求訪談，客戶開始願意談退休現金流。"></textarea>
+</div>
+
+<div class="card">
+  <div class="btn-row">
+    <button class="btn-main" id="submitBtn" onclick="submitData()">☁️ 儲存並同步 Google</button>
+    <button class="btn-gold" onclick="exportToCSV()">匯出 CSV</button>
+    <button class="btn-soft" onclick="resetForm()">重新填寫</button>
+    <button class="btn-gray" onclick="clearLocalStorage()">清除本機紀錄</button>
+  </div>
+  <p class="small">提醒：Google 表單採靜默送出，不會跳頁；本機紀錄只存在目前裝置，Google Sheet 才是雲端資料庫。</p>
+</div>
+
+</div>
+
+<aside>
+  <div id="scoreBox" class="score-box">
+    <span class="phase" id="phaseLabel">醞釀期</span>
+    <div class="score-num" id="scoreValue">0</div>
+    <div id="phaseText">今天你在播種，這些分數正在為未來的爆發做準備。</div>
+    <div class="insight" id="qualityText">尚未選擇財顧階段。完成一個關鍵訪談，也是一種高品質行動。</div>
+  </div>
+
+  <div class="card">
+    <h2>統計儀表板</h2>
+    <div class="stat-grid">
+      <div class="stat"><span>今日總分</span><b id="statTodayScore">0</b></div>
+      <div class="stat"><span>本月總分</span><b id="statMonthScore">0</b></div>
+      <div class="stat"><span>本月成交件數</span><b id="statMonthCase">0</b></div>
+      <div class="stat"><span>本月 FYP</span><b id="statMonthFYP">0</b></div>
+      <div class="stat"><span>本月 FYC</span><b id="statMonthFYC">0</b></div>
+      <div class="stat"><span>活動量 C/A/F/P/C/S/R/P</span><b id="statMonthTotalList" style="font-size:18px">0/0/0/0/0/0/0/0</b></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>最近 10 筆紀錄</h2>
+    <div id="historyList"></div>
+  </div>
+</aside>
+</section>
+
+<section class="card">
+  <h2>每日分數彙整｜週 / 月檢視</h2>
+  <p class="small">以月份為單位，檢視每天分數、每週合計與整月行動節奏。</p>
+
+  <div class="month-toolbar">
+    <div>
+      <label class="label">選擇月份</label>
+      <input type="month" id="monthPicker" onchange="renderMonthlyScore()">
+    </div>
+  </div>
+
+  <div class="month-summary">
+    <div class="summary-box"><span>本月總分</span><b id="monthTotalScore">0</b></div>
+    <div class="summary-box"><span>有紀錄天數</span><b id="monthActiveDays">0</b></div>
+    <div class="summary-box"><span>平均日分數</span><b id="monthAvgScore">0</b></div>
+    <div class="summary-box"><span>最高日分數</span><b id="monthBestScore">0</b></div>
+  </div>
+
+  <div id="monthlyScoreList"></div>
+</section>
+
+<section class="card">
+  <h2>全部歷史紀錄</h2>
+  <p class="small">完整保留本機歷史資料，方便回顧每日行動、客戶進度與產值。</p>
+  <div id="fullHistoryList"></div>
+</section>
+
+<div class="footer">
+  馥芸財富學苑｜活動量不是評分表，而是專業成長紀錄。
+</div>
 
 </div>
 
 <script>
-    // --- 1. 初始化設定 ---
-    document.getElementById('date').valueAsDate = new Date();
-    let currentStage = "";
-    let isSubmitting = false;
+document.getElementById('date').valueAsDate = new Date();
+let currentStage = "";
+let isSubmitting = false;
 
-    // 行為價值的心理建設語句
-    const behaviorInsights = {
-        'C1': "這是一切的開始，好的關係是專業的基石。",
-        'C2': "成功約訪代表客戶感受到了你的專業與誠信。",
-        'C3': "你在傾聽客戶的靈魂，填寫 CN 表是在梳理他的人生。",
-        'C4': "整理資料是為了給客戶最負責任的解決方案。",
-        'C5': "邏輯的傳遞比產品重要，你正在為客戶建立安全感。",
-        'C6': "這是一份委託與責任的開始，恭喜你贏得信任。",
-        'C7': "服務是價值的延續，更是下一段關係的開端。"
-    };
+const behaviorInsights = {
+  'C1': "這是一切的開始，好的關係是專業的基石。",
+  'C2': "成功約訪代表客戶感受到了你的專業與誠信。",
+  'C3': "你在傾聽客戶的靈魂，填寫 CN 表是在梳理他的人生。",
+  'C4': "整理資料是為了給客戶最負責任的解決方案。",
+  'C5': "邏輯的傳遞比產品重要，你正在為客戶建立安全感。",
+  'C6': "這是一份委託與責任的開始，恭喜你贏得信任。",
+  'C7': "服務是價值的延續，更是下一段關係的開端。"
+};
 
-    // 頁面載入時自動更新 UI
-    window.onload = function() {
-        calculateScore();
-        updateUI();
-    };
+window.onload = function(){
+  document.getElementById('monthPicker').value = new Date().toISOString().slice(0,7);
+  calculateScore();
+  updateUI();
+};
 
-    // --- 2. 核心功能：財顧階段選擇 (連動保經活動量) ---
-    function selectStage(element, stageCode, suggestion) {
-        document.querySelectorAll('.stage-card').forEach(card => card.classList.remove('active'));
-        element.classList.add('active');
-        currentStage = stageCode;
+function getNum(id){
+  const el = document.getElementById(id);
+  return el ? (parseInt(el.value) || 0) : 0;
+}
 
-        const nextBox = document.getElementById('nextBox');
-        const nextText = document.getElementById('nextText');
-        if (nextBox) {
-            nextBox.style.display = 'block';
-            nextText.innerHTML = `<strong>${suggestion}</strong><br><small style="opacity:0.8; font-style:italic;">✨ 專業價值：${behaviorInsights[stageCode]}</small>`;
-        }
+function selectStage(element, stageCode, suggestion){
+  document.querySelectorAll('.stage-card').forEach(card => card.classList.remove('active'));
+  element.classList.add('active');
+  currentStage = stageCode;
 
-        const mapping = {
-            'C1': 'call',
-            'C2': 'apo',
-            'C3': 'ff',
-            'C4': 'pd',
-            'C5': 'pd',
-            'C6': 'c_act',
-            'C7': 's_act'
-        };
+  const nextBox = document.getElementById('nextBox');
+  const nextText = document.getElementById('nextText');
+  if(nextBox){
+    nextBox.style.display = 'block';
+    nextText.innerHTML = `<strong>${suggestion}</strong><br><small style="opacity:0.8; font-style:italic;">✨ 專業價值：${behaviorInsights[stageCode]}</small>`;
+  }
 
-        const targetId = mapping[stageCode];
-        if (targetId) {
-            const inputEl = document.getElementById(targetId);
-            if (inputEl) {
-                inputEl.value = parseInt(inputEl.value || 0) + 1;
-                calculateScore();
-                inputEl.classList.add("flash");
-                setTimeout(() => inputEl.classList.remove("flash"), 600);
-            }
-        }
+  const mapping = {
+    'C1':'call',
+    'C2':'apo',
+    'C3':'ff',
+    'C4':'pd',
+    'C5':'pd',
+    'C6':'c_act',
+    'C7':'s_act'
+  };
+
+  const targetId = mapping[stageCode];
+  if(targetId){
+    const inputEl = document.getElementById(targetId);
+    if(inputEl){
+      inputEl.value = parseInt(inputEl.value || 0) + 1;
+      calculateScore();
+      inputEl.classList.add("flash");
+      setTimeout(() => inputEl.classList.remove("flash"), 600);
+    }
+  }
+}
+
+function calculateScore(){
+  const score =
+    (getNum('call') * 1) +
+    (getNum('apo') * 5) +
+    (getNum('ff') * 10) +
+    (getNum('pd') * 15) +
+    (getNum('c_act') * 30) +
+    (getNum('s_act') * 5) +
+    (getNum('r_act') * 20) +
+    (getNum('policy') * 10);
+
+  document.getElementById('scoreValue').innerText = score;
+
+  const scoreBox = document.getElementById('scoreBox');
+  const phaseLabel = document.getElementById('phaseLabel');
+  const phaseText = document.getElementById('phaseText');
+  const qualityText = document.getElementById('qualityText');
+
+  scoreBox.className = "score-box";
+
+  if(score >= 80){
+    scoreBox.classList.add("gold");
+    phaseLabel.innerText = "豐收期";
+    phaseText.innerText = "你正處於高動能狀態，今天的行動很可能帶來實質成果。";
+  }else if(score >= 30){
+    scoreBox.classList.add("green");
+    phaseLabel.innerText = "行動期";
+    phaseText.innerText = "你正在穩健前進，持續累積就會看見轉換。";
+  }else{
+    phaseLabel.innerText = "醞釀期";
+    phaseText.innerText = "今天你在播種，這些分數正在為未來的爆發做準備。";
+  }
+
+  qualityText.innerText =
+    currentStage && behaviorInsights[currentStage]
+      ? behaviorInsights[currentStage]
+      : "尚未選擇財顧階段。完成一個關鍵訪談，也是一種高品質行動。";
+
+  return score;
+}
+
+document.querySelectorAll('input, textarea').forEach(el => {
+  el.addEventListener('input', calculateScore);
+});
+
+async function submitData(){
+  if(isSubmitting) return;
+
+  const name = document.getElementById('name').value.trim();
+  if(!name){
+    alert("請填寫您的姓名以利記錄");
+    return;
+  }
+
+  isSubmitting = true;
+  const submitBtn = document.getElementById("submitBtn");
+  submitBtn.innerText = "送出中...";
+  submitBtn.disabled = true;
+
+  const score = calculateScore();
+
+  const entry = {
+    id: Date.now(),
+    date: document.getElementById('date').value,
+    name: name,
+    clientName: document.getElementById('clientName').value,
+    stage: currentStage,
+    call: getNum('call'),
+    apo: getNum('apo'),
+    ff: getNum('ff'),
+    pd: getNum('pd'),
+    c_act: getNum('c_act'),
+    s_act: getNum('s_act'),
+    r_act: getNum('r_act'),
+    policy: getNum('policy'),
+    caseNum: getNum('caseNum'),
+    referral: getNum('referral'),
+    fyc: getNum('fyc'),
+    fyp: getNum('fyp'),
+    note: document.getElementById('note').value,
+    nextAction: document.getElementById('nextAction').value,
+    score: score
+  };
+
+  const GOOGLE_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe7khDG8Kz5MaxI9q6Vr4LO1O1i-jOQrGVogVxnQw8YanKOqQ/formResponse";
+  const f = new FormData();
+
+  f.append("entry.1690664133", entry.date);
+  f.append("entry.1317826185", entry.name);
+  f.append("entry.1886949465", entry.clientName);
+  f.append("entry.1367187796", entry.stage);
+  f.append("entry.1822444713", entry.call);
+  f.append("entry.1491536107", entry.apo);
+  f.append("entry.1485885569", entry.ff);
+  f.append("entry.1813740552", entry.pd);
+  f.append("entry.1759215822", entry.c_act);
+  f.append("entry.80872650", entry.s_act);
+  f.append("entry.1431252305", entry.r_act);
+  f.append("entry.485676242", entry.policy);
+  f.append("entry.1322180337", entry.caseNum);
+  f.append("entry.1895807166", entry.fyc);
+  f.append("entry.1165378879", entry.note);
+
+  try{
+    await fetch(GOOGLE_URL, { method:"POST", mode:"no-cors", body:f });
+
+    let history = JSON.parse(localStorage.getItem('fuyun_data') || "[]");
+    history.unshift(entry);
+    localStorage.setItem('fuyun_data', JSON.stringify(history));
+
+    alert("🎉 紀錄已儲存！已同步 Google 表單，並更新本機儀表板。");
+    resetForm();
+    updateUI();
+
+  }catch(e){
+    alert("本機已可使用，但 Google 同步可能失敗。請確認網路或表單網址。");
+  }finally{
+    isSubmitting = false;
+    submitBtn.innerText = "☁️ 儲存並同步 Google";
+    submitBtn.disabled = false;
+  }
+}
+
+function updateUI(){
+  const history = JSON.parse(localStorage.getItem('fuyun_data') || "[]");
+  const today = new Date().toISOString().split('T')[0];
+  const thisMonth = today.substring(0,7);
+
+  let tScore = 0, mScore = 0, mCase = 0, mFYC = 0, mFYP = 0;
+  let act = { c:0, a:0, f:0, p:0, ca:0, s:0, r:0, po:0 };
+
+  const historyList = document.getElementById('historyList');
+  if(historyList) historyList.innerHTML = "";
+
+  history.forEach((item,index) => {
+    if(item.date === today) tScore += Number(item.score || 0);
+
+    if((item.date || "").startsWith(thisMonth)){
+      mScore += Number(item.score || 0);
+      mCase += Number(item.caseNum || 0);
+      mFYC += Number(item.fyc || 0);
+      mFYP += Number(item.fyp || 0);
+
+      act.c += Number(item.call || 0);
+      act.a += Number(item.apo || 0);
+      act.f += Number(item.ff || 0);
+      act.p += Number(item.pd || 0);
+      act.ca += Number(item.c_act || 0);
+      act.s += Number(item.s_act || 0);
+      act.r += Number(item.r_act || 0);
+      act.po += Number(item.policy || 0);
     }
 
-    // --- 3. 核心功能：計算分數與動態視覺 ---
-    function calculateScore() {
-        const getV = (id) => parseInt(document.getElementById(id).value) || 0;
+    if(historyList && index < 10){
+      const div = document.createElement('div');
+      div.className = "history-item";
+      div.innerHTML = `
+        <div class="history-top">
+          <div>
+            <div class="history-date">${item.date}｜${item.clientName || '日活動'}</div>
+            <strong>${item.stage || '一般行動'}</strong>
+          </div>
+          <div class="history-score">+${item.score || 0} 分</div>
+        </div>
+        <div class="small">FF ${item.ff || 0}｜成交 ${item.caseNum || 0}｜FYP ${Number(item.fyp || 0).toLocaleString()}｜下一步：${item.nextAction || '未填'}</div>
+      `;
+      historyList.appendChild(div);
+    }
+  });
 
-        const score = (getV('call') * 1) +
-                      (getV('apo') * 5) +
-                      (getV('ff') * 10) +
-                      (getV('pd') * 15) +
-                      (getV('c_act') * 30) +
-                      (getV('s_act') * 5) +
-                      (getV('r_act') * 20) +
-                      (getV('policy') * 10);
+  setText('statTodayScore', tScore);
+  setText('statMonthScore', mScore);
+  setText('statMonthCase', mCase);
+  setText('statMonthFYC', mFYC.toLocaleString());
+  setText('statMonthFYP', mFYP.toLocaleString());
+  setText('statMonthTotalList', `${act.c}/${act.a}/${act.f}/${act.p}/${act.ca}/${act.s}/${act.r}/${act.po}`);
 
-        document.getElementById('scoreValue').innerText = score;
+  renderFullHistory();
+  renderMonthlyScore();
+}
 
-        const scoreBox = document.getElementById('scoreBox');
-        const phaseLabel = document.getElementById('phaseLabel');
-        const phaseText = document.getElementById('phaseText');
-        const qualityText = document.getElementById('qualityText');
+function setText(id,val){
+  const el = document.getElementById(id);
+  if(el) el.innerText = val;
+}
 
-        scoreBox.className = "score-box";
+function resetForm(){
+  document.querySelectorAll('.stage-card').forEach(card => card.classList.remove('active'));
+  currentStage = "";
 
-        if (score >= 80) {
-            scoreBox.classList.add("gold");
-            phaseLabel.innerText = "豐收期";
-            phaseText.innerText = "你正處於高動能狀態，今天的行動很可能帶來實質成果。";
-        } else if (score >= 30) {
-            scoreBox.classList.add("green");
-            phaseLabel.innerText = "行動期";
-            phaseText.innerText = "你正在穩健前進，持續累積就會看見轉換。";
-        } else {
-            phaseLabel.innerText = "醞釀期";
-            phaseText.innerText = "今天你在播種，這些分數正在為未來的爆發做準備。";
-        }
+  ['clientName','note','nextAction'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.value = "";
+  });
 
-        if (currentStage && behaviorInsights[currentStage]) {
-            qualityText.innerText = behaviorInsights[currentStage];
-        } else {
-            qualityText.innerText = "尚未選擇財顧階段。完成一個關鍵訪談，也是一種高品質行動。";
-        }
+  ['call','apo','ff','pd','c_act','s_act','r_act','policy','caseNum','fyc','fyp','referral'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.value = 0;
+  });
 
-        return score;
+  const nextBox = document.getElementById('nextBox');
+  if(nextBox) nextBox.style.display = 'none';
+
+  calculateScore();
+}
+
+function exportToCSV(){
+  const history = JSON.parse(localStorage.getItem('fuyun_data') || "[]");
+  if(history.length === 0) return alert("尚無紀錄可匯出");
+
+  let csv = "\uFEFF日期,姓名,客戶,階段,CALL,APO,FF,PD,C成交,S服務,R轉介,POLICY送保單,成交件數,FYP,FYC,得分,下一步,備註\n";
+
+  history.forEach(r => {
+    csv += `${r.date},${r.name},${r.clientName},${r.stage},${r.call},${r.apo},${r.ff},${r.pd},${r.c_act},${r.s_act},${r.r_act},${r.policy},${r.caseNum},${r.fyp},${r.fyc},${r.score},${r.nextAction},${String(r.note || "").replaceAll(",","，")}\n`;
+  });
+
+  const blob = new Blob([csv], { type:'text/csv;charset=utf-8;' });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `馥芸財富學苑_活動量匯出_${new Date().toISOString().slice(0,10)}.csv`;
+  link.click();
+}
+
+function clearLocalStorage(){
+  if(confirm("⚠️ 確定要清除本機上的所有歷史紀錄嗎？（不影響已上傳至 Google 的資料）")){
+    localStorage.removeItem('fuyun_data');
+    updateUI();
+  }
+}
+
+function renderFullHistory(){
+  const history = JSON.parse(localStorage.getItem('fuyun_data') || "[]");
+  const container = document.getElementById('fullHistoryList');
+
+  if(!container) return;
+  container.innerHTML = "";
+
+  if(history.length === 0){
+    container.innerHTML = `<p class="small">目前尚無歷史紀錄。</p>`;
+    return;
+  }
+
+  history.forEach(item => {
+    const div = document.createElement('div');
+    div.className = "history-item";
+
+    div.innerHTML = `
+      <div class="history-top">
+        <div>
+          <div class="history-date">${item.date}｜${item.name || ''}｜${item.clientName || '日活動'}</div>
+          <strong>${item.stage || '一般行動'}</strong>
+        </div>
+        <div class="history-score">+${item.score || 0} 分</div>
+      </div>
+
+      <div class="small">
+        CALL ${item.call || 0}｜
+        APO ${item.apo || 0}｜
+        FF ${item.ff || 0}｜
+        PD ${item.pd || 0}｜
+        C ${item.c_act || 0}｜
+        S ${item.s_act || 0}｜
+        R ${item.r_act || 0}｜
+        POLICY ${item.policy || 0}
+      </div>
+
+      <div class="small">
+        成交 ${item.caseNum || 0}｜
+        FYP ${Number(item.fyp || 0).toLocaleString()}｜
+        FYC ${Number(item.fyc || 0).toLocaleString()}｜
+        下一步：${item.nextAction || '未填'}
+      </div>
+
+      <div class="small">
+        📝 ${item.note || '—'}
+      </div>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+function renderMonthlyScore(){
+  const history = JSON.parse(localStorage.getItem('fuyun_data') || "[]");
+  const picker = document.getElementById('monthPicker');
+  const container = document.getElementById('monthlyScoreList');
+
+  if(!container) return;
+
+  let selectedMonth = picker && picker.value ? picker.value : new Date().toISOString().slice(0,7);
+  if(picker && !picker.value) picker.value = selectedMonth;
+
+  const monthData = history.filter(item => (item.date || "").startsWith(selectedMonth));
+
+  let dailyMap = {};
+
+  monthData.forEach(item => {
+    if(!dailyMap[item.date]){
+      dailyMap[item.date] = {
+        score:0,
+        call:0,
+        apo:0,
+        ff:0,
+        pd:0,
+        c:0,
+        s:0,
+        r:0,
+        policy:0
+      };
     }
 
-    document.querySelectorAll('input, textarea').forEach(el => {
-        el.addEventListener('input', calculateScore);
+    dailyMap[item.date].score += Number(item.score || 0);
+    dailyMap[item.date].call += Number(item.call || 0);
+    dailyMap[item.date].apo += Number(item.apo || 0);
+    dailyMap[item.date].ff += Number(item.ff || 0);
+    dailyMap[item.date].pd += Number(item.pd || 0);
+    dailyMap[item.date].c += Number(item.c_act || 0);
+    dailyMap[item.date].s += Number(item.s_act || 0);
+    dailyMap[item.date].r += Number(item.r_act || 0);
+    dailyMap[item.date].policy += Number(item.policy || 0);
+  });
+
+  const dates = Object.keys(dailyMap).sort();
+  const monthTotal = dates.reduce((sum,date) => sum + dailyMap[date].score, 0);
+  const bestScore = dates.length ? Math.max(...dates.map(date => dailyMap[date].score)) : 0;
+  const avgScore = dates.length ? Math.round(monthTotal / dates.length) : 0;
+
+  setText('monthTotalScore', monthTotal);
+  setText('monthActiveDays', dates.length);
+  setText('monthAvgScore', avgScore);
+  setText('monthBestScore', bestScore);
+
+  let weeks = [];
+
+  dates.forEach(date => {
+    const d = new Date(date + "T00:00:00");
+    const weekIndex = Math.ceil(d.getDate() / 7) - 1;
+
+    if(!weeks[weekIndex]){
+      weeks[weekIndex] = [];
+    }
+
+    weeks[weekIndex].push({
+      date,
+      ...dailyMap[date]
     });
+  });
 
-    // --- 4. 核心功能：送出資料與本機紀錄 ---
-    async function submitData() {
-        if (isSubmitting) return;
-        const name = document.getElementById('name').value.trim();
-        if (!name) { alert("請填寫您的姓名以利記錄"); return; }
+  container.innerHTML = "";
 
-        isSubmitting = true;
-        const submitBtn = document.getElementById("submitBtn");
-        submitBtn.innerText = "送出中...";
-        submitBtn.disabled = true;
+  if(dates.length === 0){
+    container.innerHTML = `<p class="small">本月份尚無紀錄。</p>`;
+    return;
+  }
 
-        const score = calculateScore();
-        const entry = {
-            id: Date.now(),
-            date: document.getElementById('date').value,
-            name: name,
-            clientName: document.getElementById('clientName').value,
-            stage: currentStage,
-            call: parseInt(document.getElementById('call').value) || 0,
-            apo: parseInt(document.getElementById('apo').value) || 0,
-            ff: parseInt(document.getElementById('ff').value) || 0,
-            pd: parseInt(document.getElementById('pd').value) || 0,
-            c_act: parseInt(document.getElementById('c_act').value) || 0,
-            s_act: parseInt(document.getElementById('s_act').value) || 0,
-            r_act: parseInt(document.getElementById('r_act').value) || 0,
-            policy: parseInt(document.getElementById('policy').value) || 0,
-            caseNum: parseInt(document.getElementById('caseNum').value) || 0,
-            referral: parseInt(document.getElementById('referral').value) || 0,
-            fyc: parseInt(document.getElementById('fyc').value) || 0,
-            fyp: parseInt(document.getElementById('fyp').value) || 0,
-            note: document.getElementById('note').value,
-            nextAction: document.getElementById('nextAction').value,
-            score: score
-        };
+  weeks.forEach((week,index) => {
+    if(!week || week.length === 0) return;
 
-        const GOOGLE_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe7khDG8Kz5MaxI9q6Vr4LO1O1i-jOQrGVogVxnQw8YanKOqQ/formResponse";
-        const f = new FormData();
-        f.append("entry.1690664133", entry.date);
-        f.append("entry.1317826185", entry.name);
-        f.append("entry.1886949465", entry.clientName);
-        f.append("entry.1367187796", entry.stage);
-        f.append("entry.1822444713", entry.call);
-        f.append("entry.1491536107", entry.apo);
-        f.append("entry.1485885569", entry.ff);
-        f.append("entry.1813740552", entry.pd);
-        f.append("entry.1759215822", entry.c_act);
-        f.append("entry.80872650", entry.s_act);
-        f.append("entry.1431252305", entry.r_act);
-        f.append("entry.485676242", entry.policy);
-        f.append("entry.1322180337", entry.caseNum);
-        f.append("entry.1895807166", entry.fyc);
-        f.append("entry.1165378879", entry.note);
+    const weekTotal = week.reduce((sum,day) => sum + day.score, 0);
 
-        try{
-            await fetch(GOOGLE_URL, { method: "POST", mode: "no-cors", body: f });
+    const block = document.createElement("div");
+    block.className = "week-block";
 
-            let history = JSON.parse(localStorage.getItem('fuyun_data') || "[]");
-            history.unshift(entry);
-            localStorage.setItem('fuyun_data', JSON.stringify(history));
+    block.innerHTML = `
+      <div class="week-title">
+        <span>第 ${index + 1} 週</span>
+        <span>週合計 ${weekTotal} 分</span>
+      </div>
 
-            alert("🎉 紀錄已儲存！已同步 Google 表單，並更新本機儀表板。");
-            resetForm();
-            updateUI();
-        }catch(e){
-            alert("本機已可使用，但 Google 同步可能失敗。請確認網路或表單網址。");
-        }finally{
-            isSubmitting = false;
-            submitBtn.innerText = "☁️ 儲存並同步 Google";
-            submitBtn.disabled = false;
-        }
-    }
+      <div class="day-score-grid">
+        ${week.map(day => {
+          let cls = "day-gray";
+          if(day.score >= 80) cls = "day-gold";
+          else if(day.score >= 30) cls = "day-green";
 
-    // --- 5. 數據管理：更新統計儀表板與歷史列表 ---
-    function updateUI() {
-        const history = JSON.parse(localStorage.getItem('fuyun_data') || "[]");
-        const today = new Date().toISOString().split('T')[0];
-        const thisMonth = today.substring(0, 7);
+          return `
+            <div class="day-score-card ${cls}">
+              <small>${day.date}</small>
+              <b>${day.score}</b>
+              <small>
+                CALL ${day.call}｜APO ${day.apo}<br>
+                FF ${day.ff}｜C ${day.c}
+              </small>
+            </div>
+          `;
+        }).join("")}
+      </div>
+    `;
 
-        let tScore = 0, mScore = 0, mCase = 0, mFYC = 0, mFYP = 0;
-        let act = { c:0, a:0, f:0, p:0, ca:0, s:0, r:0, po:0 };
-
-        const historyList = document.getElementById('historyList');
-        if (historyList) historyList.innerHTML = "";
-
-        history.forEach((item, index) => {
-            if (item.date === today) tScore += item.score;
-            if ((item.date || "").startsWith(thisMonth)) {
-                mScore += item.score;
-                mCase += (item.caseNum || 0);
-                mFYC += (item.fyc || 0);
-                mFYP += (item.fyp || 0);
-                act.c += item.call; act.a += item.apo; act.f += item.ff; act.p += item.pd;
-                act.ca += item.c_act; act.s += item.s_act; act.r += item.r_act; act.po += item.policy;
-            }
-
-            if (historyList && index < 10) {
-                const div = document.createElement('div');
-                div.className = "history-item";
-                div.innerHTML = `
-                    <div class="history-top">
-                      <div>
-                        <div class="history-date">${item.date}｜${item.clientName || '日活動'}</div>
-                        <strong>${item.stage || '一般行動'}</strong>
-                      </div>
-                      <div class="history-score">+${item.score} 分</div>
-                    </div>
-                    <div class="small">FF ${item.ff || 0}｜成交 ${item.caseNum || 0}｜FYP ${Number(item.fyp || 0).toLocaleString()}｜下一步：${item.nextAction || '未填'}</div>
-                `;
-                historyList.appendChild(div);
-            }
-        });
-
-        const updateText = (id, val) => { if(document.getElementById(id)) document.getElementById(id).innerText = val; };
-        updateText('statTodayScore', tScore);
-        updateText('statMonthScore', mScore);
-        updateText('statMonthCase', mCase);
-        updateText('statMonthFYC', mFYC.toLocaleString());
-        updateText('statMonthFYP', mFYP.toLocaleString());
-        updateText('statMonthTotalList', `${act.c}/${act.a}/${act.f}/${act.p}/${act.ca}/${act.s}/${act.r}/${act.po}`);
-    }
-
-    // --- 6. 管理工具：清除與匯出 ---
-    function resetForm() {
-        document.querySelectorAll('.stage-card').forEach(card => card.classList.remove('active'));
-        currentStage = "";
-        ['clientName', 'note', 'nextAction'].forEach(id => { if(document.getElementById(id)) document.getElementById(id).value = ""; });
-        ['call', 'apo', 'ff', 'pd', 'c_act', 's_act', 'r_act', 'policy', 'caseNum', 'fyc', 'fyp', 'referral'].forEach(id => { if(document.getElementById(id)) document.getElementById(id).value = 0; });
-        if(document.getElementById('nextBox')) document.getElementById('nextBox').style.display = 'none';
-        calculateScore();
-    }
-
-    function exportToCSV() {
-        const history = JSON.parse(localStorage.getItem('fuyun_data') || "[]");
-        if (history.length === 0) return alert("尚無紀錄可匯出");
-
-        let csv = "\uFEFF日期,姓名,客戶,階段,CALL,APO,FF,PD,C成交,S服務,R轉介,POLICY送保單,成交件數,FYP,FYC,得分,下一步,備註\n";
-        history.forEach(r => {
-            csv += `${r.date},${r.name},${r.clientName},${r.stage},${r.call},${r.apo},${r.ff},${r.pd},${r.c_act},${r.s_act},${r.r_act},${r.policy},${r.caseNum},${r.fyp},${r.fyc},${r.score},${r.nextAction},${String(r.note || "").replaceAll(",", "，")}\n`;
-        });
-
-        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = `馥芸財富學苑_活動量匯出_${new Date().toISOString().slice(0,10)}.csv`;
-        link.click();
-    }
-
-    function clearLocalStorage() {
-        if (confirm("⚠️ 確定要清除本機上的所有歷史紀錄嗎？（不影響已上傳至 Google 的資料）")) {
-            localStorage.removeItem('fuyun_data');
-            updateUI();
-        }
-    }
+    container.appendChild(block);
+  });
+}
 </script>
 
 </body>
 </html>
-'''
-
-path = Path("/mnt/data/fuyun-activity-google-complete.html")
-path.write_text(html, encoding="utf-8")
-path.as_posix()
