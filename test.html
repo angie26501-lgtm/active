@@ -399,7 +399,67 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none}
   font-size:25px;
   margin:4px 0;
 }
+const actionAdvice = document.getElementById("actionAdvice");
 
+if(score < 30){
+  actionAdvice.innerHTML = `
+  🔍【當前策略】
+  👉 增加接觸量是關鍵
+
+  ✔ 建議：
+  - 補 3 個 CALL
+  - 或安排 1 個 APO
+  - 建立名單池
+
+  🎯 目標：
+  👉 讓流程「開始動」
+  `;
+}
+
+else if(score < 80){
+  actionAdvice.innerHTML = `
+  🔍【當前策略】
+  👉 推進流程，避免停留聊天
+
+  ✔ 建議：
+  - APO → FF
+  - 完成 1 次需求訪談
+  - 開始建立 PD
+
+  🎯 目標：
+  👉 進入「有機會成交」階段
+  `;
+}
+
+else if(score < 150){
+  actionAdvice.innerHTML = `
+  🔍【當前策略】
+  👉 成交前最後一哩
+
+  ✔ 建議：
+  - 追蹤 PD
+  - 安排 closing
+  - 解決客戶疑慮
+
+  🎯 目標：
+  👉 成交 or 明確決策
+  `;
+}
+
+else{
+  actionAdvice.innerHTML = `
+  🔍【當前策略】
+  👉 擴大成果
+
+  ✔ 建議：
+  - 要轉介紹
+  - 做服務追蹤
+  - 建立長期關係
+
+  🎯 目標：
+  👉 開下一輪名單
+  `;
+}
 .day-score-card small{
   color:var(--muted);
   line-height:1.6;
