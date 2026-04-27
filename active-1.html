@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>馥芸活動量系統</title>
+
+<style>
+body{font-family:sans-serif;background:#f5f3ef;margin:0;padding:20px;}
+.container{max-width:720px;margin:auto;}
+.card{background:#fff;border-radius:16px;padding:18px;margin-bottom:15px;box-shadow:0 4px 10px rgba(0,0,0,0.05);}
+h2{color:#2f5d50;}
+input,select,textarea{width:100%;padding:10px;margin-top:5px;margin-bottom:10px;border-radius:10px;border:1px solid #ddd;}
+.score{font-size:40px;text-align:center;color:#c9a66b;font-weight:bold;}
+button{width:100%;padding:15px;border:none;border-radius:12px;background:linear-gradient(90deg,#4caf88,#c9a66b);color:white;font-size:16px;}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<div class="card">
+<h2>基本資料</h2>
+日期<input type="date" id="date">
+姓名<input type="text" id="name">
+模式<select id="mode">
+<option>日活動量</option>
+<option>客戶紀錄</option>
+</select>
+</div>
+
+<div class="card">
+<h2>財顧流程</h2>
+客戶姓名<input type="text" id="client">
+階段<select id="stage" onchange="syncStage()">
+<option value="">不選</option>
+<option value="C1">C1</option>
+<option value="C2">C2</option>
+<option value="C3">C3</option>
+<option value="C5">C5</option>
+<option value="C6">C6</option>
+<option value="C7">C7</option>
+</select>
+</div>
+
+<div class="card">
+<h2>活動量</h2>
+CALL<input type="number" id="call" value="0">
+APO<input type="number" id="apo" value="0">
+FF<input type="number" id="ff" value="0">
+PD<input type="number" id="pd" value="0">
+C<input type="number" id="c_act" value="0">
+S<input type="number" id="s_act" value="0">
+R<input type="number" id="r_act" value="0">
+保單<input type="number" id="policy" value="0">
+</div>
+
+<div class="card">
+<div class="score" id="totalScore">0</div>
+</div>
+
+<div class="card">
+成交件數<input type="number" id="caseNum">
+FYC<input type="number" id="fyc">
+<textarea id="note" placeholder="今日重點"></textarea>
+<button onclick="sendData()">送出</button>
+</div>
+
+</div>
+
+<script>
+// 初始化日期
+document.getElementById('date').valueAsDate = new Date();
+
+// 防重複
+let stageApplied = false;
+
+// 財顧轉活動量
+function syncStage(){
+let stage=document.getElementById("stage").value;
+if(stageApplied) return alert("已套用過");
+
+if(stage==="C1") call.value++;
+if(stage==="C2") apo.value++;
+if(stage==="C3") ff.value++;
+if(stage==="C5") pd.value++;
+if(stage==="C6") c_act.value++;
+if(stage==="C7") s_act.value++;
+
+stageApplied=true;
+calc();
+}
+
+// 計分
+function calc(){
+let score=call.value*1+apo.value*5+ff.value*10+pd.value*15+c_act.value*30+s_act.value*5+r_act.value*20+policy.value*10;
+let el=document.getElementById("totalScore");
+el.innerText=score;
+
+if(score<30) el.style.color="#999";
+else if(score<80) el.style.color="#4caf88";
+else el.style.color="#c9a66b";
+
+localStorage.setItem("data",JSON.stringify({
+call:call.value,apo:apo.value,ff:ff.value,pd:pd.value,
+c:c_act.value,s:s_act.value,r:r_act.value,policy:policy.value
+}));
+}
+
+// 載入
+window.onload=function(){
+let d=JSON.parse(localStorage.getItem("data"));
+if(!d) return;
+call.value=d.call;apo.value=d.apo;ff.value=d.ff;pd.value=d.pd;
+c_act.value=d.c;s_act.value=d.s;r_act.value=d.r;policy.value=d.policy;
+calc();
+}
+
+// 監聽
+document.querySelectorAll("input").forEach(i=>i.addEventListener("input",calc));
+
+// 送出
+function sendData(){
+let url="https://docs.google.com/forms/d/e/1FAIpQLSe7khDG8Kz5MaxI9q6Vr4LO1O1i-jOQrGVogVxnQw8YanKOqQ/formResponse";
+let f=new FormData();
+
+f.append("entry.1690664133",date.value);
+f.append("entry.1317826185",name.value);
+f.append("entry.296587685",mode.value);
+f.append("entry.1822444713",call.value);
+f.append("entry.1491536107",apo.value);
+f.append("entry.1485885569",ff.value);
+f.append("entry.1813740552",pd.value);
+f.append("entry.1759215822",c_act.value);
+f.append("entry.80872650",s_act.value);
+f.append("entry.1431252305",r_act.value);
+f.append("entry.485676242",policy.value);
+f.append("entry.1886949465",client.value);
+f.append("entry.1367187796",stage.value);
+f.append("entry.1322180337",caseNum.value);
+f.append("entry.1895807166",fyc.value);
+f.append("entry.1165378879",note.value);
+
+fetch(url,{method:"POST",mode:"no-cors",body:f});
+
+alert("已送出");
+}
+</script>
+
+</body>
+</html>
