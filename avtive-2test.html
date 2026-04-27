@@ -1,210 +1,392 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>活動量管理系統</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>馥芸財富學苑｜活動量管理系統</title>
 
 <style>
 body{
-  font-family:sans-serif;
-  background:#f4f6f5;
-  padding:20px;
+  margin:0;
+  font-family:"Noto Sans TC",Arial,sans-serif;
+  background:#f7f3ea;
+  color:#1f2a24;
 }
-.container{
-  max-width:900px;
+.wrap{
+  max-width:980px;
   margin:auto;
-  background:#fff;
   padding:20px;
-  border-radius:12px;
 }
-h1{color:#1e6b4a}
+.hero{
+  background:linear-gradient(135deg,#173f33,#2f6b52);
+  color:white;
+  border-radius:24px;
+  padding:28px;
+  margin-bottom:20px;
+}
+.hero h1{margin:0;font-size:28px}
+.hero p{margin:8px 0 0;color:#e8d8a8}
 .card{
-  margin-bottom:15px;
-  padding:15px;
-  background:#fafafa;
-  border-radius:10px;
+  background:white;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 8px 20px rgba(0,0,0,.06);
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:12px;
+}
+label{
+  font-weight:700;
+  font-size:14px;
 }
 input{
   width:100%;
-  padding:8px;
-  margin-top:5px;
+  box-sizing:border-box;
+  padding:12px;
+  margin-top:6px;
+  border:1px solid #ddd5c5;
+  border-radius:12px;
+  font-size:16px;
+}
+.stage-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(110px,1fr));
+  gap:10px;
+}
+.stage-card{
+  border:1px solid #ddd5c5;
+  border-radius:14px;
+  padding:12px;
+  text-align:center;
+  cursor:pointer;
+  background:#faf7ef;
+}
+.stage-card.active{
+  background:#173f33;
+  color:white;
+  border-color:#173f33;
+}
+.score-hero{
+  background:#fff8df;
+  border:1px solid #e4c86a;
+  border-radius:18px;
+  padding:18px;
+  text-align:center;
+}
+.score-hero.high{
+  background:#e9f7ef;
+  border-color:#2f6b52;
+}
+.score{
+  font-size:42px;
+  font-weight:900;
+  color:#173f33;
 }
 button{
-  padding:10px;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
-}
-.primary{background:#1e6b4a;color:#fff}
-.save{background:#b8962e;color:#fff}
-.clear{background:#999;color:#fff}
-table{
   width:100%;
-  margin-top:20px;
-  border-collapse:collapse;
+  padding:14px;
+  border:0;
+  border-radius:14px;
+  font-size:16px;
+  font-weight:800;
+  cursor:pointer;
+  margin-top:10px;
 }
-th,td{
-  border-bottom:1px solid #ddd;
-  padding:8px;
+.btn-main{background:#173f33;color:white}
+.btn-sub{background:#c8a94b;color:white}
+.btn-clear{background:#999;color:white}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:10px;
+}
+.stat{
+  background:#faf7ef;
+  border-radius:14px;
+  padding:14px;
   text-align:center;
+}
+.stat b{
+  display:block;
+  font-size:24px;
+  color:#173f33;
+}
+.history-item{
+  padding:10px;
+  border-bottom:1px solid #eee;
+  font-size:14px;
+}
+.small{
+  font-size:13px;
+  color:#776f63;
 }
 </style>
 </head>
 
 <body>
-<div class="container">
+<div class="wrap">
 
-<h1>每日活動量管理</h1>
-<p>每日三訪是必然</p>
+  <div class="hero">
+    <h1>馥芸財富學苑｜活動量管理系統</h1>
+    <p>每日三訪是必然｜流程記錄 × 活動量加總 × Google 表單同步</p>
+  </div>
 
-<!-- 基本資料 -->
-<div class="card">
-<label>日期</label>
-<input type="date" id="date">
+  <div class="card">
+    <h2>基本資料</h2>
+    <div class="grid">
+      <div>
+        <label>日期</label>
+        <input type="date" id="date">
+      </div>
+      <div>
+        <label>姓名</label>
+        <input type="text" id="name" placeholder="請輸入姓名">
+      </div>
+    </div>
+  </div>
 
-<label>姓名</label>
-<input type="text" id="name">
-</div>
+  <div class="card">
+    <h2>財顧階段｜流程記錄</h2>
+    <p class="small">此區只做流程記錄，不列入分數計算。</p>
+    <div class="stage-grid">
+      <div class="stage-card" onclick="highlightStage(this,'C1 建立關係')">C1<br>建立關係</div>
+      <div class="stage-card" onclick="highlightStage(this,'C2 約訪')">C2<br>約訪</div>
+      <div class="stage-card" onclick="highlightStage(this,'C3 面談')">C3<br>面談</div>
+      <div class="stage-card" onclick="highlightStage(this,'C4 建議書')">C4<br>建議書</div>
+      <div class="stage-card" onclick="highlightStage(this,'C5 成交')">C5<br>成交</div>
+      <div class="stage-card" onclick="highlightStage(this,'C6 服務')">C6<br>服務</div>
+      <div class="stage-card" onclick="highlightStage(this,'C7 轉介紹')">C7<br>轉介紹</div>
+    </div>
+  </div>
 
-<!-- 活動量 -->
-<div class="card">
-<h3>六大步驟</h3>
+  <div class="card">
+    <h2>活動量輸入</h2>
+    <div class="grid">
+      <div><label>CALL 建立關係</label><input type="number" id="call" value="0"></div>
+      <div><label>APO 約訪</label><input type="number" id="apo" value="0"></div>
+      <div><label>FF 面談</label><input type="number" id="ff" value="0"></div>
+      <div><label>PD 建議書</label><input type="number" id="pd" value="0"></div>
+      <div><label>C 成交</label><input type="number" id="c_act" value="0"></div>
+      <div><label>S 服務</label><input type="number" id="s_act" value="0"></div>
+      <div><label>R 轉介紹 / 增員</label><input type="number" id="r_act" value="0"></div>
+      <div><label>POLICY 送保單</label><input type="number" id="policy" value="0"></div>
+    </div>
+  </div>
 
-<label>CALL（建立關係）</label>
-<input type="number" id="call" value="0" oninput="calc()">
+  <div class="card">
+    <h2>成交數據</h2>
+    <div class="grid">
+      <div><label>本日成交件數</label><input type="number" id="caseNum" value="0"></div>
+      <div><label>本日成交 FYP</label><input type="number" id="fyp" value="0"></div>
+      <div><label>本日成交 FYC</label><input type="number" id="fyc" value="0"></div>
+      <div><label>推薦介紹數</label><input type="number" id="referral" value="0"></div>
+    </div>
+  </div>
 
-<label>APO（約訪）</label>
-<input type="number" id="apo" value="0" oninput="calc()">
+  <div id="hero" class="score-hero">
+    <div>今日活動量分數</div>
+    <div class="score" id="totalScore">0</div>
+  </div>
 
-<label>FF（面談）</label>
-<input type="number" id="ff" value="0" oninput="calc()">
+  <button class="btn-main" onclick="submitData()">☁️ 儲存並同步 Google 表單</button>
+  <button class="btn-sub" onclick="resetToday()">重新填寫今日資料</button>
+  <button class="btn-clear" onclick="clearLocal()">清除本機紀錄</button>
 
-<label>PD（建議書）</label>
-<input type="number" id="pd" value="0" oninput="calc()">
+  <div class="card">
+    <h2>本月統計</h2>
+    <div class="stats">
+      <div class="stat">本月總分<b id="mScore">0</b></div>
+      <div class="stat">本月面談 FF<b id="mFF">0</b></div>
+      <div class="stat">本月成交件數<b id="mCase">0</b></div>
+      <div class="stat">本月 FYP<b id="mFYP">0</b></div>
+      <div class="stat">本月 FYC<b id="mFYC">0</b></div>
+    </div>
+  </div>
 
-<label>C（成交）</label>
-<input type="number" id="c" value="0" oninput="calc()">
-
-<label>S（服務）</label>
-<input type="number" id="s" value="0" oninput="calc()">
-
-<label>R（轉介紹）</label>
-<input type="number" id="r" value="0" oninput="calc()">
-
-<label>送保單</label>
-<input type="number" id="policy" value="0" oninput="calc()">
-</div>
-
-<!-- 成交 -->
-<div class="card">
-<h3>成交數據</h3>
-
-<label>FYP（保費）</label>
-<input type="number" id="fyp" value="0">
-
-<label>FYC（佣金）</label>
-<input type="number" id="fyc" value="0">
-
-<label>成交件數</label>
-<input type="number" id="case" value="0">
-
-<label>推薦介紹數</label>
-<input type="number" id="intro" value="0">
-</div>
-
-<!-- 分數 -->
-<div class="card">
-<h2>今日活動量分數：<span id="score">0</span></h2>
-</div>
-
-<!-- 按鈕 -->
-<button class="primary" onclick="save()">儲存今日</button>
-<button class="clear" onclick="clearData()">清空</button>
-
-<!-- 紀錄 -->
-<table>
-<thead>
-<tr>
-<th>日期</th>
-<th>CALL</th>
-<th>APO</th>
-<th>FF</th>
-<th>PD</th>
-<th>C</th>
-<th>分數</th>
-</tr>
-</thead>
-<tbody id="list"></tbody>
-</table>
+  <div class="card">
+    <h2>最近 10 筆紀錄</h2>
+    <div id="historyList"></div>
+  </div>
 
 </div>
 
 <script>
+// ===== Google 表單網址 =====
+const GOOGLE_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe7khDG8Kz5MaxI9q6Vr4LO1O1i-jOQrGVogVxnQw8YanKOqQ/formResponse";
+
+let currentStage = "";
+
+// ===== 初始化日期 =====
+document.getElementById("date").valueAsDate = new Date();
+
+// ===== 財顧流程高亮 =====
+function highlightStage(el, stage){
+  document.querySelectorAll(".stage-card").forEach(c => c.classList.remove("active"));
+  el.classList.add("active");
+  currentStage = stage;
+}
+
+// ===== 數字取得 =====
+function num(id){
+  return parseInt(document.getElementById(id).value) || 0;
+}
 
 // ===== 計算分數 =====
-function calc(){
-  let call = Number(document.getElementById("call").value);
-  let apo = Number(document.getElementById("apo").value);
-  let ff = Number(document.getElementById("ff").value);
-  let pd = Number(document.getElementById("pd").value);
-  let c = Number(document.getElementById("c").value);
+function calculateScore(){
+  let score =
+    num("call") * 1 +
+    num("apo") * 5 +
+    num("ff") * 10 +
+    num("pd") * 15 +
+    num("c_act") * 30 +
+    num("s_act") * 5 +
+    num("r_act") * 20 +
+    num("policy") * 10;
 
-  let score = call*1 + apo*2 + ff*3 + pd*4 + c*5;
+  document.getElementById("totalScore").innerText = score;
 
-  document.getElementById("score").innerText = score;
+  const hero = document.getElementById("hero");
+  if(score >= 80){
+    hero.className = "score-hero high";
+  }else{
+    hero.className = "score-hero";
+  }
+
+  return score;
 }
 
-// ===== 儲存 =====
-function save(){
-  let data = JSON.parse(localStorage.getItem("activity")||"[]");
+// ===== 所有 input 即時計算 =====
+document.querySelectorAll("input").forEach(i=>{
+  i.addEventListener("input", calculateScore);
+});
 
-  let item = {
+// ===== 送出資料 =====
+function submitData(){
+  const name = document.getElementById("name").value.trim();
+  if(!name){
+    alert("請先填寫姓名");
+    return;
+  }
+
+  const data = {
     date: document.getElementById("date").value,
-    call: document.getElementById("call").value,
-    apo: document.getElementById("apo").value,
-    ff: document.getElementById("ff").value,
-    pd: document.getElementById("pd").value,
-    c: document.getElementById("c").value,
-    score: document.getElementById("score").innerText
+    name: name,
+    stage: currentStage,
+    score: calculateScore(),
+    call: num("call"),
+    apo: num("apo"),
+    ff: num("ff"),
+    pd: num("pd"),
+    c_act: num("c_act"),
+    s_act: num("s_act"),
+    r_act: num("r_act"),
+    policy: num("policy"),
+    caseNum: num("caseNum"),
+    fyp: num("fyp"),
+    fyc: num("fyc"),
+    referral: num("referral")
   };
 
-  data.push(item);
-  localStorage.setItem("activity", JSON.stringify(data));
+  // ===== 傳送 Google 表單 =====
+  const f = new FormData();
+  f.append("entry.1690664133", data.date);
+  f.append("entry.1317826185", data.name);
+  f.append("entry.1367187796", data.stage);
+  f.append("entry.1822444713", data.call);
+  f.append("entry.1491536107", data.apo);
+  f.append("entry.1485885569", data.ff);
+  f.append("entry.1813740552", data.pd);
+  f.append("entry.1759215822", data.c_act);
+  f.append("entry.80872650", data.s_act);
+  f.append("entry.1431252305", data.r_act);
+  f.append("entry.485676242", data.policy);
 
-  render();
-}
-
-// ===== 顯示 =====
-function render(){
-  let data = JSON.parse(localStorage.getItem("activity")||"[]");
-  let html="";
-
-  data.forEach(d=>{
-    html+=`
-    <tr>
-      <td>${d.date}</td>
-      <td>${d.call}</td>
-      <td>${d.apo}</td>
-      <td>${d.ff}</td>
-      <td>${d.pd}</td>
-      <td>${d.c}</td>
-      <td>${d.score}</td>
-    </tr>`;
+  fetch(GOOGLE_URL, {
+    method: "POST",
+    mode: "no-cors",
+    body: f
   });
 
-  document.getElementById("list").innerHTML = html;
+  // ===== 本機同步留存 =====
+  let history = JSON.parse(localStorage.getItem("fuyun_activity_data") || "[]");
+  history.unshift(data);
+  localStorage.setItem("fuyun_activity_data", JSON.stringify(history));
+
+  alert("✅ 已完成紀錄，並送出到 Google 表單");
+  resetToday();
+  updateUI();
 }
 
-// ===== 清空 =====
-function clearData(){
-  localStorage.removeItem("activity");
-  render();
+// ===== 更新統計 =====
+function updateUI(){
+  const history = JSON.parse(localStorage.getItem("fuyun_activity_data") || "[]");
+  const list = document.getElementById("historyList");
+  const thisMonth = new Date().toISOString().substring(0,7);
+
+  let mScore = 0;
+  let mFYC = 0;
+  let mFYP = 0;
+  let mCase = 0;
+  let mFF = 0;
+
+  list.innerHTML = "";
+
+  history.forEach((h,i)=>{
+    if((h.date || "").startsWith(thisMonth)){
+      mScore += Number(h.score || 0);
+      mFYC += Number(h.fyc || 0);
+      mFYP += Number(h.fyp || 0);
+      mCase += Number(h.caseNum || 0);
+      mFF += Number(h.ff || 0);
+    }
+
+    if(i < 10){
+      const item = document.createElement("div");
+      item.className = "history-item";
+      item.innerHTML = `
+        <strong>${h.date}</strong> ｜ ${h.name}<br>
+        分數：${h.score} ｜ FF：${h.ff} ｜ 成交：${h.caseNum} ｜ FYP：${Number(h.fyp).toLocaleString()}
+      `;
+      list.appendChild(item);
+    }
+  });
+
+  document.getElementById("mScore").innerText = mScore;
+  document.getElementById("mFYC").innerText = mFYC.toLocaleString();
+  document.getElementById("mFYP").innerText = mFYP.toLocaleString();
+  document.getElementById("mCase").innerText = mCase;
+  document.getElementById("mFF").innerText = mFF;
+}
+
+// ===== 重置今日資料 =====
+function resetToday(){
+  currentStage = "";
+  document.querySelectorAll(".stage-card").forEach(c=>c.classList.remove("active"));
+
+  [
+    "call","apo","ff","pd","c_act","s_act","r_act","policy",
+    "caseNum","fyp","fyc","referral"
+  ].forEach(id=>{
+    document.getElementById(id).value = 0;
+  });
+
+  calculateScore();
+}
+
+// ===== 清除本機資料 =====
+function clearLocal(){
+  if(confirm("確定要清除本機紀錄嗎？Google 表單資料不會被刪除。")){
+    localStorage.removeItem("fuyun_activity_data");
+    updateUI();
+  }
 }
 
 // ===== 啟動 =====
-window.onload = render;
-
+calculateScore();
+updateUI();
 </script>
 
 </body>
