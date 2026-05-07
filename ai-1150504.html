@@ -1,3 +1,7 @@
+以下是完整可用版本，已修正登入功能，密碼為 **84200994**。
+請整段複製，存成 `index.html` 或 `ai-1150504.html` 後上傳 GitHub Pages。
+
+```html
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -274,7 +278,7 @@
     }
 
     .hero .hero-desc {
-      max-width: 680px;
+      max-width: 720px;
       margin: 0 auto;
       color: var(--medium-gray);
       font-size: 15px;
@@ -598,11 +602,11 @@
           placeholder="請輸入課程密碼"
           autocomplete="off"
         />
-        <button class="login-button" onclick="checkPassword()">進入學習專區</button>
+        <button type="button" class="login-button" id="loginButton">進入學習專區</button>
       </div>
 
       <div id="errorMessage" class="error-message"></div>
-      <div class="secure-note">本頁內容僅供課程學員學習使用，請勿外流分享</div>
+      <div class="secure-note">本頁內容僅供課程學員學習使用</div>
     </div>
   </section>
 
@@ -614,7 +618,7 @@
         <div class="subtitle">公勝包班（浩茂AI科技）</div>
         <div class="course-title">2026/05/04 NotebookLM 課程連結整理</div>
         <p class="hero-desc">
-          本頁整理 2026/05/04 公勝 AI 包班課程學習連結，提供學員課後複習與延伸學習使用。
+          本頁整理 2026/05/04 公勝 AI 包班課程學習連結，提供學員課後複習與延伸學習使用，請勿轉分享。
         </p>
       </section>
 
@@ -625,4 +629,198 @@
             <h3>20260504 Gemini LLM Gamma 1</h3>
             <div class="tag warning">⚠️ 本段影片無聲音</div>
             <p class="warning-note">
-              ⚠️
+              ⚠️ 第一段影片因當時錄製設定未完成，所以影片沒有聲音。建議學員可先作為畫面流程參考；第二段與第三段影片聲音正常，可正常觀看學習。
+            </p>
+          </div>
+
+          <a
+            class="watch-button"
+            href="https://youtu.be/ahACQV7iBsg"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            觀看課程 1
+          </a>
+        </article>
+
+        <article class="course-card">
+          <div>
+            <div class="course-number">02</div>
+            <h3>20260504 Gemini LLM Gamma 2</h3>
+            <div class="tag normal">聲音正常</div>
+            <p>
+              第二段影片聲音正常，適合接續第一段內容進行完整學習與複習。
+            </p>
+          </div>
+
+          <a
+            class="watch-button gold"
+            href="https://youtu.be/0QnElmUiUME"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            觀看課程 2
+          </a>
+        </article>
+
+        <article class="course-card">
+          <div>
+            <div class="course-number">03</div>
+            <h3>20260504 Gemini LLM Gamma 3</h3>
+            <div class="tag normal">聲音正常</div>
+            <p>
+              第三段影片聲音正常，協助學員完成 NotebookLM、Gemini 與 Gamma 的整合應用複習。
+            </p>
+          </div>
+
+          <a
+            class="watch-button"
+            href="https://youtu.be/qXH-yqnPdkcbu"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            觀看課程 3
+          </a>
+        </article>
+      </section>
+
+      <section class="link-section">
+        <div class="section-header">
+          <span>Follow & Learn</span>
+          <h2>延伸連結｜持續學習與追蹤</h2>
+          <p>歡迎加入馥芸財富學苑，一起持續學習 AI、財務規劃與幸福財商。</p>
+        </div>
+
+        <div class="link-grid">
+          <article class="link-card">
+            <div>
+              <div class="link-icon">LINE</div>
+              <h3>馥芸財富學苑 LINE@ 官方群組</h3>
+              <p>加入官方群組，接收最新課程資訊、學習提醒與活動通知。</p>
+            </div>
+
+            <a
+              class="watch-button"
+              href="https://lin.ee/6hkkECK"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              加入 LINE@ 官方群組
+            </a>
+          </article>
+
+          <article class="link-card">
+            <div>
+              <div class="link-icon">芸</div>
+              <h3>財顧芸專屬連結</h3>
+              <p>認識財顧芸的服務、課程資源與財務規劃相關內容。</p>
+            </div>
+
+            <a
+              class="watch-button gold"
+              href="https://reurl.cc/18zQyY"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              前往財顧芸
+            </a>
+          </article>
+
+          <article class="link-card">
+            <div>
+              <div class="link-icon">FB</div>
+              <h3>財顧芸 FB 粉專</h3>
+              <p>追蹤更多財務規劃、AI學習、家族傳承與生活分享。</p>
+            </div>
+
+            <a
+              class="watch-button"
+              href="https://www.facebook.com/IFA.Fans/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              追蹤 FB 粉專
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <div class="logout-area">
+        <button type="button" class="logout-button" id="logoutButton">登出學習專區</button>
+      </div>
+
+      <footer>
+        <strong>© 馥芸財富學苑｜財顧芸</strong><br />
+        AI學習專區｜僅供課程學員學習使用
+      </footer>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      const correctPassword = "84200994";
+      const loginStorageKey = "fuyun_ai_course_login_20260504";
+
+      const loginPage = document.getElementById("loginPage");
+      const mainPage = document.getElementById("mainPage");
+      const passwordInput = document.getElementById("passwordInput");
+      const errorMessage = document.getElementById("errorMessage");
+      const loginButton = document.getElementById("loginButton");
+      const logoutButton = document.getElementById("logoutButton");
+
+      function showMainPage() {
+        loginPage.style.display = "none";
+        mainPage.style.display = "block";
+      }
+
+      function showLoginPage() {
+        loginPage.style.display = "flex";
+        mainPage.style.display = "none";
+      }
+
+      function checkPassword() {
+        const inputPassword = passwordInput.value.trim();
+
+        if (inputPassword === correctPassword) {
+          localStorage.setItem(loginStorageKey, "true");
+          errorMessage.textContent = "";
+          passwordInput.value = "";
+          showMainPage();
+        } else {
+          errorMessage.textContent = "密碼錯誤，請重新輸入";
+          passwordInput.value = "";
+          passwordInput.focus();
+        }
+      }
+
+      function logout() {
+        localStorage.removeItem(loginStorageKey);
+        showLoginPage();
+        passwordInput.focus();
+      }
+
+      loginButton.addEventListener("click", checkPassword);
+
+      logoutButton.addEventListener("click", logout);
+
+      passwordInput.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          checkPassword();
+        }
+      });
+
+      window.addEventListener("load", function () {
+        const isLoggedIn = localStorage.getItem(loginStorageKey);
+
+        if (isLoggedIn === "true") {
+          showMainPage();
+        } else {
+          showLoginPage();
+          passwordInput.focus();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
+```
