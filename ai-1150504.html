@@ -1,222 +1,821 @@
-請幫我生成一個可直接上傳到 GitHub Pages 使用的單頁式 HTML 網頁。
-
-重要提醒：
-請只輸出「完整 HTML 程式碼本體」，不要輸出任何說明文字、不要加開場白、不要加結尾說明、不要加 Markdown 語法、不要加 ```html、不要加任何反引號。
-輸出的第一行必須是：
 <!DOCTYPE html>
-輸出的最後一行必須是：
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>馥芸財富學苑｜財顧芸｜AI學習專區</title>
+
+  <style>
+    :root {
+      --herbal-green: #5f7f68;
+      --deep-green: #3f5f4d;
+      --milk-tea-gold: #c8a66a;
+      --soft-gold: #ead8ad;
+      --cream: #f8f3e9;
+      --light-green-gray: #edf2ec;
+      --deep-gray: #2f3430;
+      --medium-gray: #6f756d;
+      --white: #ffffff;
+      --warning-bg: #fff5df;
+      --warning-border: #e0b86a;
+      --warning-text: #8b5e1f;
+      --shadow: 0 18px 45px rgba(47, 52, 48, 0.12);
+      --card-shadow: 0 14px 35px rgba(63, 95, 77, 0.13);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC",
+        "Microsoft JhengHei", "PingFang TC", sans-serif;
+      color: var(--deep-gray);
+      background:
+        radial-gradient(circle at top left, rgba(200, 166, 106, 0.22), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(95, 127, 104, 0.2), transparent 36%),
+        linear-gradient(135deg, var(--cream), var(--light-green-gray));
+      line-height: 1.7;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    button,
+    input {
+      font-family: inherit;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+    }
+
+    .login-page {
+      display: flex;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 460px;
+      padding: 42px 34px;
+      border-radius: 28px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(248, 243, 233, 0.9));
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(200, 166, 106, 0.28);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 72%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--herbal-green), var(--milk-tea-gold));
+      border-radius: 0 0 999px 999px;
+    }
+
+    .login-card::after {
+      content: "";
+      position: absolute;
+      right: -52px;
+      bottom: -52px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: rgba(200, 166, 106, 0.14);
+      z-index: 0;
+    }
+
+    .login-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand-mark {
+      width: 76px;
+      height: 76px;
+      margin: 0 auto 22px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--deep-green), var(--herbal-green));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--soft-gold);
+      font-size: 30px;
+      font-weight: 800;
+      box-shadow: 0 12px 28px rgba(63, 95, 77, 0.24);
+    }
+
+    .login-card h1 {
+      font-size: 30px;
+      line-height: 1.35;
+      letter-spacing: 0.06em;
+      color: var(--deep-green);
+      margin-bottom: 8px;
+    }
+
+    .login-card h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--deep-gray);
+      margin-bottom: 12px;
+    }
+
+    .login-card p {
+      font-size: 15px;
+      color: var(--medium-gray);
+      margin-bottom: 28px;
+    }
+
+    .password-box {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .password-box input {
+      width: 100%;
+      padding: 15px 18px;
+      border-radius: 16px;
+      border: 1px solid rgba(95, 127, 104, 0.28);
+      background: rgba(255, 255, 255, 0.88);
+      font-size: 16px;
+      outline: none;
+      color: var(--deep-gray);
+      transition: 0.25s ease;
+    }
+
+    .password-box input:focus {
+      border-color: var(--herbal-green);
+      box-shadow: 0 0 0 4px rgba(95, 127, 104, 0.12);
+    }
+
+    .login-button {
+      border: none;
+      cursor: pointer;
+      padding: 15px 18px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--deep-green), var(--herbal-green));
+      color: var(--white);
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      transition: 0.25s ease;
+      box-shadow: 0 12px 26px rgba(63, 95, 77, 0.22);
+    }
+
+    .login-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 32px rgba(63, 95, 77, 0.28);
+    }
+
+    .error-message {
+      min-height: 24px;
+      color: #b64545;
+      font-size: 14px;
+      margin-top: 12px;
+      font-weight: 700;
+    }
+
+    .secure-note {
+      margin-top: 22px;
+      font-size: 13px;
+      color: var(--medium-gray);
+    }
+
+    .main-page {
+      display: none;
+      min-height: 100vh;
+      padding: 48px 22px 34px;
+    }
+
+    .main-container {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 44px 24px 36px;
+      border-radius: 32px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.86), rgba(248, 243, 233, 0.72));
+      border: 1px solid rgba(200, 166, 106, 0.22);
+      box-shadow: var(--shadow);
+      margin-bottom: 34px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      top: -70px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(200, 166, 106, 0.16);
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 7px 16px;
+      margin-bottom: 18px;
+      border-radius: 999px;
+      background: rgba(95, 127, 104, 0.12);
+      color: var(--deep-green);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 48px);
+      line-height: 1.25;
+      color: var(--deep-green);
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero .subtitle {
+      font-size: 20px;
+      color: var(--deep-gray);
+      font-weight: 700;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero .course-title {
+      font-size: 18px;
+      color: var(--medium-gray);
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero .hero-desc {
+      max-width: 720px;
+      margin: 0 auto;
+      color: var(--medium-gray);
+      font-size: 15px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-bottom: 34px;
+    }
+
+    .course-card {
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(237, 242, 236, 0.85));
+      border-radius: 26px;
+      padding: 28px 24px;
+      box-shadow: var(--card-shadow);
+      border: 1px solid rgba(95, 127, 104, 0.14);
+      transition: 0.28s ease;
+      position: relative;
+      overflow: hidden;
+      min-height: 330px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .course-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--herbal-green), var(--milk-tea-gold));
+    }
+
+    .course-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 22px 46px rgba(63, 95, 77, 0.2);
+    }
+
+    .course-number {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      background: rgba(200, 166, 106, 0.16);
+      color: var(--deep-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    .course-card h3 {
+      font-size: 20px;
+      line-height: 1.45;
+      color: var(--deep-green);
+      margin-bottom: 12px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .tag.warning {
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      color: var(--warning-text);
+    }
+
+    .tag.normal {
+      background: rgba(95, 127, 104, 0.12);
+      border: 1px solid rgba(95, 127, 104, 0.18);
+      color: var(--deep-green);
+    }
+
+    .course-card p {
+      color: var(--medium-gray);
+      font-size: 15px;
+      margin-bottom: 22px;
+    }
+
+    .warning-note {
+      padding: 12px 13px;
+      border-radius: 16px;
+      background: var(--warning-bg);
+      border: 1px solid rgba(224, 184, 106, 0.68);
+      color: var(--warning-text);
+      font-weight: 600;
+    }
+
+    .watch-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 13px 16px;
+      border-radius: 15px;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      color: var(--white);
+      background: linear-gradient(135deg, var(--deep-green), var(--herbal-green));
+      box-shadow: 0 12px 24px rgba(63, 95, 77, 0.2);
+      transition: 0.25s ease;
+    }
+
+    .watch-button.gold {
+      background: linear-gradient(135deg, #b7924f, var(--milk-tea-gold));
+      box-shadow: 0 12px 24px rgba(200, 166, 106, 0.22);
+    }
+
+    .watch-button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.03);
+    }
+
+    .link-section {
+      margin: 8px 0 34px;
+      padding: 34px 26px;
+      border-radius: 30px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(248, 243, 233, 0.78));
+      border: 1px solid rgba(200, 166, 106, 0.22);
+      box-shadow: var(--shadow);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 26px;
+    }
+
+    .section-header span {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(200, 166, 106, 0.16);
+      color: var(--deep-green);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(24px, 4vw, 34px);
+      color: var(--deep-green);
+      letter-spacing: 0.04em;
+      margin-bottom: 8px;
+    }
+
+    .section-header p {
+      color: var(--medium-gray);
+      font-size: 16px;
+    }
+
+    .link-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .link-card {
+      padding: 26px 22px;
+      border-radius: 24px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(237, 242, 236, 0.82));
+      border: 1px solid rgba(95, 127, 104, 0.14);
+      box-shadow: var(--card-shadow);
+      transition: 0.28s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 260px;
+    }
+
+    .link-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 42px rgba(63, 95, 77, 0.18);
+    }
+
+    .link-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--deep-green), var(--herbal-green));
+      color: var(--soft-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      margin-bottom: 18px;
+      box-shadow: 0 12px 24px rgba(63, 95, 77, 0.18);
+    }
+
+    .link-card h3 {
+      font-size: 19px;
+      color: var(--deep-green);
+      margin-bottom: 10px;
+      line-height: 1.45;
+    }
+
+    .link-card p {
+      color: var(--medium-gray);
+      font-size: 15px;
+      margin-bottom: 20px;
+    }
+
+    .logout-area {
+      text-align: center;
+      margin: 12px 0 30px;
+    }
+
+    .logout-button {
+      border: 1px solid rgba(95, 127, 104, 0.28);
+      background: rgba(255, 255, 255, 0.58);
+      color: var(--deep-green);
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .logout-button:hover {
+      background: rgba(95, 127, 104, 0.1);
+      transform: translateY(-1px);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--medium-gray);
+      font-size: 14px;
+      padding: 12px 8px 0;
+    }
+
+    footer strong {
+      color: var(--deep-green);
+      font-weight: 800;
+    }
+
+    @media (max-width: 860px) {
+      .course-grid,
+      .link-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .course-card,
+      .link-card {
+        min-height: auto;
+      }
+
+      .hero {
+        padding: 36px 22px 28px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        padding: 20px;
+      }
+
+      .login-card {
+        padding: 36px 24px;
+        border-radius: 24px;
+      }
+
+      .login-card h1 {
+        font-size: 26px;
+      }
+
+      .login-card h2 {
+        font-size: 18px;
+      }
+
+      .main-page {
+        padding: 30px 16px 24px;
+      }
+
+      .hero {
+        border-radius: 26px;
+      }
+
+      .course-card,
+      .link-card {
+        padding: 24px 20px;
+        border-radius: 22px;
+      }
+
+      .link-section {
+        padding: 28px 20px;
+        border-radius: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <section id="loginPage" class="page login-page">
+    <div class="login-card">
+      <div class="brand-mark">芸</div>
+
+      <h1>馥芸財富學苑</h1>
+      <h2>財顧芸｜AI學習專區</h2>
+      <p>公勝包班｜浩茂AI科技</p>
+
+      <div class="password-box">
+        <input
+          type="password"
+          id="passwordInput"
+          placeholder="請輸入課程密碼"
+          autocomplete="off"
+        />
+        <button type="button" class="login-button" id="loginButton">進入學習專區</button>
+      </div>
+
+      <div id="errorMessage" class="error-message"></div>
+      <div class="secure-note">本頁內容僅供課程學員學習使用</div>
+    </div>
+  </section>
+
+  <main id="mainPage" class="main-page">
+    <div class="main-container">
+      <section class="hero">
+        <div class="hero-badge">AI Learning Area</div>
+        <h1>馥芸財富學苑｜財顧芸</h1>
+        <div class="subtitle">公勝包班（浩茂AI科技）</div>
+        <div class="course-title">2026/05/04 NotebookLM 課程連結整理</div>
+        <p class="hero-desc">
+          本頁整理 2026/05/04 公勝 AI 包班課程學習連結，提供學員課後複習與延伸學習使用，請勿轉分享。
+        </p>
+      </section>
+
+      <section class="course-grid">
+        <article class="course-card">
+          <div>
+            <div class="course-number">01</div>
+            <h3>20260504 Gemini LLM Gamma 1</h3>
+            <div class="tag warning">⚠️ 本段影片無聲音</div>
+            <p class="warning-note">
+              ⚠️ 第一段影片因當時錄製設定未完成，所以影片沒有聲音。建議學員可先作為畫面流程參考；第二段與第三段影片聲音正常，可正常觀看學習。
+            </p>
+          </div>
+
+          <a
+            class="watch-button"
+            href="https://youtu.be/ahACQV7iBsg"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            觀看課程 1
+          </a>
+        </article>
+
+        <article class="course-card">
+          <div>
+            <div class="course-number">02</div>
+            <h3>20260504 Gemini LLM Gamma 2</h3>
+            <div class="tag normal">聲音正常</div>
+            <p>
+              第二段影片聲音正常，適合接續第一段內容進行完整學習與複習。
+            </p>
+          </div>
+
+          <a
+            class="watch-button gold"
+            href="https://youtu.be/0QnElmUiUME"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            觀看課程 2
+          </a>
+        </article>
+
+        <article class="course-card">
+          <div>
+            <div class="course-number">03</div>
+            <h3>20260504 Gemini LLM Gamma 3</h3>
+            <div class="tag normal">聲音正常</div>
+            <p>
+              第三段影片聲音正常，協助學員完成 NotebookLM、Gemini 與 Gamma 的整合應用複習。
+            </p>
+          </div>
+
+          <a
+            class="watch-button"
+            href="https://youtu.be/qXH-yqnPdkcbu"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            觀看課程 3
+          </a>
+        </article>
+      </section>
+
+      <section class="link-section">
+        <div class="section-header">
+          <span>Follow & Learn</span>
+          <h2>延伸連結｜持續學習與追蹤</h2>
+          <p>歡迎加入馥芸財富學苑，一起持續學習 AI、財務規劃與幸福財商。</p>
+        </div>
+
+        <div class="link-grid">
+          <article class="link-card">
+            <div>
+              <div class="link-icon">LINE</div>
+              <h3>馥芸財富學苑 LINE@ 官方群組</h3>
+              <p>加入官方群組，接收最新課程資訊、學習提醒與活動通知。</p>
+            </div>
+
+            <a
+              class="watch-button"
+              href="https://lin.ee/6hkkECK"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              加入 LINE@ 官方群組
+            </a>
+          </article>
+
+          <article class="link-card">
+            <div>
+              <div class="link-icon">芸</div>
+              <h3>財顧芸專屬連結</h3>
+              <p>認識財顧芸的服務、課程資源與財務規劃相關內容。</p>
+            </div>
+
+            <a
+              class="watch-button gold"
+              href="https://reurl.cc/18zQyY"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              前往財顧芸
+            </a>
+          </article>
+
+          <article class="link-card">
+            <div>
+              <div class="link-icon">FB</div>
+              <h3>財顧芸 FB 粉專</h3>
+              <p>追蹤更多財務規劃、AI學習、家族傳承與生活分享。</p>
+            </div>
+
+            <a
+              class="watch-button"
+              href="https://www.facebook.com/IFA.Fans/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              追蹤 FB 粉專
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <div class="logout-area">
+        <button type="button" class="logout-button" id="logoutButton">登出學習專區</button>
+      </div>
+
+      <footer>
+        <strong>© 馥芸財富學苑｜財顧芸</strong><br />
+        AI學習專區｜僅供課程學員學習使用
+      </footer>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      const correctPassword = "84200994";
+      const loginStorageKey = "fuyun_ai_course_login_20260504";
+
+      const loginPage = document.getElementById("loginPage");
+      const mainPage = document.getElementById("mainPage");
+      const passwordInput = document.getElementById("passwordInput");
+      const errorMessage = document.getElementById("errorMessage");
+      const loginButton = document.getElementById("loginButton");
+      const logoutButton = document.getElementById("logoutButton");
+
+      function showMainPage() {
+        loginPage.style.display = "none";
+        mainPage.style.display = "block";
+      }
+
+      function showLoginPage() {
+        loginPage.style.display = "flex";
+        mainPage.style.display = "none";
+      }
+
+      function checkPassword() {
+        const inputPassword = passwordInput.value.trim();
+
+        if (inputPassword === correctPassword) {
+          localStorage.setItem(loginStorageKey, "true");
+          errorMessage.textContent = "";
+          passwordInput.value = "";
+          showMainPage();
+        } else {
+          errorMessage.textContent = "密碼錯誤，請重新輸入";
+          passwordInput.value = "";
+          passwordInput.focus();
+        }
+      }
+
+      function logout() {
+        localStorage.removeItem(loginStorageKey);
+        showLoginPage();
+        passwordInput.focus();
+      }
+
+      loginButton.addEventListener("click", checkPassword);
+
+      logoutButton.addEventListener("click", logout);
+
+      passwordInput.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          checkPassword();
+        }
+      });
+
+      window.addEventListener("load", function () {
+        const isLoggedIn = localStorage.getItem(loginStorageKey);
+
+        if (isLoggedIn === "true") {
+          showMainPage();
+        } else {
+          showLoginPage();
+          passwordInput.focus();
+        }
+      });
+    })();
+  </script>
+</body>
 </html>
-
-網站主題：
-馥芸財富學苑｜財顧芸
-公勝包班（浩茂AI科技）
-2026/05/04 NotebookLM 課程連結整理頁
-
-請直接產出完整 HTML 程式碼：
-- 包含 HTML、CSS、JavaScript
-- 不要拆成多個檔案
-- 可以直接複製貼上成 index.html 或 ai-1150504.html
-- 程式碼要完整，不要省略
-- 手機、平板、電腦都要自適應
-- 所有連結都要可以正常點擊，並在新分頁開啟
-- 請使用繁體中文
-- 請確保 GitHub Pages 可直接使用
-- 不要使用外部套件
-- 不要使用需要另外安裝的框架
-- 不要出現任何雜訊，例如：「以下是完整可用版本」、「請整段複製」、「```html」、「```」等文字
-
-━━━━━━━━━━━━━━━━
-一、網站功能需求
-━━━━━━━━━━━━━━━━
-
-1. 網頁一開始要先出現「密碼入口頁」
-   - 使用者輸入正確密碼後，才能看到課程連結內容。
-   - 密碼請設定為：84200994
-   - 若輸入錯誤，顯示：「密碼錯誤，請重新輸入」
-   - 密碼驗證成功後，隱藏密碼頁，顯示主內容區。
-   - 使用 localStorage 記錄登入狀態，重新整理後不用再次輸入。
-   - 需要有「登出學習專區」按鈕，點擊後清除 localStorage 並回到密碼頁。
-   - 按下 Enter 也可以送出密碼。
-   - 登入按鈕請使用 id 綁定 JavaScript，不要只依賴 onclick，避免按鈕無反應。
-
-2. 密碼入口頁設計風格：
-   - 高端財務顧問品牌感
-   - 草本綠、奶茶金、米白色、深灰色
-   - 中央卡片式登入框
-   - 有柔和光暈、細緻金色線條或漸層點綴
-   - 整體感覺溫暖、專業、乾淨、有質感
-
-密碼入口頁文字：
-
-主標題：
-馥芸財富學苑
-
-副標題：
-財顧芸｜AI學習專區
-
-說明文字：
-公勝包班｜浩茂AI科技
-2026/05/04 NotebookLM 課程回放整理
-
-密碼輸入框 placeholder：
-請輸入課程密碼
-
-按鈕文字：
-進入學習專區
-
-底部小字：
-本頁內容僅供課程學員複習使用，請勿外流分享
-
-━━━━━━━━━━━━━━━━
-二、登入後主頁內容
-━━━━━━━━━━━━━━━━
-
-主頁頁首大標題：
-馥芸財富學苑｜財顧芸
-
-副標：
-公勝包班（浩茂AI科技）
-
-課程名稱：
-2026/05/04 NotebookLM 課程連結整理
-
-簡短說明文字：
-本頁整理 2026/05/04 公勝 AI 包班課程學習連結，方便學員課後回放、複習操作流程與延伸應用。課程內容僅供學員學習使用，請勿轉分享。
-
-━━━━━━━━━━━━━━━━
-三、課程連結卡片
-━━━━━━━━━━━━━━━━
-
-請設計三個課程連結卡片。
-
-課程卡片 1：
-標題：20260504 Gemini LLM Gamma 1
-提醒標籤：⚠️ 本段影片無聲音
-說明文字：
-第一段影片因錄製設定未完成，影片沒有聲音。建議學員可先作為畫面流程參考，掌握操作畫面與課程脈絡；第二段與第三段影片聲音正常，可正常觀看學習。
-連結：https://youtu.be/ahACQV7iBsg
-按鈕文字：觀看課程 1｜畫面流程參考
-
-課程卡片 2：
-標題：20260504 Gemini LLM Gamma 2
-提醒標籤：聲音正常
-說明文字：
-第二段影片聲音正常，適合接續第一段內容進行完整學習，協助理解 NotebookLM、Gemini 與 Gamma 在課程整理與內容生成上的實際應用。
-連結：https://youtu.be/0QnElmUiUME
-按鈕文字：觀看課程 2｜接續學習
-
-課程卡片 3：
-標題：20260504 Gemini LLM Gamma 3
-提醒標籤：聲音正常
-說明文字：
-第三段影片聲音正常，適合作為完整複習與實作整理，協助學員掌握 AI 工具整合、資料整理與課程內容輸出的應用流程。
-連結：https://youtu.be/qXH-yqnPdkcbu
-按鈕文字：觀看課程 3｜完整複習
-
-課程卡片設計需求：
-- 每張卡片有圓角、陰影、淡淡漸層背景
-- 卡片內要有編號、課程標題、提醒標籤、簡短說明、觀看按鈕
-- 按鈕點擊後在新分頁開啟 YouTube 連結
-- 按鈕顏色使用草本綠或奶茶金
-- 滑鼠移過卡片時有微微浮起效果
-- 第一段影片卡片必須明顯標註「本段影片無聲音」
-- 第一段影片提醒樣式要醒目但不刺眼，可用淡金色或淡橘色提示框呈現
-- 第二段與第三段可標示「聲音正常」
-
-━━━━━━━━━━━━━━━━
-四、延伸連結引流區
-━━━━━━━━━━━━━━━━
-
-請在三個課程卡片下方，加入一區「延伸連結｜持續學習與追蹤」。
-
-區塊標題：
-延伸連結｜持續學習與追蹤
-
-區塊說明：
-歡迎加入馥芸財富學苑，一起持續學習 AI、財務規劃與幸福財商，讓工具成為專業成長與生活實踐的助力。
-
-請設計三個延伸連結卡片。
-
-延伸連結卡片 1：
-標題：馥芸財富學苑 LINE@ 官方群組
-說明：加入官方群組，接收最新課程資訊、學習提醒、活動通知與延伸資源。
-連結：https://lin.ee/6hkkECK
-按鈕文字：加入 LINE@ 官方群組
-
-延伸連結卡片 2：
-標題：財顧芸專屬連結
-說明：認識財顧芸的服務內容、課程資源與財務規劃相關整理，陪你一起建立更有方向的財務生活。
-連結：https://reurl.cc/18zQyY
-按鈕文字：前往財顧芸
-
-延伸連結卡片 3：
-標題：財顧芸 FB 粉專
-說明：追蹤更多財務規劃、AI學習、家族傳承、課程活動與生活分享。
-連結：https://www.facebook.com/IFA.Fans/
-按鈕文字：追蹤 FB 粉專
-
-延伸連結卡片設計需求：
-- 與課程卡片有視覺區隔
-- 可使用 LINE、芸、FB 作為小圖示文字
-- 按鈕點擊後在新分頁開啟
-- 設計要有品牌感、引導感，但不要像廉價廣告
-- 延伸連結區要自然放在學習頁下方
-- 讓學員看完課程後，可以繼續追蹤財顧芸、加入社群、取得後續學習資源
-
-━━━━━━━━━━━━━━━━
-五、整體視覺設計
-━━━━━━━━━━━━━━━━
-
-整體風格：
-- 高端財務顧問品牌感
-- 溫暖、專業、乾淨、有學習感
-- 草本綠、奶茶金、米白色、深灰色
-- 可加入柔和光暈、細緻金色線條、草本綠色塊
-- 不要太花俏
-- 不要廉價行銷感
-- 要適合財務顧問、AI課程、學員複習頁使用
-
-版面需求：
-- 手機、平板、電腦都要自適應
-- 最大寬度約 1000px
-- 背景使用米白色或淡綠灰色
-- 字體使用系統字體，適合繁體中文
-- 頁面區塊包含：
-  1. 密碼入口頁
-  2. 主視覺 Hero 區
-  3. 三個課程影片卡片
-  4. 延伸連結引流區
-  5. 登出按鈕
-  6. 頁尾
-
-━━━━━━━━━━━━━━━━
-六、頁尾文字
-━━━━━━━━━━━━━━━━
-
-頁尾請顯示：
-
-© 馥芸財富學苑｜財顧芸
-AI學習專區｜僅供課程學員學習使用
-
-━━━━━━━━━━━━━━━━
-七、技術要求
-━━━━━━━━━━━━━━━━
-
-請確保：
-- 密碼功能可以正常運作
-- 正確密碼為：84200994
-- localStorage 可以正常記錄登入狀態
-- 登出功能可以正常清除登入狀態
-- 錯誤密碼會顯示提醒文字：「密碼錯誤，請重新輸入」
-- 按下 Enter 也可以送出密碼
-- 所有外部連結都使用 target="_blank"
-- 所有外部連結都加上 rel="noopener noreferrer"
-- 手機版排版不可跑版
-- CSS、HTML、JavaScript 必須全部寫在同一個 HTML 檔案中
-- 不要使用外部套件
-- 不要使用需要另外安裝的框架
-- 請直接輸出完整 HTML 程式碼，不要只給片段
-- 程式碼要可以直接貼到 GitHub Pages 使用
-- HTML 檔案中不可以出現任何非程式碼雜訊
-- 第一行必須是 <!DOCTYPE html>
-- 最後一行必須是 </html>
