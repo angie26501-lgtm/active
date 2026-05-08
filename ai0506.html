@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>世新大學講座｜課後回饋表</title>
+
+  <style>
+    :root {
+      --green: #3f6f5a;
+      --deep-green: #28483b;
+      --gold: #c9a86a;
+      --cream: #f8f4ec;
+      --white: #ffffff;
+      --gray: #555;
+      --dark: #1f2a24;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Noto Sans TC", "Microsoft JhengHei", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(201,168,106,0.18), transparent 35%),
+        linear-gradient(135deg, #f8f4ec 0%, #ffffff 45%, #eef4ef 100%);
+      color: var(--dark);
+      min-height: 100vh;
+      line-height: 1.7;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 18px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 880px;
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 28px;
+      box-shadow: 0 18px 50px rgba(40, 72, 59, 0.16);
+      overflow: hidden;
+      border: 1px solid rgba(201, 168, 106, 0.3);
+    }
+
+    .hero {
+      background:
+        linear-gradient(135deg, rgba(40,72,59,0.96), rgba(63,111,90,0.94)),
+        url("https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1600&q=80");
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 52px 34px 44px;
+      text-align: center;
+      position: relative;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 7px 16px;
+      border: 1px solid rgba(255,255,255,0.45);
+      border-radius: 999px;
+      font-size: 14px;
+      letter-spacing: 1px;
+      margin-bottom: 18px;
+      background: rgba(255,255,255,0.12);
+    }
+
+    h1 {
+      font-size: clamp(30px, 5vw, 48px);
+      line-height: 1.25;
+      margin-bottom: 16px;
+      font-weight: 800;
+    }
+
+    .subtitle {
+      font-size: clamp(17px, 2.4vw, 22px);
+      color: #f3ead8;
+      margin-bottom: 14px;
+    }
+
+    .hero-note {
+      font-size: 15px;
+      opacity: 0.92;
+    }
+
+    .content {
+      padding: 38px 34px 42px;
+    }
+
+    .intro {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 30px;
+      font-size: 18px;
+      color: var(--gray);
+    }
+
+    .highlight {
+      color: var(--deep-green);
+      font-weight: 700;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 30px 0 34px;
+    }
+
+    .step {
+      background: var(--cream);
+      border-radius: 18px;
+      padding: 20px 18px;
+      text-align: center;
+      border: 1px solid rgba(201,168,106,0.28);
+    }
+
+    .step-number {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--green);
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .step-title {
+      font-weight: 700;
+      color: var(--deep-green);
+      margin-bottom: 6px;
+    }
+
+    .step-text {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .cta-area {
+      text-align: center;
+      margin-top: 28px;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--gold), #e2c88a);
+      color: #2c2416;
+      text-decoration: none;
+      font-size: 22px;
+      font-weight: 800;
+      padding: 18px 46px;
+      border-radius: 999px;
+      box-shadow: 0 12px 26px rgba(201,168,106,0.35);
+      transition: all 0.25s ease;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 32px rgba(201,168,106,0.45);
+    }
+
+    .small-note {
+      margin-top: 16px;
+      font-size: 15px;
+      color: #666;
+    }
+
+    .quote {
+      margin-top: 34px;
+      padding: 24px;
+      border-left: 5px solid var(--gold);
+      background: #fbf8f1;
+      border-radius: 16px;
+      color: var(--deep-green);
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .footer {
+      padding: 24px 34px;
+      background: #f3eee5;
+      text-align: center;
+      font-size: 14px;
+      color: #6b6255;
+    }
+
+    .brand {
+      font-weight: 700;
+      color: var(--deep-green);
+    }
+
+    @media (max-width: 720px) {
+      .hero {
+        padding: 42px 22px 36px;
+      }
+
+      .content {
+        padding: 30px 22px 36px;
+      }
+
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-button {
+        width: 100%;
+        font-size: 20px;
+        padding: 16px 24px;
+      }
+
+      .intro {
+        font-size: 16px;
+      }
+
+      .quote {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <section class="card">
+
+      <div class="hero">
+        <div class="badge">世新大學｜課後回饋表</div>
+        <h1>AI × 財務規劃 × 人生選擇權</h1>
+        <p class="subtitle">謝謝你參與這堂講座，邀請你留下最真實的回饋</p>
+        <p class="hero-note">填寫時間約 3 分鐘｜完成後可領取上課重點筆記</p>
+      </div>
+
+      <div class="content">
+        <p class="intro">
+          這份問卷是為了了解大家在講座中的收穫與感受，  
+          也幫助我們把未來的課程設計得更貼近學生的需要。  
+          你的每一份回饋，都是讓課程變得更好的重要力量。
+        </p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-title">回想課堂重點</div>
+            <div class="step-text">AI、財務規劃、理財觀念與人生選擇權</div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-title">填寫課後問卷</div>
+            <div class="step-text">選擇題＋簡短回饋，手機也能快速完成</div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-title">領取重點筆記</div>
+            <div class="step-text">完成表單後，即可獲得上課重點整理</div>
+          </div>
+        </div>
+
+        <div class="cta-area">
+          <a class="cta-button" href="https://forms.gle/rNs6mjL4mADjcH4p6" target="_blank">
+            立即填寫課後回饋表
+          </a>
+          <p class="small-note">
+            請點擊上方按鈕，將會開啟 Google 表單。
+          </p>
+        </div>
+
+        <div class="quote">
+          理財不是只為了變有錢，  
+          而是讓你慢慢擁有選擇自己人生的能力。
+        </div>
+      </div>
+
+      <div class="footer">
+        <span class="brand">馥芸財富學苑｜財顧芸</span><br />
+        陪你用更清楚的財務思維，看見更自由的人生選擇。
+      </div>
+
+    </section>
+  </main>
+</body>
+</html>
