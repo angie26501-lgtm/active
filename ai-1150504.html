@@ -1,14 +1,16 @@
-<!DOCTYPE html>
+from pathlib import Path
+html = r'''<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>馥芸財富學苑｜財顧芸｜AI學習專區</title>
+  <title>馥芸財富學苑｜財顧芸｜AI學習成果入口</title>
 
   <style>
     :root {
       --herbal-green: #5f7f68;
       --deep-green: #3f5f4d;
+      --forest: #274234;
       --milk-tea-gold: #c8a66a;
       --soft-gold: #ead8ad;
       --cream: #f8f3e9;
@@ -21,6 +23,7 @@
       --warning-text: #8b5e1f;
       --shadow: 0 18px 45px rgba(47, 52, 48, 0.12);
       --card-shadow: 0 14px 35px rgba(63, 95, 77, 0.13);
+      --button-shadow: 0 10px 0 rgba(39, 66, 52, .18), 0 18px 26px rgba(63, 95, 77, 0.18);
     }
 
     * {
@@ -29,26 +32,25 @@
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       min-height: 100vh;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC",
         "Microsoft JhengHei", "PingFang TC", sans-serif;
       color: var(--deep-gray);
       background:
-        radial-gradient(circle at top left, rgba(200, 166, 106, 0.22), transparent 32%),
-        radial-gradient(circle at bottom right, rgba(95, 127, 104, 0.2), transparent 36%),
+        radial-gradient(circle at 8% 8%, rgba(200, 166, 106, 0.28), transparent 30%),
+        radial-gradient(circle at 88% 18%, rgba(95, 127, 104, 0.18), transparent 28%),
+        radial-gradient(circle at 18% 90%, rgba(200, 166, 106, 0.12), transparent 25%),
         linear-gradient(135deg, var(--cream), var(--light-green-gray));
       line-height: 1.7;
     }
 
-    a {
-      text-decoration: none;
-    }
-
-    button,
-    input {
-      font-family: inherit;
-    }
+    a { text-decoration: none; }
+    button, input { font-family: inherit; }
 
     .page {
       min-height: 100vh;
@@ -58,17 +60,15 @@
       padding: 28px;
     }
 
-    .login-page {
-      display: flex;
-    }
+    .login-page { display: flex; }
 
     .login-card {
       width: 100%;
-      max-width: 460px;
-      padding: 42px 34px;
-      border-radius: 28px;
+      max-width: 480px;
+      padding: 44px 34px;
+      border-radius: 32px;
       background:
-        linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(248, 243, 233, 0.9));
+        linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(248, 243, 233, 0.9));
       box-shadow: var(--shadow);
       border: 1px solid rgba(200, 166, 106, 0.28);
       text-align: center;
@@ -91,10 +91,10 @@
     .login-card::after {
       content: "";
       position: absolute;
-      right: -52px;
-      bottom: -52px;
-      width: 150px;
-      height: 150px;
+      right: -58px;
+      bottom: -58px;
+      width: 160px;
+      height: 160px;
       border-radius: 50%;
       background: rgba(200, 166, 106, 0.14);
       z-index: 0;
@@ -106,17 +106,17 @@
     }
 
     .brand-mark {
-      width: 76px;
-      height: 76px;
+      width: 82px;
+      height: 82px;
       margin: 0 auto 22px;
       border-radius: 50%;
-      background: linear-gradient(145deg, var(--deep-green), var(--herbal-green));
+      background: linear-gradient(145deg, var(--forest), var(--herbal-green));
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--soft-gold);
-      font-size: 30px;
-      font-weight: 800;
+      font-size: 34px;
+      font-weight: 900;
       box-shadow: 0 12px 28px rgba(63, 95, 77, 0.24);
     }
 
@@ -130,7 +130,7 @@
 
     .login-card h2 {
       font-size: 20px;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--deep-gray);
       margin-bottom: 12px;
     }
@@ -151,9 +151,9 @@
     .password-box input {
       width: 100%;
       padding: 15px 18px;
-      border-radius: 16px;
+      border-radius: 18px;
       border: 1px solid rgba(95, 127, 104, 0.28);
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.9);
       font-size: 16px;
       outline: none;
       color: var(--deep-gray);
@@ -168,20 +168,20 @@
     .login-button {
       border: none;
       cursor: pointer;
-      padding: 15px 18px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, var(--deep-green), var(--herbal-green));
+      padding: 15px 18px 16px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--forest), var(--herbal-green));
       color: var(--white);
       font-size: 16px;
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: 0.08em;
       transition: 0.25s ease;
-      box-shadow: 0 12px 26px rgba(63, 95, 77, 0.22);
+      box-shadow: var(--button-shadow);
     }
 
     .login-button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 16px 32px rgba(63, 95, 77, 0.28);
+      box-shadow: 0 12px 0 rgba(39, 66, 52, .17), 0 22px 32px rgba(63, 95, 77, 0.25);
     }
 
     .error-message {
@@ -189,7 +189,7 @@
       color: #b64545;
       font-size: 14px;
       margin-top: 12px;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .secure-note {
@@ -206,19 +206,22 @@
 
     .main-container {
       width: 100%;
-      max-width: 1000px;
+      max-width: 1180px;
       margin: 0 auto;
     }
 
     .hero {
-      text-align: center;
-      padding: 44px 24px 36px;
-      border-radius: 32px;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 26px;
+      align-items: stretch;
+      padding: 34px;
+      border-radius: 34px;
       background:
-        linear-gradient(145deg, rgba(255, 255, 255, 0.86), rgba(248, 243, 233, 0.72));
-      border: 1px solid rgba(200, 166, 106, 0.22);
+        linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(248, 243, 233, 0.76));
+      border: 1px solid rgba(200, 166, 106, 0.24);
       box-shadow: var(--shadow);
-      margin-bottom: 34px;
+      margin-bottom: 30px;
       position: relative;
       overflow: hidden;
     }
@@ -226,12 +229,17 @@
     .hero::after {
       content: "";
       position: absolute;
-      right: -70px;
-      top: -70px;
-      width: 180px;
-      height: 180px;
+      right: -80px;
+      top: -80px;
+      width: 210px;
+      height: 210px;
       border-radius: 50%;
       background: rgba(200, 166, 106, 0.16);
+    }
+
+    .hero-copy, .hero-panel {
+      position: relative;
+      z-index: 1;
     }
 
     .hero-badge {
@@ -242,170 +250,101 @@
       background: rgba(95, 127, 104, 0.12);
       color: var(--deep-green);
       font-size: 14px;
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: 0.08em;
     }
 
     .hero h1 {
-      font-size: clamp(32px, 5vw, 48px);
-      line-height: 1.25;
+      font-size: clamp(32px, 5vw, 50px);
+      line-height: 1.22;
       color: var(--deep-green);
       letter-spacing: 0.04em;
       margin-bottom: 12px;
-      position: relative;
-      z-index: 1;
     }
 
     .hero .subtitle {
       font-size: 20px;
       color: var(--deep-gray);
-      font-weight: 700;
+      font-weight: 800;
       margin-bottom: 10px;
-      position: relative;
-      z-index: 1;
     }
 
     .hero .course-title {
       font-size: 18px;
       color: var(--medium-gray);
-      margin-bottom: 12px;
-      position: relative;
-      z-index: 1;
+      margin-bottom: 14px;
     }
 
     .hero .hero-desc {
       max-width: 720px;
-      margin: 0 auto;
       color: var(--medium-gray);
       font-size: 15px;
-      position: relative;
-      z-index: 1;
     }
 
-    .course-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-      margin-bottom: 34px;
-    }
-
-    .course-card {
+    .hero-panel {
+      border-radius: 28px;
+      padding: 24px;
       background:
-        linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(237, 242, 236, 0.85));
-      border-radius: 26px;
-      padding: 28px 24px;
-      box-shadow: var(--card-shadow);
-      border: 1px solid rgba(95, 127, 104, 0.14);
-      transition: 0.28s ease;
-      position: relative;
-      overflow: hidden;
-      min-height: 330px;
+        linear-gradient(145deg, rgba(63, 95, 77, 0.95), rgba(39, 66, 52, 0.96));
+      color: #fff;
+      box-shadow: 0 18px 38px rgba(39, 66, 52, 0.22);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      min-height: 250px;
     }
 
-    .course-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 5px;
-      background: linear-gradient(90deg, var(--herbal-green), var(--milk-tea-gold));
-    }
-
-    .course-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 22px 46px rgba(63, 95, 77, 0.2);
-    }
-
-    .course-number {
-      width: 44px;
-      height: 44px;
-      border-radius: 16px;
-      background: rgba(200, 166, 106, 0.16);
-      color: var(--deep-green);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .hero-panel .mini-title {
+      font-size: 14px;
+      letter-spacing: .12em;
+      color: var(--soft-gold);
       font-weight: 900;
-      margin-bottom: 16px;
+      margin-bottom: 10px;
     }
 
-    .course-card h3 {
-      font-size: 20px;
-      line-height: 1.45;
-      color: var(--deep-green);
-      margin-bottom: 12px;
+    .hero-panel h2 {
+      font-size: 26px;
+      line-height: 1.35;
+      margin-bottom: 10px;
     }
 
-    .tag {
-      display: inline-block;
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 800;
-      margin-bottom: 14px;
-    }
-
-    .tag.warning {
-      background: var(--warning-bg);
-      border: 1px solid var(--warning-border);
-      color: var(--warning-text);
-    }
-
-    .tag.normal {
-      background: rgba(95, 127, 104, 0.12);
-      border: 1px solid rgba(95, 127, 104, 0.18);
-      color: var(--deep-green);
-    }
-
-    .course-card p {
-      color: var(--medium-gray);
+    .hero-panel p {
+      color: rgba(255,255,255,.78);
       font-size: 15px;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
 
-    .warning-note {
-      padding: 12px 13px;
-      border-radius: 16px;
-      background: var(--warning-bg);
-      border: 1px solid rgba(224, 184, 106, 0.68);
-      color: var(--warning-text);
-      font-weight: 600;
+    .quick-nav {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 22px;
     }
 
-    .watch-button {
+    .pill-link {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
-      padding: 13px 16px;
-      border-radius: 15px;
-      font-size: 15px;
-      font-weight: 800;
-      letter-spacing: 0.06em;
-      color: var(--white);
-      background: linear-gradient(135deg, var(--deep-green), var(--herbal-green));
-      box-shadow: 0 12px 24px rgba(63, 95, 77, 0.2);
-      transition: 0.25s ease;
+      padding: 11px 15px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(95,127,104,.14);
+      color: var(--deep-green);
+      font-weight: 900;
+      font-size: 14px;
+      transition: .24s ease;
+      box-shadow: 0 8px 18px rgba(63, 95, 77, 0.11);
     }
 
-    .watch-button.gold {
-      background: linear-gradient(135deg, #b7924f, var(--milk-tea-gold));
-      box-shadow: 0 12px 24px rgba(200, 166, 106, 0.22);
-    }
-
-    .watch-button:hover {
+    .pill-link:hover {
       transform: translateY(-2px);
-      filter: brightness(1.03);
+      background: #fff;
     }
 
-    .link-section {
-      margin: 8px 0 34px;
+    .section {
+      margin: 0 0 34px;
       padding: 34px 26px;
-      border-radius: 30px;
+      border-radius: 32px;
       background:
         linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(248, 243, 233, 0.78));
       border: 1px solid rgba(200, 166, 106, 0.22);
@@ -441,36 +380,150 @@
       font-size: 16px;
     }
 
+    .course-grid,
     .link-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 22px;
     }
 
-    .link-card {
-      padding: 26px 22px;
-      border-radius: 24px;
+    .course-card,
+    .link-card,
+    .student-card {
       background:
-        linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(237, 242, 236, 0.82));
-      border: 1px solid rgba(95, 127, 104, 0.14);
+        linear-gradient(145deg, rgba(255, 255, 255, 0.97), rgba(237, 242, 236, 0.84));
+      border-radius: 26px;
+      padding: 26px 22px;
       box-shadow: var(--card-shadow);
+      border: 1px solid rgba(95, 127, 104, 0.14);
       transition: 0.28s ease;
+      position: relative;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-height: 260px;
     }
 
-    .link-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 42px rgba(63, 95, 77, 0.18);
+    .course-card {
+      min-height: 318px;
+    }
+
+    .course-card::before,
+    .link-card::before,
+    .student-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--herbal-green), var(--milk-tea-gold));
+    }
+
+    .course-card:hover,
+    .link-card:hover,
+    .student-card:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 22px 46px rgba(63, 95, 77, 0.2);
+    }
+
+    .course-number,
+    .student-number {
+      width: 46px;
+      height: 46px;
+      border-radius: 17px;
+      background: rgba(200, 166, 106, 0.16);
+      color: var(--deep-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    .course-card h3,
+    .link-card h3,
+    .student-card h3 {
+      font-size: 19px;
+      line-height: 1.45;
+      color: var(--deep-green);
+      margin-bottom: 10px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    .tag.warning {
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      color: var(--warning-text);
+    }
+
+    .tag.normal {
+      background: rgba(95, 127, 104, 0.12);
+      border: 1px solid rgba(95, 127, 104, 0.18);
+      color: var(--deep-green);
+    }
+
+    .course-card p,
+    .link-card p,
+    .student-card p {
+      color: var(--medium-gray);
+      font-size: 15px;
+      margin-bottom: 20px;
+    }
+
+    .warning-note {
+      padding: 12px 13px;
+      border-radius: 16px;
+      background: var(--warning-bg);
+      border: 1px solid rgba(224, 184, 106, 0.68);
+      color: var(--warning-text);
+      font-weight: 700;
+    }
+
+    .watch-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 13px 16px 14px;
+      border-radius: 16px;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      color: var(--white);
+      background: linear-gradient(135deg, var(--forest), var(--herbal-green));
+      box-shadow: var(--button-shadow);
+      transition: 0.25s ease;
+      text-align: center;
+    }
+
+    .watch-button.gold {
+      background: linear-gradient(135deg, #a78243, var(--milk-tea-gold));
+      box-shadow: 0 9px 0 rgba(167, 130, 67, .18), 0 16px 26px rgba(200, 166, 106, 0.22);
+    }
+
+    .watch-button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.03);
+    }
+
+    .link-card {
+      min-height: 254px;
     }
 
     .link-icon {
-      width: 54px;
-      height: 54px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, var(--deep-green), var(--herbal-green));
+      width: 56px;
+      height: 56px;
+      border-radius: 19px;
+      background: linear-gradient(135deg, var(--forest), var(--herbal-green));
       color: var(--soft-gold);
       display: flex;
       align-items: center;
@@ -478,19 +531,175 @@
       font-weight: 900;
       margin-bottom: 18px;
       box-shadow: 0 12px 24px rgba(63, 95, 77, 0.18);
+      letter-spacing: .02em;
+      font-size: 13px;
     }
 
-    .link-card h3 {
-      font-size: 19px;
+    .portfolio-feature {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 22px;
+      align-items: stretch;
+      margin-bottom: 24px;
+    }
+
+    .feature-card {
+      border-radius: 28px;
+      padding: 28px;
+      background:
+        linear-gradient(135deg, rgba(63, 95, 77, .96), rgba(39, 66, 52, .96));
+      color: #fff;
+      box-shadow: 0 20px 42px rgba(39, 66, 52, .22);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::after {
+      content: "";
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      right: -80px;
+      bottom: -90px;
+      background: rgba(200,166,106,.18);
+    }
+
+    .feature-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .feature-card .feature-label {
+      color: var(--soft-gold);
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing: .12em;
+      margin-bottom: 12px;
+    }
+
+    .feature-card h3 {
+      font-size: 30px;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .feature-card p {
+      color: rgba(255,255,255,.78);
+      margin-bottom: 22px;
+    }
+
+    .stats-box {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .stat {
+      border-radius: 22px;
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(95,127,104,.14);
+      padding: 22px 16px;
+      box-shadow: var(--card-shadow);
+      text-align: center;
+    }
+
+    .stat b {
+      display: block;
+      font-size: 34px;
       color: var(--deep-green);
-      margin-bottom: 10px;
-      line-height: 1.45;
+      line-height: 1.1;
     }
 
-    .link-card p {
+    .stat span {
+      display: block;
       color: var(--medium-gray);
+      font-weight: 800;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    .student-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin: 8px 0 22px;
+      padding: 14px;
+      border-radius: 22px;
+      background: rgba(255,255,255,.62);
+      border: 1px solid rgba(95,127,104,.12);
+    }
+
+    .student-toolbar input {
+      width: min(420px, 100%);
+      padding: 13px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(95,127,104,.22);
+      outline: none;
+      background: #fff;
+      color: var(--deep-gray);
       font-size: 15px;
-      margin-bottom: 20px;
+    }
+
+    .student-toolbar input:focus {
+      border-color: var(--herbal-green);
+      box-shadow: 0 0 0 4px rgba(95,127,104,.12);
+    }
+
+    .toolbar-note {
+      color: var(--medium-gray);
+      font-size: 14px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .student-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .student-card {
+      min-height: 204px;
+      padding: 23px 19px;
+    }
+
+    .student-card h3 {
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+
+    .student-card p {
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    .student-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 13px;
+    }
+
+    .student-number {
+      width: 40px;
+      height: 40px;
+      border-radius: 15px;
+      margin-bottom: 0;
+      flex: 0 0 auto;
+    }
+
+    .student-label {
+      font-size: 12px;
+      color: var(--medium-gray);
+      font-weight: 900;
+      letter-spacing: .08em;
+    }
+
+    .student-card .watch-button {
+      padding: 11px 13px 12px;
+      font-size: 14px;
     }
 
     .logout-area {
@@ -500,13 +709,14 @@
 
     .logout-button {
       border: 1px solid rgba(95, 127, 104, 0.28);
-      background: rgba(255, 255, 255, 0.58);
+      background: rgba(255, 255, 255, 0.66);
       color: var(--deep-green);
       border-radius: 999px;
       padding: 10px 18px;
       font-size: 14px;
       cursor: pointer;
       transition: 0.25s ease;
+      font-weight: 800;
     }
 
     .logout-button:hover {
@@ -523,33 +733,44 @@
 
     footer strong {
       color: var(--deep-green);
-      font-weight: 800;
+      font-weight: 900;
     }
 
-    @media (max-width: 860px) {
-      .course-grid,
-      .link-grid {
+    .hide {
+      display: none !important;
+    }
+
+    @media (max-width: 1080px) {
+      .student-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 920px) {
+      .hero,
+      .portfolio-feature {
         grid-template-columns: 1fr;
       }
 
-      .course-card,
-      .link-card {
-        min-height: auto;
+      .course-grid,
+      .link-grid,
+      .student-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
 
-      .hero {
-        padding: 36px 22px 28px;
+      .stats-box {
+        grid-template-columns: repeat(3, 1fr);
       }
     }
 
-    @media (max-width: 520px) {
+    @media (max-width: 620px) {
       .page {
         padding: 20px;
       }
 
       .login-card {
         padding: 36px 24px;
-        border-radius: 24px;
+        border-radius: 26px;
       }
 
       .login-card h1 {
@@ -564,19 +785,41 @@
         padding: 30px 16px 24px;
       }
 
-      .hero {
+      .hero,
+      .section {
+        padding: 26px 18px;
         border-radius: 26px;
       }
 
-      .course-card,
-      .link-card {
+      .hero-panel,
+      .feature-card {
+        border-radius: 24px;
         padding: 24px 20px;
+      }
+
+      .course-grid,
+      .link-grid,
+      .student-grid,
+      .stats-box {
+        grid-template-columns: 1fr;
+      }
+
+      .course-card,
+      .link-card,
+      .student-card {
+        min-height: auto;
+        padding: 23px 18px;
         border-radius: 22px;
       }
 
-      .link-section {
-        padding: 28px 20px;
-        border-radius: 24px;
+      .student-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .toolbar-note {
+        white-space: normal;
+        text-align: center;
       }
     }
   </style>
@@ -588,8 +831,8 @@
       <div class="brand-mark">芸</div>
 
       <h1>馥芸財富學苑</h1>
-      <h2>財顧芸｜AI學習專區</h2>
-      <p>公勝包班｜浩茂AI科技</p>
+      <h2>財顧芸｜AI學習成果入口</h2>
+      <p>公勝包班｜浩茂AI科技｜學員作品展示牆</p>
 
       <div class="password-box">
         <input
@@ -598,7 +841,7 @@
           placeholder="請輸入課程密碼"
           autocomplete="off"
         />
-        <button type="button" class="login-button" id="loginButton">進入學習專區</button>
+        <button type="button" class="login-button" id="loginButton">進入學習成果入口</button>
       </div>
 
       <div id="errorMessage" class="error-message"></div>
@@ -609,78 +852,358 @@
   <main id="mainPage" class="main-page">
     <div class="main-container">
       <section class="hero">
-        <div class="hero-badge">AI Learning Area</div>
-        <h1>馥芸財富學苑｜財顧芸</h1>
-        <div class="subtitle">公勝包班（浩茂AI科技）</div>
-        <div class="course-title">2026/05/04 NotebookLM 課程連結整理</div>
-        <p class="hero-desc">
-          本頁整理 2026/05/04 公勝 AI 包班課程學習連結，提供學員課後複習與延伸學習使用，請勿轉分享。
-        </p>
-      </section>
+        <div class="hero-copy">
+          <div class="hero-badge">AI Learning Portfolio</div>
+          <h1>馥芸財富學苑｜財顧芸</h1>
+          <div class="subtitle">公勝包班（浩茂AI科技）</div>
+          <div class="course-title">NotebookLM × Gemini × Gamma｜AI 學習成果入口</div>
+          <p class="hero-desc">
+            本頁整合課程複習影片、延伸連結與學員作品集，協助學員課後複習、彼此觀摩，
+            也讓每一份完成的作品都能被看見、被記錄、被延伸應用。
+          </p>
 
-      <section class="course-grid">
-        <article class="course-card">
+          <nav class="quick-nav" aria-label="快速導覽">
+            <a class="pill-link" href="#courseVideos">課程影片</a>
+            <a class="pill-link" href="#studentPortfolio">學員作品</a>
+            <a class="pill-link" href="#followLinks">延伸連結</a>
+          </nav>
+        </div>
+
+        <aside class="hero-panel">
           <div>
-            <div class="course-number">01</div>
-            <h3>20260504 Gemini LLM Gamma 1</h3>
-            <div class="tag warning">⚠️ 本段影片無聲音</div>
-            <p class="warning-note">
-              ⚠️ 第一段影片因當時錄製設定未完成，所以影片沒有聲音。建議學員可先作為畫面流程參考；第二段與第三段影片聲音正常，可正常觀看學習。
-            </p>
-          </div>
-
-          <a
-            class="watch-button"
-            href="https://youtu.be/ahACQV7iBsg"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            觀看課程 1
-          </a>
-        </article>
-
-        <article class="course-card">
-          <div>
-            <div class="course-number">02</div>
-            <h3>20260504 Gemini LLM Gamma 2</h3>
-            <div class="tag normal">聲音正常</div>
+            <div class="mini-title">PORTFOLIO WALL</div>
+            <h2>從學習到輸出，讓 AI 變成專業放大器</h2>
             <p>
-              第二段影片聲音正常，適合接續第一段內容進行完整學習與複習。
+              這不是單純放連結，而是一座能持續累積的成果展牆：
+              看見每位學員的專業定位、品牌表達與 AI 應用成果。
             </p>
           </div>
-
           <a
             class="watch-button gold"
-            href="https://youtu.be/0QnElmUiUME"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#studentPortfolio"
           >
-            觀看課程 2
+            查看學員作品
           </a>
-        </article>
-
-        <article class="course-card">
-          <div>
-            <div class="course-number">03</div>
-            <h3>20260504 Gemini LLM Gamma 3</h3>
-            <div class="tag normal">聲音正常</div>
-            <p>
-              第三段影片聲音正常，協助學員完成 NotebookLM、Gemini 與 Gamma 的整合應用複習。
-            </p>
-          </div>
-
-          <a
-            class="watch-button"
-            href="https://youtu.be/qXH-yqnPdkcbu"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            觀看課程 3
-          </a>
-        </article>
+        </aside>
       </section>
 
-      <section class="link-section">
+      <section id="courseVideos" class="section">
+        <div class="section-header">
+          <span>Course Replay</span>
+          <h2>課程影片｜課後複習</h2>
+          <p>保留原課程入口，讓學員可以快速回到三段課程影片進行複習。</p>
+        </div>
+
+        <div class="course-grid">
+          <article class="course-card">
+            <div>
+              <div class="course-number">01</div>
+              <h3>20260504 Gemini LLM Gamma 1</h3>
+              <div class="tag warning">⚠️ 本段影片無聲音</div>
+              <p class="warning-note">
+                第一段影片因當時錄製設定未完成，所以影片沒有聲音。建議先作為畫面流程參考；第二段與第三段影片聲音正常。
+              </p>
+            </div>
+
+            <a
+              class="watch-button"
+              href="https://youtu.be/ahACQV7iBsg"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              觀看課程 1
+            </a>
+          </article>
+
+          <article class="course-card">
+            <div>
+              <div class="course-number">02</div>
+              <h3>20260504 Gemini LLM Gamma 2</h3>
+              <div class="tag normal">聲音正常</div>
+              <p>
+                第二段影片聲音正常，適合接續第一段內容進行完整學習與複習。
+              </p>
+            </div>
+
+            <a
+              class="watch-button gold"
+              href="https://youtu.be/0QnElmUiUME"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              觀看課程 2
+            </a>
+          </article>
+
+          <article class="course-card">
+            <div>
+              <div class="course-number">03</div>
+              <h3>20260504 Gemini LLM Gamma 3</h3>
+              <div class="tag normal">聲音正常</div>
+              <p>
+                第三段影片聲音正常，協助學員完成 NotebookLM、Gemini 與 Gamma 的整合應用複習。
+              </p>
+            </div>
+
+            <a
+              class="watch-button"
+              href="https://youtu.be/qXH-yqnPdkcbu"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              觀看課程 3
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <section id="studentPortfolio" class="section">
+        <div class="section-header">
+          <span>Student Showcase</span>
+          <h2>學員作品集｜AI 專業品牌成果展</h2>
+          <p>集中展示學員 Gamma 網頁作品，方便觀摩、回訪與後續優化。</p>
+        </div>
+
+        <div class="portfolio-feature">
+          <article class="feature-card">
+            <div class="feature-label">PADLET COLLECTION</div>
+            <h3>課程作品總牆</h3>
+            <p>
+              Padlet 作品集可作為課程成果總入口，適合公開展示、內部回顧與學員彼此學習。
+            </p>
+            <a
+              class="watch-button gold"
+              href="https://padlet.com/angie26501/1150415-ai-pggf6ogtl8fekall"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              前往 Padlet 作品集
+            </a>
+          </article>
+
+          <div class="stats-box">
+            <div class="stat">
+              <b>22</b>
+              <span>學員作品</span>
+            </div>
+            <div class="stat">
+              <b>1</b>
+              <span>總作品牆</span>
+            </div>
+            <div class="stat">
+              <b>AI</b>
+              <span>專業品牌輸出</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="student-toolbar">
+          <input id="studentSearch" type="search" placeholder="搜尋學員姓名，例如：桂琴、欣婷、財顧芸" />
+          <div class="toolbar-note">點擊卡片即可開啟作品網頁</div>
+        </div>
+
+        <div class="student-grid" id="studentGrid">
+          <article class="student-card" data-name="媛馨">
+            <div>
+              <div class="student-meta"><div class="student-number">01</div><div class="student-label">STUDENT WORK</div></div>
+              <h3>媛馨</h3>
+              <p>AI 財務品牌作品頁</p>
+            </div>
+            <a class="watch-button" href="https://hilarious-rabbit-yq9km7c.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
+          </article>
+
+          <article class="student-card" data-name="加真">
+            <div>
+              <div class="student-meta"><div class="student-number">02</div><div class="student-label">STUDENT WORK</div></div>
+              <h3>加真</h3>
+              <p>AI 財務品牌作品頁</p>
+            </div>
+            <a class="watch-button gold" href="https://bruised-fish-uq25yt8.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
+          </article>
+
+          <article class="student-card" data-name="玲妤">
+            <div>
+              <div class="student-meta"><div class="student-number">03</div><div class="student-label">STUDENT WORK</div></div>
+              <h3>玲妤</h3>
+              <p>AI 財務品牌作品頁</p>
+            </div>
+            <a class="watch-button" href="https://lingyu-finance-fwmhayc.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
+          </article>
+
+          <article class="student-card" data-name="冠蓉">
+            <div>
+              <div class="student-meta"><div class="student-number">04</div><div class="student-label">STUDENT WORK</div></div>
+              <h3>冠蓉</h3>
+              <p>AI 財務品牌作品頁</p>
+            </div>
+            <a class="watch-button gold" href="https://huang-guanrong-cfp-7rjdbmu.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
+          </article>
+
+          <article class="student-card" data-name="淑貞">
+            <div>
+              <div class="student-meta"><div class="student-number">05</div><div class="student-label">STUDENT WORK</div></div>
+              <h3>淑貞</h3>
+              <p>AI 財務品牌作品頁</p>
+            </div>
+            <a class="watch-button" href="https://jane-finance-jmqjkn8.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
+          </article>
+
+          <article class="student-card" data-name="秀惠">
+            <div>
+              <div class="student-meta"><div class="student-number">06</div><div class="student-label">STUDENT WORK</div></div>
+              <h3>秀惠</h3>
+              <p>AI 財務品牌作品頁</p>
+            </div>
+            <a class="watch-button gold" href="https://xiuhui-finance-9vbayr8.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
+          </article>
+
+          <article class="student-card" data-name="佩珠">
+            <div>
+              <div class="student-meta"><div class="student-number">07</div><div class="student-label">STUDENT WORK</div></div>
+              <h3>佩珠</h3>
+              <p>AI 財務品牌作品頁</p>
+            </div>
+            <a class="watch-button" href="https://pei-chu-hong-finance-pokvmtd.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
+          </article>
+
+          <article class="student-card" data-name="玉敏">
+            <div>
+              <div class="student-meta"><div class="student-number">08</div><div class="student-label">STUDENT WORK</div></div>
+              <h3>玉敏</h3>
+              <p>AI 財務品牌作品頁</p>
+            </div>
+            <a class="watch-button gold" href="https://alice-finance-structure-rooz9ri.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
+          </article>
+
+          <article class="student-card" data-name="筱雯">
+            <div>
+              <div class="student-meta"><div class="student-number">09</div><div class="student-label">STUDENT WORK</div></div>
+              <h3>筱雯</h3>
+              <p>AI 財務品牌作品頁</p>
+            </div>
+            <a class="watch-button" href="https://lin-xiaowen-finance-tnht91i.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
+          </article>
+
+          <article class="student-card" data-name="桂琴">
+            <div>
+              <div class="student-meta"><div class="student-number">10</div><div class="student-label">STUDENT WORK</div></div>
+              <h3>桂琴</h3>
+              <p>AI 財務品牌作品頁</p>
+            </div>
+            <a class="watch-button gold" href="https://guiqin-chuancheng-n0il9h1.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
+          </article>
+
+          <article class="student-card" data-name="欣婷">
+            <div>
+              <div class="student-meta"><div class="student-number">11</div><div class="student-label">STUDENT WORK</div></div>
+              <h3>欣婷</h3>
+              <p>AI 財務品牌作品頁</p>
+            </div>
+            <a class="watch-button" href="https://puzzled-cow-zb23brm.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
+          </article>
+
+          <article class="student-card" data-name="麗婷">
+            <div>
+              <div class="student-meta"><div class="student-number">12</div><div class="student-label">STUDENT WORK</div></div>
+              <h3>麗婷</h3>
+              <p>AI 財務品牌作品頁</p>
+            </div>
+            <a class="watch-button gold" href="https://manbu-caidao-tjadtsn.gamma.site" target="_blank" rel="noopener noreferrer">開啟作品</a>
+          </article>
+
+          <article class="student-card" data-name="安芯">
+            <div>
+              <div class="student-meta"><div class="student-number">13</div><div class="student-label">STUDENT WORK</div></div>
+              <h3>安芯</h3>
+              <p>AI 財務品牌作品頁</p>
+            </div>
+            <a class="watch-button" href="https://sophie-lin-wealth-fwt5ofx.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
+          </article>
+
+          <article class="student-card" data-name="陳盈慧 盈慧">
+            <div>
+              <div class="student-meta"><div class="student-number">14</div><div class="student-label">STUDENT WORK</div></div>
+              <h3>陳盈慧</h3>
+              <p>AI 財務品牌作品頁</p>
+            </div>
+            <a class="watch-button gold" href="https://yinghui-finance-3lgmg6u.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
+          </article>
+
+          <article class="student-card" data-name="財顧芸 陳芸琪 芸琪">
+            <div>
+              <div class="student-meta"><div class="student-number">15</div><div class="student-label">STUDENT WORK</div></div>
+              <h3>財顧芸</h3>
+              <p>馥芸財富學苑品牌作品頁</p>
+            </div>
+            <a class="watch-button" href="https://polite-cetacean-b4m8g82.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
+          </article>
+
+          <article class="student-card" data-name="敏玉">
+            <div>
+              <div class="student-meta"><div class="student-number">16</div><div class="student-label">STUDENT WORK</div></div>
+              <h3>敏玉</h3>
+              <p>AI 財務品牌作品頁</p>
+            </div>
+            <a class="watch-button gold" href="https://fang-min-yu-finance-elnn3hz.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
+          </article>
+
+          <article class="student-card" data-name="桂琴">
+            <div>
+              <div class="student-meta"><div class="student-number">17</div><div class="student-label">STUDENT WORK</div></div>
+              <h3>桂琴</h3>
+              <p>AI 財富品牌作品頁</p>
+            </div>
+            <a class="watch-button" href="https://guiqin-wealth-25x3a00.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
+          </article>
+
+          <article class="student-card" data-name="秀綾">
+            <div>
+              <div class="student-meta"><div class="student-number">18</div><div class="student-label">STUDENT WORK</div></div>
+              <h3>秀綾</h3>
+              <p>AI 資產品牌作品頁</p>
+            </div>
+            <a class="watch-button gold" href="https://zhangxiuling-assets-cduzlxo.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
+          </article>
+
+          <article class="student-card" data-name="黃雅玲 雅玲">
+            <div>
+              <div class="student-meta"><div class="student-number">19</div><div class="student-label">STUDENT WORK</div></div>
+              <h3>黃雅玲</h3>
+              <p>AI 財務設計作品頁</p>
+            </div>
+            <a class="watch-button" href="https://tinas-finance-design-4lev820.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
+          </article>
+
+          <article class="student-card" data-name="楊仁杰 仁杰">
+            <div>
+              <div class="student-meta"><div class="student-number">20</div><div class="student-label">STUDENT WORK</div></div>
+              <h3>楊仁杰</h3>
+              <p>AI 財務品牌作品頁</p>
+            </div>
+            <a class="watch-button gold" href="https://gamma.app/docs/-0v5t9z54ni64y69" target="_blank" rel="noopener noreferrer">開啟作品</a>
+          </article>
+
+          <article class="student-card" data-name="姚曉萍 曉萍">
+            <div>
+              <div class="student-meta"><div class="student-number">21</div><div class="student-label">STUDENT WORK</div></div>
+              <h3>姚曉萍</h3>
+              <p>AI 財務陪跑作品頁</p>
+            </div>
+            <a class="watch-button" href="https://joy-finance-runner-h4dvcaj.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
+          </article>
+
+          <article class="student-card" data-name="何婕如 婕如">
+            <div>
+              <div class="student-meta"><div class="student-number">22</div><div class="student-label">STUDENT WORK</div></div>
+              <h3>何婕如</h3>
+              <p>AI 財富品牌作品頁</p>
+            </div>
+            <a class="watch-button gold" href="https://jie-ru-wealth-w245t5l.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
+          </article>
+        </div>
+      </section>
+
+      <section id="followLinks" class="section">
         <div class="section-header">
           <span>Follow & Learn</span>
           <h2>延伸連結｜持續學習與追蹤</h2>
@@ -742,12 +1265,12 @@
       </section>
 
       <div class="logout-area">
-        <button type="button" class="logout-button" id="logoutButton">登出學習專區</button>
+        <button type="button" class="logout-button" id="logoutButton">登出學習成果入口</button>
       </div>
 
       <footer>
         <strong>© 馥芸財富學苑｜財顧芸</strong><br />
-        AI學習專區｜僅供課程學員學習使用
+        AI學習成果入口｜僅供課程學員學習使用
       </footer>
     </div>
   </main>
@@ -763,6 +1286,8 @@
       const errorMessage = document.getElementById("errorMessage");
       const loginButton = document.getElementById("loginButton");
       const logoutButton = document.getElementById("logoutButton");
+      const studentSearch = document.getElementById("studentSearch");
+      const studentCards = Array.from(document.querySelectorAll(".student-card"));
 
       function showMainPage() {
         loginPage.style.display = "none";
@@ -795,9 +1320,20 @@
         passwordInput.focus();
       }
 
-      loginButton.addEventListener("click", checkPassword);
+      function filterStudents() {
+        const keyword = studentSearch.value.trim().toLowerCase();
 
+        studentCards.forEach(function(card) {
+          const name = (card.getAttribute("data-name") || "").toLowerCase();
+          const text = card.textContent.toLowerCase();
+          const isMatched = !keyword || name.includes(keyword) || text.includes(keyword);
+          card.classList.toggle("hide", !isMatched);
+        });
+      }
+
+      loginButton.addEventListener("click", checkPassword);
       logoutButton.addEventListener("click", logout);
+      studentSearch.addEventListener("input", filterStudents);
 
       passwordInput.addEventListener("keydown", function (event) {
         if (event.key === "Enter") {
@@ -819,3 +1355,7 @@
   </script>
 </body>
 </html>
+'''
+path = Path('/mnt/data/fuyun_ai_portfolio_entry.html')
+path.write_text(html, encoding='utf-8')
+print(f"已建立檔案：{path}")
