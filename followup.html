@@ -1,19 +1,20 @@
-以下是依照你貼上的完整需求整理出的 `active/followup.html` 單檔版本，可直接覆蓋使用。需求來源已依附檔內容整理。
-
-```html
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#183c34" />
   <title>馥芸財富學苑｜活動量管理名單設定與跟進系統</title>
+
   <style>
     :root {
-      --green-dark: #183c34;
-      --green: #2f6f5e;
-      --green-soft: #e8f3ee;
-      --gold: #c8a96a;
-      --gold-soft: #f8efd9;
+      --green-900: #183c34;
+      --green-800: #225446;
+      --green-700: #2f6f5e;
+      --green-100: #e8f3ee;
+      --gold-700: #a8833d;
+      --gold-500: #c8a96a;
+      --gold-100: #f8efd9;
       --cream: #fbf7ef;
       --gray-bg: #f4f5f2;
       --text: #2e3431;
@@ -22,21 +23,28 @@
       --danger: #b44b3f;
       --warning: #b9892f;
       --success: #2f7d5a;
-      --shadow: 0 14px 35px rgba(31, 55, 47, 0.12);
-      --shadow-soft: 0 8px 18px rgba(31, 55, 47, 0.08);
-      --radius: 22px;
-      --radius-sm: 14px;
+      --shadow: 0 16px 42px rgba(31, 55, 47, 0.14);
+      --shadow-soft: 0 8px 20px rgba(31, 55, 47, 0.08);
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 15px;
+      --focus: 0 0 0 4px rgba(47, 111, 94, 0.14);
     }
 
     * {
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       font-family: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", Arial, sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(200,169,106,0.18), transparent 32%),
+        radial-gradient(circle at top left, rgba(200, 169, 106, 0.20), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(47, 111, 94, 0.14), transparent 28%),
         linear-gradient(135deg, #fbf7ef 0%, #eef4ef 55%, #f7f0df 100%);
       color: var(--text);
       line-height: 1.65;
@@ -47,40 +55,60 @@
       color: inherit;
     }
 
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
     .page {
       width: min(1180px, calc(100% - 28px));
       margin: 0 auto;
-      padding: 28px 0 60px;
+      padding: 28px 0 70px;
     }
 
     .hero {
       position: relative;
       overflow: hidden;
-      background: linear-gradient(135deg, #173b32 0%, #2f6f5e 60%, #c8a96a 130%);
+      background: linear-gradient(135deg, #173b32 0%, #2f6f5e 62%, #c8a96a 135%);
       color: white;
-      border-radius: 30px;
-      padding: 34px;
+      border-radius: var(--radius-xl);
+      padding: clamp(24px, 4vw, 40px);
       box-shadow: var(--shadow);
       margin-bottom: 24px;
+      isolation: isolate;
     }
 
+    .hero::before,
     .hero::after {
       content: "";
       position: absolute;
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      right: -90px;
-      top: -110px;
-      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      z-index: -1;
+    }
+
+    .hero::before {
+      width: 240px;
+      height: 240px;
+      left: -90px;
+      bottom: -140px;
+    }
+
+    .hero::after {
+      width: 330px;
+      height: 330px;
+      right: -110px;
+      top: -130px;
     }
 
     .hero-badge {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(255,255,255,0.14);
-      border: 1px solid rgba(255,255,255,0.28);
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.28);
       padding: 8px 14px;
       border-radius: 999px;
       font-size: 15px;
@@ -90,15 +118,16 @@
 
     h1 {
       margin: 0;
-      font-size: clamp(30px, 4vw, 46px);
-      line-height: 1.25;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.22;
       letter-spacing: 0.03em;
     }
 
     .subtitle {
       margin: 12px 0 0;
-      color: rgba(255,255,255,0.86);
+      color: rgba(255, 255, 255, 0.88);
       font-size: clamp(18px, 2.3vw, 24px);
+      max-width: 820px;
     }
 
     .hero-note {
@@ -106,7 +135,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      color: rgba(255,255,255,0.9);
+      color: rgba(255, 255, 255, 0.9);
       font-size: 16px;
     }
 
@@ -115,20 +144,21 @@
       align-items: center;
       border-radius: 999px;
       padding: 7px 13px;
-      background: rgba(255,255,255,0.13);
-      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255, 255, 255, 0.13);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
     }
 
     .dashboard {
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
+      grid-template-columns: repeat(6, minmax(0, 1fr));
       gap: 14px;
       margin-bottom: 24px;
     }
 
     .stat-card {
-      background: rgba(255,255,255,0.86);
-      border: 1px solid rgba(47,111,94,0.12);
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(47, 111, 94, 0.12);
       border-radius: 20px;
       padding: 18px;
       box-shadow: var(--shadow-soft);
@@ -143,9 +173,10 @@
 
     .stat-value {
       font-size: 32px;
-      font-weight: 800;
-      color: var(--green-dark);
+      font-weight: 900;
+      color: var(--green-900);
       line-height: 1.15;
+      font-variant-numeric: tabular-nums;
     }
 
     .layout {
@@ -156,12 +187,13 @@
     }
 
     .card {
-      background: rgba(255,255,255,0.92);
-      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.93);
+      border-radius: var(--radius-lg);
       box-shadow: var(--shadow-soft);
-      border: 1px solid rgba(47,111,94,0.12);
-      padding: 24px;
+      border: 1px solid rgba(47, 111, 94, 0.12);
+      padding: clamp(19px, 3vw, 24px);
       margin-bottom: 20px;
+      backdrop-filter: blur(6px);
     }
 
     .section-title {
@@ -169,9 +201,10 @@
       align-items: center;
       gap: 10px;
       margin: 0 0 18px;
-      color: var(--green-dark);
+      color: var(--green-900);
       font-size: 23px;
-      font-weight: 800;
+      font-weight: 900;
+      line-height: 1.35;
     }
 
     .section-title::before {
@@ -179,13 +212,14 @@
       width: 9px;
       height: 28px;
       border-radius: 99px;
-      background: linear-gradient(180deg, var(--gold), var(--green));
+      background: linear-gradient(180deg, var(--gold-500), var(--green-700));
       display: inline-block;
+      flex: 0 0 auto;
     }
 
     .hint {
-      background: var(--green-soft);
-      border-left: 5px solid var(--green);
+      background: var(--green-100);
+      border-left: 5px solid var(--green-700);
       border-radius: 14px;
       padding: 14px 16px;
       color: #36584f;
@@ -195,13 +229,7 @@
 
     .grid-2 {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 16px;
     }
 
@@ -213,8 +241,8 @@
     }
 
     label {
-      font-weight: 700;
-      color: var(--green-dark);
+      font-weight: 800;
+      color: var(--green-900);
       font-size: 17px;
     }
 
@@ -228,15 +256,14 @@
     select,
     textarea {
       width: 100%;
-      border: 1px solid rgba(47,111,94,0.22);
+      border: 1px solid rgba(47, 111, 94, 0.22);
       background: #fff;
-      border-radius: 15px;
+      border-radius: var(--radius-md);
       padding: 13px 14px;
       font-size: 18px;
       color: var(--text);
       outline: none;
-      transition: 0.2s ease;
-      font-family: inherit;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
     }
 
     textarea {
@@ -247,19 +274,27 @@
     input:focus,
     select:focus,
     textarea:focus {
-      border-color: var(--green);
-      box-shadow: 0 0 0 4px rgba(47,111,94,0.12);
+      border-color: var(--green-700);
+      box-shadow: var(--focus);
     }
 
     input[type="range"] {
-      accent-color: var(--green);
+      accent-color: var(--green-700);
       padding: 0;
     }
 
-    .check-grid {
+    .check-grid,
+    .radio-row {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
       gap: 10px;
+    }
+
+    .check-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .radio-row {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
     .check-item,
@@ -268,18 +303,25 @@
       gap: 9px;
       align-items: flex-start;
       background: #fbfaf6;
-      border: 1px solid rgba(47,111,94,0.13);
+      border: 1px solid rgba(47, 111, 94, 0.13);
       border-radius: 14px;
       padding: 11px 12px;
       cursor: pointer;
-      transition: 0.18s ease;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+      min-height: 52px;
     }
 
     .check-item:hover,
     .radio-item:hover {
       transform: translateY(-1px);
       box-shadow: var(--shadow-soft);
-      border-color: rgba(47,111,94,0.28);
+      border-color: rgba(47, 111, 94, 0.28);
+    }
+
+    .check-item:has(input:checked),
+    .radio-item:has(input:checked) {
+      background: #edf7f1;
+      border-color: rgba(47, 111, 94, 0.42);
     }
 
     .check-item input,
@@ -287,7 +329,8 @@
       width: auto;
       margin-top: 5px;
       transform: scale(1.18);
-      accent-color: var(--green);
+      accent-color: var(--green-700);
+      flex: 0 0 auto;
     }
 
     .check-item span,
@@ -296,15 +339,9 @@
       color: #35433f;
     }
 
-    .radio-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-    }
-
     .score-box {
       background: linear-gradient(135deg, #f9f4e7, #eaf5ef);
-      border: 1px solid rgba(200,169,106,0.35);
+      border: 1px solid rgba(200, 169, 106, 0.35);
       border-radius: 18px;
       padding: 18px;
       margin-top: 14px;
@@ -314,19 +351,20 @@
       display: flex;
       align-items: baseline;
       gap: 8px;
-      color: var(--green-dark);
+      color: var(--green-900);
     }
 
     .score-number {
-      font-size: 42px;
+      font-size: 44px;
       font-weight: 900;
       line-height: 1;
+      font-variant-numeric: tabular-nums;
     }
 
     .score-status {
       margin-top: 10px;
       color: var(--muted);
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .btn-row {
@@ -342,15 +380,14 @@
       border: none;
       cursor: pointer;
       text-decoration: none;
-      font-family: inherit;
       font-size: 17px;
-      font-weight: 800;
-      border-radius: 15px;
+      font-weight: 900;
+      border-radius: var(--radius-md);
       padding: 13px 18px;
       color: white;
       background: linear-gradient(180deg, #3e806d 0%, #245848 100%);
-      box-shadow: 0 6px 0 #173c32, 0 14px 20px rgba(24,60,52,0.18);
-      transition: 0.16s ease;
+      box-shadow: 0 6px 0 #173c32, 0 14px 20px rgba(24, 60, 52, 0.18);
+      transition: transform 0.16s ease, filter 0.16s ease, box-shadow 0.16s ease;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -366,24 +403,31 @@
     button:active,
     .button-link:active {
       transform: translateY(4px);
-      box-shadow: 0 2px 0 #173c32, 0 8px 14px rgba(24,60,52,0.14);
+      box-shadow: 0 2px 0 #173c32, 0 8px 14px rgba(24, 60, 52, 0.14);
+    }
+
+    button:disabled {
+      opacity: 0.68;
+      cursor: not-allowed;
+      transform: none;
+      filter: grayscale(0.15);
     }
 
     .btn-gold {
       background: linear-gradient(180deg, #d7bd7d 0%, #a8833d 100%);
-      box-shadow: 0 6px 0 #795d26, 0 14px 20px rgba(168,131,61,0.18);
+      box-shadow: 0 6px 0 #795d26, 0 14px 20px rgba(168, 131, 61, 0.18);
     }
 
     .btn-soft {
-      color: var(--green-dark);
+      color: var(--green-900);
       background: linear-gradient(180deg, #ffffff 0%, #edf5f0 100%);
-      border: 1px solid rgba(47,111,94,0.18);
-      box-shadow: 0 6px 0 #cddbd3, 0 14px 20px rgba(31,55,47,0.08);
+      border: 1px solid rgba(47, 111, 94, 0.18);
+      box-shadow: 0 6px 0 #cddbd3, 0 14px 20px rgba(31, 55, 47, 0.08);
     }
 
     .btn-danger {
       background: linear-gradient(180deg, #c85d4f 0%, #96392f 100%);
-      box-shadow: 0 6px 0 #6e2822, 0 14px 20px rgba(150,57,47,0.16);
+      box-shadow: 0 6px 0 #6e2822, 0 14px 20px rgba(150, 57, 47, 0.16);
     }
 
     .submit-status {
@@ -391,7 +435,7 @@
       padding: 13px 15px;
       border-radius: 14px;
       display: none;
-      font-weight: 800;
+      font-weight: 900;
     }
 
     .submit-status.show {
@@ -401,13 +445,13 @@
     .submit-status.success {
       background: #e8f5ee;
       color: var(--success);
-      border: 1px solid rgba(47,125,90,0.25);
+      border: 1px solid rgba(47, 125, 90, 0.25);
     }
 
     .submit-status.error {
       background: #fff0ed;
       color: var(--danger);
-      border: 1px solid rgba(180,75,63,0.25);
+      border: 1px solid rgba(180, 75, 63, 0.25);
     }
 
     .summary-box {
@@ -423,7 +467,8 @@
       padding: 18px;
       font-size: 16px;
       min-height: 360px;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+      overflow-wrap: anywhere;
     }
 
     .search-box {
@@ -439,7 +484,7 @@
 
     .record-card {
       background: white;
-      border: 1px solid rgba(47,111,94,0.13);
+      border: 1px solid rgba(47, 111, 94, 0.13);
       border-radius: 20px;
       padding: 18px;
       box-shadow: var(--shadow-soft);
@@ -456,7 +501,7 @@
 
     .record-title {
       font-size: 22px;
-      color: var(--green-dark);
+      color: var(--green-900);
       font-weight: 900;
     }
 
@@ -466,7 +511,7 @@
       border-radius: 999px;
       padding: 5px 10px;
       font-size: 14px;
-      font-weight: 800;
+      font-weight: 900;
       white-space: nowrap;
     }
 
@@ -487,19 +532,19 @@
 
     .record-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 8px 16px;
       color: #40504b;
       font-size: 16px;
     }
 
     .record-grid strong {
-      color: var(--green-dark);
+      color: var(--green-900);
     }
 
     details {
       background: #fbfaf6;
-      border: 1px dashed rgba(47,111,94,0.22);
+      border: 1px dashed rgba(47, 111, 94, 0.22);
       border-radius: 18px;
       padding: 14px 16px;
       margin-bottom: 18px;
@@ -508,7 +553,7 @@
     summary {
       cursor: pointer;
       font-weight: 900;
-      color: var(--green-dark);
+      color: var(--green-900);
       font-size: 18px;
     }
 
@@ -519,13 +564,25 @@
 
     .divider {
       height: 1px;
-      background: rgba(47,111,94,0.13);
+      background: rgba(47, 111, 94, 0.13);
       margin: 18px 0;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
     @media (max-width: 1080px) {
       .dashboard {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
 
       .layout {
@@ -549,13 +606,11 @@
       }
 
       .hero {
-        padding: 24px 20px;
         border-radius: 24px;
       }
 
       .dashboard,
       .grid-2,
-      .grid-3,
       .check-grid,
       .radio-row,
       .record-grid,
@@ -563,8 +618,8 @@
         grid-template-columns: 1fr;
       }
 
-      .card {
-        padding: 19px;
+      .stat-card {
+        min-height: 96px;
       }
 
       button,
@@ -577,6 +632,10 @@
       textarea {
         font-size: 17px;
       }
+
+      .record-head {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
@@ -585,8 +644,8 @@
     <header class="hero">
       <div class="hero-badge">馥芸財富學苑｜活動量管理</div>
       <h1>名單設定與跟進系統</h1>
-      <p class="subtitle">名單設定 × 專案追蹤 × 顧問活動量紀錄</p>
-      <div class="hero-note">
+      <p class="subtitle">名單設定 × 專案追蹤 × 顧問活動量紀錄，把每一次服務都變成可累積的專業資產。</p>
+      <div class="hero-note" aria-label="主題標籤">
         <span class="pill">財務規劃</span>
         <span class="pill">保單健診</span>
         <span class="pill">退休現金流</span>
@@ -700,10 +759,7 @@
 
           <div class="field">
             <label for="familySummary">家庭成員摘要</label>
-            <textarea id="familySummary" name="familySummary" placeholder="例如：
-先生 69 歲，半退休專科醫師
-太太 55 歲，半退休講師
-女兒 18 歲，預計海外留學 4～6 年"></textarea>
+            <textarea id="familySummary" name="familySummary" placeholder="例如：&#10;先生 69 歲，半退休專科醫師&#10;太太 55 歲，半退休講師&#10;女兒 18 歲，預計海外留學 4～6 年"></textarea>
           </div>
 
           <div class="field">
@@ -718,14 +774,12 @@
 
           <div class="field">
             <label for="painPoint">目前主要痛點</label>
-            <textarea id="painPoint" name="painPoint" placeholder="例如：
-資產分散於保單、股票、基金與不動產，目前希望從海外陪讀、美元現金流、稅務合規與家族傳承角度重新整理。"></textarea>
+            <textarea id="painPoint" name="painPoint" placeholder="例如：&#10;資產分散於保單、股票、基金與不動產，目前希望從海外陪讀、美元現金流、稅務合規與家族傳承角度重新整理。"></textarea>
           </div>
 
           <div class="field">
             <label for="assetSummary">目前資產概況</label>
-            <textarea id="assetSummary" name="assetSummary" placeholder="例如：
-北部核心區老家、北部市區套房、中南部投資性房產、多筆保單、股票、基金。"></textarea>
+            <textarea id="assetSummary" name="assetSummary" placeholder="例如：&#10;北部核心區老家、北部市區套房、中南部投資性房產、多筆保單、股票、基金。"></textarea>
           </div>
         </section>
 
@@ -749,20 +803,17 @@
 
           <div class="field">
             <label for="originalIssue">原規劃問題</label>
-            <textarea id="originalIssue" name="originalIssue" placeholder="例如：
-現有保單雖有每年還本，但若從美元需求、海外陪讀、稅務申報、傳承彈性來看，可能需要重新檢視幣別與配置效率。"></textarea>
+            <textarea id="originalIssue" name="originalIssue" placeholder="例如：&#10;現有保單雖有每年還本，但若從美元需求、海外陪讀、稅務申報、傳承彈性來看，可能需要重新檢視幣別與配置效率。"></textarea>
           </div>
 
           <div class="field">
             <label for="optimizationDirection">初步優化方向</label>
-            <textarea id="optimizationDirection" name="optimizationDirection" placeholder="例如：
-以解舊換新、幣別轉換、主被動雙軌現金流、資產配置與傳承安排作為後續討論方向。"></textarea>
+            <textarea id="optimizationDirection" name="optimizationDirection" placeholder="例如：&#10;以解舊換新、幣別轉換、主被動雙軌現金流、資產配置與傳承安排作為後續討論方向。"></textarea>
           </div>
 
           <div class="field">
             <label for="complianceReminder">合規提醒</label>
-            <textarea id="complianceReminder" name="complianceReminder" placeholder="例如：
-因全家具有美國公民身分，需注意全球課稅、FATCA、海外帳戶揭露與保單稅務申報議題，正式規劃前建議與專業會計師／稅務顧問確認。"></textarea>
+            <textarea id="complianceReminder" name="complianceReminder" placeholder="例如：&#10;因全家具有美國公民身分，需注意全球課稅、FATCA、海外帳戶揭露與保單稅務申報議題，正式規劃前建議與專業會計師／稅務顧問確認。"></textarea>
           </div>
         </section>
 
@@ -813,14 +864,12 @@
 
           <div class="field">
             <label for="nextAction">下一步行動</label>
-            <textarea id="nextAction" name="nextAction" placeholder="例如：
-先用白皮書架構切入海外陪讀與美元現金流，再安排保單現況檢視與資產盤點。"></textarea>
+            <textarea id="nextAction" name="nextAction" placeholder="例如：&#10;先用白皮書架構切入海外陪讀與美元現金流，再安排保單現況檢視與資產盤點。"></textarea>
           </div>
 
           <div class="field">
             <label for="followRecord">本次跟進紀錄</label>
-            <textarea id="followRecord" name="followRecord" placeholder="例如：
-已向客戶說明海外陪讀期間需要同時考量生活費、學費、幣別、稅務合規與傳承彈性。"></textarea>
+            <textarea id="followRecord" name="followRecord" placeholder="例如：&#10;已向客戶說明海外陪讀期間需要同時考量生活費、學費、幣別、稅務合規與傳承彈性。"></textarea>
           </div>
 
           <div class="field">
@@ -861,8 +910,7 @@
 
           <div class="field">
             <label for="internalReminder">內部提醒</label>
-            <textarea id="internalReminder" name="internalReminder" placeholder="例如：
-此案涉及美國稅務與海外資產，避免做稅務結論，應以提醒與轉介專業稅務顧問為主。"></textarea>
+            <textarea id="internalReminder" name="internalReminder" placeholder="例如：&#10;此案涉及美國稅務與海外資產，避免做稅務結論，應以提醒與轉介專業稅務顧問為主。"></textarea>
           </div>
 
           <details>
@@ -900,7 +948,7 @@
             <a class="button-link btn-gold" href="https://docs.google.com/forms/d/e/1FAIpQLSeEJHeNGEOxzijmcGvKI5DUuiZdoYv1ahZtdFTkVXEYg7o6rw/viewform" target="_blank" rel="noopener">開啟原始表單</a>
           </div>
 
-          <div id="submitStatus" class="submit-status"></div>
+          <div id="submitStatus" class="submit-status" role="status" aria-live="polite"></div>
         </section>
       </form>
 
@@ -1020,7 +1068,8 @@
       "其他"
     ];
 
-    const STORAGE_KEY = "fuyun_followup_records_v1";
+    const STORAGE_KEY = "fuyun_followup_records_v2";
+    const ADVISOR_STORAGE_KEY = "fuyun_followup_advisor_profile_v1";
 
     const form = document.getElementById("followForm");
     const progressPercent = document.getElementById("progressPercent");
@@ -1053,15 +1102,11 @@
       return checked ? checked.value : "";
     }
 
-    function createCheckboxGroup(containerId, name, values) {
-      const container = document.getElementById(containerId);
-      container.innerHTML = "";
-      values.forEach(value => {
-        const label = document.createElement("label");
-        label.className = "check-item";
-        label.innerHTML = `<input type="checkbox" name="${name}" value="${escapeHtml(value)}" /><span>${escapeHtml(value)}</span>`;
-        container.appendChild(label);
-      });
+    function createSafeId() {
+      if (window.crypto && typeof window.crypto.randomUUID === "function") {
+        return window.crypto.randomUUID();
+      }
+      return `${Date.now()}_${Math.random().toString(36).slice(2)}`;
     }
 
     function escapeHtml(text) {
@@ -1073,9 +1118,30 @@
         .replaceAll("'", "&#039;");
     }
 
+    function createCheckboxGroup(containerId, name, values) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      container.innerHTML = "";
+
+      values.forEach(value => {
+        const label = document.createElement("label");
+        const checkbox = document.createElement("input");
+        const span = document.createElement("span");
+
+        label.className = "check-item";
+        checkbox.type = "checkbox";
+        checkbox.name = name;
+        checkbox.value = value;
+        span.textContent = value;
+
+        label.appendChild(checkbox);
+        label.appendChild(span);
+        container.appendChild(label);
+      });
+    }
+
     function calculateActivityScore() {
-      const selected = getCheckedValues("activityTypes");
-      return selected.reduce((sum, item) => sum + (ACTIVITY_SCORES[item] || 0), 0);
+      return getCheckedValues("activityTypes").reduce((sum, item) => sum + (ACTIVITY_SCORES[item] || 0), 0);
     }
 
     function activityStatus(score) {
@@ -1088,17 +1154,16 @@
       const score = calculateActivityScore();
       const status = activityStatus(score);
       document.getElementById("activityScoreView").textContent = score;
-      document.getElementById("activityScore").value = score;
+      document.getElementById("activityScore").value = String(score);
       document.getElementById("activityStatusView").textContent = status;
       document.getElementById("todayActivityStatus").value = status;
-      updateSummary();
     }
 
     function collectData() {
       const activityScore = calculateActivityScore();
       const status = activityStatus(activityScore);
       const data = {
-        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+        id: createSafeId(),
         createdAt: new Date().toISOString(),
 
         advisorName: safeValue("advisorName"),
@@ -1157,6 +1222,7 @@
 顧問：${data.advisorName || "＿＿＿"}
 手機：${data.advisorPhone || "＿＿＿"}
 客戶：${data.clientName || "＿＿＿"}
+名單溫度：${data.leadTemperature || "＿＿＿"}
 目前階段：${data.currentStage || "＿＿＿"}
 追蹤進度：${data.progressPercent || "0"}%
 下次追蹤：${data.nextFollowDate || "＿＿＿"}
@@ -1164,17 +1230,19 @@
 核心議題：${data.painPoint || data.discussionTarget || "＿＿＿"}
 本次活動：${data.activityTypes || "＿＿＿"}
 活動分數：${data.activityScore || "0"}
+活動狀態：${data.todayActivityStatus || "＿＿＿"}
 下一步行動：${data.nextAction || "＿＿＿"}
 備註：${data.advisorNote || data.internalReminder || "＿＿＿"}`;
     }
 
     function updateSummary() {
+      updateActivityScore();
       const data = collectData();
       summaryText.textContent = data.followSummary;
       document.getElementById("followSummary").value = data.followSummary;
     }
 
-    function showStatus(message, type) {
+    function showStatus(message, type = "success") {
       submitStatus.textContent = message;
       submitStatus.className = `submit-status show ${type}`;
     }
@@ -1195,7 +1263,8 @@
 
     function getRecords() {
       try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+        const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+        return Array.isArray(parsed) ? parsed : [];
       } catch (error) {
         console.warn("localStorage parse error", error);
         return [];
@@ -1208,9 +1277,30 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(records.slice(0, 300)));
     }
 
+    function saveAdvisorProfile(data) {
+      const profile = {
+        advisorName: data.advisorName,
+        advisorPhone: data.advisorPhone,
+        advisorTeam: data.advisorTeam
+      };
+      localStorage.setItem(ADVISOR_STORAGE_KEY, JSON.stringify(profile));
+    }
+
+    function loadAdvisorProfile() {
+      try {
+        const profile = JSON.parse(localStorage.getItem(ADVISOR_STORAGE_KEY) || "{}");
+        ["advisorName", "advisorPhone", "advisorTeam"].forEach(key => {
+          if (profile[key] && document.getElementById(key)) {
+            document.getElementById(key).value = profile[key];
+          }
+        });
+      } catch (error) {
+        console.warn("advisor profile parse error", error);
+      }
+    }
+
     async function submitToGoogleForms(data) {
       const payload = new URLSearchParams();
-
       Object.keys(FORM_FIELDS).forEach(key => {
         payload.append(FORM_FIELDS[key], data[key] || "");
       });
@@ -1219,7 +1309,7 @@
         method: "POST",
         mode: "no-cors",
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
         },
         body: payload
       });
@@ -1245,7 +1335,8 @@
           record.clientPhone,
           record.currentStage,
           record.leadTemperature,
-          record.activityTypes
+          record.activityTypes,
+          record.nextAction
         ].join(" ").toLowerCase();
         return !keyword || haystack.includes(keyword);
       }).slice(0, 10);
@@ -1318,17 +1409,26 @@
     }
 
     function copyText(text, message) {
-      navigator.clipboard.writeText(text).then(() => {
-        showStatus(message || "已複製。", "success");
-      }).catch(() => {
-        const temp = document.createElement("textarea");
-        temp.value = text;
-        document.body.appendChild(temp);
-        temp.select();
-        document.execCommand("copy");
-        document.body.removeChild(temp);
-        showStatus(message || "已複製。", "success");
-      });
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+          showStatus(message || "已複製。", "success");
+        }).catch(() => fallbackCopy(text, message));
+      } else {
+        fallbackCopy(text, message);
+      }
+    }
+
+    function fallbackCopy(text, message) {
+      const temp = document.createElement("textarea");
+      temp.value = text;
+      temp.setAttribute("readonly", "readonly");
+      temp.style.position = "fixed";
+      temp.style.left = "-9999px";
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand("copy");
+      document.body.removeChild(temp);
+      showStatus(message || "已複製。", "success");
     }
 
     function exportCSV() {
@@ -1396,13 +1496,24 @@
     }
 
     function resetForm() {
+      const profile = {
+        advisorName: safeValue("advisorName"),
+        advisorPhone: safeValue("advisorPhone"),
+        advisorTeam: safeValue("advisorTeam")
+      };
+
       form.reset();
       document.getElementById("recordDate").value = todayString();
       progressPercent.value = 0;
       progressText.textContent = "0%";
-      updateActivityScore();
+
+      Object.entries(profile).forEach(([key, value]) => {
+        const el = document.getElementById(key);
+        if (el) el.value = value;
+      });
+
       updateSummary();
-      showStatus("表單已重設，本機紀錄不受影響。", "success");
+      showStatus("表單已重設，顧問資料與本機紀錄不受影響。", "success");
     }
 
     form.addEventListener("submit", async event => {
@@ -1423,8 +1534,9 @@
       try {
         await submitToGoogleForms(data);
         saveRecord(data);
+        saveAdvisorProfile(data);
         renderRecords();
-        showStatus("已送出，請至 Google 試算表確認。資料也已同步儲存在本機紀錄。", "success");
+        showStatus("已送出。請至 Google 試算表確認；資料也已同步儲存在本機紀錄。", "success");
       } catch (error) {
         console.error(error);
         showStatus("送出失敗，請檢查 Google 表單連結或 entry 代碼。", "error");
@@ -1440,17 +1552,11 @@
     });
 
     document.addEventListener("input", event => {
-      if (event.target.closest("#followForm")) {
-        if (event.target.name === "activityTypes") updateActivityScore();
-        updateSummary();
-      }
+      if (event.target.closest("#followForm")) updateSummary();
     });
 
     document.addEventListener("change", event => {
-      if (event.target.closest("#followForm")) {
-        if (event.target.name === "activityTypes") updateActivityScore();
-        updateSummary();
-      }
+      if (event.target.closest("#followForm")) updateSummary();
     });
 
     document.getElementById("copySummaryBtn").addEventListener("click", () => {
@@ -1491,9 +1597,9 @@
       createCheckboxGroup("activityTypesGroup", "activityTypes", Object.keys(ACTIVITY_SCORES));
 
       document.getElementById("recordDate").value = todayString();
+      loadAdvisorProfile();
       progressText.textContent = `${progressPercent.value}%`;
 
-      updateActivityScore();
       updateSummary();
       renderRecords();
       updateDashboard();
@@ -1503,4 +1609,3 @@
   </script>
 </body>
 </html>
-```
