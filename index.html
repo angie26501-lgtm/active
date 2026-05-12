@@ -2,143 +2,1144 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>活動量管理｜馥芸財富學苑</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>馥芸財富學苑｜活動量入口</title>
+  <meta name="description" content="馥芸財富學苑｜活動量入口，整合活動量管理核心系統、每日紀錄、完整回報、AI 學習成果與延伸工具。" />
+
+  <style>
+    :root {
+      --herbal-green: #5f7f68;
+      --deep-green: #263f33;
+      --forest-green: #17352a;
+      --milk-tea-gold: #c8a66a;
+      --soft-gold: #ead8ad;
+      --cream: #f8f3e9;
+      --warm-white: #fffdf8;
+      --mist-green: #edf3ec;
+      --text-dark: #2f3430;
+      --text-muted: #70776f;
+      --line-gold: rgba(200, 166, 106, 0.34);
+      --line-green: rgba(95, 127, 104, 0.18);
+      --shadow-soft: 0 18px 45px rgba(47, 52, 48, 0.12);
+      --shadow-card: 0 16px 38px rgba(63, 95, 77, 0.14);
+      --shadow-button: 0 9px 0 rgba(39, 66, 52, 0.16), 0 18px 28px rgba(63, 95, 77, 0.2);
+      --shadow-gold-button: 0 9px 0 rgba(167, 130, 67, 0.18), 0 18px 28px rgba(200, 166, 106, 0.23);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC",
+        "Microsoft JhengHei", "PingFang TC", sans-serif;
+      color: var(--text-dark);
+      background:
+        radial-gradient(circle at 8% 8%, rgba(200, 166, 106, 0.26), transparent 28%),
+        radial-gradient(circle at 92% 12%, rgba(95, 127, 104, 0.18), transparent 30%),
+        radial-gradient(circle at 15% 90%, rgba(200, 166, 106, 0.12), transparent 28%),
+        linear-gradient(135deg, var(--cream), var(--mist-green));
+      line-height: 1.7;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button,
+    input {
+      font-family: inherit;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Login Page */
+    .login-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+    }
+
+    .login-card {
+      width: min(100%, 480px);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      padding: 46px 34px 38px;
+      border-radius: 34px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(248, 243, 233, 0.9));
+      border: 1px solid var(--line-gold);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .login-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 72%;
+      height: 6px;
+      border-radius: 0 0 999px 999px;
+      background: linear-gradient(90deg, var(--herbal-green), var(--milk-tea-gold));
+    }
+
+    .login-card::after {
+      content: "";
+      position: absolute;
+      right: -58px;
+      bottom: -58px;
+      width: 165px;
+      height: 165px;
+      border-radius: 50%;
+      background: rgba(200, 166, 106, 0.15);
+      z-index: 0;
+    }
+
+    .login-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand-mark {
+      width: 86px;
+      height: 86px;
+      margin: 0 auto 22px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--forest-green), var(--herbal-green));
+      color: var(--soft-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      font-weight: 900;
+      box-shadow: 0 14px 30px rgba(63, 95, 77, 0.25);
+      border: 1px solid rgba(234, 216, 173, 0.42);
+    }
+
+    .login-card h1 {
+      color: var(--deep-green);
+      font-size: 30px;
+      letter-spacing: 0.06em;
+      line-height: 1.35;
+      margin-bottom: 8px;
+    }
+
+    .login-card h2 {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--text-dark);
+      margin-bottom: 12px;
+    }
+
+    .login-card p {
+      color: var(--text-muted);
+      font-size: 15px;
+      margin-bottom: 26px;
+    }
+
+    .password-box {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .password-box input {
+      width: 100%;
+      padding: 16px 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(95, 127, 104, 0.3);
+      background: rgba(255, 255, 255, 0.92);
+      outline: none;
+      font-size: 16px;
+      color: var(--text-dark);
+      transition: 0.25s ease;
+    }
+
+    .password-box input:focus {
+      border-color: var(--herbal-green);
+      box-shadow: 0 0 0 4px rgba(95, 127, 104, 0.12);
+    }
+
+    .login-button {
+      border: none;
+      cursor: pointer;
+      padding: 15px 18px 16px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--forest-green), var(--herbal-green));
+      color: #fff;
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      box-shadow: var(--shadow-button);
+      transition: 0.25s ease;
+    }
+
+    .login-button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.04);
+    }
+
+    .error-message {
+      min-height: 24px;
+      margin-top: 14px;
+      color: #b64545;
+      font-weight: 900;
+      font-size: 14px;
+    }
+
+    .secure-note {
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Main Page */
+    .site-page {
+      display: none;
+      min-height: 100vh;
+      padding: 36px 20px 34px;
+    }
+
+    .site-container {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .logo-mini {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--deep-green);
+      font-weight: 900;
+      letter-spacing: 0.04em;
+    }
+
+    .logo-circle {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--forest-green), var(--herbal-green));
+      color: var(--soft-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 18px rgba(63, 95, 77, 0.18);
+    }
+
+    .logout-button {
+      border: 1px solid rgba(95, 127, 104, 0.28);
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--deep-green);
+      border-radius: 999px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 900;
+      transition: 0.25s ease;
+    }
+
+    .logout-button:hover {
+      transform: translateY(-1px);
+      background: rgba(95, 127, 104, 0.1);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 26px;
+      align-items: stretch;
+      padding: 36px;
+      border-radius: 36px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(248, 243, 233, 0.78));
+      border: 1px solid rgba(200, 166, 106, 0.24);
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 30px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -86px;
+      top: -86px;
+      width: 225px;
+      height: 225px;
+      border-radius: 50%;
+      background: rgba(200, 166, 106, 0.16);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      left: -70px;
+      bottom: -90px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(95, 127, 104, 0.1);
+    }
+
+    .hero-copy,
+    .hero-panel {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 7px 16px;
+      margin-bottom: 18px;
+      border-radius: 999px;
+      background: rgba(95, 127, 104, 0.12);
+      color: var(--deep-green);
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+    }
+
+    .hero h1 {
+      color: var(--deep-green);
+      font-size: clamp(34px, 5vw, 54px);
+      line-height: 1.2;
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+    }
+
+    .hero .subtitle {
+      font-size: 21px;
+      color: var(--text-dark);
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .hero .slogan {
+      color: #8b6729;
+      font-size: 16px;
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    .hero .description {
+      max-width: 720px;
+      color: var(--text-muted);
+      font-size: 16px;
+    }
+
+    .quick-nav {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .pill-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 15px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(95, 127, 104, 0.14);
+      color: var(--deep-green);
+      font-weight: 900;
+      font-size: 14px;
+      transition: 0.24s ease;
+      box-shadow: 0 8px 18px rgba(63, 95, 77, 0.1);
+    }
+
+    .pill-link:hover {
+      transform: translateY(-2px);
+      background: #fff;
+    }
+
+    .hero-panel {
+      border-radius: 30px;
+      padding: 26px;
+      background: linear-gradient(145deg, rgba(38, 63, 51, 0.97), rgba(23, 53, 42, 0.97));
+      color: #fff;
+      box-shadow: 0 18px 38px rgba(39, 66, 52, 0.22);
+      min-height: 290px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid rgba(234, 216, 173, 0.2);
+    }
+
+    .hero-panel .mini-title {
+      color: var(--soft-gold);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .hero-panel h2 {
+      font-size: 28px;
+      line-height: 1.35;
+      margin-bottom: 12px;
+    }
+
+    .hero-panel p {
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 15px;
+      margin-bottom: 20px;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .metric {
+      border-radius: 20px;
+      padding: 14px 10px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(234, 216, 173, 0.18);
+    }
+
+    .metric b {
+      display: block;
+      color: var(--soft-gold);
+      font-size: 20px;
+      line-height: 1.1;
+    }
+
+    .metric span {
+      display: block;
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 12px;
+      margin-top: 6px;
+      font-weight: 800;
+    }
+
+    .main-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin-top: 22px;
+      padding: 14px 18px 15px;
+      border-radius: 18px;
+      color: #fff;
+      background: linear-gradient(135deg, #a78243, var(--milk-tea-gold));
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      box-shadow: var(--shadow-gold-button);
+      transition: 0.24s ease;
+    }
+
+    .main-cta:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.03);
+    }
+
+    .section {
+      margin: 0 0 32px;
+      padding: 32px 26px;
+      border-radius: 34px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(248, 243, 233, 0.78));
+      border: 1px solid rgba(200, 166, 106, 0.22);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 26px;
+    }
+
+    .section-header span {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(200, 166, 106, 0.16);
+      color: var(--deep-green);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+
+    .section-header h2 {
+      color: var(--deep-green);
+      font-size: clamp(24px, 4vw, 34px);
+      letter-spacing: 0.04em;
+      margin-bottom: 8px;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .tool-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 284px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 25px 21px;
+      border-radius: 28px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(237, 242, 236, 0.84));
+      border: 1px solid var(--line-green);
+      box-shadow: var(--shadow-card);
+      transition: 0.28s ease;
+    }
+
+    .tool-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--herbal-green), var(--milk-tea-gold));
+    }
+
+    .tool-card::after {
+      content: "";
+      position: absolute;
+      right: -44px;
+      bottom: -48px;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: rgba(200, 166, 106, 0.1);
+      pointer-events: none;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 22px 48px rgba(63, 95, 77, 0.2);
+    }
+
+    .tool-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .icon-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 19px;
+      background: linear-gradient(135deg, var(--forest-green), var(--herbal-green));
+      color: var(--soft-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      box-shadow: 0 12px 24px rgba(63, 95, 77, 0.18);
+      flex: 0 0 auto;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--deep-green);
+      background: rgba(95, 127, 104, 0.12);
+      border: 1px solid rgba(95, 127, 104, 0.14);
+      white-space: nowrap;
+    }
+
+    .tag.gold {
+      color: #8b6729;
+      background: rgba(200, 166, 106, 0.16);
+      border: 1px solid rgba(200, 166, 106, 0.18);
+    }
+
+    .tool-card h3 {
+      color: var(--deep-green);
+      font-size: 20px;
+      line-height: 1.42;
+      margin-bottom: 9px;
+    }
+
+    .highlight {
+      color: var(--text-dark);
+      font-size: 15px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .usage {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 48px;
+      padding: 13px 16px 14px;
+      border-radius: 17px;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      color: #fff;
+      background: linear-gradient(135deg, var(--forest-green), var(--herbal-green));
+      box-shadow: var(--shadow-button);
+      transition: 0.25s ease;
+      text-align: center;
+    }
+
+    .button.gold {
+      background: linear-gradient(135deg, #a78243, var(--milk-tea-gold));
+      box-shadow: var(--shadow-gold-button);
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.04);
+    }
+
+    .reserved-card {
+      border-style: dashed;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.72), rgba(237, 242, 236, 0.55));
+    }
+
+    .notice {
+      margin-top: 22px;
+      padding: 16px 18px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.68);
+      border: 1px solid rgba(95, 127, 104, 0.14);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .notice strong {
+      color: var(--deep-green);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      padding: 16px 8px 0;
+    }
+
+    footer strong {
+      color: var(--deep-green);
+      font-weight: 900;
+    }
+
+    @media (max-width: 980px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 680px) {
+      .site-page {
+        padding: 24px 14px;
+      }
+
+      .top-bar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .logout-button {
+        width: 100%;
+      }
+
+      .hero,
+      .section {
+        padding: 25px 18px;
+        border-radius: 28px;
+      }
+
+      .hero-panel {
+        padding: 22px 18px;
+        border-radius: 24px;
+      }
+
+      .metric-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tool-card {
+        min-height: auto;
+        padding: 23px 18px;
+        border-radius: 24px;
+      }
+
+      .quick-nav {
+        flex-direction: column;
+      }
+
+      .pill-link {
+        width: 100%;
+      }
+
+      .login-page {
+        padding: 20px;
+      }
+
+      .login-card {
+        padding: 38px 24px 32px;
+        border-radius: 28px;
+      }
+
+      .login-card h1 {
+        font-size: 26px;
+      }
+
+      .login-card h2 {
+        font-size: 18px;
+      }
+    }
+  </style>
 </head>
 
-<body class="bg-gradient-to-br from-emerald-50 to-amber-50 min-h-screen text-gray-800">
+<body>
+  <!-- 密碼登入畫面 -->
+  <section id="loginPage" class="login-page">
+    <div class="login-card">
+      <div class="brand-mark">芸</div>
+      <h1>馥芸財富學苑</h1>
+      <h2>活動量入口</h2>
+      <p>請輸入課程或團隊專屬密碼</p>
 
-<div class="max-w-3xl mx-auto p-6">
+      <div class="password-box">
+        <input
+          type="password"
+          id="passwordInput"
+          placeholder="請輸入密碼"
+          autocomplete="off"
+        />
+        <button type="button" id="loginButton" class="login-button">進入系統</button>
+      </div>
 
-  <h1 class="text-3xl font-black text-center mb-4">
-    活動量每日回報
-  </h1>
-
-  <!-- 🔗 原始表單入口（已幫你加入） -->
-  <div class="text-center mb-6">
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfIWCo6ywRDfgpm9UUSPjGFA8pe2bB5e1m46r4sSrHQrz5H6A/viewform" 
-       target="_blank"
-       class="inline-block bg-white border px-5 py-3 rounded-xl shadow font-bold text-emerald-700 hover:bg-gray-50">
-       🔗 開啟原始 Google 表單
-    </a>
-  </div>
-
-  <form id="form" class="bg-white rounded-3xl p-6 shadow space-y-4">
-
-    <input id="date" type="date" class="w-full p-3 rounded-xl border" required>
-    <input id="name" type="text" placeholder="姓名" class="w-full p-3 rounded-xl border" required>
-
-    <div class="grid grid-cols-2 gap-3">
-      <input id="call" type="number" value="0" class="p-3 rounded-xl border" placeholder="CALL">
-      <input id="apo" type="number" value="0" class="p-3 rounded-xl border" placeholder="APO">
-      <input id="ff" type="number" value="0" class="p-3 rounded-xl border" placeholder="FF">
-      <input id="pd" type="number" value="0" class="p-3 rounded-xl border" placeholder="PD">
-      <input id="c" type="number" value="0" class="p-3 rounded-xl border" placeholder="C">
-      <input id="s" type="number" value="0" class="p-3 rounded-xl border" placeholder="S">
-      <input id="r" type="number" value="0" class="p-3 rounded-xl border" placeholder="R">
-      <input id="policy" type="number" value="0" class="p-3 rounded-xl border" placeholder="送保單">
+      <div id="errorMessage" class="error-message"></div>
+      <div class="secure-note">
+        本頁為 GitHub Pages 靜態網頁，密碼屬於簡易前端保護。
+      </div>
     </div>
+  </section>
 
-    <input id="cases" type="number" value="0" placeholder="成交件數" class="w-full p-3 rounded-xl border">
-    <input id="fyc" type="number" value="0" placeholder="FYC" class="w-full p-3 rounded-xl border">
-    <input id="fyp" type="number" value="0" placeholder="FYP" class="w-full p-3 rounded-xl border">
+  <!-- 主入口內容 -->
+  <main id="sitePage" class="site-page">
+    <div class="site-container">
+      <div class="top-bar">
+        <div class="logo-mini">
+          <div class="logo-circle">芸</div>
+          <span>財顧芸｜馥芸財富學苑</span>
+        </div>
+        <button type="button" id="logoutButton" class="logout-button">登出入口</button>
+      </div>
 
-    <textarea id="note" placeholder="備註" class="w-full p-3 rounded-xl border"></textarea>
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="hero-badge">FU YUN ACTIVITY PORTAL</div>
+          <h1>馥芸財富學苑｜活動量入口</h1>
+          <div class="subtitle">讓活動量被看見，讓行動更有方向</div>
+          <div class="slogan">每日三訪是必然｜從紀錄開始，累積成果</div>
+          <p class="description">
+            把每天的努力，整理成可以追蹤、可以檢視、可以成長的專業行動系統。
+            從 CALL、APO、FF 到成交與服務，讓團隊從行動中看見成長。
+          </p>
 
-    <button class="w-full bg-emerald-700 text-white p-4 rounded-xl font-bold">
-      ☁️ 送出
-    </button>
+          <nav class="quick-nav" aria-label="快速導覽">
+            <a class="pill-link" href="#core">核心系統</a>
+            <a class="pill-link" href="#daily">每日紀錄與回報</a>
+            <a class="pill-link" href="#ai">AI 學習與成果</a>
+            <a class="pill-link" href="#extend">入口與延伸</a>
+          </nav>
+        </div>
 
-    <div id="msg" class="text-center text-green-600 font-bold hidden">
-      ✅ 已送出
+        <aside class="hero-panel">
+          <div>
+            <div class="mini-title">ACTION SYSTEM</div>
+            <h2>高端金融 × 溫暖陪跑 × 專業管理</h2>
+            <p>
+              活動量不是壓力，而是看見自己正在前進的證據。
+              每一次拜訪、每一次服務、每一次追蹤，都能成為可累積的成果。
+            </p>
+
+            <div class="metric-grid">
+              <div class="metric">
+                <b>01</b>
+                <span>今日行動</span>
+              </div>
+              <div class="metric">
+                <b>02</b>
+                <span>活動紀錄</span>
+              </div>
+              <div class="metric">
+                <b>03</b>
+                <span>成果追蹤</span>
+              </div>
+            </div>
+          </div>
+
+          <a class="main-cta" href="https://angie26501-lgtm.github.io/active/test.html">
+            進入主系統
+          </a>
+        </aside>
+      </section>
+
+      <!-- 第一區：核心系統 -->
+      <section id="core" class="section">
+        <div class="section-header">
+          <span>Core System</span>
+          <h2>核心系統</h2>
+          <p>適合每日管理、團隊追蹤與完整活動量檢視。</p>
+        </div>
+
+        <div class="card-grid">
+          <article class="tool-card">
+            <div>
+              <div class="icon-row">
+                <div class="icon">01</div>
+                <span class="tag gold">主系統</span>
+              </div>
+              <h3>活動量管理成長系統</h3>
+              <p class="highlight">進入主系統，開始記錄今日活動量。</p>
+              <p class="usage">適合財務顧問每日使用，從 CALL、APO、FF 到成交，完整掌握行動進度。</p>
+            </div>
+            <a class="button gold" href="https://angie26501-lgtm.github.io/active/test.html">
+              進入主系統
+            </a>
+          </article>
+
+          <article class="tool-card">
+            <div>
+              <div class="icon-row">
+                <div class="icon">02</div>
+                <span class="tag">核心入口</span>
+              </div>
+              <h3>活動量管理主頁</h3>
+              <p class="highlight">快速進入活動量管理相關頁面。</p>
+              <p class="usage">適合作為內部管理入口，讓夥伴快速找到常用工具與回報頁面。</p>
+            </div>
+            <a class="button" href="https://angie26501-lgtm.github.io/active/main.html">
+              前往 main.html
+            </a>
+          </article>
+
+          <article class="tool-card">
+            <div>
+              <div class="icon-row">
+                <div class="icon">03</div>
+                <span class="tag">活動版本</span>
+              </div>
+              <h3>活動量管理版本 1</h3>
+              <p class="highlight">保留既有第一版活動量頁面。</p>
+              <p class="usage">適合比較不同版本設計，也可作為後續優化或備用入口。</p>
+            </div>
+            <a class="button" href="https://angie26501-lgtm.github.io/active/active-1.html">
+              開啟 active-1
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <!-- 第二區：每日紀錄與回報 -->
+      <section id="daily" class="section">
+        <div class="section-header">
+          <span>Daily Report</span>
+          <h2>每日紀錄與回報</h2>
+          <p>適合每天快速回報、完整填寫與團隊追蹤。</p>
+        </div>
+
+        <div class="card-grid">
+          <article class="tool-card">
+            <div>
+              <div class="icon-row">
+                <div class="icon">04</div>
+                <span class="tag gold">完整回報</span>
+              </div>
+              <h3>活動量完整回報表</h3>
+              <p class="highlight">適合每日快速回報與團隊追蹤。</p>
+              <p class="usage">可記錄每日活動量、成交件數、FYC、FYP 與備註，讓成果更容易彙整。</p>
+            </div>
+            <a class="button gold" href="https://angie26501-lgtm.github.io/active/activity-full.html">
+              查看完整回報
+            </a>
+          </article>
+
+          <article class="tool-card">
+            <div>
+              <div class="icon-row">
+                <div class="icon">05</div>
+                <span class="tag">測試版</span>
+              </div>
+              <h3>活動量測試版</h3>
+              <p class="highlight">保留測試版本，方便比較與修正。</p>
+              <p class="usage">適合檢查新功能、測試流程、調整視覺與欄位設定。</p>
+            </div>
+            <a class="button" href="https://angie26501-lgtm.github.io/active/avtive-2test.html">
+              開啟測試版
+            </a>
+          </article>
+
+          <article class="tool-card reserved-card">
+            <div>
+              <div class="icon-row">
+                <div class="icon">＋</div>
+                <span class="tag">預留區</span>
+              </div>
+              <h3>未來每日回報新版</h3>
+              <p class="highlight">預留給團隊版、主管版或月報版。</p>
+              <p class="usage">未來可放入新的回報頁，例如月統計、團隊總覽、主管追蹤儀表板。</p>
+            </div>
+            <a class="button" href="#extend">
+              查看延伸入口
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <!-- 第三區：AI 學習與成果 -->
+      <section id="ai" class="section">
+        <div class="section-header">
+          <span>AI Learning</span>
+          <h2>AI 學習與成果</h2>
+          <p>整合 AI 學習成果，延伸專業輸出能力。</p>
+        </div>
+
+        <div class="card-grid">
+          <article class="tool-card">
+            <div>
+              <div class="icon-row">
+                <div class="icon">AI</div>
+                <span class="tag gold">學員成果</span>
+              </div>
+              <h3>AI 學習成果入口</h3>
+              <p class="highlight">整合課程影片、學員作品與成果展示。</p>
+              <p class="usage">適合公勝包班、浩茂 AI 科技、NotebookLM、Gemini、Gamma 課後複習使用。</p>
+            </div>
+            <a class="button gold" href="https://angie26501-lgtm.github.io/active/ai-1150504.html">
+              進入 AI 學習成果
+            </a>
+          </article>
+
+          <article class="tool-card">
+            <div>
+              <div class="icon-row">
+                <div class="icon">06</div>
+                <span class="tag">AI 延伸</span>
+              </div>
+              <h3>AI0506 課程頁</h3>
+              <p class="highlight">保留 AI 課程延伸頁面。</p>
+              <p class="usage">適合作為課程回顧、學員補課、作品集或後續進階學習入口。</p>
+            </div>
+            <a class="button" href="https://angie26501-lgtm.github.io/active/ai0506.html">
+              開啟 ai0506
+            </a>
+          </article>
+
+          <article class="tool-card reserved-card">
+            <div>
+              <div class="icon-row">
+                <div class="icon">↗</div>
+                <span class="tag">專業輸出</span>
+              </div>
+              <h3>AI × 財顧應用預留</h3>
+              <p class="highlight">把 AI 學習延伸成專業輸出工具。</p>
+              <p class="usage">未來可放入講義、圖卡、簡報、學員作品牆與 AI Agent 入口。</p>
+            </div>
+            <a class="button" href="https://angie26501-lgtm.github.io/active/ai-1150504.html">
+              查看成果頁
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <!-- 第四區：入口與延伸 -->
+      <section id="extend" class="section">
+        <div class="section-header">
+          <span>Portal & Extension</span>
+          <h2>入口與延伸</h2>
+          <p>保留總入口與未來可持續擴充的位置。</p>
+        </div>
+
+        <div class="card-grid">
+          <article class="tool-card">
+            <div>
+              <div class="icon-row">
+                <div class="icon">首頁</div>
+                <span class="tag gold">總入口</span>
+              </div>
+              <h3>馥芸財富學苑｜活動量入口</h3>
+              <p class="highlight">目前這一頁就是所有工具的總入口。</p>
+              <p class="usage">適合加入手機桌面、LINE 圖文選單或團隊公告，讓夥伴快速進入所有頁面。</p>
+            </div>
+            <a class="button gold" href="https://angie26501-lgtm.github.io/active/index.html">
+              回到總入口
+            </a>
+          </article>
+
+          <article class="tool-card reserved-card">
+            <div>
+              <div class="icon-row">
+                <div class="icon">＋</div>
+                <span class="tag">新增頁面</span>
+              </div>
+              <h3>新增活動量工具頁</h3>
+              <p class="highlight">預留未來新增版本。</p>
+              <p class="usage">例如團隊統計、主管儀表板、月報分析、行動建議 AI 化，都可以放在這裡。</p>
+            </div>
+            <a class="button" href="#core">
+              查看目前系統
+            </a>
+          </article>
+
+          <article class="tool-card reserved-card">
+            <div>
+              <div class="icon-row">
+                <div class="icon">★</div>
+                <span class="tag">品牌系統</span>
+              </div>
+              <h3>馥芸財富學苑品牌工具</h3>
+              <p class="highlight">讓活動量入口成為品牌工具中心。</p>
+              <p class="usage">未來可串接 LINE、Google 表單、Google Sheet、AI Agent 或更多學員系統。</p>
+            </div>
+            <a class="button" href="#daily">
+              查看回報工具
+            </a>
+          </article>
+        </div>
+
+        <div class="notice">
+          <strong>提醒：</strong>
+          `avtive-2test.html` 為目前既有檔名，雖然看起來像拼字錯誤，但本頁已依照原檔名保留連結。
+          GitHub Pages 的前端密碼保護屬於簡易保護，適合課程與團隊入口，不適合放置高度機密資料。
+        </div>
+      </section>
+
+      <footer>
+        <strong>馥芸財富學苑｜財顧芸</strong><br />
+        活動量管理 × 財顧流程 × 保經活動量 × 專業成長紀錄
+      </footer>
     </div>
+  </main>
 
-  </form>
+  <script>
+    /*
+      簡易密碼設定區
+      日後若要修改密碼，請只改這一行即可。
+      注意：GitHub Pages 是靜態網頁，前端密碼可被懂程式的人查看，
+      因此僅適合一般課程入口、團隊入口，不適合高度機密資料。
+    */
+    const PORTAL_PASSWORD = "yun888";
 
-</div>
+    const STORAGE_KEY = "fuyun_activity_portal_logged_in";
 
-<script>
-const CONFIG = {
-  formAction: "https://docs.google.com/forms/d/e/1FAIpQLSfIWCo6ywRDfgpm9UUSPjGFA8pe2bB5e1m46r4sSrHQrz5H6A/formResponse",
-  entries: {
-    date: "entry.919879348",
-    name: "entry.337035848",
-    call: "entry.151478796",
-    apo: "entry.2016416450",
-    ff: "entry.328881420",
-    pd: "entry.136604677",
-    c: "entry.1402626868",
-    s: "entry.1839597626",
-    r: "entry.2137473605",
-    policy: "entry.286475001",
-    cases: "entry.1425354552",
-    fyc: "entry.845303929",
-    fyp: "entry.1289571681",
-    note: "entry.1999587977"
-  }
-};
+    const loginPage = document.getElementById("loginPage");
+    const sitePage = document.getElementById("sitePage");
+    const passwordInput = document.getElementById("passwordInput");
+    const loginButton = document.getElementById("loginButton");
+    const logoutButton = document.getElementById("logoutButton");
+    const errorMessage = document.getElementById("errorMessage");
 
-const KEY = "activity_draft";
-
-// 👉 自動今天日期
-const today = new Date().toISOString().split("T")[0];
-if(!document.getElementById("date").value){
-  document.getElementById("date").value = today;
-}
-
-// 👉 載入暫存
-function load(){
-  const data = JSON.parse(localStorage.getItem(KEY)||"{}");
-  Object.keys(data).forEach(k=>{
-    if(document.getElementById(k)){
-      document.getElementById(k).value = data[k];
+    function showSite() {
+      loginPage.classList.add("hidden");
+      sitePage.style.display = "block";
     }
-  });
-}
-load();
 
-// 👉 儲存暫存
-document.querySelectorAll("input,textarea").forEach(el=>{
-  el.addEventListener("input",()=>{
-    const data = {};
-    document.querySelectorAll("input,textarea").forEach(i=>{
-      data[i.id]=i.value;
+    function showLogin() {
+      sitePage.style.display = "none";
+      loginPage.classList.remove("hidden");
+      passwordInput.value = "";
+      errorMessage.textContent = "";
+      setTimeout(() => passwordInput.focus(), 100);
+    }
+
+    function login() {
+      const inputValue = passwordInput.value.trim();
+
+      if (inputValue === PORTAL_PASSWORD) {
+        sessionStorage.setItem(STORAGE_KEY, "true");
+        showSite();
+      } else {
+        errorMessage.textContent = "密碼不正確，請再試一次";
+        passwordInput.select();
+      }
+    }
+
+    function logout() {
+      sessionStorage.removeItem(STORAGE_KEY);
+      showLogin();
+    }
+
+    loginButton.addEventListener("click", login);
+
+    passwordInput.addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        login();
+      }
     });
-    localStorage.setItem(KEY,JSON.stringify(data));
-  });
-});
 
-// 👉 送出
-document.getElementById("form").addEventListener("submit",e=>{
-  e.preventDefault();
+    logoutButton.addEventListener("click", logout);
 
-  const formData = new FormData();
+    window.addEventListener("DOMContentLoaded", function() {
+      const loggedIn = sessionStorage.getItem(STORAGE_KEY) === "true";
 
-  Object.keys(CONFIG.entries).forEach(key=>{
-    const el = document.getElementById(key);
-    if(el){
-      formData.append(CONFIG.entries[key],el.value);
-    }
-  });
-
-  fetch(CONFIG.formAction,{
-    method:"POST",
-    mode:"no-cors",
-    body:formData
-  });
-
-  localStorage.removeItem(KEY);
-
-  document.getElementById("msg").classList.remove("hidden");
-
-  document.querySelectorAll("input").forEach(el=>{
-    if(el.type==="number") el.value=0;
-  });
-
-  document.getElementById("note").value="";
-});
-</script>
-
+      if (loggedIn) {
+        showSite();
+      } else {
+        showLogin();
+      }
+    });
+  </script>
 </body>
 </html>
