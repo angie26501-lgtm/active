@@ -1,0 +1,1506 @@
+以下是依照你貼上的完整需求整理出的 `active/followup.html` 單檔版本，可直接覆蓋使用。需求來源已依附檔內容整理。
+
+```html
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>馥芸財富學苑｜活動量管理名單設定與跟進系統</title>
+  <style>
+    :root {
+      --green-dark: #183c34;
+      --green: #2f6f5e;
+      --green-soft: #e8f3ee;
+      --gold: #c8a96a;
+      --gold-soft: #f8efd9;
+      --cream: #fbf7ef;
+      --gray-bg: #f4f5f2;
+      --text: #2e3431;
+      --muted: #6f7b75;
+      --white: #ffffff;
+      --danger: #b44b3f;
+      --warning: #b9892f;
+      --success: #2f7d5a;
+      --shadow: 0 14px 35px rgba(31, 55, 47, 0.12);
+      --shadow-soft: 0 8px 18px rgba(31, 55, 47, 0.08);
+      --radius: 22px;
+      --radius-sm: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(200,169,106,0.18), transparent 32%),
+        linear-gradient(135deg, #fbf7ef 0%, #eef4ef 55%, #f7f0df 100%);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 18px;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 28px 0 60px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #173b32 0%, #2f6f5e 60%, #c8a96a 130%);
+      color: white;
+      border-radius: 30px;
+      padding: 34px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      right: -90px;
+      top: -110px;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.28);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.25;
+      letter-spacing: 0.03em;
+    }
+
+    .subtitle {
+      margin: 12px 0 0;
+      color: rgba(255,255,255,0.86);
+      font-size: clamp(18px, 2.3vw, 24px);
+    }
+
+    .hero-note {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: rgba(255,255,255,0.9);
+      font-size: 16px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 7px 13px;
+      background: rgba(255,255,255,0.13);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(47,111,94,0.12);
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+      min-height: 112px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 15px;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--green-dark);
+      line-height: 1.15;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(330px, 0.75fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.92);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(47,111,94,0.12);
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 18px;
+      color: var(--green-dark);
+      font-size: 23px;
+      font-weight: 800;
+    }
+
+    .section-title::before {
+      content: "";
+      width: 9px;
+      height: 28px;
+      border-radius: 99px;
+      background: linear-gradient(180deg, var(--gold), var(--green));
+      display: inline-block;
+    }
+
+    .hint {
+      background: var(--green-soft);
+      border-left: 5px solid var(--green);
+      border-radius: 14px;
+      padding: 14px 16px;
+      color: #36584f;
+      margin-bottom: 18px;
+      font-size: 16px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-bottom: 16px;
+    }
+
+    label {
+      font-weight: 700;
+      color: var(--green-dark);
+      font-size: 17px;
+    }
+
+    .required::after {
+      content: " *";
+      color: var(--danger);
+      font-weight: 900;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid rgba(47,111,94,0.22);
+      background: #fff;
+      border-radius: 15px;
+      padding: 13px 14px;
+      font-size: 18px;
+      color: var(--text);
+      outline: none;
+      transition: 0.2s ease;
+      font-family: inherit;
+    }
+
+    textarea {
+      min-height: 112px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 4px rgba(47,111,94,0.12);
+    }
+
+    input[type="range"] {
+      accent-color: var(--green);
+      padding: 0;
+    }
+
+    .check-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .check-item,
+    .radio-item {
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+      background: #fbfaf6;
+      border: 1px solid rgba(47,111,94,0.13);
+      border-radius: 14px;
+      padding: 11px 12px;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .check-item:hover,
+    .radio-item:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-soft);
+      border-color: rgba(47,111,94,0.28);
+    }
+
+    .check-item input,
+    .radio-item input {
+      width: auto;
+      margin-top: 5px;
+      transform: scale(1.18);
+      accent-color: var(--green);
+    }
+
+    .check-item span,
+    .radio-item span {
+      font-size: 16px;
+      color: #35433f;
+    }
+
+    .radio-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .score-box {
+      background: linear-gradient(135deg, #f9f4e7, #eaf5ef);
+      border: 1px solid rgba(200,169,106,0.35);
+      border-radius: 18px;
+      padding: 18px;
+      margin-top: 14px;
+    }
+
+    .score-main {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      color: var(--green-dark);
+    }
+
+    .score-number {
+      font-size: 42px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .score-status {
+      margin-top: 10px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    button,
+    .button-link {
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      font-family: inherit;
+      font-size: 17px;
+      font-weight: 800;
+      border-radius: 15px;
+      padding: 13px 18px;
+      color: white;
+      background: linear-gradient(180deg, #3e806d 0%, #245848 100%);
+      box-shadow: 0 6px 0 #173c32, 0 14px 20px rgba(24,60,52,0.18);
+      transition: 0.16s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    button:hover,
+    .button-link:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+    }
+
+    button:active,
+    .button-link:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #173c32, 0 8px 14px rgba(24,60,52,0.14);
+    }
+
+    .btn-gold {
+      background: linear-gradient(180deg, #d7bd7d 0%, #a8833d 100%);
+      box-shadow: 0 6px 0 #795d26, 0 14px 20px rgba(168,131,61,0.18);
+    }
+
+    .btn-soft {
+      color: var(--green-dark);
+      background: linear-gradient(180deg, #ffffff 0%, #edf5f0 100%);
+      border: 1px solid rgba(47,111,94,0.18);
+      box-shadow: 0 6px 0 #cddbd3, 0 14px 20px rgba(31,55,47,0.08);
+    }
+
+    .btn-danger {
+      background: linear-gradient(180deg, #c85d4f 0%, #96392f 100%);
+      box-shadow: 0 6px 0 #6e2822, 0 14px 20px rgba(150,57,47,0.16);
+    }
+
+    .submit-status {
+      margin-top: 14px;
+      padding: 13px 15px;
+      border-radius: 14px;
+      display: none;
+      font-weight: 800;
+    }
+
+    .submit-status.show {
+      display: block;
+    }
+
+    .submit-status.success {
+      background: #e8f5ee;
+      color: var(--success);
+      border: 1px solid rgba(47,125,90,0.25);
+    }
+
+    .submit-status.error {
+      background: #fff0ed;
+      color: var(--danger);
+      border: 1px solid rgba(180,75,63,0.25);
+    }
+
+    .summary-box {
+      position: sticky;
+      top: 18px;
+    }
+
+    .summary-text {
+      white-space: pre-wrap;
+      background: #173b32;
+      color: #fff;
+      border-radius: 18px;
+      padding: 18px;
+      font-size: 16px;
+      min-height: 360px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12);
+    }
+
+    .search-box {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: end;
+    }
+
+    .records {
+      margin-top: 20px;
+    }
+
+    .record-card {
+      background: white;
+      border: 1px solid rgba(47,111,94,0.13);
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 14px;
+    }
+
+    .record-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .record-title {
+      font-size: 22px;
+      color: var(--green-dark);
+      font-weight: 900;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 14px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .tag.today {
+      background: #e7f4ee;
+      color: var(--success);
+    }
+
+    .tag.overdue {
+      background: #fff0ed;
+      color: var(--danger);
+    }
+
+    .tag.future {
+      background: #fff7e4;
+      color: var(--warning);
+    }
+
+    .record-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px 16px;
+      color: #40504b;
+      font-size: 16px;
+    }
+
+    .record-grid strong {
+      color: var(--green-dark);
+    }
+
+    details {
+      background: #fbfaf6;
+      border: 1px dashed rgba(47,111,94,0.22);
+      border-radius: 18px;
+      padding: 14px 16px;
+      margin-bottom: 18px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 900;
+      color: var(--green-dark);
+      font-size: 18px;
+    }
+
+    .small {
+      font-size: 15px;
+      color: var(--muted);
+    }
+
+    .divider {
+      height: 1px;
+      background: rgba(47,111,94,0.13);
+      margin: 18px 0;
+    }
+
+    @media (max-width: 1080px) {
+      .dashboard {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .summary-box {
+        position: relative;
+        top: 0;
+      }
+    }
+
+    @media (max-width: 760px) {
+      body {
+        font-size: 17px;
+      }
+
+      .page {
+        width: min(100% - 20px, 1180px);
+        padding-top: 14px;
+      }
+
+      .hero {
+        padding: 24px 20px;
+        border-radius: 24px;
+      }
+
+      .dashboard,
+      .grid-2,
+      .grid-3,
+      .check-grid,
+      .radio-row,
+      .record-grid,
+      .search-box {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        padding: 19px;
+      }
+
+      button,
+      .button-link {
+        width: 100%;
+      }
+
+      input,
+      select,
+      textarea {
+        font-size: 17px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-badge">馥芸財富學苑｜活動量管理</div>
+      <h1>名單設定與跟進系統</h1>
+      <p class="subtitle">名單設定 × 專案追蹤 × 顧問活動量紀錄</p>
+      <div class="hero-note">
+        <span class="pill">財務規劃</span>
+        <span class="pill">保單健診</span>
+        <span class="pill">退休現金流</span>
+        <span class="pill">家族傳承</span>
+        <span class="pill">高資產家庭專案</span>
+      </div>
+    </header>
+
+    <section class="dashboard" aria-label="統計儀表板">
+      <div class="stat-card">
+        <div class="stat-label">今日登打筆數</div>
+        <div class="stat-value" id="statTodayCount">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">今日活動量分數</div>
+        <div class="stat-value" id="statTodayScore">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">待追蹤名單數</div>
+        <div class="stat-value" id="statPending">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">高溫名單數</div>
+        <div class="stat-value" id="statHot">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">今日需追蹤數</div>
+        <div class="stat-value" id="statDueToday">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">已逾期追蹤數</div>
+        <div class="stat-value" id="statOverdue">0</div>
+      </div>
+    </section>
+
+    <main class="layout">
+      <form id="followForm" autocomplete="on">
+        <section class="card">
+          <h2 class="section-title">A. 顧問資料</h2>
+          <div class="grid-2">
+            <div class="field">
+              <label class="required" for="advisorName">顧問姓名</label>
+              <input id="advisorName" name="advisorName" type="text" placeholder="請輸入顧問姓名" required />
+            </div>
+            <div class="field">
+              <label class="required" for="advisorPhone">顧問手機</label>
+              <input id="advisorPhone" name="advisorPhone" type="tel" placeholder="請輸入顧問手機" required />
+            </div>
+            <div class="field">
+              <label for="advisorTeam">所屬單位／團隊</label>
+              <input id="advisorTeam" name="advisorTeam" type="text" placeholder="例如：馥芸財富學苑、公勝、宜蘭團隊" />
+            </div>
+            <div class="field">
+              <label class="required" for="recordDate">登打日期</label>
+              <input id="recordDate" name="recordDate" type="date" required />
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2 class="section-title">B. 客戶基本資料</h2>
+          <div class="grid-2">
+            <div class="field">
+              <label class="required" for="clientName">客戶姓名／暱稱</label>
+              <input id="clientName" name="clientName" type="text" placeholder="例如：林醫師、陳媽媽、王小姐" required />
+            </div>
+            <div class="field">
+              <label for="clientPhone">客戶手機</label>
+              <input id="clientPhone" name="clientPhone" type="tel" placeholder="請輸入客戶手機" />
+            </div>
+            <div class="field">
+              <label for="clientAge">客戶年齡</label>
+              <input id="clientAge" name="clientAge" type="number" min="0" max="120" placeholder="例如：55" />
+            </div>
+            <div class="field">
+              <label for="clientJob">客戶身分／職業</label>
+              <input id="clientJob" name="clientJob" type="text" placeholder="例如：醫師、講師、企業主、退休人士、家庭主婦" />
+            </div>
+            <div class="field">
+              <label class="required" for="clientSource">客戶來源</label>
+              <select id="clientSource" name="clientSource" required>
+                <option value="">請選擇</option>
+                <option>自然名單</option>
+                <option>轉介紹</option>
+                <option>講座名單</option>
+                <option>社群名單</option>
+                <option>舊客戶</option>
+                <option>家人朋友</option>
+                <option>異業合作</option>
+                <option>其他</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="required" for="leadTemperature">名單溫度</label>
+              <select id="leadTemperature" name="leadTemperature" required>
+                <option value="">請選擇</option>
+                <option>A級：高度意願</option>
+                <option>B級：可培養</option>
+                <option>C級：需暖名單</option>
+                <option>D級：暫緩追蹤</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2 class="section-title">C. 家庭與專案背景</h2>
+          <div class="hint">
+            範例：高資產家庭海外陪讀專案｜先生 69 歲半退休專科醫師、太太 55 歲半退休講師、女兒 18 歲預計海外留學 4～6 年；全家具美國公民身分，需留意全球課稅與 FATCA。
+          </div>
+
+          <div class="field">
+            <label for="familySummary">家庭成員摘要</label>
+            <textarea id="familySummary" name="familySummary" placeholder="例如：
+先生 69 歲，半退休專科醫師
+太太 55 歲，半退休講師
+女兒 18 歲，預計海外留學 4～6 年"></textarea>
+          </div>
+
+          <div class="field">
+            <label for="spouseOrFamilyNote">夫妻／家庭補充說明</label>
+            <textarea id="spouseOrFamilyNote" name="spouseOrFamilyNote" placeholder="例如：夫妻財務各自獨立，理財規劃互不合併。"></textarea>
+          </div>
+
+          <div class="field">
+            <label>關鍵背景標籤</label>
+            <div class="check-grid" id="backgroundTagsGroup"></div>
+          </div>
+
+          <div class="field">
+            <label for="painPoint">目前主要痛點</label>
+            <textarea id="painPoint" name="painPoint" placeholder="例如：
+資產分散於保單、股票、基金與不動產，目前希望從海外陪讀、美元現金流、稅務合規與家族傳承角度重新整理。"></textarea>
+          </div>
+
+          <div class="field">
+            <label for="assetSummary">目前資產概況</label>
+            <textarea id="assetSummary" name="assetSummary" placeholder="例如：
+北部核心區老家、北部市區套房、中南部投資性房產、多筆保單、股票、基金。"></textarea>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2 class="section-title">D. 保單與資產議題</h2>
+          <div class="grid-2">
+            <div class="field">
+              <label for="discussionTarget">目前討論標的</label>
+              <input id="discussionTarget" name="discussionTarget" type="text" placeholder="例如：遠雄保單、美元保單、退休現金流、傳承配置" />
+            </div>
+            <div class="field">
+              <label for="currentValue">目前現價／資產金額</label>
+              <input id="currentValue" name="currentValue" type="number" min="0" placeholder="例如：5000000" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="cashflow">每年／每月現金流</label>
+            <input id="cashflow" name="cashflow" type="text" placeholder="例如：每年還本 11 萬、每月領 1.1 萬" />
+          </div>
+
+          <div class="field">
+            <label for="originalIssue">原規劃問題</label>
+            <textarea id="originalIssue" name="originalIssue" placeholder="例如：
+現有保單雖有每年還本，但若從美元需求、海外陪讀、稅務申報、傳承彈性來看，可能需要重新檢視幣別與配置效率。"></textarea>
+          </div>
+
+          <div class="field">
+            <label for="optimizationDirection">初步優化方向</label>
+            <textarea id="optimizationDirection" name="optimizationDirection" placeholder="例如：
+以解舊換新、幣別轉換、主被動雙軌現金流、資產配置與傳承安排作為後續討論方向。"></textarea>
+          </div>
+
+          <div class="field">
+            <label for="complianceReminder">合規提醒</label>
+            <textarea id="complianceReminder" name="complianceReminder" placeholder="例如：
+因全家具有美國公民身分，需注意全球課稅、FATCA、海外帳戶揭露與保單稅務申報議題，正式規劃前建議與專業會計師／稅務顧問確認。"></textarea>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2 class="section-title">E. 跟進進度</h2>
+          <div class="grid-2">
+            <div class="field">
+              <label class="required" for="currentStage">目前階段</label>
+              <select id="currentStage" name="currentStage" required>
+                <option value="">請選擇</option>
+                <option>01 初次接觸</option>
+                <option>02 已建立信任</option>
+                <option>03 已完成基本資料蒐集</option>
+                <option>04 已完成資產盤點</option>
+                <option>05 已完成需求訪談</option>
+                <option>06 已提出初步觀念</option>
+                <option>07 已安排正式簡報</option>
+                <option>08 已完成方案說明</option>
+                <option>09 成交／執行中</option>
+                <option>10 售後服務</option>
+                <option>11 轉介紹經營</option>
+                <option>12 暫緩追蹤</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="progressPercent">追蹤進度百分比：<span id="progressText">0%</span></label>
+              <input id="progressPercent" name="progressPercent" type="range" min="0" max="100" value="0" />
+            </div>
+            <div class="field">
+              <label for="nextFollowDate">下次追蹤日期</label>
+              <input id="nextFollowDate" name="nextFollowDate" type="date" />
+            </div>
+            <div class="field">
+              <label for="followMethod">下次跟進方式</label>
+              <select id="followMethod" name="followMethod">
+                <option value="">請選擇</option>
+                <option>LINE</option>
+                <option>電話</option>
+                <option>面談</option>
+                <option>Zoom</option>
+                <option>傳送資料</option>
+                <option>邀約講座</option>
+                <option>安排家庭會議</option>
+                <option>其他</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="nextAction">下一步行動</label>
+            <textarea id="nextAction" name="nextAction" placeholder="例如：
+先用白皮書架構切入海外陪讀與美元現金流，再安排保單現況檢視與資產盤點。"></textarea>
+          </div>
+
+          <div class="field">
+            <label for="followRecord">本次跟進紀錄</label>
+            <textarea id="followRecord" name="followRecord" placeholder="例如：
+已向客戶說明海外陪讀期間需要同時考量生活費、學費、幣別、稅務合規與傳承彈性。"></textarea>
+          </div>
+
+          <div class="field">
+            <label class="required">是否完成本次追蹤</label>
+            <div class="radio-row">
+              <label class="radio-item"><input type="radio" name="followStatus" value="未完成" required /><span>未完成</span></label>
+              <label class="radio-item"><input type="radio" name="followStatus" value="已完成" /><span>已完成</span></label>
+              <label class="radio-item"><input type="radio" name="followStatus" value="等待客戶回覆" /><span>等待客戶回覆</span></label>
+              <label class="radio-item"><input type="radio" name="followStatus" value="暫緩追蹤" /><span>暫緩追蹤</span></label>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2 class="section-title">F. 活動量紀錄</h2>
+          <div class="field">
+            <label class="required">本次活動類型</label>
+            <div class="check-grid" id="activityTypesGroup"></div>
+          </div>
+
+          <div class="score-box">
+            <div class="score-main">
+              <span class="score-number" id="activityScoreView">0</span>
+              <span>分</span>
+            </div>
+            <input id="activityScore" name="activityScore" type="hidden" value="0" />
+            <input id="todayActivityStatus" name="todayActivityStatus" type="hidden" value="醞釀期｜今天先補 3 個 CALL 或安排 1 個 APO" />
+            <div class="score-status" id="activityStatusView">醞釀期｜今天先補 3 個 CALL 或安排 1 個 APO</div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2 class="section-title">G. 顧問備註</h2>
+          <div class="field">
+            <label for="advisorNote">顧問備註</label>
+            <textarea id="advisorNote" name="advisorNote"></textarea>
+          </div>
+
+          <div class="field">
+            <label for="internalReminder">內部提醒</label>
+            <textarea id="internalReminder" name="internalReminder" placeholder="例如：
+此案涉及美國稅務與海外資產，避免做稅務結論，應以提醒與轉介專業稅務顧問為主。"></textarea>
+          </div>
+
+          <details>
+            <summary>補充欄位</summary>
+            <div class="divider"></div>
+            <div class="grid-2">
+              <div class="field">
+                <label for="extraField1">補充欄位一</label>
+                <input id="extraField1" name="extraField1" type="text" />
+              </div>
+              <div class="field">
+                <label for="extraField2">補充欄位二</label>
+                <input id="extraField2" name="extraField2" type="text" />
+              </div>
+              <div class="field">
+                <label for="extraField3">補充欄位三</label>
+                <input id="extraField3" name="extraField3" type="text" />
+              </div>
+              <div class="field">
+                <label for="extraField4">補充欄位四</label>
+                <input id="extraField4" name="extraField4" type="text" />
+              </div>
+              <div class="field">
+                <label for="extraField5">補充欄位五</label>
+                <input id="extraField5" name="extraField5" type="text" />
+              </div>
+            </div>
+          </details>
+
+          <input id="followSummary" name="followSummary" type="hidden" />
+
+          <div class="btn-row">
+            <button type="submit" id="submitBtn">送出到 Google 表單</button>
+            <button type="button" class="btn-soft" id="resetBtn">重設表單</button>
+            <a class="button-link btn-gold" href="https://docs.google.com/forms/d/e/1FAIpQLSeEJHeNGEOxzijmcGvKI5DUuiZdoYv1ahZtdFTkVXEYg7o6rw/viewform" target="_blank" rel="noopener">開啟原始表單</a>
+          </div>
+
+          <div id="submitStatus" class="submit-status"></div>
+        </section>
+      </form>
+
+      <aside class="card summary-box">
+        <h2 class="section-title">自動追蹤摘要</h2>
+        <div class="summary-text" id="summaryText"></div>
+        <div class="btn-row">
+          <button type="button" class="btn-gold" id="copySummaryBtn">複製摘要</button>
+        </div>
+        <p class="small">摘要會同步送到 Google 表單的追蹤摘要欄位，也可直接複製到 LINE 或客戶管理紀錄。</p>
+      </aside>
+    </main>
+
+    <section class="card records">
+      <h2 class="section-title">最近登打紀錄</h2>
+
+      <div class="search-box">
+        <div class="field" style="margin-bottom:0;">
+          <label for="recordSearch">名單搜尋</label>
+          <input id="recordSearch" type="search" placeholder="可搜尋客戶姓名、顧問姓名、手機、階段、溫度、活動類型" />
+        </div>
+        <button type="button" class="btn-soft" id="clearSearchBtn">清除搜尋</button>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="btn-soft" id="exportCsvBtn">匯出 CSV</button>
+        <button type="button" class="btn-soft" id="copyAllBtn">複製全部近期摘要</button>
+        <button type="button" class="btn-danger" id="clearRecordsBtn">清除本機紀錄</button>
+      </div>
+
+      <div id="recordsList" style="margin-top:18px;"></div>
+    </section>
+  </div>
+
+  <script>
+    const GOOGLE_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSeEJHeNGEOxzijmcGvKI5DUuiZdoYv1ahZtdFTkVXEYg7o6rw/formResponse";
+
+    const FORM_FIELDS = {
+      advisorName: "entry.61496239",
+      advisorPhone: "entry.1685109884",
+      advisorTeam: "entry.227921307",
+      recordDate: "entry.981856927",
+
+      clientName: "entry.1971189089",
+      clientPhone: "entry.1655984811",
+      clientAge: "entry.988429007",
+      clientJob: "entry.2120848965",
+      clientSource: "entry.1148267591",
+      leadTemperature: "entry.382043890",
+
+      familySummary: "entry.272803960",
+      spouseOrFamilyNote: "entry.159734209",
+      backgroundTags: "entry.1304743309",
+      painPoint: "entry.161589739",
+      assetSummary: "entry.1826735274",
+
+      discussionTarget: "entry.635925929",
+      currentValue: "entry.281860254",
+      cashflow: "entry.1740771223",
+      originalIssue: "entry.779818530",
+      optimizationDirection: "entry.1285850366",
+      complianceReminder: "entry.400813955",
+
+      currentStage: "entry.1037612458",
+      progressPercent: "entry.627389718",
+      nextFollowDate: "entry.1452187387",
+      followMethod: "entry.23189785",
+      nextAction: "entry.1257036435",
+      followRecord: "entry.1507320150",
+      followStatus: "entry.1032531203",
+
+      activityScore: "entry.1551303934",
+      activityTypes: "entry.1402411803",
+      todayActivityStatus: "entry.1918657228",
+
+      advisorNote: "entry.665030454",
+      internalReminder: "entry.1425441889",
+      followSummary: "entry.156742092",
+
+      extraField1: "entry.313434815",
+      extraField2: "entry.116819654",
+      extraField3: "entry.1714527824",
+      extraField4: "entry.1420819648",
+      extraField5: "entry.1490602053"
+    };
+
+    const ACTIVITY_SCORES = {
+      "CALL 電話聯繫｜Call": 1,
+      "APO 約訪｜Appointment": 5,
+      "FF 需求訪談｜Fact Finding": 10,
+      "PD 方案說明｜Presentation / Proposal Discussion": 15,
+      "C 成交｜Closing": 30,
+      "S 售後服務｜Service": 5,
+      "R 轉介紹｜Referral": 20,
+      "POLICY 送保單｜Policy Delivery": 10,
+      "財顧紀錄｜Financial Planning Record": 10,
+      "白皮書提案｜White Paper Proposal": 15,
+      "家族傳承討論｜Legacy Planning Discussion": 20,
+      "稅務合規提醒｜Tax Compliance Reminder": 15
+    };
+
+    const BACKGROUND_TAGS = [
+      "退休規劃",
+      "高資產家庭",
+      "海外陪讀",
+      "美國公民",
+      "全球課稅",
+      "FATCA 肥咖條款",
+      "家族傳承",
+      "保單健診",
+      "現金流規劃",
+      "資產配置",
+      "不動產配置",
+      "稅務合規",
+      "子女教育金",
+      "夫妻財務獨立",
+      "其他"
+    ];
+
+    const STORAGE_KEY = "fuyun_followup_records_v1";
+
+    const form = document.getElementById("followForm");
+    const progressPercent = document.getElementById("progressPercent");
+    const progressText = document.getElementById("progressText");
+    const summaryText = document.getElementById("summaryText");
+    const submitStatus = document.getElementById("submitStatus");
+    const submitBtn = document.getElementById("submitBtn");
+    const recordsList = document.getElementById("recordsList");
+    const recordSearch = document.getElementById("recordSearch");
+
+    function todayString() {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, "0");
+      const d = String(now.getDate()).padStart(2, "0");
+      return `${y}-${m}-${d}`;
+    }
+
+    function safeValue(id) {
+      const el = document.getElementById(id);
+      return el ? String(el.value || "").trim() : "";
+    }
+
+    function getCheckedValues(name) {
+      return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(input => input.value);
+    }
+
+    function getRadioValue(name) {
+      const checked = document.querySelector(`input[name="${name}"]:checked`);
+      return checked ? checked.value : "";
+    }
+
+    function createCheckboxGroup(containerId, name, values) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = "";
+      values.forEach(value => {
+        const label = document.createElement("label");
+        label.className = "check-item";
+        label.innerHTML = `<input type="checkbox" name="${name}" value="${escapeHtml(value)}" /><span>${escapeHtml(value)}</span>`;
+        container.appendChild(label);
+      });
+    }
+
+    function escapeHtml(text) {
+      return String(text || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function calculateActivityScore() {
+      const selected = getCheckedValues("activityTypes");
+      return selected.reduce((sum, item) => sum + (ACTIVITY_SCORES[item] || 0), 0);
+    }
+
+    function activityStatus(score) {
+      if (score >= 80) return "豐收期｜今天活動量充足，請追蹤成交與轉介紹";
+      if (score >= 30) return "行動期｜已有活動基礎，建議推進到 FF 或 PD";
+      return "醞釀期｜今天先補 3 個 CALL 或安排 1 個 APO";
+    }
+
+    function updateActivityScore() {
+      const score = calculateActivityScore();
+      const status = activityStatus(score);
+      document.getElementById("activityScoreView").textContent = score;
+      document.getElementById("activityScore").value = score;
+      document.getElementById("activityStatusView").textContent = status;
+      document.getElementById("todayActivityStatus").value = status;
+      updateSummary();
+    }
+
+    function collectData() {
+      const activityScore = calculateActivityScore();
+      const status = activityStatus(activityScore);
+      const data = {
+        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+        createdAt: new Date().toISOString(),
+
+        advisorName: safeValue("advisorName"),
+        advisorPhone: safeValue("advisorPhone"),
+        advisorTeam: safeValue("advisorTeam"),
+        recordDate: safeValue("recordDate"),
+
+        clientName: safeValue("clientName"),
+        clientPhone: safeValue("clientPhone"),
+        clientAge: safeValue("clientAge"),
+        clientJob: safeValue("clientJob"),
+        clientSource: safeValue("clientSource"),
+        leadTemperature: safeValue("leadTemperature"),
+
+        familySummary: safeValue("familySummary"),
+        spouseOrFamilyNote: safeValue("spouseOrFamilyNote"),
+        backgroundTags: getCheckedValues("backgroundTags").join("、"),
+        painPoint: safeValue("painPoint"),
+        assetSummary: safeValue("assetSummary"),
+
+        discussionTarget: safeValue("discussionTarget"),
+        currentValue: safeValue("currentValue"),
+        cashflow: safeValue("cashflow"),
+        originalIssue: safeValue("originalIssue"),
+        optimizationDirection: safeValue("optimizationDirection"),
+        complianceReminder: safeValue("complianceReminder"),
+
+        currentStage: safeValue("currentStage"),
+        progressPercent: safeValue("progressPercent"),
+        nextFollowDate: safeValue("nextFollowDate"),
+        followMethod: safeValue("followMethod"),
+        nextAction: safeValue("nextAction"),
+        followRecord: safeValue("followRecord"),
+        followStatus: getRadioValue("followStatus"),
+
+        activityScore: String(activityScore),
+        activityTypes: getCheckedValues("activityTypes").join("、"),
+        todayActivityStatus: status,
+
+        advisorNote: safeValue("advisorNote"),
+        internalReminder: safeValue("internalReminder"),
+
+        extraField1: safeValue("extraField1"),
+        extraField2: safeValue("extraField2"),
+        extraField3: safeValue("extraField3"),
+        extraField4: safeValue("extraField4"),
+        extraField5: safeValue("extraField5")
+      };
+
+      data.followSummary = generateSummary(data);
+      return data;
+    }
+
+    function generateSummary(data) {
+      return `【名單追蹤摘要】
+顧問：${data.advisorName || "＿＿＿"}
+手機：${data.advisorPhone || "＿＿＿"}
+客戶：${data.clientName || "＿＿＿"}
+目前階段：${data.currentStage || "＿＿＿"}
+追蹤進度：${data.progressPercent || "0"}%
+下次追蹤：${data.nextFollowDate || "＿＿＿"}
+跟進方式：${data.followMethod || "＿＿＿"}
+核心議題：${data.painPoint || data.discussionTarget || "＿＿＿"}
+本次活動：${data.activityTypes || "＿＿＿"}
+活動分數：${data.activityScore || "0"}
+下一步行動：${data.nextAction || "＿＿＿"}
+備註：${data.advisorNote || data.internalReminder || "＿＿＿"}`;
+    }
+
+    function updateSummary() {
+      const data = collectData();
+      summaryText.textContent = data.followSummary;
+      document.getElementById("followSummary").value = data.followSummary;
+    }
+
+    function showStatus(message, type) {
+      submitStatus.textContent = message;
+      submitStatus.className = `submit-status show ${type}`;
+    }
+
+    function validateRequired(data) {
+      const missing = [];
+      if (!data.advisorName) missing.push("顧問姓名");
+      if (!data.advisorPhone) missing.push("顧問手機");
+      if (!data.recordDate) missing.push("登打日期");
+      if (!data.clientName) missing.push("客戶姓名／暱稱");
+      if (!data.clientSource) missing.push("客戶來源");
+      if (!data.leadTemperature) missing.push("名單溫度");
+      if (!data.currentStage) missing.push("目前階段");
+      if (!data.followStatus) missing.push("是否完成本次追蹤");
+      if (!data.activityTypes) missing.push("本次活動類型");
+      return missing;
+    }
+
+    function getRecords() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      } catch (error) {
+        console.warn("localStorage parse error", error);
+        return [];
+      }
+    }
+
+    function saveRecord(data) {
+      const records = getRecords();
+      records.unshift(data);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(records.slice(0, 300)));
+    }
+
+    async function submitToGoogleForms(data) {
+      const payload = new URLSearchParams();
+
+      Object.keys(FORM_FIELDS).forEach(key => {
+        payload.append(FORM_FIELDS[key], data[key] || "");
+      });
+
+      await fetch(GOOGLE_FORM_ACTION, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: payload
+      });
+    }
+
+    function followTag(dateString) {
+      const today = todayString();
+      if (!dateString) return { text: "未設定追蹤日", cls: "future" };
+      if (dateString === today) return { text: "今日需追蹤", cls: "today" };
+      if (dateString < today) return { text: "已逾期", cls: "overdue" };
+      return { text: "待追蹤", cls: "future" };
+    }
+
+    function renderRecords() {
+      const records = getRecords();
+      const keyword = recordSearch.value.trim().toLowerCase();
+
+      const filtered = records.filter(record => {
+        const haystack = [
+          record.clientName,
+          record.advisorName,
+          record.advisorPhone,
+          record.clientPhone,
+          record.currentStage,
+          record.leadTemperature,
+          record.activityTypes
+        ].join(" ").toLowerCase();
+        return !keyword || haystack.includes(keyword);
+      }).slice(0, 10);
+
+      recordsList.innerHTML = "";
+
+      if (!filtered.length) {
+        recordsList.innerHTML = `<div class="hint">目前沒有符合條件的紀錄。完成送出後，最近 10 筆會顯示在這裡。</div>`;
+        updateDashboard();
+        return;
+      }
+
+      filtered.forEach(record => {
+        const tag = followTag(record.nextFollowDate);
+        const card = document.createElement("div");
+        card.className = "record-card";
+        card.innerHTML = `
+          <div class="record-head">
+            <div>
+              <div class="record-title">${escapeHtml(record.clientName || "未命名客戶")}</div>
+              <div class="small">${escapeHtml(record.recordDate || "")}｜${escapeHtml(record.leadTemperature || "")}</div>
+            </div>
+            <span class="tag ${tag.cls}">${tag.text}</span>
+          </div>
+          <div class="record-grid">
+            <div><strong>顧問：</strong>${escapeHtml(record.advisorName || "")}</div>
+            <div><strong>顧問手機：</strong>${escapeHtml(record.advisorPhone || "")}</div>
+            <div><strong>目前階段：</strong>${escapeHtml(record.currentStage || "")}</div>
+            <div><strong>追蹤進度：</strong>${escapeHtml(record.progressPercent || "0")}%</div>
+            <div><strong>下次追蹤：</strong>${escapeHtml(record.nextFollowDate || "未設定")}</div>
+            <div><strong>活動分數：</strong>${escapeHtml(record.activityScore || "0")}</div>
+            <div style="grid-column:1/-1;"><strong>本次活動：</strong>${escapeHtml(record.activityTypes || "")}</div>
+            <div style="grid-column:1/-1;"><strong>下一步行動：</strong>${escapeHtml(record.nextAction || "")}</div>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn-soft copy-one-btn" data-id="${escapeHtml(record.id)}">複製單筆追蹤摘要</button>
+          </div>
+        `;
+        recordsList.appendChild(card);
+      });
+
+      document.querySelectorAll(".copy-one-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-id");
+          const record = getRecords().find(item => item.id === id);
+          if (record) copyText(record.followSummary || generateSummary(record), "已複製單筆追蹤摘要。");
+        });
+      });
+
+      updateDashboard();
+    }
+
+    function updateDashboard() {
+      const records = getRecords();
+      const today = todayString();
+
+      const todayRecords = records.filter(r => r.recordDate === today);
+      const todayScore = todayRecords.reduce((sum, r) => sum + Number(r.activityScore || 0), 0);
+      const pending = records.filter(r => r.nextFollowDate && r.nextFollowDate > today).length;
+      const hot = records.filter(r => String(r.leadTemperature || "").startsWith("A級")).length;
+      const dueToday = records.filter(r => r.nextFollowDate === today).length;
+      const overdue = records.filter(r => r.nextFollowDate && r.nextFollowDate < today).length;
+
+      document.getElementById("statTodayCount").textContent = todayRecords.length;
+      document.getElementById("statTodayScore").textContent = todayScore;
+      document.getElementById("statPending").textContent = pending;
+      document.getElementById("statHot").textContent = hot;
+      document.getElementById("statDueToday").textContent = dueToday;
+      document.getElementById("statOverdue").textContent = overdue;
+    }
+
+    function copyText(text, message) {
+      navigator.clipboard.writeText(text).then(() => {
+        showStatus(message || "已複製。", "success");
+      }).catch(() => {
+        const temp = document.createElement("textarea");
+        temp.value = text;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand("copy");
+        document.body.removeChild(temp);
+        showStatus(message || "已複製。", "success");
+      });
+    }
+
+    function exportCSV() {
+      const records = getRecords();
+      if (!records.length) {
+        showStatus("目前沒有本機紀錄可匯出。", "error");
+        return;
+      }
+
+      const headers = [
+        "登打日期",
+        "顧問姓名",
+        "顧問手機",
+        "客戶姓名",
+        "客戶手機",
+        "客戶來源",
+        "名單溫度",
+        "目前階段",
+        "追蹤進度",
+        "下次追蹤日期",
+        "跟進方式",
+        "本次活動類型",
+        "活動量分數",
+        "下一步行動",
+        "本次跟進紀錄",
+        "顧問備註",
+        "追蹤摘要"
+      ];
+
+      const rows = records.map(r => [
+        r.recordDate,
+        r.advisorName,
+        r.advisorPhone,
+        r.clientName,
+        r.clientPhone,
+        r.clientSource,
+        r.leadTemperature,
+        r.currentStage,
+        r.progressPercent,
+        r.nextFollowDate,
+        r.followMethod,
+        r.activityTypes,
+        r.activityScore,
+        r.nextAction,
+        r.followRecord,
+        r.advisorNote,
+        r.followSummary
+      ]);
+
+      const csv = [headers, ...rows]
+        .map(row => row.map(value => `"${String(value || "").replaceAll('"', '""')}"`).join(","))
+        .join("\n");
+
+      const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `馥芸活動量跟進紀錄_${todayString()}.csv`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      showStatus("CSV 已匯出，繁體中文已加入 BOM 避免亂碼。", "success");
+    }
+
+    function resetForm() {
+      form.reset();
+      document.getElementById("recordDate").value = todayString();
+      progressPercent.value = 0;
+      progressText.textContent = "0%";
+      updateActivityScore();
+      updateSummary();
+      showStatus("表單已重設，本機紀錄不受影響。", "success");
+    }
+
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+
+      const data = collectData();
+      const missing = validateRequired(data);
+
+      if (missing.length) {
+        showStatus(`請先完成必填欄位：${missing.join("、")}`, "error");
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "送出中...";
+      showStatus("送出中，請稍候。", "success");
+
+      try {
+        await submitToGoogleForms(data);
+        saveRecord(data);
+        renderRecords();
+        showStatus("已送出，請至 Google 試算表確認。資料也已同步儲存在本機紀錄。", "success");
+      } catch (error) {
+        console.error(error);
+        showStatus("送出失敗，請檢查 Google 表單連結或 entry 代碼。", "error");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "送出到 Google 表單";
+      }
+    });
+
+    progressPercent.addEventListener("input", () => {
+      progressText.textContent = `${progressPercent.value}%`;
+      updateSummary();
+    });
+
+    document.addEventListener("input", event => {
+      if (event.target.closest("#followForm")) {
+        if (event.target.name === "activityTypes") updateActivityScore();
+        updateSummary();
+      }
+    });
+
+    document.addEventListener("change", event => {
+      if (event.target.closest("#followForm")) {
+        if (event.target.name === "activityTypes") updateActivityScore();
+        updateSummary();
+      }
+    });
+
+    document.getElementById("copySummaryBtn").addEventListener("click", () => {
+      updateSummary();
+      copyText(summaryText.textContent, "已複製追蹤摘要。");
+    });
+
+    document.getElementById("resetBtn").addEventListener("click", resetForm);
+
+    document.getElementById("clearRecordsBtn").addEventListener("click", () => {
+      if (!confirm("確定要清除本機紀錄嗎？此動作不會刪除 Google 試算表資料。")) return;
+      localStorage.removeItem(STORAGE_KEY);
+      renderRecords();
+      showStatus("本機紀錄已清除。", "success");
+    });
+
+    document.getElementById("exportCsvBtn").addEventListener("click", exportCSV);
+
+    document.getElementById("copyAllBtn").addEventListener("click", () => {
+      const records = getRecords().slice(0, 10);
+      if (!records.length) {
+        showStatus("目前沒有近期摘要可複製。", "error");
+        return;
+      }
+      const text = records.map(r => r.followSummary || generateSummary(r)).join("\n\n--------------------\n\n");
+      copyText(text, "已複製全部近期摘要。");
+    });
+
+    recordSearch.addEventListener("input", renderRecords);
+
+    document.getElementById("clearSearchBtn").addEventListener("click", () => {
+      recordSearch.value = "";
+      renderRecords();
+    });
+
+    function init() {
+      createCheckboxGroup("backgroundTagsGroup", "backgroundTags", BACKGROUND_TAGS);
+      createCheckboxGroup("activityTypesGroup", "activityTypes", Object.keys(ACTIVITY_SCORES));
+
+      document.getElementById("recordDate").value = todayString();
+      progressText.textContent = `${progressPercent.value}%`;
+
+      updateActivityScore();
+      updateSummary();
+      renderRecords();
+      updateDashboard();
+    }
+
+    init();
+  </script>
+</body>
+</html>
+```
