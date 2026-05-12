@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>馥芸財富學苑｜每月拜訪客戶名單</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap"/>
+<style>
+:root{
+  --bg:#f5f3ee;--surface:#fff;--s2:#f9f7f3;
+  --bd:rgba(20,60,45,.10);--bdm:rgba(20,60,45,.18);
+  --g950:#0f2b24;--g900:#183c34;--g800:#225446;--g700:#2f6f5e;--g600:#3a8a75;
+  --g200:#b6ddd1;--g50:#f0f8f5;
+  --gd7:#a8833d;--gd5:#c8a96a;--gd3:#e5cf9e;
+  --blue:#1a6fa8;--bluebg:#e6f1fb;
+  --purple:#6a3db8;--purplebg:#f0ebfb;
+  --teal:#0f7b6c;--tealbg:#e0f5f2;
+  --red:#c0392b;--redbg:#fef0ee;
+  --orange:#d4861a;--orangebg:#fff4e0;
+  --text:#1e2d28;--t2:#4a5e58;--t3:#7a8f89;
+  --rsm:6px;--rmd:10px;--rlg:16px;--rxl:22px;--r2xl:30px;
+  --s1:0 1px 3px rgba(15,43,36,.08);--s2s:0 4px 12px rgba(15,43,36,.10);--s3:0 12px 32px rgba(15,43,36,.13);
+  --tr:.16s cubic-bezier(.4,0,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Noto Sans TC",sans-serif;background:var(--bg);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased;font-size:15px}
+button,input,select,textarea{font:inherit}
+.page{width:min(1400px,calc(100% - 24px));margin:0 auto;padding:26px 0 80px}
+
+/* hero */
+.hero{position:relative;overflow:hidden;isolation:isolate;background:var(--g950);border-radius:var(--r2xl);padding:clamp(22px,3.5vw,40px);margin-bottom:22px;box-shadow:var(--s3)}
+.hg1,.hg2{position:absolute;border-radius:50%;z-index:-1}
+.hg1{width:480px;height:480px;top:-170px;right:-110px;background:radial-gradient(circle,var(--gd5),transparent 70%);opacity:.10}
+.hg2{width:340px;height:340px;bottom:-130px;left:-70px;background:radial-gradient(circle,var(--g600),transparent 70%);opacity:.15}
+.eyebrow{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);padding:5px 12px;border-radius:999px;font-size:12px;letter-spacing:.06em;color:rgba(255,255,255,.65);margin-bottom:12px}
+.eyebrow::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--gd5)}
+.hero h1{font-size:clamp(22px,3vw,38px);font-weight:900;color:#fff;line-height:1.2;margin-bottom:8px}
+.hero h1 em{font-style:normal;color:var(--gd3)}
+.hero-sub{color:rgba(255,255,255,.6);font-size:14px}
+
+/* controls */
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;background:var(--surface);border:1px solid var(--bd);border-radius:var(--rxl);padding:16px 20px;box-shadow:var(--s1);margin-bottom:18px}
+.cg{display:flex;flex-direction:column;gap:4px}
+.cl{font-size:11px;font-weight:900;color:var(--t3);letter-spacing:.04em}
+.ci{border:1px solid var(--bdm);background:var(--surface);border-radius:var(--rmd);padding:7px 11px;font-size:13px;color:var(--text);outline:none;transition:border-color var(--tr),box-shadow var(--tr);min-width:110px}
+.ci:focus{border-color:var(--g600);box-shadow:0 0 0 3px rgba(47,111,94,.09)}
+.mnav{display:flex;align-items:center;gap:6px}
+.mbtn{width:30px;height:30px;border-radius:var(--rmd);padding:0;background:transparent;border:1px solid var(--bdm);color:var(--t2);font-size:15px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all var(--tr)}
+.mbtn:hover{background:var(--g50);border-color:var(--g200)}
+.mlbl{font-size:17px;font-weight:900;color:var(--g950);min-width:76px;text-align:center}
+.sp{flex:1}
+.btn{appearance:none;border:none;cursor:pointer;font-size:13px;font-weight:700;border-radius:var(--rmd);padding:8px 14px;color:#fff;background:var(--g800);transition:all var(--tr);display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.btn:hover{background:var(--g700);transform:translateY(-1px);box-shadow:var(--s2s)}
+.btn:active{transform:none;box-shadow:none}
+.btn-gold{background:var(--gd7)}.btn-gold:hover{background:#b8943d}
+.btn-ol{background:transparent;color:var(--g800);border:1px solid var(--bdm)}.btn-ol:hover{background:var(--g50);border-color:var(--g200);transform:translateY(-1px)}
+.btn-danger{background:var(--red)}.btn-danger:hover{background:#a8312a}
+.btn-sm{padding:6px 11px;font-size:12px}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-bottom:18px}
+.stat{background:var(--surface);border:1px solid var(--bd);border-radius:var(--rlg);padding:13px 15px;box-shadow:var(--s1);position:relative;overflow:hidden}
+.sbar{position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--rlg) var(--rlg) 0 0}
+.slbl{font-size:11px;color:var(--t3);font-weight:700;letter-spacing:.02em;margin-bottom:4px}
+.sval{font-size:24px;font-weight:900;color:var(--g900);line-height:1;font-variant-numeric:tabular-nums}
+.ssub{font-size:11px;color:var(--t3);margin-top:3px}
+
+/* table */
+.tw{background:var(--surface);border:1px solid var(--bd);border-radius:var(--rxl);box-shadow:var(--s1);overflow:hidden;margin-bottom:18px}
+.th{padding:14px 18px 0;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.tt{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:900;color:var(--g950)}
+.ttb{width:4px;height:18px;border-radius:99px}
+.ts{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+thead th{background:var(--s2);padding:9px 8px;font-size:11px;font-weight:900;color:var(--t3);letter-spacing:.03em;text-align:left;border-bottom:1px solid var(--bd);white-space:nowrap;position:sticky;top:0;z-index:1}
+thead th:first-child{padding-left:14px}
+thead th.ctr{text-align:center}
+tbody tr{border-bottom:1px solid var(--bd);transition:background var(--tr)}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:var(--g50)}
+tbody td{padding:6px 8px;vertical-align:middle}
+tbody td:first-child{padding-left:14px}
+.rn{width:22px;height:22px;border-radius:var(--rsm);background:var(--s2);border:1px solid var(--bd);font-size:10px;font-weight:900;color:var(--t3);display:flex;align-items:center;justify-content:center}
+
+/* inline inputs */
+.ti{border:1px solid transparent;background:transparent;border-radius:var(--rsm);padding:4px 7px;font-size:12.5px;color:var(--text);width:100%;outline:none;transition:border-color var(--tr),background var(--tr)}
+.ti:hover{border-color:var(--bdm);background:var(--surface)}
+.ti:focus{border-color:var(--g600);background:var(--surface);box-shadow:0 0 0 2px rgba(47,111,94,.08)}
+.tsel{border:1px solid transparent;background:transparent;border-radius:var(--rsm);padding:4px 5px;font-size:12px;color:var(--text);outline:none;cursor:pointer;width:100%;transition:border-color var(--tr),background var(--tr)}
+.tsel:hover,.tsel:focus{border-color:var(--bdm);background:var(--surface)}
+
+/* type badge */
+.typebadge{border-radius:999px;padding:3px 9px;font-size:11px;font-weight:900;border:none;outline:none;cursor:pointer;appearance:none;text-align:center;transition:all var(--tr)}
+.tp{background:var(--bluebg);color:var(--blue)}
+.tr2{background:var(--purplebg);color:var(--purple)}
+.tc{background:var(--tealbg);color:var(--teal)}
+
+/* follow tags — multi checkbox pills */
+.follow-cell{display:flex;flex-wrap:wrap;gap:3px;align-items:center;min-width:200px}
+.fpill{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:999px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid transparent;transition:all var(--tr);white-space:nowrap;user-select:none}
+.fpill input{display:none}
+.fpill-second{background:var(--orangebg);color:var(--orange);border-color:rgba(212,134,26,.2)}
+.fpill-second:has(input:checked){background:var(--orange);color:#fff;border-color:var(--orange)}
+.fpill-policy{background:var(--bluebg);color:var(--blue);border-color:rgba(26,111,168,.2)}
+.fpill-policy:has(input:checked){background:var(--blue);color:#fff;border-color:var(--blue)}
+.fpill-asset{background:var(--tealbg);color:var(--teal);border-color:rgba(15,123,108,.2)}
+.fpill-asset:has(input:checked){background:var(--teal);color:#fff;border-color:var(--teal)}
+.fpill-plan{background:var(--purplebg);color:var(--purple);border-color:rgba(106,61,184,.2)}
+.fpill-plan:has(input:checked){background:var(--purple);color:#fff;border-color:var(--purple)}
+.fpill-claim{background:#fff0f0;color:var(--red);border-color:rgba(192,57,43,.2)}
+.fpill-claim:has(input:checked){background:var(--red);color:#fff;border-color:var(--red)}
+.fpill-service{background:#f5f0ff;color:#7c3aed;border-color:rgba(124,58,237,.2)}
+.fpill-service:has(input:checked){background:#7c3aed;color:#fff;border-color:#7c3aed}
+.fother{border:1px solid var(--bdm);background:transparent;border-radius:999px;padding:2px 8px;font-size:11px;color:var(--t2);outline:none;width:72px;transition:border-color var(--tr)}
+.fother:focus{border-color:var(--g600);width:100px}
+.fother::placeholder{color:var(--t3)}
+
+/* money */
+.money{text-align:right;font-variant-numeric:tabular-nums}
+
+/* del */
+.delbtn{width:24px;height:24px;padding:0;border-radius:var(--rsm);display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--bd);color:var(--t3);cursor:pointer;font-size:13px;transition:all var(--tr)}
+.delbtn:hover{background:var(--redbg);border-color:var(--red);color:var(--red)}
+
+/* footer */
+.tf{padding:12px 14px;border-top:1px dashed var(--bdm);display:flex;align-items:center;gap:10px;background:var(--s2)}
+.tfsm{font-size:12px;color:var(--t3);margin-left:auto;display:flex;gap:14px}
+.tfsm span strong{color:var(--g800)}
+
+/* empty */
+.empty-td{text-align:center;padding:36px;color:var(--t3);font-size:13px}
+
+/* toast */
+.toast{position:fixed;bottom:22px;right:22px;z-index:999;background:var(--g900);color:#fff;padding:10px 16px;border-radius:var(--rlg);font-size:13px;font-weight:700;box-shadow:var(--s3);pointer-events:none;opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s}
+.toast.show{opacity:1;transform:translateY(0)}
+
+@media(max-width:900px){
+  .stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .controls{flex-direction:column;align-items:stretch}
+  .sp{display:none}
+  .btn{width:100%}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="hero">
+  <div class="hg1"></div><div class="hg2"></div>
+  <div class="eyebrow">馥芸財富學苑｜活動量管理</div>
+  <h1>每月拜訪<em>客戶名單</em></h1>
+  <p class="hero-sub">準客戶 × 推薦名單 × 增員名單，三類互通，跟進事項一鍵勾選，預估 FYC／FYP 即時統計。</p>
+</header>
+
+<div class="controls">
+  <div class="cg">
+    <span class="cl">顧問姓名</span>
+    <input id="advName" class="ci" type="text" placeholder="請輸入顧問姓名" style="min-width:130px"/>
+  </div>
+  <div class="cg">
+    <span class="cl">月份</span>
+    <div class="mnav">
+      <button class="mbtn" onclick="chMonth(-1)">&#8249;</button>
+      <span class="mlbl" id="monthLbl"></span>
+      <button class="mbtn" onclick="chMonth(1)">&#8250;</button>
+    </div>
+  </div>
+  <div class="sp"></div>
+  <button class="btn btn-ol" onclick="addRow('prospect')">＋ 準客戶</button>
+  <button class="btn btn-ol" onclick="addRow('referral')">＋ 推薦名單</button>
+  <button class="btn btn-ol" onclick="addRow('recruit')">＋ 增員名單</button>
+  <button class="btn btn-gold" onclick="doExport()">
+    <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    匯出 CSV
+  </button>
+  <button class="btn btn-danger btn-sm" onclick="clearMonth()">清除本月</button>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="sbar" style="background:linear-gradient(90deg,var(--g700),var(--gd5))"></div><div class="slbl">名單總數</div><div class="sval" id="s0">0</div></div>
+  <div class="stat"><div class="sbar" style="background:linear-gradient(90deg,var(--blue),#5aabdc)"></div><div class="slbl">準客戶</div><div class="sval" id="s1">0</div></div>
+  <div class="stat"><div class="sbar" style="background:linear-gradient(90deg,var(--purple),#9b7de0)"></div><div class="slbl">推薦名單</div><div class="sval" id="s2">0</div></div>
+  <div class="stat"><div class="sbar" style="background:linear-gradient(90deg,var(--teal),#3abfad)"></div><div class="slbl">增員名單</div><div class="sval" id="s3">0</div></div>
+  <div class="stat"><div class="sbar" style="background:linear-gradient(90deg,var(--gd7),var(--gd3))"></div><div class="slbl">預估 FYC 合計</div><div class="sval" id="s4">0</div><div class="ssub">元</div></div>
+  <div class="stat"><div class="sbar" style="background:linear-gradient(90deg,var(--orange),#e8c250)"></div><div class="slbl">預估 FYP 合計</div><div class="sval" id="s5">0</div><div class="ssub">元</div></div>
+</div>
+
+<div class="tw">
+  <div class="th">
+    <div class="tt">
+      <span class="ttb" style="background:linear-gradient(180deg,var(--g700),var(--gd5))"></span>
+      本月名單總覽
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-ol btn-sm" onclick="addRow('prospect')">＋ 準客戶</button>
+      <button class="btn btn-ol btn-sm" onclick="addRow('referral')">＋ 推薦名單</button>
+      <button class="btn btn-ol btn-sm" onclick="addRow('recruit')">＋ 增員名單</button>
+    </div>
+  </div>
+  <div class="ts">
+    <table id="mainTable">
+      <thead>
+        <tr>
+          <th style="width:32px">#</th>
+          <th style="width:76px">名單類型</th>
+          <th style="min-width:92px">姓名／暱稱</th>
+          <th style="min-width:86px">手機</th>
+          <th style="min-width:78px">來源／推薦人</th>
+          <th style="min-width:70px">溫度</th>
+          <th style="min-width:220px">本次跟進重點</th>
+          <th style="min-width:80px">下次追蹤</th>
+          <th style="min-width:68px;text-align:right">預估 FYC</th>
+          <th style="min-width:68px;text-align:right">預估 FYP</th>
+          <th style="min-width:108px">備註說明</th>
+          <th style="width:30px"></th>
+        </tr>
+      </thead>
+      <tbody id="mainBody"></tbody>
+    </table>
+  </div>
+  <div class="tf">
+    <button class="btn btn-ol btn-sm" onclick="addRow('prospect')">＋ 新增一列</button>
+    <div class="tfsm">
+      <span id="rowCount">0 筆</span>
+      <span>二次面談 <strong id="f0">0</strong></span>
+      <span>保單檢視 <strong id="f1">0</strong></span>
+      <span>資產配置 <strong id="f2">0</strong></span>
+      <span>規劃建議 <strong id="f3">0</strong></span>
+      <span>理賠 <strong id="f4">0</strong></span>
+      <span>保服照會 <strong id="f5">0</strong></span>
+    </div>
+  </div>
+</div>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const SK="fuyun_mv3";const AK="fuyun_mv3_adv";
+let Y=new Date().getFullYear(),M=new Date().getMonth()+1;
+const TLBL={prospect:"準客戶",referral:"推薦名單",recruit:"增員名單"};
+const TCLS={prospect:"tp",referral:"tr2",recruit:"tc"};
+const TEMPS=["","A級：高意願","B級：可培養","C級：需暖化","D級：暫緩"];
+const SRCS=["","自然名單","轉介紹","講座名單","社群名單","舊客戶","異業合作","其他"];
+const FOLLOW_KEYS=["second","policy","asset","plan","claim","service"];
+const FOLLOW_LBLS=["二次面談","保單檢視","資產配置","規劃建議","理賠","保服照會"];
+const FOLLOW_CLS=["fpill-second","fpill-policy","fpill-asset","fpill-plan","fpill-claim","fpill-service"];
+
+function sk(y,m){return`${SK}_${y}_${String(m).padStart(2,"0")}`}
+function load(){try{return JSON.parse(localStorage.getItem(sk(Y,M))||"[]")}catch{return[]}}
+function save(r){localStorage.setItem(sk(Y,M),JSON.stringify(r))}
+function uid(){return Date.now()+"_"+Math.random().toString(36).slice(2)}
+function esc(t){return String(t||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2200)}
+function num(v){const n=parseFloat(String(v).replace(/,/g,""));return isNaN(n)?0:n}
+
+function newRow(type){
+  const f={};FOLLOW_KEYS.forEach(k=>f[k]=false);
+  return{id:uid(),type,name:"",phone:"",source:"",temperature:"",
+    follow:f,followOther:"",nextDate:"",fyc:"",fyp:"",note:""};
+}
+
+function updMonthLbl(){document.getElementById("monthLbl").textContent=`${Y}/${String(M).padStart(2,"0")}`}
+function chMonth(d){M+=d;if(M>12){M=1;Y++}if(M<1){M=12;Y--}updMonthLbl();render()}
+
+function render(){
+  const rows=load();
+  const tbody=document.getElementById("mainBody");
+  tbody.innerHTML="";
+  if(!rows.length){
+    tbody.innerHTML=`<tr><td class="empty-td" colspan="12">尚未新增名單。點上方按鈕新增準客戶、推薦名單或增員名單。</td></tr>`;
+  }else{
+    rows.forEach((r,i)=>{
+      const tr=document.createElement("tr");
+      tr.dataset.id=r.id;
+      const typeOpts=Object.entries(TLBL).map(([v,l])=>`<option value="${v}"${r.type===v?" selected":""}>${l}</option>`).join("");
+      const tOpts=TEMPS.map(o=>`<option${r.temperature===o?" selected":""}>${o}</option>`).join("");
+      const sOpts=SRCS.map(o=>`<option${r.source===o?" selected":""}>${o}</option>`).join("");
+      const pills=FOLLOW_KEYS.map((k,idx)=>`
+        <label class="fpill ${FOLLOW_CLS[idx]}">
+          <input type="checkbox" ${r.follow&&r.follow[k]?"checked":""} onchange="updFollow('${r.id}','${k}',this.checked)"/>
+          ${FOLLOW_LBLS[idx]}
+        </label>`).join("");
+      tr.innerHTML=`
+        <td><div class="rn">${i+1}</div></td>
+        <td><select class="typebadge ${TCLS[r.type]||'tp'}" onchange="updType('${r.id}',this)">${typeOpts}</select></td>
+        <td><input class="ti" style="font-weight:700;min-width:82px" value="${esc(r.name)}" placeholder="姓名／暱稱" onchange="upd('${r.id}','name',this.value)"/></td>
+        <td><input class="ti" value="${esc(r.phone)}" placeholder="手機" onchange="upd('${r.id}','phone',this.value)"/></td>
+        <td><select class="tsel" onchange="upd('${r.id}','source',this.value)">${sOpts}</select></td>
+        <td><select class="tsel" onchange="upd('${r.id}','temperature',this.value)">${tOpts}</select></td>
+        <td><div class="follow-cell">${pills}<input class="ti fother" value="${esc(r.followOther)}" placeholder="其他…" onchange="upd('${r.id}','followOther',this.value)"/></div></td>
+        <td><input class="ti" type="date" value="${esc(r.nextDate)}" onchange="upd('${r.id}','nextDate',this.value)"/></td>
+        <td><input class="ti money" value="${esc(r.fyc)}" placeholder="0" onchange="upd('${r.id}','fyc',this.value)" style="text-align:right"/></td>
+        <td><input class="ti money" value="${esc(r.fyp)}" placeholder="0" onchange="upd('${r.id}','fyp',this.value)" style="text-align:right"/></td>
+        <td><input class="ti" style="min-width:98px" value="${esc(r.note)}" placeholder="備註說明" onchange="upd('${r.id}','note',this.value)"/></td>
+        <td><button class="delbtn" onclick="delRow('${r.id}')" title="刪除">✕</button></td>`;
+      tbody.appendChild(tr);
+    });
+  }
+  updStats(rows);
+}
+
+function updStats(rows){
+  document.getElementById("s0").textContent=rows.length;
+  document.getElementById("s1").textContent=rows.filter(r=>r.type==="prospect").length;
+  document.getElementById("s2").textContent=rows.filter(r=>r.type==="referral").length;
+  document.getElementById("s3").textContent=rows.filter(r=>r.type==="recruit").length;
+  const fyc=rows.reduce((s,r)=>s+num(r.fyc),0);
+  const fyp=rows.reduce((s,r)=>s+num(r.fyp),0);
+  document.getElementById("s4").textContent=fyc?fyc.toLocaleString():"0";
+  document.getElementById("s5").textContent=fyp?fyp.toLocaleString():"0";
+  document.getElementById("rowCount").textContent=`${rows.length} 筆`;
+  FOLLOW_KEYS.forEach((k,i)=>{
+    document.getElementById(`f${i}`).textContent=rows.filter(r=>r.follow&&r.follow[k]).length;
+  });
+}
+
+function addRow(type){
+  const rows=load();rows.push(newRow(type));save(rows);render();
+  setTimeout(()=>{
+    const last=document.getElementById("mainBody").lastElementChild;
+    last?.scrollIntoView({behavior:"smooth",block:"nearest"});
+    last?.querySelector("input.ti")?.focus();
+  },60);
+}
+function upd(id,field,val){
+  const rows=load();const r=rows.find(x=>x.id===id);
+  if(r){r[field]=val;save(rows);updStats(rows);}
+}
+function updFollow(id,key,val){
+  const rows=load();const r=rows.find(x=>x.id===id);
+  if(r){if(!r.follow)r.follow={};r.follow[key]=val;save(rows);updStats(rows);}
+}
+function updType(id,sel){
+  const rows=load();const r=rows.find(x=>x.id===id);
+  if(r){r.type=sel.value;save(rows);sel.className=`typebadge ${TCLS[sel.value]||"tp"}`;updStats(rows);}
+}
+function delRow(id){
+  save(load().filter(r=>r.id!==id));render();toast("已刪除。");
+}
+function clearMonth(){
+  if(!confirm(`確定清除 ${Y}/${String(M).padStart(2,"0")} 所有名單？`))return;
+  localStorage.removeItem(sk(Y,M));render();toast("本月名單已清除。");
+}
+function doExport(){
+  const rows=load();
+  const adv=document.getElementById("advName").value.trim()||"未填寫";
+  const ym=`${Y}/${String(M).padStart(2,"0")}`;
+  const hdr=["月份","顧問","名單類型","姓名","手機","來源／推薦人","溫度",
+    ...FOLLOW_LBLS,"其他跟進","下次追蹤","預估FYC","預估FYP","備註說明"];
+  const data=rows.map(r=>[ym,adv,TLBL[r.type]||r.type,r.name,r.phone,r.source,r.temperature,
+    ...FOLLOW_KEYS.map(k=>(r.follow&&r.follow[k])?"✓":""),
+    r.followOther,r.nextDate,r.fyc,r.fyp,r.note]);
+  const csv=[hdr,...data].map(row=>row.map(v=>`"${String(v||"").replaceAll('"','""')}"`).join(",")).join("\n");
+  const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8;"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download=`馥芸拜訪名單_${Y}${String(M).padStart(2,"0")}.csv`;
+  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+  toast("CSV 已匯出！");
+}
+
+// advisor persist
+const advEl=document.getElementById("advName");
+try{const s=localStorage.getItem(AK);if(s)advEl.value=s}catch{}
+advEl.addEventListener("input",()=>{try{localStorage.setItem(AK,advEl.value)}catch{}});
+
+// init 20 default rows
+function initDefault(){
+  if(!load().length){
+    const types=["prospect","prospect","prospect","prospect","prospect",
+                 "prospect","prospect","referral","referral","referral",
+                 "referral","referral","recruit","recruit","recruit",
+                 "recruit","recruit","prospect","referral","recruit"];
+    save(types.map(t=>newRow(t)));
+  }
+}
+
+updMonthLbl();initDefault();render();
+</script>
+</body>
+</html>
