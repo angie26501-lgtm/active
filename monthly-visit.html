@@ -1,4 +1,4 @@
-日<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
@@ -6,17 +6,22 @@
   <title>馥芸財富學苑｜每月拜訪客戶名單</title>
   <style>
     :root {
-      --green: #315f4b;
-      --green-soft: #e8f1ec;
-      --green-light: #f4faf6;
-      --gold: #c7a45d;
-      --gold-soft: #f5ead2;
-      --ink: #24342d;
-      --muted: #6b7c73;
-      --line: #d9e3dd;
-      --white: #ffffff;
-      --danger: #b95c45;
-      --shadow: 0 18px 45px rgba(49, 95, 75, 0.16);
+      --green-dark: #0f3428;
+      --green: #1f6b55;
+      --green-soft: #e8f3ef;
+      --gold: #b58a3a;
+      --gold-soft: #f6edda;
+      --blue: #2e8fd3;
+      --purple: #8a6be8;
+      --teal: #23b99a;
+      --orange: #e49b21;
+      --red: #cc3c31;
+      --bg: #f6f4ef;
+      --card: #ffffff;
+      --text: #18342d;
+      --muted: #6b7d77;
+      --line: #dfe7e3;
+      --shadow: 0 12px 28px rgba(20, 45, 36, 0.10);
       --radius: 22px;
     }
 
@@ -27,123 +32,76 @@
     body {
       margin: 0;
       font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(199,164,93,0.18), transparent 30%),
-        radial-gradient(circle at bottom right, rgba(49,95,75,0.16), transparent 32%),
-        linear-gradient(135deg, #f7faf7 0%, #edf4ef 48%, #fbf6ec 100%);
-      color: var(--ink);
+      background: var(--bg);
+      color: var(--text);
       min-height: 100vh;
-      padding: 24px 14px 42px;
+      padding: 24px;
     }
 
     .page {
-      width: 100%;
-      max-width: 980px;
+      max-width: 1680px;
       margin: 0 auto;
     }
 
     .hero {
-      background: linear-gradient(135deg, var(--green), #234336);
-      color: var(--white);
-      border-radius: 28px;
-      padding: 34px 28px;
+      background:
+        radial-gradient(circle at right center, rgba(255,255,255,0.08), transparent 28%),
+        linear-gradient(135deg, #0b2b22 0%, #153f31 55%, #103126 100%);
+      border-radius: 32px;
+      padding: 48px 56px;
+      color: white;
       box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 22px;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      width: 220px;
-      height: 220px;
-      border-radius: 999px;
-      background: rgba(199,164,93,0.25);
-      right: -70px;
-      top: -80px;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      width: 160px;
-      height: 160px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      left: -60px;
-      bottom: -80px;
-    }
-
-    .hero-inner {
-      position: relative;
-      z-index: 2;
+      margin-bottom: 28px;
     }
 
     .badge {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(255,255,255,0.14);
-      border: 1px solid rgba(255,255,255,0.22);
-      padding: 7px 12px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.10);
+      color: rgba(255,255,255,0.86);
       border-radius: 999px;
-      font-size: 13px;
-      letter-spacing: 0.06em;
-      margin-bottom: 14px;
+      padding: 8px 14px;
+      font-size: 14px;
+      margin-bottom: 20px;
     }
 
-    .hero h1 {
+    .badge::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--gold);
+    }
+
+    h1 {
       margin: 0;
-      font-size: clamp(28px, 4vw, 42px);
-      line-height: 1.2;
+      font-size: clamp(34px, 4vw, 58px);
       letter-spacing: 0.04em;
-      font-weight: 800;
+      line-height: 1.15;
+      color: #fff8e8;
+      text-shadow: 0 2px 0 rgba(0,0,0,0.18);
     }
 
     .hero p {
-      margin: 14px 0 0;
-      color: rgba(255,255,255,0.86);
+      margin: 18px 0 0;
+      color: rgba(255,255,255,0.78);
+      font-size: 18px;
       line-height: 1.8;
-      font-size: 16px;
     }
 
-    .panel {
-      background: rgba(255,255,255,0.9);
-      border: 1px solid rgba(255,255,255,0.7);
-      border-radius: var(--radius);
+    .toolbar {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 18px 22px;
       box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-
-    .section-title {
-      padding: 22px 24px;
-      border-bottom: 1px solid var(--line);
-      background: rgba(255,255,255,0.72);
-    }
-
-    .section-title h2 {
-      margin: 0;
-      font-size: 20px;
-      color: var(--green);
-      letter-spacing: 0.04em;
-    }
-
-    .section-title p {
-      margin: 8px 0 0;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.7;
-    }
-
-    form {
-      padding: 24px;
-    }
-
-    .grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: 280px 240px 1fr;
       gap: 18px;
+      align-items: end;
+      margin-bottom: 24px;
     }
 
     .field {
@@ -152,362 +110,576 @@
       gap: 8px;
     }
 
-    .field.full {
-      grid-column: 1 / -1;
-    }
-
-    label {
-      font-weight: 700;
-      color: var(--ink);
-      font-size: 15px;
-    }
-
-    .required::after {
-      content: " *";
-      color: var(--danger);
+    .field label {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--muted);
     }
 
     input,
     select,
     textarea {
       width: 100%;
-      border: 1px solid var(--line);
-      background: var(--white);
-      border-radius: 16px;
-      padding: 13px 14px;
+      border: 1px solid #cfdcd7;
+      border-radius: 14px;
+      background: white;
+      color: var(--text);
       font-size: 16px;
-      color: var(--ink);
+      padding: 12px 14px;
       outline: none;
-      transition: 0.18s ease;
       font-family: inherit;
+      transition: 0.18s ease;
     }
 
     input:focus,
     select:focus,
     textarea:focus {
       border-color: var(--green);
-      box-shadow: 0 0 0 4px rgba(49,95,75,0.12);
+      box-shadow: 0 0 0 4px rgba(31,107,85,0.12);
     }
 
     textarea {
-      min-height: 118px;
+      min-height: 88px;
       resize: vertical;
-      line-height: 1.7;
     }
 
-    .checks {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    .month-control {
+      display: flex;
+      align-items: center;
       gap: 10px;
     }
 
-    .check-card {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      padding: 12px 13px;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      background: var(--green-light);
+    .month-label {
+      min-width: 110px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--text);
+    }
+
+    .icon-btn {
+      border: 1px solid #cfdcd7;
+      background: white;
+      color: var(--green-dark);
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      font-size: 20px;
       cursor: pointer;
-      min-height: 46px;
       transition: 0.18s ease;
-      font-weight: 600;
-      color: var(--ink);
+      font-weight: 800;
     }
 
-    .check-card:hover {
-      border-color: var(--green);
+    .icon-btn:hover {
       background: var(--green-soft);
+      border-color: var(--green);
     }
 
-    .check-card input {
-      width: 18px;
-      height: 18px;
-      accent-color: var(--green);
-      padding: 0;
-      border-radius: 4px;
-    }
-
-    .hint {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .actions {
+    .top-actions {
       display: flex;
-      gap: 12px;
       justify-content: flex-end;
       align-items: center;
-      margin-top: 26px;
-      padding-top: 22px;
-      border-top: 1px solid var(--line);
+      gap: 12px;
       flex-wrap: wrap;
     }
 
     button {
-      appearance: none;
       border: none;
-      border-radius: 999px;
-      padding: 13px 22px;
+      border-radius: 14px;
+      padding: 12px 18px;
       font-size: 16px;
-      font-weight: 800;
-      letter-spacing: 0.04em;
+      font-weight: 900;
       cursor: pointer;
       font-family: inherit;
       transition: 0.18s ease;
+      white-space: nowrap;
     }
 
-    .btn-clear {
-      background: #eef3f0;
-      color: var(--green);
+    .btn-outline {
+      background: white;
+      color: var(--green-dark);
+      border: 1px solid #cfdcd7;
     }
 
-    .btn-clear:hover {
-      background: #e1ebe5;
+    .btn-outline:hover {
+      background: var(--green-soft);
+      border-color: var(--green);
     }
 
-    .btn-submit {
-      background: linear-gradient(135deg, var(--green), #244638);
+    .btn-gold {
+      background: var(--gold);
       color: white;
-      box-shadow: 0 10px 22px rgba(49,95,75,0.22);
+      box-shadow: 0 8px 18px rgba(181,138,58,0.24);
     }
 
-    .btn-submit:hover {
+    .btn-gold:hover {
       transform: translateY(-1px);
-      box-shadow: 0 14px 28px rgba(49,95,75,0.26);
+      box-shadow: 0 12px 24px rgba(181,138,58,0.30);
     }
 
-    .btn-submit:disabled {
-      opacity: 0.65;
+    .btn-green {
+      background: linear-gradient(135deg, var(--green), #134233);
+      color: white;
+      box-shadow: 0 8px 18px rgba(31,107,85,0.24);
+    }
+
+    .btn-green:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 24px rgba(31,107,85,0.28);
+    }
+
+    .btn-red {
+      background: var(--red);
+      color: white;
+      box-shadow: 0 8px 18px rgba(204,60,49,0.20);
+    }
+
+    .btn-red:hover {
+      transform: translateY(-1px);
+    }
+
+    button:disabled {
+      opacity: 0.62;
       cursor: not-allowed;
-      transform: none;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 20px 18px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      min-height: 112px;
+    }
+
+    .stat-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      background: var(--green);
+    }
+
+    .stat-card.blue::before { background: var(--blue); }
+    .stat-card.purple::before { background: var(--purple); }
+    .stat-card.teal::before { background: var(--teal); }
+    .stat-card.gold::before { background: var(--gold); }
+    .stat-card.orange::before { background: var(--orange); }
+
+    .stat-title {
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .stat-number {
+      font-size: 32px;
+      line-height: 1.1;
+      font-weight: 950;
+      color: var(--green-dark);
+    }
+
+    .stat-unit {
+      color: var(--muted);
+      margin-top: 4px;
+      font-size: 14px;
+    }
+
+    .panel {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 20px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      font-weight: 950;
+      color: var(--green-dark);
+    }
+
+    .panel-title::before {
+      content: "";
+      width: 5px;
+      height: 24px;
+      border-radius: 999px;
+      background: linear-gradient(var(--green), var(--gold));
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 1420px;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: #f7f5f1;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: left;
+      padding: 14px 12px;
+      border-bottom: 1px solid var(--line);
+      white-space: nowrap;
+      font-weight: 900;
+    }
+
+    td {
+      padding: 12px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: middle;
+    }
+
+    tbody tr:hover {
+      background: #fbfdfc;
+    }
+
+    .row-no {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: #f4f1e9;
+      border: 1px solid #ddd7c8;
+      font-weight: 800;
+      color: var(--muted);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .pill.client {
+      background: #e4f3ff;
+      color: #176aa5;
+    }
+
+    .pill.referral {
+      background: #eee7ff;
+      color: #6b4fd3;
+    }
+
+    .pill.recruit {
+      background: #e2f8f2;
+      color: #16866d;
+    }
+
+    .mini-input,
+    .mini-select {
+      border: none;
+      background: transparent;
+      border-radius: 10px;
+      padding: 8px;
+      font-size: 15px;
+      min-width: 110px;
+    }
+
+    .mini-input:focus,
+    .mini-select:focus {
+      background: white;
+      border: 1px solid var(--green);
+      box-shadow: 0 0 0 3px rgba(31,107,85,0.10);
+    }
+
+    .name-input { min-width: 150px; font-weight: 800; }
+    .phone-input { min-width: 130px; }
+    .money-input { min-width: 110px; text-align: right; }
+    .note-input { min-width: 180px; }
+
+    .focus-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      min-width: 300px;
+    }
+
+    .focus-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #d8d5eb;
+      background: #f4f1ff;
+      color: #573fc3;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .focus-tag input {
+      width: 14px;
+      height: 14px;
+      padding: 0;
+      accent-color: var(--purple);
+      display: none;
+    }
+
+    .focus-tag.checked {
+      color: #0f5d4b;
+      background: #e5f7f2;
+      border-color: #b7e5d7;
+    }
+
+    .focus-tag.orange {
+      color: #b05b00;
+      background: #fff0d9;
+      border-color: #f0c98d;
+    }
+
+    .focus-tag.blue {
+      color: #11679e;
+      background: #e7f4ff;
+      border-color: #b6dcf6;
+    }
+
+    .delete-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      padding: 0;
+      background: white;
+      color: #98a39f;
+      border: 1px solid #dce5e1;
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .delete-btn:hover {
+      color: var(--red);
+      border-color: #efb4ac;
+      background: #fff2f0;
     }
 
     .message {
       display: none;
-      margin-top: 18px;
-      padding: 15px 16px;
+      margin: 0 22px 18px;
+      padding: 14px 16px;
       border-radius: 16px;
-      line-height: 1.7;
-      font-weight: 700;
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1.6;
     }
 
     .message.success {
       display: block;
-      color: #24533e;
-      background: #e6f4ed;
-      border: 1px solid #b9ddca;
+      color: #0f5d4b;
+      background: #e4f5ee;
+      border: 1px solid #b4dfce;
     }
 
     .message.error {
       display: block;
-      color: #8a3e2f;
-      background: #fff0eb;
-      border: 1px solid #efc3b5;
+      color: #9a352b;
+      background: #fff0ed;
+      border: 1px solid #e9b9af;
     }
 
-    .footer-note {
+    .message.info {
+      display: block;
+      color: #1d5b7d;
+      background: #e9f5fb;
+      border: 1px solid #b8dced;
+    }
+
+    .empty {
+      padding: 48px 20px;
       text-align: center;
       color: var(--muted);
-      font-size: 13px;
-      line-height: 1.7;
-      margin-top: 18px;
+      font-weight: 800;
     }
 
-    .gold-line {
-      width: 54px;
-      height: 4px;
-      background: var(--gold);
-      border-radius: 999px;
-      margin-top: 14px;
-    }
-
-    @media (max-width: 760px) {
+    @media (max-width: 1100px) {
       body {
-        padding: 14px 10px 28px;
+        padding: 14px;
       }
 
       .hero {
-        padding: 28px 20px;
+        padding: 34px 24px;
         border-radius: 24px;
       }
 
-      .section-title,
-      form {
-        padding: 20px 16px;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
-      }
-
-      .checks {
+      .toolbar {
         grid-template-columns: 1fr;
       }
 
-      .actions {
-        flex-direction: column-reverse;
-        align-items: stretch;
+      .top-actions {
+        justify-content: flex-start;
       }
 
-      button {
+      .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .panel-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .top-actions button {
         width: 100%;
+      }
+
+      .month-control {
+        width: 100%;
+      }
+
+      .month-label {
+        flex: 1;
       }
     }
   </style>
 </head>
-
 <body>
   <div class="page">
-    <header class="hero">
-      <div class="hero-inner">
-        <div class="badge">馥芸財富學苑｜活動量管理</div>
-        <h1>每月拜訪客戶名單</h1>
-        <div class="gold-line"></div>
-        <p>
-          準客戶、推薦名單、增員名單，透過每月系統化追蹤，讓每一次拜訪都留下紀錄，也讓下一步更清楚。
-        </p>
-      </div>
-    </header>
+    <section class="hero">
+      <div class="badge">馥芸財富學苑｜活動量管理</div>
+      <h1>每月拜訪客戶名單</h1>
+      <p>準客戶 × 推薦名單 × 增員名單，三類互通，跟進事項一鍵勾選，預估 FYC／FYP 即時統計。</p>
+    </section>
 
-    <main class="panel">
-      <div class="section-title">
-        <h2>名單追蹤紀錄</h2>
-        <p>填寫後資料會自動送到 Google 表單回覆試算表，方便後續統計、追蹤與管理。</p>
+    <section class="toolbar">
+      <div class="field">
+        <label for="advisorName">顧問姓名</label>
+        <input id="advisorName" type="text" placeholder="請輸入顧問姓名" />
       </div>
 
-      <form id="visitForm" autocomplete="on">
-        <div class="grid">
-          <div class="field">
-            <label class="required" for="month">月份</label>
-            <input id="month" name="month" type="text" placeholder="例如：2026/05" required />
-            <div class="hint">系統會自動帶入當前年月，可自行修改。</div>
-          </div>
-
-          <div class="field">
-            <label class="required" for="advisorName">顧問姓名</label>
-            <input id="advisorName" name="advisorName" type="text" placeholder="請輸入顧問姓名" required />
-          </div>
-
-          <div class="field">
-            <label class="required" for="listType">名單類型</label>
-            <select id="listType" name="listType" required>
-              <option value="">請選擇</option>
-              <option value="準客戶">準客戶</option>
-              <option value="推薦名單">推薦名單</option>
-              <option value="增員名單">增員名單</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label class="required" for="clientName">姓名／暱稱</label>
-            <input id="clientName" name="clientName" type="text" placeholder="請輸入姓名或暱稱" required />
-          </div>
-
-          <div class="field">
-            <label for="phone">手機</label>
-            <input id="phone" name="phone" type="tel" placeholder="例如：0912-345-678" />
-          </div>
-
-          <div class="field">
-            <label for="source">來源／推薦人</label>
-            <select id="source" name="source">
-              <option value="">請選擇</option>
-              <option value="自然名單">自然名單</option>
-              <option value="轉介紹">轉介紹</option>
-              <option value="講座名單">講座名單</option>
-              <option value="社群名單">社群名單</option>
-              <option value="舊客戶">舊客戶</option>
-              <option value="異業合作">異業合作</option>
-              <option value="其他">其他</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="temperature">溫度</label>
-            <select id="temperature" name="temperature">
-              <option value="">請選擇</option>
-              <option value="A級：高意願">A級：高意願</option>
-              <option value="B級：可培養">B級：可培養</option>
-              <option value="C級：需暖化">C級：需暖化</option>
-              <option value="D級：暫緩">D級：暫緩</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="nextFollowDate">下次追蹤日期</label>
-            <input id="nextFollowDate" name="nextFollowDate" type="date" />
-          </div>
-
-          <div class="field full">
-            <label>本次跟進重點</label>
-            <div class="checks">
-              <label class="check-card">
-                <input type="checkbox" name="followFocus" value="二次面談" />
-                二次面談
-              </label>
-              <label class="check-card">
-                <input type="checkbox" name="followFocus" value="保單檢視" />
-                保單檢視
-              </label>
-              <label class="check-card">
-                <input type="checkbox" name="followFocus" value="資產配置" />
-                資產配置
-              </label>
-              <label class="check-card">
-                <input type="checkbox" name="followFocus" value="規劃建議" />
-                規劃建議
-              </label>
-              <label class="check-card">
-                <input type="checkbox" name="followFocus" value="理賠" />
-                理賠
-              </label>
-              <label class="check-card">
-                <input type="checkbox" name="followFocus" value="保服照會" />
-                保服照會
-              </label>
-            </div>
-          </div>
-
-          <div class="field full">
-            <label for="otherFollowup">其他跟進事項</label>
-            <input id="otherFollowup" name="otherFollowup" type="text" placeholder="例如：補資料、約時間、等待回覆、提醒文件等" />
-          </div>
-
-          <div class="field">
-            <label for="estimatedFYC">預估 FYC</label>
-            <input id="estimatedFYC" name="estimatedFYC" type="number" inputmode="numeric" placeholder="例如：18000" />
-          </div>
-
-          <div class="field">
-            <label for="estimatedFYP">預估 FYP</label>
-            <input id="estimatedFYP" name="estimatedFYP" type="number" inputmode="numeric" placeholder="例如：300000" />
-          </div>
-
-          <div class="field full">
-            <label for="notes">備註說明</label>
-            <textarea id="notes" name="notes" placeholder="可記錄家庭背景、保單議題、跟進進度、增員方向、下一步提醒等。"></textarea>
-          </div>
+      <div class="field">
+        <label>月份</label>
+        <div class="month-control">
+          <button class="icon-btn" type="button" id="prevMonth">‹</button>
+          <div class="month-label" id="monthLabel">2026/05</div>
+          <button class="icon-btn" type="button" id="nextMonth">›</button>
         </div>
+      </div>
 
-        <div id="message" class="message"></div>
+      <div class="top-actions">
+        <button class="btn-outline" type="button" onclick="addRow('準客戶')">＋ 準客戶</button>
+        <button class="btn-outline" type="button" onclick="addRow('推薦名單')">＋ 推薦名單</button>
+        <button class="btn-outline" type="button" onclick="addRow('增員名單')">＋ 增員名單</button>
+        <button class="btn-green" type="button" id="submitGoogleBtn">📤 送出本月名單到 Google 表單</button>
+        <button class="btn-gold" type="button" id="exportBtn">⇩ 匯出 CSV</button>
+        <button class="btn-red" type="button" id="clearMonthBtn">清除本月</button>
+      </div>
+    </section>
 
-        <div class="actions">
-          <button class="btn-clear" type="button" id="clearBtn">清除表單</button>
-          <button class="btn-submit" type="submit" id="submitBtn">送出紀錄</button>
+    <section class="stats">
+      <div class="stat-card">
+        <div class="stat-title">名單總數</div>
+        <div class="stat-number" id="totalCount">0</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-title">準客戶</div>
+        <div class="stat-number" id="clientCount">0</div>
+      </div>
+      <div class="stat-card purple">
+        <div class="stat-title">推薦名單</div>
+        <div class="stat-number" id="referralCount">0</div>
+      </div>
+      <div class="stat-card teal">
+        <div class="stat-title">增員名單</div>
+        <div class="stat-number" id="recruitCount">0</div>
+      </div>
+      <div class="stat-card gold">
+        <div class="stat-title">預估 FYC 合計</div>
+        <div class="stat-number" id="fyfCount">0</div>
+        <div class="stat-unit">元</div>
+      </div>
+      <div class="stat-card orange">
+        <div class="stat-title">預估 FYP 合計</div>
+        <div class="stat-number" id="fypCount">0</div>
+        <div class="stat-unit">元</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <div class="panel-title">本月名單總覽</div>
+        <div class="top-actions">
+          <button class="btn-outline" type="button" onclick="addRow('準客戶')">＋ 準客戶</button>
+          <button class="btn-outline" type="button" onclick="addRow('推薦名單')">＋ 推薦名單</button>
+          <button class="btn-outline" type="button" onclick="addRow('增員名單')">＋ 增員名單</button>
         </div>
-      </form>
-    </main>
+      </div>
 
-    <div class="footer-note">
-      馥芸財富學苑｜讓名單管理變得更清楚，讓每一次跟進都有累積。
-    </div>
+      <div id="messageBox" class="message"></div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>名單類型</th>
+              <th>姓名／暱稱</th>
+              <th>手機</th>
+              <th>來源／推薦人</th>
+              <th>溫度</th>
+              <th>本次跟進重點</th>
+              <th>下次追蹤</th>
+              <th>預估 FYC</th>
+              <th>預估 FYP</th>
+              <th>備註說明</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="listBody"></tbody>
+        </table>
+      </div>
+      <div id="emptyState" class="empty" style="display:none;">目前尚無名單，請點選「＋ 準客戶／推薦名單／增員名單」開始建立。</div>
+    </section>
   </div>
-
-  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
   <script>
     const GOOGLE_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLScThv-SXE_ioxat3PhfKiWGn07mYVNn-nYNKok69adHeETNPg/formResponse";
@@ -516,7 +688,7 @@
       month: "entry.331237824",
       advisorName: "entry.2101744704",
       listType: "entry.893080773",
-      clientName: "entry.1540990726",
+      name: "entry.1540990726",
       phone: "entry.1992956277",
       source: "entry.897595625",
       temperature: "entry.887587433",
@@ -528,82 +700,309 @@
       notes: "entry.298986749"
     };
 
-    const form = document.getElementById("visitForm");
-    const messageBox = document.getElementById("message");
-    const submitBtn = document.getElementById("submitBtn");
-    const clearBtn = document.getElementById("clearBtn");
-    const monthInput = document.getElementById("month");
+    const STORAGE_KEY = "fuyun_monthly_visit_records_v2";
+    const ADVISOR_KEY = "fuyun_monthly_visit_advisor";
+    const focusOptions = ["二次面談", "保單檢視", "資產配置", "規劃建議", "理賠", "保服照會"];
 
-    function getCurrentMonthText() {
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = String(now.getMonth() + 1).padStart(2, "0");
-      return `${year}/${month}`;
+    let currentDate = new Date();
+    let records = [];
+
+    const advisorNameEl = document.getElementById("advisorName");
+    const monthLabelEl = document.getElementById("monthLabel");
+    const listBodyEl = document.getElementById("listBody");
+    const emptyStateEl = document.getElementById("emptyState");
+    const messageBoxEl = document.getElementById("messageBox");
+    const submitGoogleBtn = document.getElementById("submitGoogleBtn");
+
+    function pad2(n) {
+      return String(n).padStart(2, "0");
+    }
+
+    function getCurrentMonth() {
+      return `${currentDate.getFullYear()}/${pad2(currentDate.getMonth() + 1)}`;
+    }
+
+    function normalizeDateForGoogle(dateValue) {
+      if (!dateValue) return "";
+      if (/^\d{4}-\d{2}-\d{2}$/.test(dateValue)) {
+        const [y, m, d] = dateValue.split("-");
+        return `${y}/${m}/${d}`;
+      }
+      return dateValue;
+    }
+
+    function formatMoney(n) {
+      const value = Number(n || 0);
+      return value.toLocaleString("zh-TW");
+    }
+
+    function createId() {
+      return "r_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 8);
+    }
+
+    function getTypeClass(type) {
+      if (type === "推薦名單") return "referral";
+      if (type === "增員名單") return "recruit";
+      return "client";
+    }
+
+    function loadData() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        records = raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        records = [];
+      }
+
+      advisorNameEl.value = localStorage.getItem(ADVISOR_KEY) || "";
+      monthLabelEl.textContent = getCurrentMonth();
+
+      if (records.length === 0) {
+        addRow("準客戶", true);
+        addRow("準客戶", true);
+        addRow("準客戶", true);
+        addRow("準客戶", true);
+        addRow("準客戶", true);
+        addRow("準客戶", true);
+        addRow("準客戶", true);
+        addRow("準客戶", true);
+        addRow("推薦名單", true);
+        addRow("推薦名單", true);
+        addRow("推薦名單", true);
+        addRow("推薦名單", true);
+        addRow("推薦名單", true);
+        addRow("推薦名單", true);
+        addRow("增員名單", true);
+        addRow("增員名單", true);
+        addRow("增員名單", true);
+        addRow("增員名單", true);
+        addRow("增員名單", true);
+        addRow("增員名單", true);
+        saveData();
+      }
+
+      render();
+    }
+
+    function saveData() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+      localStorage.setItem(ADVISOR_KEY, advisorNameEl.value.trim());
     }
 
     function showMessage(type, text) {
-      messageBox.className = "message " + type;
-      messageBox.textContent = text;
-      messageBox.scrollIntoView({ behavior: "smooth", block: "center" });
+      messageBoxEl.className = "message " + type;
+      messageBoxEl.textContent = text;
+      messageBoxEl.scrollIntoView({ behavior: "smooth", block: "center" });
     }
 
     function clearMessage() {
-      messageBox.className = "message";
-      messageBox.textContent = "";
+      messageBoxEl.className = "message";
+      messageBoxEl.textContent = "";
     }
 
-    function resetForm() {
-      form.reset();
-      monthInput.value = getCurrentMonthText();
-      clearMessage();
+    function getMonthRecords() {
+      const month = getCurrentMonth();
+      return records.filter(r => r.month === month);
     }
 
-    function validateForm() {
-      const requiredFields = [
-        { id: "month", label: "月份" },
-        { id: "advisorName", label: "顧問姓名" },
-        { id: "listType", label: "名單類型" },
-        { id: "clientName", label: "姓名／暱稱" }
-      ];
+    function addRow(type, silent = false) {
+      records.push({
+        id: createId(),
+        month: getCurrentMonth(),
+        listType: type,
+        name: "",
+        phone: "",
+        source: "",
+        temperature: "",
+        followFocus: [],
+        otherFollowup: "",
+        nextFollowDate: "",
+        estimatedFYC: "",
+        estimatedFYP: "",
+        notes: ""
+      });
+      saveData();
+      if (!silent) {
+        clearMessage();
+        render();
+      }
+    }
 
-      for (const field of requiredFields) {
-        const el = document.getElementById(field.id);
-        if (!el.value.trim()) {
-          showMessage("error", `請先填寫「${field.label}」。`);
-          el.focus();
-          return false;
-        }
+    function deleteRow(id) {
+      if (!confirm("確定要刪除此筆名單嗎？")) return;
+      records = records.filter(r => r.id !== id);
+      saveData();
+      render();
+    }
+
+    function updateRecord(id, field, value) {
+      const record = records.find(r => r.id === id);
+      if (!record) return;
+      record[field] = value;
+      saveData();
+      renderStatsOnly();
+    }
+
+    function toggleFocus(id, value) {
+      const record = records.find(r => r.id === id);
+      if (!record) return;
+
+      if (!Array.isArray(record.followFocus)) {
+        record.followFocus = [];
+      }
+
+      if (record.followFocus.includes(value)) {
+        record.followFocus = record.followFocus.filter(item => item !== value);
+      } else {
+        record.followFocus.push(value);
+      }
+
+      saveData();
+      render();
+    }
+
+    function render() {
+      monthLabelEl.textContent = getCurrentMonth();
+      const monthRecords = getMonthRecords();
+      listBodyEl.innerHTML = "";
+
+      if (monthRecords.length === 0) {
+        emptyStateEl.style.display = "block";
+      } else {
+        emptyStateEl.style.display = "none";
+      }
+
+      monthRecords.forEach((record, index) => {
+        const tr = document.createElement("tr");
+        const focusTags = focusOptions.map((option, i) => {
+          const checked = Array.isArray(record.followFocus) && record.followFocus.includes(option);
+          const extraClass = i === 0 ? "orange" : i === 1 ? "blue" : "";
+          return `
+            <label class="focus-tag ${extraClass} ${checked ? "checked" : ""}">
+              <input type="checkbox" ${checked ? "checked" : ""} onchange="toggleFocus('${record.id}', '${option}')">
+              ${option}
+            </label>
+          `;
+        }).join("");
+
+        tr.innerHTML = `
+          <td><span class="row-no">${index + 1}</span></td>
+          <td><span class="pill ${getTypeClass(record.listType)}">${record.listType}</span></td>
+          <td><input class="mini-input name-input" value="${escapeHtml(record.name)}" placeholder="姓名／暱稱" onchange="updateRecord('${record.id}', 'name', this.value)" /></td>
+          <td><input class="mini-input phone-input" value="${escapeHtml(record.phone)}" placeholder="手機" onchange="updateRecord('${record.id}', 'phone', this.value)" /></td>
+          <td>
+            <select class="mini-select" onchange="updateRecord('${record.id}', 'source', this.value)">
+              ${selectOptions(["", "自然名單", "轉介紹", "講座名單", "社群名單", "舊客戶", "異業合作", "其他"], record.source)}
+            </select>
+          </td>
+          <td>
+            <select class="mini-select" onchange="updateRecord('${record.id}', 'temperature', this.value)">
+              ${selectOptions(["", "A級：高意願", "B級：可培養", "C級：需暖化", "D級：暫緩"], record.temperature)}
+            </select>
+          </td>
+          <td>
+            <div class="focus-tags">
+              ${focusTags}
+              <input class="mini-input" value="${escapeHtml(record.otherFollowup)}" placeholder="其他..." onchange="updateRecord('${record.id}', 'otherFollowup', this.value)" />
+            </div>
+          </td>
+          <td><input class="mini-input" type="date" value="${escapeHtml(record.nextFollowDate)}" onchange="updateRecord('${record.id}', 'nextFollowDate', this.value)" /></td>
+          <td><input class="mini-input money-input" type="number" value="${escapeHtml(record.estimatedFYC)}" placeholder="0" onchange="updateRecord('${record.id}', 'estimatedFYC', this.value)" /></td>
+          <td><input class="mini-input money-input" type="number" value="${escapeHtml(record.estimatedFYP)}" placeholder="0" onchange="updateRecord('${record.id}', 'estimatedFYP', this.value)" /></td>
+          <td><input class="mini-input note-input" value="${escapeHtml(record.notes)}" placeholder="備註說明" onchange="updateRecord('${record.id}', 'notes', this.value)" /></td>
+          <td><button class="delete-btn" type="button" onclick="deleteRow('${record.id}')">×</button></td>
+        `;
+
+        listBodyEl.appendChild(tr);
+      });
+
+      renderStatsOnly();
+    }
+
+    function renderStatsOnly() {
+      const monthRecords = getMonthRecords();
+      const total = monthRecords.length;
+      const client = monthRecords.filter(r => r.listType === "準客戶").length;
+      const referral = monthRecords.filter(r => r.listType === "推薦名單").length;
+      const recruit = monthRecords.filter(r => r.listType === "增員名單").length;
+      const fyc = monthRecords.reduce((sum, r) => sum + Number(r.estimatedFYC || 0), 0);
+      const fyp = monthRecords.reduce((sum, r) => sum + Number(r.estimatedFYP || 0), 0);
+
+      document.getElementById("totalCount").textContent = total;
+      document.getElementById("clientCount").textContent = client;
+      document.getElementById("referralCount").textContent = referral;
+      document.getElementById("recruitCount").textContent = recruit;
+      document.getElementById("fyfCount").textContent = formatMoney(fyc);
+      document.getElementById("fypCount").textContent = formatMoney(fyp);
+    }
+
+    function selectOptions(options, selected) {
+      return options.map(option => {
+        const label = option || "請選擇";
+        return `<option value="${escapeHtml(option)}" ${option === selected ? "selected" : ""}>${escapeHtml(label)}</option>`;
+      }).join("");
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function validateBeforeSubmit() {
+      const advisorName = advisorNameEl.value.trim();
+      const monthRecords = getMonthRecords();
+
+      if (!advisorName) {
+        showMessage("error", "請先填寫「顧問姓名」。");
+        advisorNameEl.focus();
+        return false;
+      }
+
+      if (monthRecords.length === 0) {
+        showMessage("error", "本月名單至少要有一筆，才能送出到 Google 表單。");
+        return false;
+      }
+
+      const invalidIndex = monthRecords.findIndex(r => !String(r.name || "").trim());
+      if (invalidIndex >= 0) {
+        showMessage("error", `第 ${invalidIndex + 1} 筆名單的「姓名／暱稱」不可空白。`);
+        return false;
       }
 
       return true;
     }
 
     function appendIfValue(formData, key, value) {
-      if (value !== null && value !== undefined && String(value).trim() !== "") {
+      if (value !== undefined && value !== null && String(value).trim() !== "") {
         formData.append(key, value);
       }
     }
 
-    async function submitToGoogleForm() {
+    async function sendOneRecord(record, advisorName) {
       const formData = new FormData();
 
-      appendIfValue(formData, FIELD_MAP.month, document.getElementById("month").value);
-      appendIfValue(formData, FIELD_MAP.advisorName, document.getElementById("advisorName").value);
-      appendIfValue(formData, FIELD_MAP.listType, document.getElementById("listType").value);
-      appendIfValue(formData, FIELD_MAP.clientName, document.getElementById("clientName").value);
-      appendIfValue(formData, FIELD_MAP.phone, document.getElementById("phone").value);
-      appendIfValue(formData, FIELD_MAP.source, document.getElementById("source").value);
-      appendIfValue(formData, FIELD_MAP.temperature, document.getElementById("temperature").value);
-      appendIfValue(formData, FIELD_MAP.otherFollowup, document.getElementById("otherFollowup").value);
-      appendIfValue(formData, FIELD_MAP.nextFollowDate, document.getElementById("nextFollowDate").value);
-      appendIfValue(formData, FIELD_MAP.estimatedFYC, document.getElementById("estimatedFYC").value);
-      appendIfValue(formData, FIELD_MAP.estimatedFYP, document.getElementById("estimatedFYP").value);
-      appendIfValue(formData, FIELD_MAP.notes, document.getElementById("notes").value);
+      appendIfValue(formData, FIELD_MAP.month, record.month);
+      appendIfValue(formData, FIELD_MAP.advisorName, advisorName);
+      appendIfValue(formData, FIELD_MAP.listType, record.listType);
+      appendIfValue(formData, FIELD_MAP.name, record.name);
+      appendIfValue(formData, FIELD_MAP.phone, record.phone);
+      appendIfValue(formData, FIELD_MAP.source, record.source);
+      appendIfValue(formData, FIELD_MAP.temperature, record.temperature);
+      appendIfValue(formData, FIELD_MAP.otherFollowup, record.otherFollowup);
+      appendIfValue(formData, FIELD_MAP.nextFollowDate, normalizeDateForGoogle(record.nextFollowDate));
+      appendIfValue(formData, FIELD_MAP.estimatedFYC, record.estimatedFYC);
+      appendIfValue(formData, FIELD_MAP.estimatedFYP, record.estimatedFYP);
+      appendIfValue(formData, FIELD_MAP.notes, record.notes);
 
-      const checkedFocus = document.querySelectorAll('input[name="followFocus"]:checked');
-      checkedFocus.forEach(item => {
-        formData.append(FIELD_MAP.followFocus, item.value);
-      });
+      if (Array.isArray(record.followFocus)) {
+        record.followFocus.forEach(item => {
+          appendIfValue(formData, FIELD_MAP.followFocus, item);
+        });
+      }
 
       await fetch(GOOGLE_FORM_ACTION, {
         method: "POST",
@@ -612,38 +1011,113 @@
       });
     }
 
-    form.addEventListener("submit", async function(event) {
-      event.preventDefault();
+    async function submitCurrentMonthToGoogleForm() {
       clearMessage();
 
-      if (!validateForm()) return;
+      if (!validateBeforeSubmit()) return;
 
-      submitBtn.disabled = true;
-      submitBtn.textContent = "送出中...";
+      const advisorName = advisorNameEl.value.trim();
+      const monthRecords = getMonthRecords();
+
+      const confirmed = confirm(`確定要將 ${getCurrentMonth()} 的 ${monthRecords.length} 筆名單送出到 Google 表單嗎？`);
+      if (!confirmed) return;
+
+      submitGoogleBtn.disabled = true;
+      submitGoogleBtn.textContent = "送出中...";
+      showMessage("info", `送出中，共 ${monthRecords.length} 筆資料，請稍候...`);
 
       try {
-        await submitToGoogleForm();
+        for (let i = 0; i < monthRecords.length; i++) {
+          await sendOneRecord(monthRecords[i], advisorName);
+          await new Promise(resolve => setTimeout(resolve, 260));
+        }
+
         showMessage("success", "已成功送出，請至 Google 試算表確認紀錄");
-        form.reset();
-        monthInput.value = getCurrentMonthText();
       } catch (error) {
-        showMessage("error", "送出時發生異常，請稍後再試，或直接使用 Google 表單填寫網址。");
+        showMessage("error", "送出失敗，請檢查網路或 Google 表單設定");
       } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = "送出紀錄";
+        submitGoogleBtn.disabled = false;
+        submitGoogleBtn.textContent = "📤 送出本月名單到 Google 表單";
       }
+    }
+
+    function exportCSV() {
+      const monthRecords = getMonthRecords();
+      const advisorName = advisorNameEl.value.trim();
+      const header = [
+        "月份", "顧問姓名", "名單類型", "姓名／暱稱", "手機", "來源／推薦人", "溫度",
+        "本次跟進重點", "其他跟進事項", "下次追蹤日期", "預估FYC", "預估FYP", "備註說明"
+      ];
+
+      const rows = monthRecords.map(r => [
+        r.month,
+        advisorName,
+        r.listType,
+        r.name,
+        r.phone,
+        r.source,
+        r.temperature,
+        Array.isArray(r.followFocus) ? r.followFocus.join("、") : "",
+        r.otherFollowup,
+        normalizeDateForGoogle(r.nextFollowDate),
+        r.estimatedFYC,
+        r.estimatedFYP,
+        r.notes
+      ]);
+
+      const csv = [header, ...rows]
+        .map(row => row.map(cell => `"${String(cell ?? "").replaceAll('"', '""')}"`).join(","))
+        .join("\n");
+
+      const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `馥芸每月拜訪名單_${getCurrentMonth().replace("/", "-")}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function clearCurrentMonth() {
+      const monthRecords = getMonthRecords();
+      if (monthRecords.length === 0) {
+        showMessage("error", "本月目前沒有可清除的名單。");
+        return;
+      }
+
+      if (!confirm(`確定要清除 ${getCurrentMonth()} 的全部名單嗎？此動作無法復原。`)) return;
+
+      const month = getCurrentMonth();
+      records = records.filter(r => r.month !== month);
+      saveData();
+      render();
+      showMessage("success", "已清除本月名單。");
+    }
+
+    document.getElementById("prevMonth").addEventListener("click", () => {
+      currentDate.setMonth(currentDate.getMonth() - 1);
+      clearMessage();
+      render();
     });
 
-    clearBtn.addEventListener("click", function() {
-      const confirmed = window.confirm("確定要清除目前表單內容嗎？");
-      if (confirmed) {
-        resetForm();
-      }
+    document.getElementById("nextMonth").addEventListener("click", () => {
+      currentDate.setMonth(currentDate.getMonth() + 1);
+      clearMessage();
+      render();
     });
 
-    document.addEventListener("DOMContentLoaded", function() {
-      monthInput.value = getCurrentMonthText();
+    advisorNameEl.addEventListener("change", saveData);
+    advisorNameEl.addEventListener("input", () => {
+      localStorage.setItem(ADVISOR_KEY, advisorNameEl.value.trim());
     });
+
+    document.getElementById("submitGoogleBtn").addEventListener("click", submitCurrentMonthToGoogleForm);
+    document.getElementById("exportBtn").addEventListener("click", exportCSV);
+    document.getElementById("clearMonthBtn").addEventListener("click", clearCurrentMonth);
+
+    loadData();
   </script>
 </body>
 </html>
