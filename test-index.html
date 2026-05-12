@@ -1,1327 +1,374 @@
+你是一位頂尖前端工程師、GitHub Pages 網頁架構師、HTML/CSS/JavaScript 除錯專家。
+
+請協助我完整修正並優化 `active/test.html`。
+
+目前頁面左上角出現不該出現的文字：
+
+from pathlib import Path html_content = r'''
+
+這代表我不小心把 Python 產生檔案用的包裝語法貼進 HTML 檔案裡了。
+
+請幫我完整清理這個問題，並輸出一份可以直接覆蓋 GitHub Pages `active/test.html` 的完整 HTML 程式碼。
+
+請務必做到以下要求：
+
+一、移除所有 Python 包裝語法
+
+請刪除 HTML 檔案最前面所有不屬於 HTML 的 Python 程式碼，例如：
+
 from pathlib import Path
+html_content = r'''
 
-html_content = r'''<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>馥芸財富學苑｜活動量管理成長系統</title>
+或類似：
 
-<style>
-:root{
-  --green:#1f5b43;
-  --green2:#2f7a5a;
-  --dark-green:#16392e;
-  --gold:#c8a94b;
-  --gold2:#f3df9b;
-  --milk:#f7f1e4;
-  --paper:#fffdf8;
-  --ink:#243129;
-  --muted:#776f63;
-  --gray:#a8a8a8;
-  --line:#e4ddcf;
-  --red:#b94a48;
-  --shadow:0 10px 30px rgba(31,91,67,.10);
-  --soft-shadow:0 8px 24px rgba(36,49,41,.06);
-}
+p = Path(...)
+s = ...
+out_path = ...
+write_text(...)
+print(...)
 
-*{box-sizing:border-box}
+或最後可能出現的：
 
-body{
-  margin:0;
-  font-family:"Noto Sans TC","Microsoft JhengHei",Arial,sans-serif;
-  background:
-    radial-gradient(circle at top left, rgba(200,169,75,.18), transparent 30%),
-    linear-gradient(180deg,#fbf7ee,#f2eadb);
-  color:var(--ink);
-  min-height:100vh;
-}
-
-button,
-input,
-textarea,
-select{
-  font-family:inherit;
-}
-
-.login-gate{
-  min-height:100vh;
-  width:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:24px;
-  background:
-    radial-gradient(circle at top left, rgba(200,169,75,.22), transparent 32%),
-    linear-gradient(135deg,#16392e,#1f5b43 55%,#2f7a5a);
-}
-
-.login-card{
-  width:min(440px,100%);
-  background:rgba(255,253,248,.96);
-  border:1px solid rgba(243,223,155,.55);
-  border-radius:30px;
-  padding:34px 28px;
-  box-shadow:0 24px 70px rgba(0,0,0,.22);
-  text-align:center;
-  position:relative;
-  overflow:hidden;
-}
-
-.login-card:before{
-  content:"";
-  position:absolute;
-  right:-54px;
-  top:-54px;
-  width:150px;
-  height:150px;
-  border-radius:50%;
-  background:rgba(200,169,75,.20);
-}
-
-.login-card small{
-  position:relative;
-  z-index:1;
-  display:block;
-  color:var(--green);
-  letter-spacing:.16em;
-  font-weight:900;
-  margin-bottom:10px;
-}
-
-.login-card h1{
-  position:relative;
-  z-index:1;
-  margin:0 0 8px;
-  color:var(--dark-green);
-  font-size:clamp(26px,5vw,34px);
-}
-
-.login-card p{
-  position:relative;
-  z-index:1;
-  margin:0 0 20px;
-  color:var(--muted);
-  line-height:1.7;
-}
-
-.login-card input{
-  position:relative;
-  z-index:1;
-  width:100%;
-  border:1px solid var(--line);
-  border-radius:16px;
-  background:#fffdf8;
-  padding:14px 14px;
-  font-size:17px;
-  outline:none;
-  text-align:center;
-}
-
-.login-card input:focus{
-  border-color:var(--green);
-  box-shadow:0 0 0 4px rgba(31,91,67,.12);
-}
-
-.login-card button{
-  position:relative;
-  z-index:1;
-  width:100%;
-  margin-top:14px;
-  border:0;
-  border-radius:16px;
-  padding:14px 18px;
-  font-size:17px;
-  font-weight:950;
-  color:white;
-  background:linear-gradient(135deg,var(--green),var(--green2));
-  cursor:pointer;
-  transition:.2s;
-}
-
-.login-card button:hover{
-  transform:translateY(-1px);
-  box-shadow:0 12px 24px rgba(31,91,67,.18);
-}
-
-#loginError{
-  min-height:24px;
-  margin-top:12px;
-  color:var(--red);
-  font-weight:800;
-}
-
-.wrap{
-  max-width:1120px;
-  margin:auto;
-  padding:18px;
-}
-
-.hero{
-  background:linear-gradient(135deg,#16392e,#1f5b43 55%,#2f7a5a);
-  color:white;
-  border-radius:28px;
-  padding:30px;
-  margin:12px 0 18px;
-  box-shadow:var(--shadow);
-  position:relative;
-  overflow:hidden;
-}
-
-.hero:after{
-  content:"";
-  position:absolute;
-  right:-80px;
-  top:-80px;
-  width:220px;
-  height:220px;
-  border-radius:50%;
-  background:rgba(200,169,75,.25);
-}
-
-.hero small{
-  position:relative;
-  z-index:1;
-  letter-spacing:.15em;
-  color:var(--gold2);
-  font-weight:800;
-}
-
-.hero h1{
-  position:relative;
-  z-index:1;
-  margin:8px 0 6px;
-  font-size:clamp(26px,5vw,40px);
-  line-height:1.25;
-}
-
-.hero p{
-  position:relative;
-  z-index:1;
-  margin:0;
-  color:#f5ead0;
-  line-height:1.7;
-}
-
-.two{
-  display:grid;
-  grid-template-columns:1.2fr .8fr;
-  gap:16px;
-  align-items:start;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:14px;
-}
-
-.card{
-  background:rgba(255,253,248,.94);
-  border:1px solid rgba(228,221,207,.9);
-  border-radius:22px;
-  padding:20px;
-  margin-bottom:16px;
-  box-shadow:var(--soft-shadow);
-}
-
-.card h2{
-  margin:0 0 12px;
-  font-size:20px;
-  color:var(--green);
-}
-
-.card h3{
-  margin:0 0 10px;
-  font-size:17px;
-}
-
-label,.label{
-  display:block;
-  font-size:13px;
-  font-weight:800;
-  margin:8px 0 6px;
-  color:var(--ink);
-}
-
-input,textarea,select{
-  width:100%;
-  border:1px solid var(--line);
-  border-radius:14px;
-  background:#fffdf8;
-  padding:12px 13px;
-  font-size:16px;
-  outline:none;
-  color:var(--ink);
-}
-
-textarea{
-  min-height:92px;
-  resize:vertical;
-}
-
-input:focus,textarea:focus,select:focus{
-  border-color:var(--green);
-  box-shadow:0 0 0 3px rgba(31,91,67,.12);
-}
-
-.small{
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.7;
-  margin:0 0 12px;
-}
-
-.stage-buttons{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(126px,1fr));
-  gap:10px;
-}
-
-.stage-buttons button{
-  background:#faf4e8;
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:14px 10px;
-  text-align:center;
-  cursor:pointer;
-  transition:.2s;
-  user-select:none;
-  color:var(--ink);
-  font-size:15px;
-  font-weight:900;
-  box-shadow:none;
-}
-
-.stage-buttons button:hover{
-  transform:translateY(-2px);
-  box-shadow:0 8px 20px rgba(31,91,67,.10);
-}
-
-.stage-buttons button.active{
-  background:linear-gradient(135deg,var(--green),var(--green2));
-  color:white;
-  border-color:var(--green);
-}
-
-.stage-code{
-  display:block;
-  font-weight:950;
-  font-size:18px;
-}
-
-.stage-title{
-  display:block;
-  margin-top:2px;
-  font-size:13px;
-  font-weight:800;
-}
-
-#stageMessage{
-  min-height:1.5em;
-  margin:0 0 12px;
-  color:var(--green);
-  font-weight:900;
-  line-height:1.7;
-}
-
-.activity-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(132px,1fr));
-  gap:14px;
-}
-
-.activity-grid label{
-  background:#faf4e8;
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:14px;
-  margin:0;
-  color:var(--ink);
-}
-
-.activity-grid span{
-  display:block;
-  margin-bottom:8px;
-  color:var(--muted);
-  font-size:12px;
-  font-weight:900;
-}
-
-.buttons-bar{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:10px;
-  margin:0 0 16px;
-}
-
-button{
-  border:0;
-  border-radius:16px;
-  padding:14px 16px;
-  font-size:16px;
-  font-weight:900;
-  cursor:pointer;
-  transition:.2s;
-}
-
-button:hover{transform:translateY(-1px)}
-button:disabled{opacity:.55;cursor:not-allowed;transform:none}
-
-.buttons-bar button.save{background:var(--green);color:white}
-.buttons-bar button.csv{background:var(--gold);color:white}
-.buttons-bar button.reset{background:#efe5cf;color:#5a4b24}
-.buttons-bar button.clear{background:#888;color:white}
-
-.score-card{
-  border-radius:24px;
-  padding:24px;
-  color:white;
-  background:#a8a8a8;
-  box-shadow:var(--shadow);
-  transition:.3s;
-  text-align:center;
-  margin-bottom:16px;
-}
-
-.score-card.low{
-  background:#a8a8a8;
-  color:white;
-}
-
-.score-card.mid{
-  background:linear-gradient(135deg,var(--green),var(--green2));
-  color:white;
-}
-
-.score-card.high{
-  background:linear-gradient(135deg,var(--green),var(--gold));
-  color:white;
-}
-
-.score-card h2{
-  margin:0;
-  font-size:18px;
-  color:inherit;
-}
-
-#currentScore{
-  display:block;
-  font-size:56px;
-  font-weight:950;
-  line-height:1;
-  margin:12px 0;
-}
-
-.score-card h3{
-  display:inline-flex;
-  padding:5px 12px;
-  border-radius:999px;
-  background:rgba(255,255,255,.18);
-  font-weight:900;
-  font-size:14px;
-  margin:0 0 12px;
-}
-
-.score-card p{
-  margin:8px 0;
-  line-height:1.7;
-}
-
-.stats-list{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
-  gap:12px;
-}
-
-.stat-item{
-  background:#faf4e8;
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:16px;
-}
-
-.stat-item h3{
-  margin:0;
-  font-size:12px;
-  color:var(--muted);
-  font-weight:800;
-}
-
-.stat-item p{
-  margin:4px 0 0;
-  color:var(--green);
-  font-size:26px;
-  font-weight:950;
-}
-
-.history-list{
-  display:grid;
-  gap:10px;
-}
-
-.history-item{
-  background:#faf4e8;
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:14px;
-}
-
-.history-top{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  align-items:flex-start;
-}
-
-.history-date{
-  font-size:12px;
-  color:var(--muted);
-  line-height:1.6;
-}
-
-.history-title{
-  color:var(--green);
-  font-weight:950;
-  margin-top:2px;
-}
-
-.history-score{
-  color:var(--gold);
-  font-weight:950;
-  white-space:nowrap;
-}
-
-.history-meta{
-  margin-top:8px;
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.7;
-}
-
-.month-summary{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:10px;
-  margin:12px 0;
-}
-
-.day-score-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:14px;
-}
-
-.week-section{
-  background:#faf4e8;
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:14px;
-}
-
-.week-section h4{
-  font-weight:900;
-  color:var(--green);
-  margin:0 0 10px;
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  flex-wrap:wrap;
-}
-
-.day-score-card{
-  background:white;
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:12px;
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  line-height:1.6;
-  margin-top:8px;
-}
-
-.day-score-card strong{
-  color:var(--green);
-  font-size:20px;
-}
-
-.footer{
-  text-align:center;
-  color:var(--muted);
-  font-size:12px;
-  padding:26px 0 18px;
-}
-
-.flash{
-  animation:flash .55s ease;
-}
-
-@keyframes flash{
-  0%{background:#f2d9a0}
-  100%{background:#fffdf8}
-}
-
-@media(max-width:820px){
-  .two{grid-template-columns:1fr}
-  .wrap{padding:12px}
-  .hero{padding:24px 20px;border-radius:22px}
-  .card{padding:16px;border-radius:18px}
-  #currentScore{font-size:46px}
-  .history-top{flex-direction:column}
-}
-
-@media print{
-  .login-gate,
-  button,
-  .buttons-bar{display:none!important}
-  body{background:white}
-  .card,.hero,.score-card{box-shadow:none}
-}
-</style>
-</head>
-
-<body>
-
-<div id="loginGate" class="login-gate">
-  <div class="login-card">
-    <small>FUYUN WEALTH ACADEMY</small>
-    <h1>活動量管理系統</h1>
-    <p>請輸入授權密碼進入</p>
-    <input type="password" id="passwordInput" placeholder="請輸入密碼" autocomplete="current-password">
-    <button id="loginBtn" type="button">進入系統</button>
-    <div id="loginError"></div>
-  </div>
-</div>
-
-<div id="app" class="wrap" style="display:none;">
-
-<section class="hero">
-  <small>FUYUN WEALTH ACADEMY</small>
-  <h1>活動量管理成長系統</h1>
-  <p>每日三訪是必然｜財顧流程 × 保經活動量 × 專業成長紀錄</p>
-</section>
-
-<section class="two">
-  <main>
-    <div class="card">
-      <h2>基本資料</h2>
-      <div class="grid">
-        <div>
-          <label>日期</label>
-          <input type="date" id="date">
-        </div>
-        <div>
-          <label>姓名</label>
-          <input type="text" id="name" placeholder="請輸入姓名">
-        </div>
-        <div>
-          <label>客戶 / 案件名稱</label>
-          <input type="text" id="clientName" placeholder="可空白，不列公開排名">
-        </div>
-        <div>
-          <label>下一步行動</label>
-          <input type="text" id="nextAction" placeholder="例：下週約 C3 / 補資料">
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>財顧階段｜點擊即自動換算活動量</h2>
-      <p class="small">此區會連動下方保經活動量。點錯可直接手動修正數字。</p>
-      <p id="stageMessage"></p>
-
-      <div class="stage-buttons">
-        <button type="button" data-stage="C1"><span class="stage-code">C1</span><span class="stage-title">建立關係</span></button>
-        <button type="button" data-stage="C2"><span class="stage-code">C2</span><span class="stage-title">約訪</span></button>
-        <button type="button" data-stage="C3"><span class="stage-code">C3</span><span class="stage-title">需求訪談</span></button>
-        <button type="button" data-stage="C4"><span class="stage-code">C4</span><span class="stage-title">資料整理</span></button>
-        <button type="button" data-stage="C5"><span class="stage-code">C5</span><span class="stage-title">建議書</span></button>
-        <button type="button" data-stage="C6"><span class="stage-code">C6</span><span class="stage-title">成交委託</span></button>
-        <button type="button" data-stage="C7"><span class="stage-code">C7</span><span class="stage-title">服務延伸</span></button>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>保經活動量數據</h2>
-      <div class="activity-grid">
-        <label><span>CALL 建立關係</span><input type="number" id="CALL" min="0" value="0"></label>
-        <label><span>APO 約訪</span><input type="number" id="APO" min="0" value="0"></label>
-        <label><span>FF 面談</span><input type="number" id="FF" min="0" value="0"></label>
-        <label><span>PD 建議書</span><input type="number" id="PD" min="0" value="0"></label>
-        <label><span>C 成交</span><input type="number" id="C" min="0" value="0"></label>
-        <label><span>S 服務</span><input type="number" id="S" min="0" value="0"></label>
-        <label><span>R 轉介紹 / 增員</span><input type="number" id="R" min="0" value="0"></label>
-        <label><span>POLICY 送保單</span><input type="number" id="POLICY" min="0" value="0"></label>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>產值與備註</h2>
-      <div class="grid">
-        <div><label>本日成交件數</label><input type="number" id="caseNum" min="0" value="0"></div>
-        <div><label>本日成交 FYP</label><input type="number" id="fyp" min="0" value="0"></div>
-        <div><label>本日成交 FYC</label><input type="number" id="fyc" min="0" value="0"></div>
-        <div><label>推薦介紹數</label><input type="number" id="referral" min="0" value="0"></div>
-      </div>
-      <label>今日重點 / 特殊案件 / 客戶狀況</label>
-      <textarea id="note" rows="3" placeholder="例：今天完成 C3 需求訪談，客戶開始願意談退休現金流。"></textarea>
-    </div>
-
-    <div class="buttons-bar">
-      <button id="saveBtn" class="save" type="button">☁️ 儲存並同步 Google</button>
-      <button id="csvBtn" class="csv" type="button">匯出 CSV</button>
-      <button id="resetBtn" class="reset" type="button">重新填寫</button>
-      <button id="clearBtn" class="clear" type="button">清除本機紀錄</button>
-    </div>
-  </main>
-
-  <aside>
-    <div id="scoreCard" class="score-card low">
-      <h2>當前得分</h2>
-      <span id="currentScore">0</span>
-      <h3 id="scorePhase">醞釀期</h3>
-      <p id="scoreDesc">今天你在播種，這些分數正在為未來的爆發做準備。</p>
-      <p id="scoreStrategy">補 3 個 CALL 或安排 1 個 APO。</p>
-    </div>
-
-    <div class="card">
-      <h2>統計儀表板</h2>
-      <div class="stats-list">
-        <div class="stat-item"><h3>今日總分</h3><p id="todayTotalScore">0</p></div>
-        <div class="stat-item"><h3>本月總分</h3><p id="monthTotalScore">0</p></div>
-        <div class="stat-item"><h3>本月成交件數</h3><p id="monthCaseNum">0</p></div>
-        <div class="stat-item"><h3>本月 FYP</h3><p id="monthFYP">0</p></div>
-        <div class="stat-item"><h3>本月 FYC</h3><p id="monthFYC">0</p></div>
-        <div class="stat-item"><h3>CALL</h3><p id="monthCALL">0</p></div>
-        <div class="stat-item"><h3>APO</h3><p id="monthAPO">0</p></div>
-        <div class="stat-item"><h3>FF</h3><p id="monthFF">0</p></div>
-        <div class="stat-item"><h3>PD</h3><p id="monthPD">0</p></div>
-        <div class="stat-item"><h3>C</h3><p id="monthC">0</p></div>
-        <div class="stat-item"><h3>S</h3><p id="monthS">0</p></div>
-        <div class="stat-item"><h3>R</h3><p id="monthR">0</p></div>
-        <div class="stat-item"><h3>POLICY</h3><p id="monthPOLICY">0</p></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>最近 10 筆紀錄</h2>
-      <div id="recentRecords" class="history-list"></div>
-    </div>
-  </aside>
-</section>
-
-<section class="card">
-  <h2>每日分數彙整｜週 / 月檢視</h2>
-  <p class="small">以月份為單位，檢視每天分數、每週合計與整月行動節奏。</p>
-
-  <div class="grid">
-    <div>
-      <label>選擇月份</label>
-      <input type="month" id="monthSelector">
-    </div>
-  </div>
-
-  <div class="month-summary">
-    <div class="stat-item"><h3>本月總分</h3><p id="monthSummaryTotal">0</p></div>
-    <div class="stat-item"><h3>有紀錄天數</h3><p id="monthSummaryDays">0</p></div>
-    <div class="stat-item"><h3>平均日分數</h3><p id="monthSummaryAverage">0</p></div>
-    <div class="stat-item"><h3>最高日分數</h3><p id="monthSummaryMax">0</p></div>
-  </div>
-
-  <div id="weeklyContainer" class="day-score-grid"></div>
-</section>
-
-<section class="card">
-  <h2>全部歷史紀錄</h2>
-  <p class="small">完整保留本機歷史資料，方便回顧每日行動、客戶進度與產值。</p>
-  <div id="allRecords" class="history-list"></div>
-</section>
-
-<div class="footer">
-  馥芸財富學苑｜活動量不是評分表，而是專業成長紀錄。
-</div>
-
-</div>
-
-<script>
-const APP_PASSWORD = 'yun888';
-
-/* 財顧階段映射設定 */
-const stageMap = {
-  'C1': { field: 'CALL', message: '與客戶建立關係做得好！下一步安排約訪。', nextAction: '安排約訪' },
-  'C2': { field: 'APO', message: '成功安排約訪！準備需求訪談。', nextAction: '需求訪談' },
-  'C3': { field: 'FF', message: '需求訪談成功！進行資料整理。', nextAction: '資料整理' },
-  'C4': { field: 'PD', message: '資料整理完成！撰寫建議書。', nextAction: '撰寫建議書' },
-  'C5': { field: 'PD', message: '建議書完成！推進成交委託。', nextAction: '成交委託' },
-  'C6': { field: 'C', message: '成交委託完成！進行服務延伸。', nextAction: '服務延伸' },
-  'C7': { field: 'S', message: '服務延伸已完成！鼓勵轉介紹。', nextAction: '轉介紹' }
-};
-
-document.addEventListener('DOMContentLoaded', function() {
-  checkLogin();
-
-  document.getElementById('loginBtn').addEventListener('click', login);
-  document.getElementById('passwordInput').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') {
-      login();
-    }
-  });
-
-  document.getElementById('date').value = new Date().toISOString().split('T')[0];
-  document.getElementById('monthSelector').value = new Date().toISOString().slice(0,7);
-
-  document.querySelectorAll('.stage-buttons button').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      handleStageClick(this.dataset.stage);
-    });
-  });
-
-  document.getElementById('saveBtn').addEventListener('click', saveRecord);
-  document.getElementById('csvBtn').addEventListener('click', exportCSV);
-  document.getElementById('resetBtn').addEventListener('click', function(e) { e.preventDefault(); resetForm(); });
-  document.getElementById('clearBtn').addEventListener('click', function(e) { e.preventDefault(); clearStorage(); });
-  document.getElementById('monthSelector').addEventListener('change', updateMonthlySummary);
-
-  document.querySelectorAll('input[type="number"], input[type="date"], input[type="month"], textarea').forEach(function(input) {
-    input.addEventListener('input', function() {
-      updateScoreCard();
-      updateDashboard();
-      updateMonthlySummary();
-    });
-  });
-
-  loadRecords();
-});
-
-function checkLogin() {
-  const isLoggedIn = sessionStorage.getItem('fuyun_logged_in') === 'yes';
-  const loginGate = document.getElementById('loginGate');
-  const app = document.getElementById('app');
-
-  if (isLoggedIn) {
-    loginGate.style.display = 'none';
-    app.style.display = 'block';
-  } else {
-    loginGate.style.display = 'flex';
-    app.style.display = 'none';
-  }
-}
-
-function login() {
-  const input = document.getElementById('passwordInput').value.trim();
-  const error = document.getElementById('loginError');
-
-  if (input === APP_PASSWORD) {
-    sessionStorage.setItem('fuyun_logged_in', 'yes');
-    error.textContent = '';
-    checkLogin();
-  } else {
-    error.textContent = '密碼錯誤，請重新輸入';
-  }
-}
-
-function getRecords() {
-  return JSON.parse(localStorage.getItem('records') || '[]');
-}
-
-function setRecords(records) {
-  localStorage.setItem('records', JSON.stringify(records));
-}
-
-function safeText(value) {
-  const div = document.createElement('div');
-  div.textContent = value === undefined || value === null ? '' : String(value);
-  return div.innerHTML;
-}
-
-function formatNumber(value) {
-  return Number(value || 0).toLocaleString();
-}
-
-function handleStageClick(key) {
-  document.querySelectorAll('.stage-buttons button').forEach(function(b) { b.classList.remove('active'); });
-  const btn = document.querySelector('.stage-buttons button[data-stage="' + key + '"]');
-  if (btn) { btn.classList.add('active'); }
-
-  const map = stageMap[key];
-  if (map) {
-    const input = document.getElementById(map.field);
-    input.value = (parseInt(input.value || '0') + 1);
-    input.classList.add('flash');
-    setTimeout(function(){ input.classList.remove('flash'); }, 600);
-
-    document.getElementById('nextAction').value = map.nextAction;
-    document.getElementById('stageMessage').textContent = map.message;
-  }
-  updateScoreCard();
-  updateDashboard();
-}
-
-function calculateScore() {
-  const weights = { CALL: 1, APO: 5, FF: 10, PD: 15, C: 30, S: 5, R: 20, POLICY: 10 };
-  let total = 0;
-
-  Object.keys(weights).forEach(function(f) {
-    const val = Number(document.getElementById(f).value) || 0;
-    total += val * weights[f];
-  });
-
-  return total;
-}
-
-function updateScoreCard() {
-  const total = calculateScore();
-  document.getElementById('currentScore').textContent = total;
-
-  let phase, desc, strat, className;
-  if (total < 30) {
-    phase = '醞釀期';
-    desc = '今天你在播種，這些分數正在為未來的爆發做準備。';
-    strat = '補 3 個 CALL 或安排 1 個 APO。';
-    className = 'low';
-  } else if (total < 80) {
-    phase = '行動期';
-    desc = '你正在穩健前進，持續累積就會看見轉換。';
-    strat = '推進 APO → FF。';
-    className = 'mid';
-  } else if (total < 150) {
-    phase = '轉換期';
-    desc = '你已經接近成交，關鍵在最後一哩。';
-    strat = '追蹤 PD / Closing。';
-    className = 'high';
-  } else {
-    phase = '豐收期';
-    desc = '你正處於高動能狀態，開始放大成果。';
-    strat = '轉介紹 / 服務延伸。';
-    className = 'high';
-  }
-
-  document.getElementById('scorePhase').textContent = phase;
-  document.getElementById('scoreDesc').textContent = desc;
-  document.getElementById('scoreStrategy').textContent = strat;
-
-  const card = document.getElementById('scoreCard');
-  card.classList.remove('low', 'mid', 'high');
-  card.classList.add(className);
-
-  updateDashboard();
-}
-
-function saveRecord(e) {
-  if (e) e.preventDefault();
-
-  const date = document.getElementById('date').value;
-  const name = document.getElementById('name').value.trim();
-  const clientName = document.getElementById('clientName').value.trim();
-  const nextAction = document.getElementById('nextAction').value.trim();
-  const caseNum = Number(document.getElementById('caseNum').value) || 0;
-  const fyp = Number(document.getElementById('fyp').value) || 0;
-  const fyc = Number(document.getElementById('fyc').value) || 0;
-  const referral = Number(document.getElementById('referral').value) || 0;
-  const note = document.getElementById('note').value.trim();
-  const stageBtn = document.querySelector('.stage-buttons button.active');
-  const stage = stageBtn ? stageBtn.dataset.stage : '';
-
-  const counts = {};
-  ['CALL', 'APO', 'FF', 'PD', 'C', 'S', 'R', 'POLICY'].forEach(function(f) {
-    counts[f] = Number(document.getElementById(f).value) || 0;
-  });
-
-  const score = calculateScore();
-  const record = {
-    date: date,
-    name: name,
-    clientName: clientName,
-    stage: stage,
-    CALL: counts.CALL,
-    APO: counts.APO,
-    FF: counts.FF,
-    PD: counts.PD,
-    C: counts.C,
-    S: counts.S,
-    R: counts.R,
-    POLICY: counts.POLICY,
-    caseNum: caseNum,
-    fyp: fyp,
-    fyc: fyc,
-    referral: referral,
-    score: score,
-    nextAction: nextAction,
-    note: note
-  };
-
-  const records = getRecords();
-  records.push(record);
-  setRecords(records);
-
-  syncToGoogle(record);
-  updateDashboard();
-  updateRecentRecords();
-  updateAllRecords();
-  updateMonthlySummary();
-
-  alert('🎉 已儲存紀錄！');
-  resetForm();
-}
-
-function syncToGoogle(record) {
-  /* 提醒：GOOGLE_URL 與 entry.xxxxx 須依實際 Google 表單欄位替換 */
-  const url = 'GOOGLE_URL';
-  const formData = new FormData();
-
-  // formData.append('entry.123456', record.date);
-  // formData.append('entry.654321', record.name);
-  // formData.append('entry.xxxxxx', record.clientName);
-  // formData.append('entry.xxxxxx', record.stage);
-  // formData.append('entry.xxxxxx', record.CALL);
-  // formData.append('entry.xxxxxx', record.APO);
-  // formData.append('entry.xxxxxx', record.FF);
-  // formData.append('entry.xxxxxx', record.PD);
-  // formData.append('entry.xxxxxx', record.C);
-  // formData.append('entry.xxxxxx', record.S);
-  // formData.append('entry.xxxxxx', record.R);
-  // formData.append('entry.xxxxxx', record.POLICY);
-  // formData.append('entry.xxxxxx', record.caseNum);
-  // formData.append('entry.xxxxxx', record.fyp);
-  // formData.append('entry.xxxxxx', record.fyc);
-  // formData.append('entry.xxxxxx', record.referral);
-  // formData.append('entry.xxxxxx', record.score);
-  // formData.append('entry.xxxxxx', record.nextAction);
-  // formData.append('entry.xxxxxx', record.note);
-
-  if (!url || url === 'GOOGLE_URL') {
-    return;
-  }
-
-  fetch(url, {
-    method: 'POST',
-    mode: 'no-cors',
-    body: formData
-  }).catch(function(err) {
-    console.warn('Google sync failed', err);
-  });
-}
-
-function exportCSV(e) {
-  if (e) e.preventDefault();
-
-  const records = getRecords();
-  if (records.length === 0) {
-    alert('尚無紀錄可匯出');
-    return;
-  }
-
-  let csv = '\uFEFF日期,姓名,客戶名稱,階段,CALL,APO,FF,PD,C,S,R,POLICY,成交件數,FYP,FYC,推薦介紹數,得分,下一步行動,備註\n';
-
-  records.forEach(function(r) {
-    const row = [
-      r.date, r.name, r.clientName, r.stage,
-      r.CALL, r.APO, r.FF, r.PD, r.C, r.S, r.R, r.POLICY,
-      r.caseNum, r.fyp, r.fyc, r.referral,
-      r.score, r.nextAction, r.note
-    ].map(function(val) {
-      const str = val !== undefined && val !== null ? String(val).replace(/"/g, '""') : '';
-      return '"' + str + '"';
-    }).join(',');
-
-    csv += row + '\n';
-  });
-
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = '馥芸財富學苑_活動量紀錄_' + new Date().toISOString().slice(0,10) + '.csv';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
-
-function resetForm() {
-  document.getElementById('date').value = new Date().toISOString().split('T')[0];
-  document.getElementById('name').value = '';
-  document.getElementById('clientName').value = '';
-  document.getElementById('nextAction').value = '';
-  document.getElementById('caseNum').value = 0;
-  document.getElementById('fyp').value = 0;
-  document.getElementById('fyc').value = 0;
-  document.getElementById('referral').value = 0;
-  document.getElementById('note').value = '';
-
-  document.querySelectorAll('.stage-buttons button').forEach(function(b) { b.classList.remove('active'); });
-  document.getElementById('stageMessage').textContent = '';
-
-  ['CALL', 'APO', 'FF', 'PD', 'C', 'S', 'R', 'POLICY'].forEach(function(f) {
-    document.getElementById(f).value = 0;
-  });
-
-  updateScoreCard();
-  updateDashboard();
-}
-
-function clearStorage() {
-  if (confirm('確定清除所有本機紀錄嗎？此操作無法復原。')) {
-    localStorage.removeItem('records');
-    updateDashboard();
-    updateRecentRecords();
-    updateAllRecords();
-    updateMonthlySummary();
-    alert('已清除所有本機紀錄。');
-  }
-}
-
-function loadRecords() {
-  updateScoreCard();
-  updateDashboard();
-  updateRecentRecords();
-  updateAllRecords();
-  updateMonthlySummary();
-}
-
-function updateDashboard() {
-  const records = getRecords();
-  const todayStr = new Date().toISOString().split('T')[0];
-  const now = new Date();
-  const currentYear = now.getFullYear().toString();
-  const currentMonth = ('0' + (now.getMonth() + 1)).slice(-2);
-
-  let todayScore = 0;
-  let monthScore = 0;
-  let monthCase = 0;
-  let monthFYP = 0;
-  let monthFYC = 0;
-  const activityTotals = { CALL: 0, APO: 0, FF: 0, PD: 0, C: 0, S: 0, R: 0, POLICY: 0 };
-
-  records.forEach(function(r) {
-    if (r.date === todayStr) {
-      todayScore += Number(r.score) || 0;
-    }
-
-    const parts = String(r.date || '').split('-');
-    const y = parts[0];
-    const m = parts[1];
-
-    if (y === currentYear && m === currentMonth) {
-      monthScore += Number(r.score) || 0;
-      monthCase += Number(r.caseNum) || 0;
-      monthFYP += Number(r.fyp) || 0;
-      monthFYC += Number(r.fyc) || 0;
-
-      activityTotals.CALL += Number(r.CALL) || 0;
-      activityTotals.APO += Number(r.APO) || 0;
-      activityTotals.FF += Number(r.FF) || 0;
-      activityTotals.PD += Number(r.PD) || 0;
-      activityTotals.C += Number(r.C) || 0;
-      activityTotals.S += Number(r.S) || 0;
-      activityTotals.R += Number(r.R) || 0;
-      activityTotals.POLICY += Number(r.POLICY) || 0;
-    }
-  });
-
-  const unsavedScore = calculateScore();
-  todayScore += unsavedScore;
-  monthScore += unsavedScore;
-
-  ['CALL', 'APO', 'FF', 'PD', 'C', 'S', 'R', 'POLICY'].forEach(function(f) {
-    activityTotals[f] += Number(document.getElementById(f).value) || 0;
-  });
-
-  monthCase += Number(document.getElementById('caseNum').value) || 0;
-  monthFYP += Number(document.getElementById('fyp').value) || 0;
-  monthFYC += Number(document.getElementById('fyc').value) || 0;
-
-  document.getElementById('todayTotalScore').textContent = todayScore;
-  document.getElementById('monthTotalScore').textContent = monthScore;
-  document.getElementById('monthCaseNum').textContent = monthCase;
-  document.getElementById('monthFYP').textContent = formatNumber(monthFYP);
-  document.getElementById('monthFYC').textContent = formatNumber(monthFYC);
-  document.getElementById('monthCALL').textContent = activityTotals.CALL;
-  document.getElementById('monthAPO').textContent = activityTotals.APO;
-  document.getElementById('monthFF').textContent = activityTotals.FF;
-  document.getElementById('monthPD').textContent = activityTotals.PD;
-  document.getElementById('monthC').textContent = activityTotals.C;
-  document.getElementById('monthS').textContent = activityTotals.S;
-  document.getElementById('monthR').textContent = activityTotals.R;
-  document.getElementById('monthPOLICY').textContent = activityTotals.POLICY;
-}
-
-function updateRecentRecords() {
-  const container = document.getElementById('recentRecords');
-  container.innerHTML = '';
-
-  const records = getRecords();
-  const lastRecords = records.slice(-10).reverse();
-
-  if (lastRecords.length === 0) {
-    container.innerHTML = '<p class="small">目前尚無紀錄。</p>';
-    return;
-  }
-
-  lastRecords.forEach(function(r) {
-    const div = document.createElement('div');
-    div.className = 'history-item';
-    div.innerHTML = historyCardHTML(r, false);
-    container.appendChild(div);
-  });
-}
-
-function updateAllRecords() {
-  const container = document.getElementById('allRecords');
-  container.innerHTML = '';
-
-  const records = getRecords();
-
-  if (records.length === 0) {
-    container.innerHTML = '<p class="small">目前尚無歷史紀錄。</p>';
-    return;
-  }
-
-  records.slice().reverse().forEach(function(r) {
-    const div = document.createElement('div');
-    div.className = 'history-item';
-    div.innerHTML = historyCardHTML(r, true);
-    container.appendChild(div);
-  });
-}
-
-function historyCardHTML(r, showDetail) {
-  const base = `
-    <div class="history-top">
-      <div>
-        <div class="history-date">${safeText(r.date)}｜${safeText(r.name || '')}</div>
-        <div class="history-title">${safeText(r.clientName || '日活動')}｜${safeText(r.stage || '一般行動')}</div>
-      </div>
-      <div class="history-score">+${safeText(r.score || 0)} 分</div>
-    </div>
-    <div class="history-meta">
-      CALL ${safeText(r.CALL || 0)}｜APO ${safeText(r.APO || 0)}｜FF ${safeText(r.FF || 0)}｜PD ${safeText(r.PD || 0)}｜C ${safeText(r.C || 0)}｜S ${safeText(r.S || 0)}｜R ${safeText(r.R || 0)}｜POLICY ${safeText(r.POLICY || 0)}
-    </div>
-    <div class="history-meta">
-      成交 ${safeText(r.caseNum || 0)}｜FYP ${formatNumber(r.fyp || 0)}｜FYC ${formatNumber(r.fyc || 0)}｜下一步：${safeText(r.nextAction || '未填')}
-    </div>
-  `;
-
-  const detail = showDetail
-    ? `<div class="history-meta">📝 ${safeText(r.note || '—')}</div>`
-    : '';
-
-  return base + detail;
-}
-
-function updateMonthlySummary() {
-  const monthVal = document.getElementById('monthSelector').value;
-  if (!monthVal) return;
-
-  const partsSel = monthVal.split('-');
-  const year = partsSel[0];
-  const month = partsSel[1];
-  const records = getRecords();
-  const dailyMap = {};
-  let totalScore = 0;
-
-  records.forEach(function(r) {
-    const parts = String(r.date || '').split('-');
-    if (parts[0] === year && parts[1] === month) {
-      if (!dailyMap[r.date]) {
-        dailyMap[r.date] = { score: 0, CALL: 0, APO: 0, FF: 0, PD: 0, C: 0, S: 0, R: 0, POLICY: 0 };
-      }
-
-      dailyMap[r.date].score += Number(r.score) || 0;
-      dailyMap[r.date].CALL += Number(r.CALL) || 0;
-      dailyMap[r.date].APO += Number(r.APO) || 0;
-      dailyMap[r.date].FF += Number(r.FF) || 0;
-      dailyMap[r.date].PD += Number(r.PD) || 0;
-      dailyMap[r.date].C += Number(r.C) || 0;
-      dailyMap[r.date].S += Number(r.S) || 0;
-      dailyMap[r.date].R += Number(r.R) || 0;
-      dailyMap[r.date].POLICY += Number(r.POLICY) || 0;
-      totalScore += Number(r.score) || 0;
-    }
-  });
-
-  const dates = Object.keys(dailyMap).sort();
-  const numDays = dates.length;
-  let highest = 0;
-
-  dates.forEach(function(d) {
-    if (dailyMap[d].score > highest) highest = dailyMap[d].score;
-  });
-
-  const avg = numDays ? Math.round(totalScore / numDays) : 0;
-
-  document.getElementById('monthSummaryTotal').textContent = totalScore;
-  document.getElementById('monthSummaryDays').textContent = numDays;
-  document.getElementById('monthSummaryAverage').textContent = avg;
-  document.getElementById('monthSummaryMax').textContent = highest;
-
-  const weekContainer = document.getElementById('weeklyContainer');
-  weekContainer.innerHTML = '';
-
-  if (dates.length === 0) {
-    weekContainer.innerHTML = '<p class="small">本月份尚無紀錄。</p>';
-    return;
-  }
-
-  const weeks = {};
-  dates.forEach(function(date) {
-    const day = new Date(date + 'T00:00:00').getDate();
-    const weekNum = Math.ceil(day / 7);
-    if (!weeks[weekNum]) weeks[weekNum] = [];
-    weeks[weekNum].push(date);
-  });
-
-  for (let i = 1; i <= 5; i++) {
-    if (weeks[i] && weeks[i].length > 0) {
-      let weekScore = 0;
-
-      weeks[i].forEach(function(d) {
-        weekScore += dailyMap[d].score;
-      });
-
-      const section = document.createElement('div');
-      section.className = 'week-section';
-
-      const header = document.createElement('h4');
-      const title = document.createElement('span');
-      const total = document.createElement('span');
-
-      title.textContent = '第 ' + i + ' 週';
-      total.textContent = '週合計 ' + weekScore + ' 分';
-
-      header.appendChild(title);
-      header.appendChild(total);
-      section.appendChild(header);
-
-      weeks[i].forEach(function(d) {
-        const info = dailyMap[d];
-        const card = document.createElement('div');
-        card.className = 'day-score-card';
-        card.innerHTML =
-          '<div>' + safeText(d) + '<br><span class="small">CALL ' + safeText(info.CALL) +
-          '｜APO ' + safeText(info.APO) +
-          '｜FF ' + safeText(info.FF) +
-          '｜PD ' + safeText(info.PD) +
-          '<br>C ' + safeText(info.C) +
-          '｜S ' + safeText(info.S) +
-          '｜R ' + safeText(info.R) +
-          '｜POLICY ' + safeText(info.POLICY) +
-          '</span></div><strong>' + safeText(info.score) + ' 分</strong>';
-        section.appendChild(card);
-      });
-
-      weekContainer.appendChild(section);
-    }
-  }
-}
-</script>
-
-</body>
-</html>
 '''
 
-out_path = Path("/mnt/data/test_optimized_yun888.html")
-out_path.write_text(html_content, encoding="utf-8")
-print(f"已產生檔案：{out_path}")
-print(f"檔案大小：{out_path.stat().st_size:,} bytes")
+請確認檔案第一行必須是：
+
+<!DOCTYPE html>
+
+不能有任何文字、空白說明、Python 語法出現在 `<!DOCTYPE html>` 前面。
+
+二、檔案結尾也要清乾淨
+
+請確認檔案最後必須是：
+
+</html>
+
+在 `</html>` 後面不能有：
+
+'''
+Path(...)
+write_text(...)
+print(...)
+
+或任何 Python、Markdown、說明文字。
+
+三、請保留目前頁面功能
+
+請保留目前 `test.html` 的所有功能：
+
+1. 密碼登入保護。
+2. 密碼為：yun888
+3. 登入後顯示活動量管理系統。
+4. 使用 `sessionStorage` 記錄登入狀態。
+5. 保留高質感 MAIN 視覺版面。
+6. 保留深綠、草本綠、柔金、奶油米白風格。
+7. 保留 Hero 區塊。
+8. 保留左右雙欄版面。
+9. 保留手機版單欄版面。
+10. 保留圓角卡片與柔和陰影。
+11. 保留右側分數儀表板。
+12. 保留最近紀錄。
+13. 保留全部歷史紀錄。
+14. 保留每日 / 週 / 月分數彙整。
+
+四、請保留 TEST 原本資料邏輯
+
+請不要改掉資料庫與 localStorage 設定。
+
+必須保留：
+
+localStorage.getItem('records')
+
+以及：
+
+localStorage.setItem('records', JSON.stringify(records))
+
+不要改成：
+
+localStorage.getItem('fuyun_data')
+
+五、請保留原本欄位 ID
+
+請確認以下欄位 ID 都存在，而且不要改名。
+
+基本資料：
+
+id="date"
+id="name"
+id="phone"
+id="clientName"
+id="nextAction"
+
+其中：
+
+`name` 的畫面標籤要顯示為「顧問名稱」
+
+`phone` 的畫面標籤要顯示為「手機號碼」
+
+活動量欄位：
+
+id="CALL"
+id="APO"
+id="FF"
+id="PD"
+id="C"
+id="S"
+id="R"
+id="POLICY"
+
+產值欄位：
+
+id="caseNum"
+id="fyp"
+id="fyc"
+id="referral"
+id="note"
+
+分數與統計欄位：
+
+id="scoreCard"
+id="currentScore"
+id="scorePhase"
+id="scoreDesc"
+id="scoreStrategy"
+id="todayTotalScore"
+id="monthTotalScore"
+id="monthCaseNum"
+id="monthFYP"
+id="monthFYC"
+id="monthCALL"
+id="monthAPO"
+id="monthFF"
+id="monthPD"
+id="monthC"
+id="monthS"
+id="monthR"
+id="monthPOLICY"
+
+歷史與月檢視欄位：
+
+id="recentRecords"
+id="allRecords"
+id="monthSelector"
+id="monthSummaryTotal"
+id="monthSummaryDays"
+id="monthSummaryAverage"
+id="monthSummaryMax"
+id="weeklyContainer"
+
+六、請保留函式名稱
+
+請保留以下 JavaScript 函式名稱，不要改名：
+
+checkLogin
+login
+handleStageClick
+calculateScore
+updateScoreCard
+saveRecord
+syncToGoogle
+exportCSV
+resetForm
+clearStorage
+loadRecords
+updateDashboard
+updateRecentRecords
+updateAllRecords
+updateMonthlySummary
+
+七、請確認 Google 表單同步架構保留
+
+請保留：
+
+function syncToGoogle(record) {
+const url = 'GOOGLE_URL';
+const formData = new FormData();
+}
+
+請不要自行改成其他 Google 表單網址。
+
+如果手機號碼已新增，請保留這行註解，方便我之後填入 Google Form entry：
+
+// formData.append('entry.xxxxxx', record.phone);
+
+八、請確認手機號碼有寫入紀錄
+
+請確認 `saveRecord()` 裡有讀取手機號碼：
+
+const phone = document.getElementById('phone').value.trim();
+
+並確認 record 物件有：
+
+phone: phone,
+
+CSV 匯出標題也要包含：
+
+手機號碼
+
+CSV row 也要包含：
+
+r.phone
+
+最近紀錄與全部歷史紀錄中，也要顯示手機號碼。
+
+九、請修正任何 HTML 結構錯誤
+
+請確認：
+
+1. 只有一個 `<!DOCTYPE html>`。
+2. 只有一組 `<html>...</html>`。
+3. 只有一組 `<head>...</head>`。
+4. 只有一組 `<body>...</body>`。
+5. 所有 JavaScript 都放在 `<script>...</script>` 裡。
+6. 不要有任何 JavaScript 函式出現在 `</script>` 後面。
+7. 不要有重複的 `calculateScore()`。
+8. 不要有 Python 語法。
+9. 不要有 Markdown 標記，例如 `html 或 `。
+10. 不要有「以下略」或說明文字。
+11. 不要有任何多餘文字出現在 `<!DOCTYPE html>` 前面。
+12. 不要有任何多餘文字出現在 `</html>` 後面。
+
+十、請確認活動量對應正確
+
+請確認點選財顧階段時，會自動增加對應活動量：
+
+C1 對應 CALL
+C2 對應 APO
+C3 對應 FF
+C4 對應 PD
+C5 對應 PD
+C6 對應 C
+C7 對應 S
+
+並且點選後會更新：
+
+1. 按鈕 active 樣式。
+2. 下一步行動欄位。
+3. 階段提示文字。
+4. 當前分數。
+5. 今日總分。
+6. 本月統計。
+
+十一、請確認分數計算規則
+
+請保留以下計分規則：
+
+CALL × 1
+APO × 5
+FF × 10
+PD × 15
+C × 30
+S × 5
+R × 20
+POLICY × 10
+
+十二、請確認分數階段顯示
+
+請依照分數顯示不同階段：
+
+0～29：醞釀期
+30～79：行動期
+80～149：轉換期
+150 以上：豐收期
+
+分數卡樣式：
+
+醞釀期：灰色或低彩度
+行動期：草本綠
+轉換期：綠金漸層
+豐收期：綠金漸層
+
+十三、請確認即時更新
+
+請確認手動輸入以下欄位時，分數與統計會即時更新：
+
+CALL
+APO
+FF
+PD
+C
+S
+R
+POLICY
+caseNum
+fyp
+fyc
+referral
+
+十四、請確認儲存、匯出與清除功能
+
+請確認：
+
+1. 儲存後資料寫入 `localStorage` 的 `records`。
+2. 最近 10 筆紀錄可以正常顯示。
+3. 全部歷史紀錄可以正常顯示。
+4. 每日 / 週 / 月分數彙整可以正常顯示。
+5. 匯出 CSV 可以正常下載。
+6. CSV 有 BOM，讓 Excel 開啟時中文不亂碼。
+7. 清除本機紀錄會移除 `records`。
+8. 清除本機紀錄不影響 Google Sheet 已上傳資料。
+
+十五、請保留品牌視覺
+
+請保留或優化以下視覺設定：
+
+整體色系：
+
+深綠：#16392e
+草本綠：#1f5b43
+輔助綠：#2f7a5a
+柔金色：#c8a94b
+淡金色：#f3df9b
+奶油米白：#f7f1e4
+紙白：#fffdf8
+文字深色：#243129
+次要文字：#776f63
+線條色：#e4ddcf
+
+字體：
+
+font-family:"Noto Sans TC","Microsoft JhengHei",Arial,sans-serif;
+
+版面要求：
+
+1. 最外層活動量系統使用 `.wrap`。
+2. 頂部使用 `.hero`。
+3. Hero 小字：FUYUN WEALTH ACADEMY
+4. Hero 主標題：活動量管理成長系統
+5. Hero 副標：每日三訪是必然｜財顧流程 × 保經活動量 × 專業成長紀錄
+6. 桌機版使用左右雙欄。
+7. 左側為：基本資料、財顧階段、保經活動量、產值與備註、操作按鈕。
+8. 右側為：分數卡、統計儀表板、最近紀錄。
+9. 手機版自動改為單欄。
+10. 卡片使用圓角 18px～28px。
+11. 使用柔和陰影。
+12. 按鈕要有高質感圓角與 hover 效果。
+13. 財顧階段 C1～C7 要做成卡片按鈕。
+14. 被選取的 C1～C7 要有深綠漸層背景。
+15. 活動量欄位要做成整齊的網格卡片。
+16. 右側分數卡要有大數字顯示。
+17. 下方保留「每日分數彙整｜週 / 月檢視」。
+18. 下方保留「全部歷史紀錄」。
+19. 最底部加入：馥芸財富學苑｜活動量不是評分表，而是專業成長紀錄。
+
+十六、請最後直接輸出完整 HTML
+
+請直接輸出完整可覆蓋的 `test.html`。
+
+輸出內容必須從：
+
+<!DOCTYPE html>
+
+開始，到：
+
+</html>
+
+結束。
+
+不要在程式碼前後加任何說明文字。
+不要加 Markdown code block。
+不要加「這是修正版」。
+不要加 `html。  
+不要加 `。
+不要加任何解釋。
+只輸出完整 HTML 原始碼。
