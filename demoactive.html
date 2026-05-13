@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>馥芸財富學苑｜名單跟進展示頁</title>
+
+  <style>
+    :root{
+      --green-dark:#173c33;
+      --green:#2f6f5e;
+      --green-soft:#e9f4ef;
+      --gold:#c8a96a;
+      --cream:#fbf7ef;
+      --text:#26322e;
+      --muted:#6e7a74;
+      --danger:#b5473d;
+      --success:#2f7d5a;
+      --shadow:0 16px 40px rgba(23,60,51,.13);
+      --soft-shadow:0 8px 22px rgba(23,60,51,.08);
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:"Noto Sans TC","Microsoft JhengHei","PingFang TC",Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 8% 0%,rgba(200,169,106,.24),transparent 35%),
+        linear-gradient(135deg,#fbf7ef 0%,#eef4ef 58%,#f7f0df 100%);
+      font-size:18px;
+      line-height:1.6;
+    }
+
+    .page{
+      width:min(1180px,calc(100% - 28px));
+      margin:0 auto;
+      padding:28px 0 56px;
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      color:#fff;
+      background:linear-gradient(135deg,#173c33 0%,#2f6f5e 62%,#c8a96a 145%);
+      border-radius:32px;
+      padding:38px;
+      box-shadow:var(--shadow);
+      margin-bottom:22px;
+    }
+
+    .hero:after{
+      content:"";
+      position:absolute;
+      width:310px;
+      height:310px;
+      border-radius:50%;
+      right:-80px;
+      top:-120px;
+      background:rgba(255,255,255,.13);
+    }
+
+    .badge{
+      display:inline-flex;
+      border:1px solid rgba(255,255,255,.28);
+      background:rgba(255,255,255,.14);
+      border-radius:999px;
+      padding:8px 16px;
+      font-weight:800;
+      margin-bottom:14px;
+    }
+
+    h1{
+      margin:0;
+      font-size:clamp(34px,5vw,58px);
+      line-height:1.16;
+      letter-spacing:.03em;
+    }
+
+    .subtitle{
+      font-size:clamp(20px,2.5vw,30px);
+      font-weight:800;
+      color:rgba(255,255,255,.9);
+      margin:14px 0 22px;
+    }
+
+    .tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .tag{
+      border:1px solid rgba(255,255,255,.22);
+      background:rgba(255,255,255,.13);
+      border-radius:999px;
+      padding:8px 14px;
+      font-weight:800;
+    }
+
+    .showcase{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+      margin-bottom:22px;
+    }
+
+    .showcase-card{
+      background:rgba(255,255,255,.92);
+      border:1px solid rgba(47,111,94,.13);
+      border-radius:20px;
+      padding:18px;
+      box-shadow:var(--soft-shadow);
+    }
+
+    .showcase-card span{
+      display:block;
+      color:var(--muted);
+      font-size:15px;
+      font-weight:800;
+    }
+
+    .showcase-card strong{
+      display:block;
+      color:var(--green-dark);
+      font-size:24px;
+      line-height:1.25;
+      margin-top:8px;
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns:minmax(0,1.35fr) minmax(330px,.8fr);
+      gap:22px;
+      align-items:start;
+    }
+
+    .card{
+      background:rgba(255,255,255,.95);
+      border:1px solid rgba(47,111,94,.13);
+      border-radius:24px;
+      box-shadow:var(--soft-shadow);
+      padding:24px;
+      margin-bottom:20px;
+    }
+
+    .title{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin:0 0 18px;
+      font-size:24px;
+      color:var(--green-dark);
+      font-weight:900;
+    }
+
+    .title:before{
+      content:"";
+      width:9px;
+      height:30px;
+      border-radius:999px;
+      background:linear-gradient(180deg,var(--gold),var(--green));
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:16px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:7px;
+      margin-bottom:16px;
+    }
+
+    label{
+      color:var(--green-dark);
+      font-weight:900;
+      font-size:17px;
+    }
+
+    .req:after{
+      content:" *";
+      color:var(--danger);
+    }
+
+    input,select,textarea{
+      width:100%;
+      border:1px solid rgba(47,111,94,.22);
+      border-radius:15px;
+      padding:13px 14px;
+      font-size:18px;
+      font-family:inherit;
+      outline:none;
+      background:#fff;
+      color:var(--text);
+    }
+
+    textarea{
+      min-height:105px;
+      resize:vertical;
+    }
+
+    input:focus,select:focus,textarea:focus{
+      border-color:var(--green);
+      box-shadow:0 0 0 4px rgba(47,111,94,.12);
+    }
+
+    input[type="range"]{
+      accent-color:var(--green);
+    }
+
+    .checks{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+    }
+
+    .check,.radio{
+      display:flex;
+      gap:9px;
+      align-items:flex-start;
+      border:1px solid rgba(47,111,94,.13);
+      background:#fbfaf6;
+      border-radius:14px;
+      padding:11px 12px;
+      cursor:pointer;
+    }
+
+    .check input,.radio input{
+      width:auto;
+      margin-top:5px;
+      accent-color:var(--green);
+      transform:scale(1.16);
+    }
+
+    .check span,.radio span{
+      font-size:16px;
+    }
+
+    .radios{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+    }
+
+    .hint{
+      background:var(--green-soft);
+      border-left:5px solid var(--green);
+      border-radius:14px;
+      padding:14px 16px;
+      color:#36584f;
+      font-size:16px;
+      font-weight:700;
+      margin-bottom:18px;
+    }
+
+    .score{
+      background:linear-gradient(135deg,#f9f4e7,#eaf5ef);
+      border:1px solid rgba(200,169,106,.35);
+      border-radius:18px;
+      padding:18px;
+    }
+
+    .score strong{
+      font-size:46px;
+      color:var(--green-dark);
+      line-height:1;
+    }
+
+    .score p{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-weight:900;
+    }
+
+    .btns{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:18px;
+    }
+
+    button{
+      border:none;
+      cursor:pointer;
+      font-family:inherit;
+      font-size:17px;
+      font-weight:900;
+      border-radius:15px;
+      padding:13px 18px;
+      color:#fff;
+      background:linear-gradient(180deg,#3e806d 0%,#245848 100%);
+      box-shadow:0 6px 0 #173c32,0 14px 20px rgba(24,60,52,.18);
+    }
+
+    button:hover{
+      transform:translateY(-2px);
+      filter:brightness(1.05);
+    }
+
+    .soft{
+      color:var(--green-dark);
+      background:linear-gradient(180deg,#fff 0%,#edf5f0 100%);
+      border:1px solid rgba(47,111,94,.18);
+      box-shadow:0 6px 0 #cddbd3,0 14px 20px rgba(31,55,47,.08);
+    }
+
+    .gold{
+      background:linear-gradient(180deg,#d7bd7d 0%,#a8833d 100%);
+      box-shadow:0 6px 0 #795d26,0 14px 20px rgba(168,131,61,.18);
+    }
+
+    .summary{
+      position:sticky;
+      top:18px;
+    }
+
+    .summary pre{
+      white-space:pre-wrap;
+      margin:0;
+      background:#173c33;
+      color:#fff;
+      border-radius:18px;
+      padding:18px;
+      min-height:360px;
+      font-size:16px;
+    }
+
+    .status{
+      display:none;
+      margin-top:14px;
+      border-radius:14px;
+      padding:13px 15px;
+      font-weight:900;
+    }
+
+    .status.show{
+      display:block;
+    }
+
+    .status.ok{
+      background:#e8f5ee;
+      color:var(--success);
+    }
+
+    .status.err{
+      background:#fff0ed;
+      color:var(--danger);
+    }
+
+    .small{
+      font-size:15px;
+      color:var(--muted);
+    }
+
+    .notice{
+      background:#fffaf0;
+      border:1px solid rgba(200,169,106,.35);
+      color:#6b5428;
+      border-radius:18px;
+      padding:16px 18px;
+      font-weight:800;
+      margin-bottom:20px;
+    }
+
+    @media(max-width:1000px){
+      .showcase{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .layout{
+        grid-template-columns:1fr;
+      }
+
+      .summary{
+        position:relative;
+        top:auto;
+      }
+    }
+
+    @media(max-width:700px){
+      body{
+        font-size:17px;
+      }
+
+      .page{
+        width:calc(100% - 20px);
+        padding-top:14px;
+      }
+
+      .hero{
+        padding:24px 20px;
+        border-radius:24px;
+      }
+
+      .showcase,.grid,.checks,.radios{
+        grid-template-columns:1fr;
+      }
+
+      .card{
+        padding:19px;
+      }
+
+      button{
+        width:100%;
+      }
+
+      input,select,textarea{
+        font-size:17px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="badge">馥芸財富學苑｜活動量管理展示頁</div>
+      <h1>名單設定與跟進系統</h1>
+      <div class="subtitle">展示頁 × 名單紀錄 × Google 表單送出</div>
+      <div class="tags">
+        <span class="tag">財務規劃</span>
+        <span class="tag">保單健診</span>
+        <span class="tag">退休現金流</span>
+        <span class="tag">家族傳承</span>
+        <span class="tag">高資產家庭專案</span>
+      </div>
+    </header>
+
+    <section class="showcase">
+      <div class="showcase-card">
+        <span>用途一</span>
+        <strong>名單背景整理</strong>
+      </div>
+      <div class="showcase-card">
+        <span>用途二</span>
+        <strong>跟進階段紀錄</strong>
+      </div>
+      <div class="showcase-card">
+        <span>用途三</span>
+        <strong>活動量分數提示</strong>
+      </div>
+      <div class="showcase-card">
+        <span>用途四</span>
+        <strong>送出至表單後台</strong>
+      </div>
+    </section>
+
+    <div class="notice">
+      本頁為展示與登錄頁面：送出後資料會送至 Google 表單，不會儲存在本機瀏覽器，也不會產生本機紀錄。
+    </div>
+
+    <main class="layout">
+      <form id="form">
+        <section class="card">
+          <h2 class="title">A. 顧問資料</h2>
+          <div class="grid">
+            <div class="field">
+              <label class="req">顧問姓名</label>
+              <input id="advisorName" required placeholder="請輸入顧問姓名">
+            </div>
+
+            <div class="field">
+              <label class="req">顧問手機</label>
+              <input id="advisorPhone" required placeholder="請輸入顧問手機">
+            </div>
+
+            <div class="field">
+              <label>所屬單位／團隊</label>
+              <input id="advisorTeam" placeholder="例如：馥芸財富學苑、公勝、宜蘭團隊">
+            </div>
+
+            <div class="field">
+              <label class="req">登打日期</label>
+              <input id="recordDate" type="date" required>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2 class="title">B. 客戶基本資料</h2>
+          <div class="grid">
+            <div class="field">
+              <label class="req">客戶姓名／暱稱</label>
+              <input id="clientName" required placeholder="例如：林醫師、陳媽媽、王小姐">
+            </div>
+
+            <div class="field">
+              <label>客戶手機</label>
+              <input id="clientPhone" placeholder="請輸入客戶手機">
+            </div>
+
+            <div class="field">
+              <label>客戶身分／職業</label>
+              <input id="clientJob" placeholder="例如：醫師、講師、企業主、退休人士">
+            </div>
+
+            <div class="field">
+              <label class="req">客戶來源</label>
+              <select id="clientSource" required>
+                <option value="">請選擇</option>
+                <option>自然名單</option>
+                <option>轉介紹</option>
+                <option>講座名單</option>
+                <option>社群名單</option>
+                <option>舊客戶</option>
+                <option>異業合作</option>
+                <option>其他</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label class="req">名單溫度</label>
+              <select id="leadTemperature" required>
+                <option value="">請選擇</option>
+                <option>A級：高度意願</option>
+                <option>B級：可培養</option>
+                <option>C級：需暖名單</option>
+                <option>D級：暫緩追蹤</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label class="req">目前階段</label>
+              <select id="currentStage" required>
+                <option value="">請選擇</option>
+                <option>01 初次接觸</option>
+                <option>02 已建立信任</option>
+                <option>03 已完成基本資料蒐集</option>
+                <option>04 已完成資產盤點</option>
+                <option>05 已完成需求訪談</option>
+                <option>06 已提出初步觀念</option>
+                <option>07 已安排正式簡報</option>
+                <option>08 已完成方案說明</option>
+                <option>09 成交／執行中</option>
+                <option>10 售後服務</option>
+                <option>11 轉介紹經營</option>
+                <option>12 暫緩追蹤</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2 class="title">C. 專案背景與核心議題</h2>
+
+          <div class="hint">
+            範例：高資產家庭海外陪讀專案｜需留意美元現金流、全球課稅、FATCA、保單健診、家族傳承與稅務合規提醒。
+          </div>
+
+          <div class="field">
+            <label>家庭成員摘要</label>
+            <textarea id="familySummary" placeholder="例如：先生 69 歲，半退休專科醫師；太太 55 歲，半退休講師；女兒 18 歲，預計海外留學 4～6 年。"></textarea>
+          </div>
+
+          <div class="field">
+            <label>目前主要痛點</label>
+            <textarea id="painPoint" placeholder="例如：資產分散於保單、股票、基金與不動產，希望從海外陪讀、美元現金流、稅務合規與家族傳承角度重新整理。"></textarea>
+          </div>
+
+          <div class="field">
+            <label>下一步行動</label>
+            <textarea id="nextAction" placeholder="例如：先用白皮書架構切入海外陪讀與美元現金流，再安排保單現況檢視與資產盤點。"></textarea>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2 class="title">D. 跟進進度與活動量</h2>
+
+          <div class="grid">
+            <div class="field">
+              <label>追蹤進度：<span id="progressText">0%</span></label>
+              <input id="progressPercent" type="range" min="0" max="100" value="0">
+            </div>
+
+            <div class="field">
+              <label>下次追蹤日期</label>
+              <input id="nextFollowDate" type="date">
+            </div>
+
+            <div class="field">
+              <label>下次跟進方式</label>
+              <select id="followMethod">
+                <option value="">請選擇</option>
+                <option>LINE</option>
+                <option>電話</option>
+                <option>面談</option>
+                <option>Zoom</option>
+                <option>傳送資料</option>
+                <option>邀約講座</option>
+                <option>其他</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="req">是否完成本次追蹤</label>
+            <div class="radios">
+              <label class="radio">
+                <input type="radio" name="followStatus" value="未完成" required>
+                <span>未完成</span>
+              </label>
+
+              <label class="radio">
+                <input type="radio" name="followStatus" value="已完成">
+                <span>已完成</span>
+              </label>
+
+              <label class="radio">
+                <input type="radio" name="followStatus" value="等待客戶回覆">
+                <span>等待客戶回覆</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="req">本次活動類型</label>
+            <div class="checks" id="activityGroup"></div>
+          </div>
+
+          <div class="score">
+            <strong id="scoreView">0</strong> 分
+            <p id="scoreStatus">醞釀期｜今天先補 3 個 CALL 或安排 1 個 APO</p>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2 class="title">E. 顧問備註</h2>
+
+          <div class="field">
+            <label>本次跟進紀錄</label>
+            <textarea id="followRecord" placeholder="請記錄本次互動重點。"></textarea>
+          </div>
+
+          <div class="field">
+            <label>顧問備註</label>
+            <textarea id="advisorNote" placeholder="內部提醒、風險提醒、後續注意事項。"></textarea>
+          </div>
+
+          <div class="btns">
+            <button type="submit">送出至 Google 表單</button>
+            <button type="button" class="soft" id="resetBtn">重設表單</button>
+          </div>
+
+          <div class="status" id="status"></div>
+        </section>
+      </form>
+
+      <aside class="card summary">
+        <h2 class="title">自動追蹤摘要</h2>
+        <pre id="summaryText"></pre>
+
+        <div class="btns">
+          <button type="button" class="gold" id="copySummary">複製摘要</button>
+        </div>
+
+        <p class="small">
+          摘要僅供當下複製使用，不會儲存在本機。
+        </p>
+      </aside>
+    </main>
+  </div>
+
+  <script>
+    const GOOGLE_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSeEJHeNGEOxzijmcGvKI5DUuiZdoYv1ahZtdFTkVXEYg7o6rw/formResponse";
+
+    const FORM_FIELDS = {
+      advisorName:"entry.61496239",
+      advisorPhone:"entry.1685109884",
+      advisorTeam:"entry.227921307",
+      recordDate:"entry.981856927",
+      clientName:"entry.1971189089",
+      clientPhone:"entry.1655984811",
+      clientJob:"entry.2120848965",
+      clientSource:"entry.1148267591",
+      leadTemperature:"entry.382043890",
+      familySummary:"entry.272803960",
+      painPoint:"entry.161589739",
+      currentStage:"entry.1037612458",
+      progressPercent:"entry.627389718",
+      nextFollowDate:"entry.1452187387",
+      followMethod:"entry.23189785",
+      nextAction:"entry.1257036435",
+      followRecord:"entry.1507320150",
+      followStatus:"entry.1032531203",
+      activityScore:"entry.1551303934",
+      activityTypes:"entry.1402411803",
+      todayActivityStatus:"entry.1918657228",
+      advisorNote:"entry.665030454",
+      followSummary:"entry.156742092"
+    };
+
+    const SCORES = {
+      "CALL 電話聯繫｜Call":1,
+      "APO 約訪｜Appointment":5,
+      "FF 需求訪談｜Fact Finding":10,
+      "PD 方案說明｜Presentation":15,
+      "C 成交｜Closing":30,
+      "S 售後服務｜Service":5,
+      "R 轉介紹｜Referral":20,
+      "POLICY 送保單｜Policy Delivery":10,
+      "財顧紀錄｜Financial Planning Record":10,
+      "白皮書提案｜White Paper Proposal":15,
+      "家族傳承討論｜Legacy Planning":20,
+      "稅務合規提醒｜Tax Compliance Reminder":15
+    };
+
+    const $ = id => document.getElementById(id);
+
+    function today(){
+      const d = new Date();
+      return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+    }
+
+    function v(id){
+      return ($(id)?.value || "").trim();
+    }
+
+    function checked(name){
+      return Array.from(document.querySelectorAll('input[name="' + name + '"]:checked')).map(x => x.value);
+    }
+
+    function radio(name){
+      const x = document.querySelector('input[name="' + name + '"]:checked');
+      return x ? x.value : "";
+    }
+
+    function score(){
+      return checked("activityTypes").reduce((s,x) => s + (SCORES[x] || 0), 0);
+    }
+
+    function scoreStatus(s){
+      if(s >= 80) return "豐收期｜今天活動量充足，請追蹤成交與轉介紹";
+      if(s >= 30) return "行動期｜已有活動基礎，建議推進到 FF 或 PD";
+      return "醞釀期｜今天先補 3 個 CALL 或安排 1 個 APO";
+    }
+
+    function summary(data){
+      return "【名單追蹤摘要】\n" +
+      "顧問：" + (data.advisorName || "＿＿＿") + "\n" +
+      "手機：" + (data.advisorPhone || "＿＿＿") + "\n" +
+      "客戶：" + (data.clientName || "＿＿＿") + "\n" +
+      "目前階段：" + (data.currentStage || "＿＿＿") + "\n" +
+      "追蹤進度：" + (data.progressPercent || "0") + "%\n" +
+      "下次追蹤：" + (data.nextFollowDate || "＿＿＿") + "\n" +
+      "跟進方式：" + (data.followMethod || "＿＿＿") + "\n" +
+      "核心議題：" + (data.painPoint || "＿＿＿") + "\n" +
+      "本次活動：" + (data.activityTypes || "＿＿＿") + "\n" +
+      "活動分數：" + (data.activityScore || "0") + "\n" +
+      "下一步行動：" + (data.nextAction || "＿＿＿") + "\n" +
+      "備註：" + (data.advisorNote || "＿＿＿");
+    }
+
+    function data(){
+      const s = score();
+
+      const d = {
+        createdAt:new Date().toISOString(),
+        advisorName:v("advisorName"),
+        advisorPhone:v("advisorPhone"),
+        advisorTeam:v("advisorTeam"),
+        recordDate:v("recordDate"),
+        clientName:v("clientName"),
+        clientPhone:v("clientPhone"),
+        clientJob:v("clientJob"),
+        clientSource:v("clientSource"),
+        leadTemperature:v("leadTemperature"),
+        familySummary:v("familySummary"),
+        painPoint:v("painPoint"),
+        currentStage:v("currentStage"),
+        progressPercent:v("progressPercent"),
+        nextFollowDate:v("nextFollowDate"),
+        followMethod:v("followMethod"),
+        nextAction:v("nextAction"),
+        followRecord:v("followRecord"),
+        followStatus:radio("followStatus"),
+        activityScore:String(s),
+        activityTypes:checked("activityTypes").join("、"),
+        todayActivityStatus:scoreStatus(s),
+        advisorNote:v("advisorNote")
+      };
+
+      d.followSummary = summary(d);
+      return d;
+    }
+
+    function update(){
+      const d = data();
+      $("summaryText").textContent = d.followSummary;
+
+      const s = score();
+      $("scoreView").textContent = s;
+      $("scoreStatus").textContent = scoreStatus(s);
+      $("progressText").textContent = v("progressPercent") + "%";
+    }
+
+    function show(msg,type){
+      $("status").textContent = msg;
+      $("status").className = "status show " + (type || "ok");
+    }
+
+    function escapeHtml(x){
+      return String(x || "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    async function sendGoogle(d){
+      const fd = new FormData();
+
+      Object.keys(FORM_FIELDS).forEach(k => {
+        fd.append(FORM_FIELDS[k], d[k] || "");
+      });
+
+      await fetch(GOOGLE_FORM_ACTION,{
+        method:"POST",
+        mode:"no-cors",
+        body:fd
+      });
+    }
+
+    function copy(text){
+      if(navigator.clipboard){
+        navigator.clipboard.writeText(text).then(() => {
+          show("摘要已複製。", "ok");
+        });
+      }else{
+        show("此瀏覽器不支援自動複製，請手動複製右側摘要。", "err");
+      }
+    }
+
+    function init(){
+      Object.keys(SCORES).forEach(k => {
+        const label = document.createElement("label");
+        label.className = "check";
+        label.innerHTML =
+          '<input type="checkbox" name="activityTypes" value="' + escapeHtml(k) + '">' +
+          '<span>' + escapeHtml(k) + '</span>';
+        $("activityGroup").appendChild(label);
+      });
+
+      $("recordDate").value = today();
+      update();
+    }
+
+    document.addEventListener("input", e => {
+      if(e.target.closest("#form")) update();
+    });
+
+    document.addEventListener("change", e => {
+      if(e.target.closest("#form")) update();
+    });
+
+    $("form").addEventListener("submit", async e => {
+      e.preventDefault();
+
+      const d = data();
+
+      if(
+        !d.advisorName ||
+        !d.advisorPhone ||
+        !d.recordDate ||
+        !d.clientName ||
+        !d.clientSource ||
+        !d.leadTemperature ||
+        !d.currentStage ||
+        !d.followStatus ||
+        !d.activityTypes
+      ){
+        show("請先完成所有必填欄位。", "err");
+        return;
+      }
+
+      show("送出中，請稍候。", "ok");
+
+      try{
+        await sendGoogle(d);
+        show("已送出至 Google 表單。此頁不會儲存在本機。", "ok");
+      }catch(err){
+        show("送出可能受網路或表單權限影響，請稍後再試。此頁未儲存在本機。", "err");
+      }
+    });
+
+    $("copySummary").onclick = () => copy($("summaryText").textContent);
+
+    $("resetBtn").onclick = () => {
+      $("form").reset();
+      $("recordDate").value = today();
+      update();
+      show("表單已重設，未儲存在本機。", "ok");
+    };
+
+    init();
+  </script>
+</body>
+</html>
