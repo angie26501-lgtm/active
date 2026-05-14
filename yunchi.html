@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>馥芸財富學苑｜活動量管理成長系統</title>
+<style>
+  :root {
+    --herb-green: #1f5b43;
+    --dark-green: #16392e;
+    --gold: #c8a94b;
+    --beige-background: #f7f1e4;
+    --paper-white: #fffdf8;
+    --dark-text: #243129;
+    --light-shadow: rgba(0, 0, 0, 0.1);
+  }
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    background: var(--beige-background);
+    color: var(--dark-text);
+  }
+  header {
+    background: var(--dark-green);
+    color: var(--paper-white);
+    padding: 1.5rem;
+    text-align: center;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+  }
+  header p {
+    margin: 0.25rem 0 0 0;
+    font-size: 0.9rem;
+    color: var(--gold);
+  }
+  .container {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  @media (min-width: 768px) {
+    .container {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+  }
+  .left-panel,
+  .right-panel {
+    width: 100%;
+  }
+  @media (min-width: 768px) {
+    .left-panel {
+      width: 60%;
+    }
+    .right-panel {
+      width: 40%;
+    }
+  }
+  .card {
+    background: var(--paper-white);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--light-shadow);
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  .card h2 {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+    color: var(--herb-green);
+  }
+  label {
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--dark-text);
+  }
+  input[type="text"],
+  input[type="number"],
+  input[type="date"],
+  input[type="month"],
+  textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-top: 0.25rem;
+    font-size: 0.9rem;
+    background: var(--paper-white);
+    color: var(--dark-text);
+  }
+  textarea {
+    resize: vertical;
+  }
+  .stage-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .stage-buttons button {
+    flex: 1 1 calc(33.333% - 0.5rem);
+    padding: 0.75rem;
+    border: none;
+    border-radius: 8px;
+    background: var(--beige-background);
+    color: var(--dark-text);
+    box-shadow: 0 1px 3px var(--light-shadow);
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 0.9rem;
+  }
+  .stage-buttons button.active {
+    background: var(--herb-green);
+    color: var(--paper-white);
+  }
+  .activity-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 0.5rem;
+  }
+  .activity-grid label {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8rem;
+    color: var(--dark-text);
+  }
+  .activity-grid input {
+    margin-top: 0.2rem;
+    width: 100%;
+  }
+  .buttons-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  .buttons-bar button {
+    flex: 1 1 calc(25% - 0.5rem);
+    padding: 0.75rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--paper-white);
+    transition: background 0.3s;
+  }
+  .buttons-bar button.save {
+    background: var(--herb-green);
+  }
+  .buttons-bar button.csv {
+    background: var(--dark-green);
+  }
+  .buttons-bar button.reset {
+    background: var(--gold);
+    color: var(--dark-green);
+  }
+  .buttons-bar button.clear {
+    background: #999;
+  }
+  .score-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+  .score-card.low {
+    background: #cccccc;
+    color: var(--dark-text);
+  }
+  .score-card.mid {
+    background: var(--herb-green);
+    color: var(--paper-white);
+  }
+  .score-card.high {
+    background: var(--gold);
+    color: var(--dark-green);
+  }
+  .score-card h2 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+  .score-card h3 {
+    margin: 0.5rem 0 0.25rem 0;
+    font-size: 1.2rem;
+  }
+  .score-card p {
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  .stats-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .stats-list .stat-item {
+    flex: 1 1 calc(50% - 0.5rem);
+    background: var(--paper-white);
+    border-radius: 8px;
+    box-shadow: 0 1px 4px var(--light-shadow);
+    padding: 0.5rem;
+  }
+  .stats-list .stat-item h3 {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--dark-green);
+  }
+  .stats-list .stat-item p {
+    margin: 0.2rem 0 0 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  .records-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+  }
+  .records-table th,
+  .records-table td {
+    padding: 0.4rem;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+  .records-table th {
+    background: var(--beige-background);
+  }
+  .day-score-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .week-section {
+    border-radius: 8px;
+    box-shadow: 0 1px 4px var(--light-shadow);
+    background: var(--paper-white);
+    padding: 0.5rem;
+  }
+  .week-section h4 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--dark-green);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .day-score-card {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #eee;
+    padding: 0.4rem 0;
+    font-size: 0.8rem;
+  }
+  .day-score-card:first-of-type {
+    border-top: none;
+  }
+  @media (min-width: 768px) {
+    .day-score-grid {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+    .week-section {
+      flex: 1 1 calc(20% - 0.5rem);
+    }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1>馥芸財富學苑｜活動量管理成長系統</h1>
+    <p>每日三訪是必然｜財顧流程 × 保經活動量 × 專業成長紀錄</p>
+  </header>
+  <div class="container">
+    <div class="left-panel">
+      <div class="card">
+        <h2>基本資料</h2>
+        <label>日期<input type="date" id="date"></label>
+        <label>姓名<input type="text" id="name"></label>
+        <label>客戶 / 案件名稱<input type="text" id="clientName"></label>
+        <label>下一步行動<input type="text" id="nextAction" placeholder="如：安排約訪"></label>
+      </div>
+      <div class="card">
+        <h2>財顧階段｜點擊即自動換算活動量</h2>
+        <p id="stageMessage" style="min-height:1.5em;color:var(--dark-green);font-weight:bold;"></p>
+        <div class="stage-buttons">
+          <button type="button" data-stage="C1">C1 建立關係</button>
+          <button type="button" data-stage="C2">C2 約訪</button>
+          <button type="button" data-stage="C3">C3 需求訪談</button>
+          <button type="button" data-stage="C4">C4 資料整理</button>
+          <button type="button" data-stage="C5">C5 建議書</button>
+          <button type="button" data-stage="C6">C6 成交委託</button>
+          <button type="button" data-stage="C7">C7 服務延伸</button>
+        </div>
+      </div>
+      <div class="card">
+        <h2>保經活動量</h2>
+        <div class="activity-grid">
+          <label>CALL<br/><input type="number" id="CALL" min="0" value="0"></label>
+          <label>APO<br/><input type="number" id="APO" min="0" value="0"></label>
+          <label>FF<br/><input type="number" id="FF" min="0" value="0"></label>
+          <label>PD<br/><input type="number" id="PD" min="0" value="0"></label>
+          <label>C<br/><input type="number" id="C" min="0" value="0"></label>
+          <label>S<br/><input type="number" id="S" min="0" value="0"></label>
+          <label>R<br/><input type="number" id="R" min="0" value="0"></label>
+          <label>POLICY<br/><input type="number" id="POLICY" min="0" value="0"></label>
+        </div>
+      </div>
+      <div class="card">
+        <h2>產值紀錄</h2>
+        <label>本日成交件數<br/><input type="number" id="caseNum" min="0" value="0"></label>
+        <label>本日成交 FYP<br/><input type="number" id="fyp" min="0" value="0"></label>
+        <label>本日成交 FYC<br/><input type="number" id="fyc" min="0" value="0"></label>
+        <label>推薦介紹數<br/><input type="number" id="referral" min="0" value="0"></label>
+        <label>今日重點 / 特殊案件 / 客戶狀況<br/><textarea id="note" rows="3"></textarea></label>
+      </div>
+      <div class="buttons-bar">
+        <button id="saveBtn" class="save">儲存並同步 Google</button>
+        <button id="csvBtn" class="csv">匯出 CSV</button>
+        <button id="resetBtn" class="reset">重新填寫</button>
+        <button id="clearBtn" class "clear">清除本機紀錄</button>
+      </div>
+    </div>
+    <div class="right-panel">
+      <div id="scoreCard" class="score-card low">
+        <h2>當前得分：<span id="currentScore">0</span></h2>
+        <h3 id="scorePhase">醞釀期</h3>
+        <p id="scoreDesc">今天你在播種，這些分數正在為未來的爆發做準備。</p>
+        <p id="scoreStrategy">補 3 個 CALL 或安排 1 個 APO。</p>
+      </div>
+      <div class="card">
+        <h2>統計儀表板</h2>
+        <div class="stats-list">
+          <div class="stat-item"><h3>今日總分</h3><p id="todayTotalScore">0</p></div>
+          <div class="stat-item"><h3>本月總分</h3><p id="monthTotalScore">0</p></div>
+          <div class="stat-item"><h3>本月成交件數</h3><p id="monthCaseNum">0</p></div>
+          <div class="stat-item"><h3>本月 FYP</h3><p id="monthFYP">0</p></div>
+          <div class="stat-item"><h3>本月 FYC</h3><p id="monthFYC">0</p></div>
+          <div class="stat-item"><h3>CALL</h3><p id="monthCALL">0</p></div>
+          <div class="stat-item"><h3>APO</h3><p id="monthAPO">0</p></div>
+          <div class="stat-item"><h3>FF</h3><p id="monthFF">0</p></div>
+          <div class="stat-item"><h3>PD</h3><p id="monthPD">0</p></div>
+          <div class="stat-item"><h3>C</h3><p id="monthC">0</p></div>
+          <div class="stat-item"><h3>S</h3><p id="monthS">0</p></div>
+          <div class="stat-item"><h3>R</h3><p id="monthR">0</p></div>
+          <div class="stat-item"><h3>POLICY</h3><p id="monthPOLICY">0</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h2>最近紀錄</h2>
+      <div id="recentRecords"></div>
+    </div>
+    <div class="card">
+      <h2>全部歷史紀錄</h2>
+      <div id="allRecords"></div>
+    </div>
+    <div class="card">
+      <h2>每日分數彙整｜週 / 月檢視</h2>
+      <label>選擇月份：<input type="month" id="monthSelector"></label>
+      <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.5rem;">
+        <div class="stat-item"><h3>本月總分</h3><p id="monthSummaryTotal">0</p></div>
+        <div class="stat-item"><h3>有紀錄天數</h3><p id="monthSummaryDays">0</p></div>
+        <div class="stat-item"><h3>平均日分數</h3><p id="monthSummaryAverage">0</p></div>
+        <div class="stat-item"><h3>最高日分數</h3><p id="monthSummaryMax">0</p></div>
+      </div>
+      <div id="weeklyContainer" class="day-score-grid"></div>
+    </div>
+  </div>
+<script>
+/* 財顧階段映射設定 */
+const stageMap = {
+  'C1': { field: 'CALL', message: '與客戶建立關係做得好！下一步安排約訪。', nextAction: '安排約訪' },
+  'C2': { field: 'APO', message: '成功安排約訪！準備需求訪談。', nextAction: '需求訪談' },
+  'C3': { field: 'FF', message: '需求訪談成功！進行資料整理。', nextAction: '資料整理' },
+  'C4': { field: 'PD', message: '資料整理完成！撰寫建議書。', nextAction: '撰寫建議書' },
+  'C5': { field: 'PD', message: '建議書完成！推進成交委託。', nextAction: '成交委託' },
+  'C6': { field: 'C', message: '成交委託完成！進行服務延伸。', nextAction: '服務延伸' },
+  'C7': { field: 'S', message: '服務延伸已完成！鼓勵轉介紹。', nextAction: '轉介紹' }
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+// 初始化日期和月份
+document.getElementById('date').value = new Date().toISOString().split('T')[0];
+document.getElementById('monthSelector').value = new Date().toISOString().slice(0,7);
+// 設定階段按鈕事件
+document.querySelectorAll('.stage-buttons button').forEach(function(btn) {
+btn.addEventListener('click', function() {
+handleStageClick(this.dataset.stage);
+});
+});
+// 按鈕功能
+document.getElementById('saveBtn').addEventListener('click', saveRecord);
+document.getElementById('csvBtn').addEventListener('click', exportCSV);
+document.getElementById('resetBtn').addEventListener('click', function(e) { e.preventDefault(); resetForm(); });
+document.getElementById('clearBtn').addEventListener('click', function(e) { e.preventDefault(); clearStorage(); });
+document.getElementById('monthSelector').addEventListener('change', updateMonthlySummary);
+// 載入儲存紀錄
+loadRecords();
+});
+
+function handleStageClick(key) {
+// 取消所有按鈕的 active 樣式
+document.querySelectorAll('.stage-buttons button').forEach(function(b) { b.classList.remove('active'); });
+const btn = document.querySelector('.stage-buttons button[data-stage="' + key + '"]');
+if (btn) { btn.classList.add('active'); }
+const map = stageMap[key];
+if (map) {
+const input = document.getElementById(map.field);
+input.value = (parseInt(input.value || '0') + 1);
+document.getElementById('nextAction').value = map.nextAction;
+document.getElementById('stageMessage').textContent = map.message;
+}
+updateScoreCard();
+}
+
+function calculateScore() {
+const weights = { CALL: 1, APO: 5, FF: 10, PD: 15, C: 30, S: 5, R: 20, POLICY: 10 };
+let total = 0;
+Object.keys(weights).forEach(function(f) {
+const val = Number(document.getElementById(f).value) || 0;
+total += val * weights[f];
+});
+return total;
+}
+
+function updateScoreCard() {
+const total = calculateScore();
+document.getElementById('currentScore').textContent = total;
+let phase, desc, strat, className;
+if (total < 30) {
+phase = '醞釀期';
+desc = '今天你在播種，這些分數正在為未來的爆發做準備。';
+strat = '補 3 個 CALL 或安排 1 個 APO。';
+className = 'low';
+} else if (total < 80) {
+phase = '行動期';
+desc = '你正在穩健前進，持續累積就會看見轉換。';
+strat = '推進 APO → FF。';
+className = 'mid';
+} else if (total < 150) {
+phase = '轉換期';
+desc = '你已經接近成交，關鍵在最後一哩。';
+strat = '追蹤 PD / Closing。';
+className = 'mid';
+} else {
+phase = '豐收期';
+desc = '你正處於高動能狀態，開始放大成果。';
+strat = '轉介紹 / 服務延伸。';
+className = 'high';
+}
+document.getElementById('scorePhase').textContent = phase;
+document.getElementById('scoreDesc').textContent = desc;
+document.getElementById('scoreStrategy').textContent = strat;
+const card = document.getElementById('scoreCard');
+card.classList.remove('low', 'mid', 'high');
+card.classList.add(className);
+updateDashboard();
+}
+
+function saveRecord(e) {
+if (e) e.preventDefault();
+const date = document.getElementById('date').value;
+const name = document.getElementById('name').value.trim();
+const clientName = document.getElementById('clientName').value.trim();
+const nextAction = document.getElementById('nextAction').value.trim();
+const caseNum = Number(document.getElementById('caseNum').value) || 0;
+const fyp = Number(document.getElementById('fyp').value) || 0;
+const fyc = Number(document.getElementById('fyc').value) || 0;
+const referral = Number(document.getElementById('referral').value) || 0;
+const note = document.getElementById('note').value.trim();
+const stageBtn = document.querySelector('.stage-buttons button.active');
+const stage = stageBtn ? stageBtn.dataset.stage : '';
+const counts = {};
+['CALL', 'APO', 'FF', 'PD', 'C', 'S', 'R', 'POLICY'].forEach(function(f) {
+counts[f] = Number(document.getElementById(f).value) || 0;
+});
+const score = calculateScore();
+const record = {
+date: date,
+name: name,
+clientName: clientName,
+stage: stage,
+CALL: counts.CALL,
+APO: counts.APO,
+FF: counts.FF,
+PD: counts.PD,
+C: counts.C,
+S: counts.S,
+R: counts.R,
+POLICY: counts.POLICY,
+caseNum: caseNum,
+fyp: fyp,
+fyc: fyc,
+referral: referral,
+score: score,
+nextAction: nextAction,
+note: note
+};
+const records = JSON.parse(localStorage.getItem('records') || '[]');
+records.push(record);
+localStorage.setItem('records', JSON.stringify(records));
+syncToGoogle(record);
+updateDashboard();
+updateRecentRecords();
+updateAllRecords();
+updateMonthlySummary();
+alert('已儲存紀錄！');
+resetForm();
+}
+
+function syncToGoogle(record) {
+/* 提醒：GOOGLE_URL 與 entry.xxxxx 須依實際 Google 表單欄位替換 */
+const url = 'GOOGLE_URL';
+const formData = new FormData();
+// formData.append('entry.123456', record.date);
+// formData.append('entry.654321', record.name);
+// ... 請依實際欄位替換
+if (!url || url === 'GOOGLE_URL') {
+return;
+}
+fetch(url, {
+method: 'POST',
+mode: 'no-cors',
+body: formData
+}).catch(function(err) {
+console.warn('Google sync failed', err);
+});
+}
+
+function exportCSV(e) {
+if (e) e.preventDefault();
+const records = JSON.parse(localStorage.getItem('records') || '[]');
+let csv = '日期,姓名,客戶名稱,階段,CALL,APO,FF,PD,C,S,R,POLICY,成交件數,FYP,FYC,推薦介紹數,得分,下一步行動,備註\n';
+records.forEach(function(r) {
+const row = [
+r.date, r.name, r.clientName, r.stage,
+r.CALL, r.APO, r.FF, r.PD, r.C, r.S, r.R, r.POLICY,
+r.caseNum, r.fyp, r.fyc, r.referral,
+r.score, r.nextAction, r.note
+].map(function(val) {
+const str = val !== undefined && val !== null ? String(val).replace(/"/g, '""') : '';
+return '"' + str + '"';
+}).join(',');
+csv += row + '\n';
+});
+const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url;
+a.download = 'records.csv';
+document.body.appendChild(a);
+a.click();
+document.body.removeChild(a);
+URL.revokeObjectURL(url);
+}
+
+function resetForm() {
+document.getElementById('date').value = new Date().toISOString().split('T')[0];
+document.getElementById('name').value = '';
+document.getElementById('clientName').value = '';
+document.getElementById('nextAction').value = '';
+document.getElementById('caseNum').value = 0;
+document.getElementById('fyp').value = 0;
+document.getElementById('fyc').value = 0;
+document.getElementById('referral').value = 0;
+document.getElementById('note').value = '';
+document.querySelectorAll('.stage-buttons button').forEach(function(b) { b.classList.remove('active'); });
+document.getElementById('stageMessage').textContent = '';
+['CALL', 'APO', 'FF', 'PD', 'C', 'S', 'R', 'POLICY'].forEach(function(f) {
+document.getElementById(f).value = 0;
+});
+updateScoreCard();
+}
+
+function clearStorage() {
+if (confirm('確定清除所有本機紀錄嗎？此操作無法復原。')) {
+localStorage.removeItem('records');
+updateDashboard();
+updateRecentRecords();
+updateAllRecords();
+updateMonthlySummary();
+alert('已清除所有本機紀錄。');
+}
+}
+
+function loadRecords() {
+updateScoreCard();
+updateDashboard();
+updateRecentRecords();
+updateAllRecords();
+updateMonthlySummary();
+}
+
+function updateDashboard() {
+const records = JSON.parse(localStorage.getItem('records') || '[]');
+const todayStr = new Date().toISOString().split('T')[0];
+const now = new Date();
+const currentYear = now.getFullYear().toString();
+const currentMonth = ('0' + (now.getMonth() + 1)).slice(-2);
+let todayScore = 0;
+let monthScore = 0;
+let monthCase = 0;
+let monthFYP = 0;
+let monthFYC = 0;
+const activityTotals = { CALL: 0, APO: 0, FF: 0, PD: 0, C: 0, S: 0, R: 0, POLICY: 0 };
+records.forEach(function(r) {
+if (r.date === todayStr) {
+todayScore += Number(r.score) || 0;
+}
+const parts = r.date.split('-');
+const y = parts[0];
+const m = parts[1];
+if (y === currentYear && m === currentMonth) {
+monthScore += Number(r.score) || 0;
+monthCase += Number(r.caseNum) || 0;
+monthFYP += Number(r.fyp) || 0;
+monthFYC += Number(r.fyc) || 0;
+activityTotals.CALL += Number(r.CALL) || 0;
+activityTotals.APO += Number(r.APO) || 0;
+activityTotals.FF += Number(r.FF) || 0;
+activityTotals.PD += Number(r.PD) || 0;
+activityTotals.C += Number(r.C) || 0;
+activityTotals.S += Number(r.S) || 0;
+activityTotals.R += Number(r.R) || 0;
+activityTotals.POLICY += Number(r.POLICY) || 0;
+}
+});
+// 未儲存的紀錄加總
+const unsavedScore = calculateScore();
+todayScore += unsavedScore;
+monthScore += unsavedScore;
+['CALL', 'APO', 'FF', 'PD', 'C', 'S', 'R', 'POLICY'].forEach(function(f) {
+activityTotals[f] += Number(document.getElementById(f).value) || 0;
+});
+monthCase += Number(document.getElementById('caseNum').value) || 0;
+monthFYP += Number(document.getElementById('fyp').value) || 0;
+monthFYC += Number(document.getElementById('fyc').value) || 0;
+// 更新畫面
+document.getElementById('todayTotalScore').textContent = todayScore;
+document.getElementById('monthTotalScore').textContent = monthScore;
+document.getElementById('monthCaseNum').textContent = monthCase;
+document.getElementById('monthFYP').textContent = monthFYP;
+document.getElementById('monthFYC').textContent = monthFYC;
+document.getElementById('monthCALL').textContent = activityTotals.CALL;
+document.getElementById('monthAPO').textContent = activityTotals.APO;
+document.getElementById('monthFF').textContent = activityTotals.FF;
+document.getElementById('monthPD').textContent = activityTotals.PD;
+document.getElementById('monthC').textContent = activityTotals.C;
+document.getElementById('monthS').textContent = activityTotals.S;
+document.getElementById('monthR').textContent = activityTotals.R;
+document.getElementById('monthPOLICY').textContent = activityTotals.POLICY;
+}
+
+function updateRecentRecords() {
+const container = document.getElementById('recentRecords');
+container.innerHTML = '';
+const records = JSON.parse(localStorage.getItem('records') || '[]');
+const lastRecords = records.slice(-10).reverse();
+if (lastRecords.length === 0) {
+container.innerHTML = '<p>尚無紀錄</p>';
+return;
+}
+const table = document.createElement('table');
+table.className = 'records-table';
+table.innerHTML = '<thead><tr><th>日期</th><th>客戶/案件</th><th>階段</th><th>得分</th><th>FF</th><th>成交件數</th><th>FYP</th><th>下一步</th></tr></thead><tbody></tbody>';
+const tbody = table.querySelector('tbody');
+lastRecords.forEach(function(r) {
+const tr = document.createElement('tr');
+tr.innerHTML = '<td>' + r.date + '</td><td>' + (r.clientName || '') + '</td><td>' + r.stage + '</td><td>' + r.score + '</td><td>' + r.FF + '</td><td>' + r.caseNum + '</td><td>' + r.fyp + '</td><td>' + r.nextAction + '</td>';
+tbody.appendChild(tr);
+});
+container.appendChild(table);
+}
+
+function updateAllRecords() {
+const container = document.getElementById('allRecords');
+container.innerHTML = '';
+const records = JSON.parse(localStorage.getItem('records') || '[]');
+if (records.length === 0) {
+container.innerHTML = '<p>尚無紀錄</p>';
+return;
+}
+const table = document.createElement('table');
+table.className = 'records-table';
+table.innerHTML = '<thead><tr><th>日期</th><th>姓名</th><th>客戶名稱</th><th>階段</th><th>CALL</th><th>APO</th><th>FF</th><th>PD</th><th>C</th><th>S</th><th>R</th><th>POLICY</th><th>成交件數</th><th>FYP</th><th>FYC</th><th>推薦介紹數</th><th>得分</th><th>下一步</th><th>備註</th></tr></thead><tbody></tbody>';
+const tbody = table.querySelector('tbody');
+records.slice().reverse().forEach(function(r) {
+const tr = document.createElement('tr');
+tr.innerHTML = '<td>' + r.date + '</td><td>' + r.name + '</td><td>' + r.clientName + '</td><td>' + r.stage + '</td><td>' + r.CALL + '</td><td>' + r.APO + '</td><td>' + r.FF + '</td><td>' + r.PD + '</td><td>' + r.C + '</td><td>' + r.S + '</td><td>' + r.R + '</td><td>' + r.POLICY + '</td><td>' + r.caseNum + '</td><td>' + r.fyp + '</td><td>' + r.fyc + '</td><td>' + r.referral + '</td><td>' + r.score + '</td><td>' + r.nextAction + '</td><td>' + (r.note || '') + '</td>';
+tbody.appendChild(tr);
+});
+container.appendChild(table);
+}
+
+function updateMonthlySummary() {
+const monthVal = document.getElementById('monthSelector').value;
+if (!monthVal) return;
+const partsSel = monthVal.split('-');
+const year = partsSel[0];
+const month = partsSel[1];
+const records = JSON.parse(localStorage.getItem('records') || '[]');
+const dailyMap = {};
+let totalScore = 0;
+records.forEach(function(r) {
+const parts = r.date.split('-');
+if (parts[0] === year && parts[1] === month) {
+if (!dailyMap[r.date]) {
+dailyMap[r.date] = { score: 0, CALL: 0, APO: 0, FF: 0, PD: 0, C: 0, S: 0, R: 0, POLICY: 0 };
+}
+dailyMap[r.date].score += Number(r.score) || 0;
+dailyMap[r.date].CALL += Number(r.CALL) || 0;
+dailyMap[r.date].APO += Number(r.APO) || 0;
+dailyMap[r.date].FF += Number(r.FF) || 0;
+dailyMap[r.date].PD += Number(r.PD) || 0;
+dailyMap[r.date].C += Number(r.C) || 0;
+dailyMap[r.date].S += Number(r.S) || 0;
+dailyMap[r.date].R += Number(r.R) || 0;
+dailyMap[r.date].POLICY += Number(r.POLICY) || 0;
+totalScore += Number(r.score) || 0;
+}
+});
+const dates = Object.keys(dailyMap).sort();
+const numDays = dates.length;
+let highest = 0;
+dates.forEach(function(d) { if (dailyMap[d].score > highest) highest = dailyMap[d].score; });
+const avg = numDays ? Math.round(totalScore / numDays) : 0;
+document.getElementById('monthSummaryTotal').textContent = totalScore;
+document.getElementById('monthSummaryDays').textContent = numDays;
+document.getElementById('monthSummaryAverage').textContent = avg;
+document.getElementById('monthSummaryMax').textContent = highest;
+const weekContainer = document.getElementById('weeklyContainer');
+weekContainer.innerHTML = '';
+const weeks = {};
+dates.forEach(function(date) {
+const day = new Date(date).getDate();
+const weekNum = Math.ceil(day / 7);
+if (!weeks[weekNum]) weeks[weekNum] = [];
+weeks[weekNum].push(date);
+});
+for (let i = 1; i <= 5; i++) {
+if (weeks[i] && weeks[i].length > 0) {
+let weekScore = 0;
+weeks[i].forEach(function(d) {
+weekScore += dailyMap[d].score;
+});
+const section = document.createElement('div');
+section.className = 'week-section';
+const header = document.createElement('h4');
+const span = document.createElement('span');
+span.textContent = '週合計 ' + weekScore + ' 分';
+header.textContent = '第 ' + i + ' 週';
+header.appendChild(span);
+section.appendChild(header);
+weeks[i].forEach(function(d) {
+const info = dailyMap[d];
+const card = document.createElement('div');
+card.className = 'day-score-card';
+card.innerHTML = '<div>' + d + '<br/>CALL ' + info.CALL + '｜APO ' + info.APO + '｜FF ' + info.FF + '｜PD ' + info.PD + '｜C ' + info.C + '｜S ' + info.S + '｜R ' + info.R + '｜POLICY ' + info.POLICY + '</div><div>' + info.score + ' 分</div>';
+section.appendChild(card);
+});
+weekContainer.appendChild(section);
+}
+}
+} </script>
+
+</body>
+</html>
