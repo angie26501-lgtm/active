@@ -1,150 +1,161 @@
-```html
-<!-- 🌿 學員作品區 -->
-<section style="
-background: linear-gradient(135deg,#02111f 0%,#00352b 60%,#365b2d 100%);
-padding: 80px 40px;
-border-radius: 40px;
-margin-top: 40px;
-font-family:'Noto Sans TC','Microsoft JhengHei',sans-serif;
-">
 
-<div style="
-max-width:1200px;
-margin:auto;
-color:white;
-">
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>馥芸財富學苑｜學員作品集</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#FAF8F3;--warm:#F3EEE4;--sand:#E5DDD0;--tan:#C8B89A;
+  --gold:#A8883A;--gold2:#C8A95A;--green:#4A7C5F;--green-mid:#7BAF93;
+  --navy:#2B3D52;--brown:#5A3D22;--text:#2C1F0E;--text-mid:#5C4A32;--text-muted:#9C8468;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--cream);color:var(--text);font-size:14px;line-height:1.7;}
 
-<div style="
-color:#f4d36b;
-letter-spacing:4px;
-font-size:18px;
-margin-bottom:18px;
-font-weight:700;
-">
-20260415 ｜ STUDENT WORKS
-</div>
+/* HERO */
+.hero{background:var(--navy);padding:72px 24px 60px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(74,124,95,0.18) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 85% 95%,rgba(168,136,58,0.13) 0%,transparent 60%);}
+.hero-inner{position:relative;z-index:1;max-width:760px;margin:0 auto;}
+.kana{display:inline-block;font-size:11px;letter-spacing:5px;color:var(--green-mid);border:1px solid rgba(123,175,147,0.4);padding:5px 18px;border-radius:20px;margin-bottom:22px;animation:up .7s ease both;}
+.hero h1{font-family:'Noto Serif TC',serif;font-size:clamp(1.8rem,5vw,2.7rem);font-weight:700;color:#FAF8F3;line-height:1.35;margin-bottom:14px;animation:up .7s .1s ease both;}
+.hero h1 span{color:var(--gold2);}
+.hero p{font-size:13.5px;color:rgba(250,248,243,0.6);line-height:2;max-width:480px;margin:0 auto 26px;animation:up .7s .2s ease both;}
+.hero-count{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:rgba(250,248,243,0.8);background:rgba(168,136,58,0.18);border:1px solid rgba(200,169,90,0.3);padding:7px 18px;border-radius:20px;animation:up .7s .3s ease both;}
+.hero-count b{font-family:'Noto Serif TC',serif;color:var(--gold2);font-size:15px;}
 
-<h2 style="
-font-size:64px;
-line-height:1.1;
-margin:0 0 20px 0;
-font-weight:900;
-">
-馥芸財富學苑<br>
-學員作品區
-</h2>
+/* GRID */
+.wrap{max-width:1140px;margin:0 auto;padding:52px 24px 40px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(216px,1fr));gap:18px;}
 
-<p style="
-font-size:24px;
-color:#e7efe9;
-line-height:1.8;
-max-width:1000px;
-margin-bottom:60px;
-">
-AI × 財務 × 個人品牌整合成果展示。<br>
-每一份作品，都是學員從學習、整理到輸出的真實成長軌跡。
-</p>
+.card{position:relative;background:#fff;border:1px solid var(--sand);border-radius:16px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;text-decoration:none;transition:transform .25s,box-shadow .25s;}
+.card:hover{transform:translateY(-5px);box-shadow:0 14px 38px rgba(43,61,82,0.14);}
+.cover{height:116px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.cover-no{position:absolute;right:10px;bottom:-14px;font-family:'Noto Serif TC',serif;font-size:74px;font-weight:700;color:rgba(255,255,255,0.16);line-height:1;letter-spacing:-3px;}
+.cover-seal{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,0.92);display:flex;align-items:center;justify-content:center;font-family:'Noto Serif TC',serif;font-size:20px;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,0.12);position:relative;z-index:1;}
+.body{padding:14px 16px 16px;flex:1;display:flex;flex-direction:column;}
+.tag{font-size:9.5px;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:5px;}
+.name{font-family:'Noto Serif TC',serif;font-size:1.15rem;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:12px;}
+.go{margin-top:auto;display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:500;color:var(--green);}
+.card:hover .go{gap:8px;}
+.go svg{width:13px;height:13px;transition:transform .2s;}
 
-</div>
+/* featured */
+.card.feat{border:1.5px solid var(--gold);box-shadow:0 6px 22px rgba(168,136,58,0.18);}
+.ribbon{position:absolute;top:11px;left:11px;z-index:2;font-size:10px;font-weight:700;letter-spacing:1px;color:#fff;background:var(--gold);padding:3px 10px;border-radius:12px;box-shadow:0 2px 8px rgba(168,136,58,0.4);}
+.feat .name{color:var(--brown);}
+.feat .go{color:var(--gold);}
 
-<div style="
-max-width:1400px;
-margin:auto;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-gap:28px;
-">
+/* back / footer */
+.backbar{max-width:1140px;margin:0 auto;padding:0 24px 10px;}
+.back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text-muted);text-decoration:none;}
+.back:hover{color:var(--navy);}
+footer{background:var(--brown);color:rgba(250,248,243,0.45);text-align:center;padding:30px 24px;font-size:11px;letter-spacing:1px;line-height:2;margin-top:30px;}
+footer strong{color:rgba(250,248,243,0.75);font-weight:500;}
 
-<!-- 學員卡片開始 -->
+@keyframes up{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+@media(max-width:600px){.grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;}.cover{height:96px;}.cover-no{font-size:58px;}.name{font-size:1rem;}}
+</style>
+</head>
+<body>
 
-<!-- 卡片模板 -->
-<!-- 複製即可新增 -->
-
-<!-- 1 -->
-<a href="https://hilarious-rabbit-yq9km7c.gamma.site/" target="_blank" style="text-decoration:none;">
-<div style="background:rgba(255,255,255,0.08);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.12);border-radius:30px;overflow:hidden;">
-<iframe src="https://hilarious-rabbit-yq9km7c.gamma.site/" style="width:100%;height:260px;border:0;pointer-events:none;background:white;"></iframe>
-<div style="padding:28px;color:white;">
-<div style="color:#f4d36b;font-size:14px;margin-bottom:10px;">NO.01 學員作品</div>
-<div style="font-size:34px;font-weight:800;margin-bottom:12px;">媛馨</div>
-<div style="color:#d8e5db;font-size:16px;">點擊查看完整作品網站 →</div>
-</div>
-</div>
-</a>
-
-<!-- 2 -->
-<a href="https://bruised-fish-uq25yt8.gamma.site/" target="_blank" style="text-decoration:none;">
-<div style="background:rgba(255,255,255,0.08);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.12);border-radius:30px;overflow:hidden;">
-<iframe src="https://bruised-fish-uq25yt8.gamma.site/" style="width:100%;height:260px;border:0;"></iframe>
-<div style="padding:28px;color:white;">
-<div style="color:#f4d36b;font-size:14px;margin-bottom:10px;">NO.02 學員作品</div>
-<div style="font-size:34px;font-weight:800;margin-bottom:12px;">加真</div>
-<div style="color:#d8e5db;font-size:16px;">點擊查看完整作品網站 →</div>
-</div>
-</div>
-</a>
-
-<!-- 3 -->
-<a href="https://lingyu-finance-fwmhayc.gamma.site/" target="_blank" style="text-decoration:none;">
-<div style="background:rgba(255,255,255,0.08);backdrop-filter:blur(8px);border-radius:30px;overflow:hidden;">
-<iframe src="https://lingyu-finance-fwmhayc.gamma.site/" style="width:100%;height:260px;border:0;"></iframe>
-<div style="padding:28px;color:white;">
-<div style="color:#f4d36b;font-size:14px;">NO.03 學員作品</div>
-<div style="font-size:34px;font-weight:800;">玲妤</div>
-</div>
-</div>
-</a>
-
-<!-- 4 -->
-<a href="https://huang-guanrong-cfp-7rjdbmu.gamma.site/" target="_blank" style="text-decoration:none;">
-<div style="background:rgba(255,255,255,0.08);backdrop-filter:blur(8px);border-radius:30px;overflow:hidden;">
-<iframe src="https://huang-guanrong-cfp-7rjdbmu.gamma.site/" style="width:100%;height:260px;border:0;"></iframe>
-<div style="padding:28px;color:white;">
-<div style="color:#f4d36b;font-size:14px;">NO.04 學員作品</div>
-<div style="font-size:34px;font-weight:800;">冠蓉</div>
-</div>
-</div>
-</a>
-
-<!-- 5~22 -->
-
-<a href="https://jane-finance-jmqjkn8.gamma.site/" target="_blank" style="text-decoration:none;"><div style="background:rgba(255,255,255,0.08);border-radius:30px;overflow:hidden;"><iframe src="https://jane-finance-jmqjkn8.gamma.site/" style="width:100%;height:260px;border:0;"></iframe><div style="padding:28px;color:white;"><div style="color:#f4d36b;">NO.05 學員作品</div><div style="font-size:34px;font-weight:800;">淑貞</div></div></div></a>
-
-<a href="https://xiuhui-finance-9vbayr8.gamma.site/" target="_blank" style="text-decoration:none;"><div style="background:rgba(255,255,255,0.08);border-radius:30px;overflow:hidden;"><iframe src="https://xiuhui-finance-9vbayr8.gamma.site/" style="width:100%;height:260px;border:0;"></iframe><div style="padding:28px;color:white;"><div style="color:#f4d36b;">NO.06 學員作品</div><div style="font-size:34px;font-weight:800;">秀惠</div></div></div></a>
-
-<a href="https://pei-chu-hong-finance-pokvmtd.gamma.site/" target="_blank" style="text-decoration:none;"><div style="background:rgba(255,255,255,0.08);border-radius:30px;overflow:hidden;"><iframe src="https://pei-chu-hong-finance-pokvmtd.gamma.site/" style="width:100%;height:260px;border:0;"></iframe><div style="padding:28px;color:white;"><div style="color:#f4d36b;">NO.07 學員作品</div><div style="font-size:34px;font-weight:800;">佩珠</div></div></div></a>
-
-<a href="https://alice-finance-structure-rooz9ri.gamma.site/" target="_blank" style="text-decoration:none;"><div style="background:rgba(255,255,255,0.08);border-radius:30px;overflow:hidden;"><iframe src="https://alice-finance-structure-rooz9ri.gamma.site/" style="width:100%;height:260px;border:0;"></iframe><div style="padding:28px;color:white;"><div style="color:#f4d36b;">NO.08 學員作品</div><div style="font-size:34px;font-weight:800;">玉敏</div></div></div></a>
-
-<a href="https://lin-xiaowen-finance-tnht91i.gamma.site/" target="_blank" style="text-decoration:none;"><div style="background:rgba(255,255,255,0.08);border-radius:30px;overflow:hidden;"><iframe src="https://lin-xiaowen-finance-tnht91i.gamma.site/" style="width:100%;height:260px;border:0;"></iframe><div style="padding:28px;color:white;"><div style="color:#f4d36b;">NO.09 學員作品</div><div style="font-size:34px;font-weight:800;">筱雯</div></div></div></a>
-
-<a href="https://guiqin-chuancheng-n0il9h1.gamma.site/" target="_blank" style="text-decoration:none;"><div style="background:rgba(255,255,255,0.08);border-radius:30px;overflow:hidden;"><iframe src="https://guiqin-chuancheng-n0il9h1.gamma.site/" style="width:100%;height:260px;border:0;"></iframe><div style="padding:28px;color:white;"><div style="color:#f4d36b;">NO.10 學員作品</div><div style="font-size:34px;font-weight:800;">桂琴</div></div></div></a>
-
-<a href="https://puzzled-cow-zb23brm.gamma.site/" target="_blank" style="text-decoration:none;"><div style="background:rgba(255,255,255,0.08);border-radius:30px;overflow:hidden;"><iframe src="https://puzzled-cow-zb23brm.gamma.site/" style="width:100%;height:260px;border:0;"></iframe><div style="padding:28px;color:white;"><div style="color:#f4d36b;">NO.11 學員作品</div><div style="font-size:34px;font-weight:800;">欣婷</div></div></div></a>
-
-<a href="https://manbu-caidao-tjadtsn.gamma.site" target="_blank" style="text-decoration:none;"><div style="background:rgba(255,255,255,0.08);border-radius:30px;overflow:hidden;"><iframe src="https://manbu-caidao-tjadtsn.gamma.site" style="width:100%;height:260px;border:0;"></iframe><div style="padding:28px;color:white;"><div style="color:#f4d36b;">NO.12 學員作品</div><div style="font-size:34px;font-weight:800;">麗婷</div></div></div></a>
-
-<a href="https://sophie-lin-wealth-fwt5ofx.gamma.site/" target="_blank" style="text-decoration:none;"><div style="background:rgba(255,255,255,0.08);border-radius:30px;overflow:hidden;"><iframe src="https://sophie-lin-wealth-fwt5ofx.gamma.site/" style="width:100%;height:260px;border:0;"></iframe><div style="padding:28px;color:white;"><div style="color:#f4d36b;">NO.13 學員作品</div><div style="font-size:34px;font-weight:800;">安芯</div></div></div></a>
-
-<a href="https://yinghui-finance-3lgmg6u.gamma.site/" target="_blank" style="text-decoration:none;"><div style="background:rgba(255,255,255,0.08);border-radius:30px;overflow:hidden;"><iframe src="https://yinghui-finance-3lgmg6u.gamma.site/" style="width:100%;height:260px;border:0;"></iframe><div style="padding:28px;color:white;"><div style="color:#f4d36b;">NO.14 學員作品</div><div style="font-size:34px;font-weight:800;">陳盈慧</div></div></div></a>
-
-<a href="https://polite-cetacean-b4m8g82.gamma.site/" target="_blank" style="text-decoration:none;"><div style="background:linear-gradient(135deg,#f0c54d,#1b8f6b);border-radius:30px;overflow:hidden;"><iframe src="https://polite-cetacean-b4m8g82.gamma.site/" style="width:100%;height:260px;border:0;"></iframe><div style="padding:28px;color:white;"><div style="color:#fff3c9;">FEATURED</div><div style="font-size:38px;font-weight:900;">財顧芸</div></div></div></a>
-
-<a href="https://fang-min-yu-finance-elnn3hz.gamma.site/" target="_blank" style="text-decoration:none;"><div style="background:rgba(255,255,255,0.08);border-radius:30px;overflow:hidden;"><iframe src="https://fang-min-yu-finance-elnn3hz.gamma.site/" style="width:100%;height:260px;border:0;"></iframe><div style="padding:28px;color:white;"><div style="color:#f4d36b;">NO.16 學員作品</div><div style="font-size:34px;font-weight:800;">敏玉</div></div></div></a>
-
-<a href="https://guiqin-wealth-25x3a00.gamma.site/" target="_blank" style="text-decoration:none;"><div style="background:rgba(255,255,255,0.08);border-radius:30px;overflow:hidden;"><iframe src="https://guiqin-wealth-25x3a00.gamma.site/" style="width:100%;height:260px;border:0;"></iframe><div style="padding:28px;color:white;"><div style="color:#f4d36b;">NO.17 學員作品</div><div style="font-size:34px;font-weight:800;">桂琴</div></div></div></a>
-
-<a href="https://zhangxiuling-assets-cduzlxo.gamma.site/" target="_blank" style="text-decoration:none;"><div style="background:rgba(255,255,255,0.08);border-radius:30px;overflow:hidden;"><iframe src="https://zhangxiuling-assets-cduzlxo.gamma.site/" style="width:100%;height:260px;border:0;"></iframe><div style="padding:28px;color:white;"><div style="color:#f4d36b;">NO.18 學員作品</div><div style="font-size:34px;font-weight:800;">秀綾</div></div></div></a>
-
-<a href="https://tinas-finance-design-4lev820.gamma.site/" target="_blank" style="text-decoration:none;"><div style="background:rgba(255,255,255,0.08);border-radius:30px;overflow:hidden;"><iframe src="https://tinas-finance-design-4lev820.gamma.site/" style="width:100%;height:260px;border:0;"></iframe><div style="padding:28px;color:white;"><div style="color:#f4d36b;">NO.19 學員作品</div><div style="font-size:34px;font-weight:800;">黃雅玲</div></div></div></a>
-
-<a href="https://gamma.app/docs/-0v5t9z54ni64y69" target="_blank" style="text-decoration:none;"><div style="background:rgba(255,255,255,0.08);border-radius:30px;overflow:hidden;"><iframe src="https://gamma.app/docs/-0v5t9z54ni64y69" style="width:100%;height:260px;border:0;"></iframe><div style="padding:28px;color:white;"><div style="color:#f4d36b;">NO.20 學員作品</div><div style="font-size:34px;font-weight:800;">楊仁杰</div></div></div></a>
-
-<a href="https://joy-finance-runner-h4dvcaj.gamma.site/" target="_blank" style="text-decoration:none;"><div style="background:rgba(255,255,255,0.08);border-radius:30px;overflow:hidden;"><iframe src="https://joy-finance-runner-h4dvcaj.gamma.site/" style="width:100%;height:260px;border:0;"></iframe><div style="padding:28px;color:white;"><div style="color:#f4d36b;">NO.21 學員作品</div><div style="font-size:34px;font-weight:800;">姚曉萍</div></div></div></a>
-
-<a href="https://jie-ru-wealth-w245t5l.gamma.site/" target="_blank" style="text-decoration:none;"><div style="background:rgba(255,255,255,0.08);border-radius:30px;overflow:hidden;"><iframe src="https://jie-ru-wealth-w245t5l.gamma.site/" style="width:100%;height:260px;border:0;"></iframe><div style="padding:28px;color:white;"><div style="color:#f4d36b;">NO.22 學員作品</div><div style="font-size:34px;font-weight:800;">何婕如</div></div></div></a>
-
-</div>
-
+<section class="hero">
+  <div class="hero-inner">
+    <div class="kana">STUDENT WORKS · 馥芸財富學苑</div>
+    <h1>學員<span>作品集</span></h1>
+    <p>AI × 財務 × 個人品牌的整合成果<br>每一份作品，都是從學習、整理到輸出的真實成長軌跡</p>
+    <div class="hero-count">🎓 累積 <b id="cnt">—</b> 件學員作品</div>
+  </div>
 </section>
-```
+
+<div class="backbar" style="padding-top:18px;">
+  <a class="back" href="https://angie26501-lgtm.github.io/active/fuyun-academy.html">← 回課程活動總覽</a>
+</div>
+
+<div class="wrap" style="padding-top:18px;">
+  <div class="grid" id="grid"></div>
+</div>
+
+<footer>
+  <strong>馥芸財富學苑</strong>　學員作品集<br>
+  財務規劃 × AI應用 × 親子財商 × 女性財富成長<br>
+  © 2025 馥芸財富學苑 · 版權所有
+</footer>
+
+<script>
+var WORKS = [
+  {no:'01', name:'媛馨', url:'https://hilarious-rabbit-yq9km7c.gamma.site/'},
+  {no:'02', name:'加真', url:'https://bruised-fish-uq25yt8.gamma.site/'},
+  {no:'03', name:'玲妤', url:'https://lingyu-finance-fwmhayc.gamma.site/'},
+  {no:'04', name:'冠蓉', url:'https://huang-guanrong-cfp-7rjdbmu.gamma.site/'},
+  {no:'05', name:'淑貞', url:'https://jane-finance-jmqjkn8.gamma.site/'},
+  {no:'06', name:'秀惠', url:'https://xiuhui-finance-9vbayr8.gamma.site/'},
+  {no:'07', name:'佩珠', url:'https://pei-chu-hong-finance-pokvmtd.gamma.site/'},
+  {no:'08', name:'玉敏', url:'https://alice-finance-structure-rooz9ri.gamma.site/'},
+  {no:'09', name:'筱雯', url:'https://lin-xiaowen-finance-tnht91i.gamma.site/'},
+  {no:'10', name:'桂琴', url:'https://guiqin-chuancheng-n0il9h1.gamma.site/'},
+  {no:'11', name:'欣婷', url:'https://puzzled-cow-zb23brm.gamma.site/'},
+  {no:'12', name:'麗婷', url:'https://manbu-caidao-tjadtsn.gamma.site'},
+  {no:'13', name:'安芯', url:'https://sophie-lin-wealth-fwt5ofx.gamma.site/'},
+  {no:'14', name:'陳盈慧', url:'https://yinghui-finance-3lgmg6u.gamma.site/'},
+  {feat:true, name:'財顧芸', url:'https://polite-cetacean-b4m8g82.gamma.site/'},
+  {no:'16', name:'敏玉', url:'https://fang-min-yu-finance-elnn3hz.gamma.site/'},
+  {no:'17', name:'桂琴', url:'https://guiqin-wealth-25x3a00.gamma.site/'},
+  {no:'18', name:'秀綾', url:'https://zhangxiuling-assets-cduzlxo.gamma.site/'},
+  {no:'19', name:'黃雅玲', url:'https://tinas-finance-design-4lev820.gamma.site/'},
+  {no:'20', name:'楊仁杰', url:'https://gamma.app/docs/-0v5t9z54ni64y69'},
+  {no:'21', name:'姚曉萍', url:'https://joy-finance-runner-h4dvcaj.gamma.site/'},
+  {no:'22', name:'何婕如', url:'https://jie-ru-wealth-w245t5l.gamma.site/'}
+];
+
+var COVERS = [
+  'linear-gradient(135deg,#4A7C5F,#7BAF93)',
+  'linear-gradient(135deg,#2B3D52,#3A5470)',
+  'linear-gradient(135deg,#A8883A,#C8A95A)',
+  'linear-gradient(135deg,#5A3D22,#8a6a44)',
+  'linear-gradient(135deg,#3a6b6b,#5fa3a3)',
+  'linear-gradient(135deg,#6b8f7a,#9ab8a6)'
+];
+var FEAT_COVER = 'linear-gradient(135deg,#A8883A,#E0C184)';
+var ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>';
+
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function render(){
+  var grid=document.getElementById('grid');
+  document.getElementById('cnt').textContent = WORKS.length;
+  grid.innerHTML = WORKS.map(function(w,i){
+    var cover = w.feat ? FEAT_COVER : COVERS[i % COVERS.length];
+    var seal = w.name.charAt(0);
+    var noLabel = w.feat ? 'FEATURED 精選' : 'NO.'+w.no+' 學員作品';
+    var ribbon = w.feat ? '<div class="ribbon">★ FEATURED</div>' : '';
+    var bigNo = w.feat ? '★' : w.no;
+    return '<a class="card reveal'+(w.feat?' feat':'')+'" href="'+esc(w.url)+'" target="_blank" rel="noopener">'
+      + ribbon
+      + '<div class="cover" style="background:'+cover+'">'
+      +   '<div class="cover-no">'+esc(bigNo)+'</div>'
+      +   '<div class="cover-seal">'+esc(seal)+'</div>'
+      + '</div>'
+      + '<div class="body">'
+      +   '<div class="tag">'+esc(noLabel)+'</div>'
+      +   '<div class="name">'+esc(w.name)+'</div>'
+      +   '<span class="go">查看完整作品 '+ARROW+'</span>'
+      + '</div>'
+      + '</a>';
+  }).join('');
+
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e,i){ if(e.isIntersecting){ setTimeout(function(){e.target.classList.add('in');}, (i%8)*55); io.unobserve(e.target);} });
+  },{threshold:0.05});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+}
+render();
+</script>
+</body>
+</html>
