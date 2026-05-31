@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>馥芸學苑｜課程後台管理</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#2B3D52;--gold:#A8883A;--gold2:#C8A95A;--green:#4A7C5F;
+  --cream:#FAF8F3;--warm:#F3EEE4;--sand:#E5DDD0;--line:#E5DDD0;
+  --text:#2C1F0E;--text2:#5C4A32;--text3:#9C8468;--white:#fff;--red:#C4504A;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--cream);color:var(--text);font-size:14px;line-height:1.6;}
+.wrap{max-width:780px;margin:0 auto;padding:0 0 4rem;}
+.head{background:var(--navy);color:#fff;padding:1.8rem 1.5rem;}
+.head-title{font-family:'Noto Serif TC',serif;font-size:21px;font-weight:700;}
+.head-title em{color:var(--gold2);font-style:normal;}
+.head-sub{font-size:12px;color:rgba(255,255,255,0.6);margin-top:5px;}
+.head-links{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;}
+.head-links a{font-size:12px;color:var(--gold2);text-decoration:none;border:1px solid rgba(200,169,90,0.4);padding:5px 12px;border-radius:16px;}
+.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:1.2rem 1.5rem 0.5rem;position:sticky;top:0;background:rgba(250,248,243,0.95);backdrop-filter:blur(8px);z-index:20;}
+.filt{display:flex;gap:4px;flex-wrap:wrap;flex:1;}
+.filt button{font-family:'Noto Sans TC',sans-serif;font-size:12.5px;padding:7px 13px;border-radius:18px;border:1px solid var(--sand);background:#fff;color:var(--text3);cursor:pointer;}
+.filt button.on{background:var(--navy);color:#fff;border-color:transparent;}
+.btn-add{font-family:'Noto Sans TC',sans-serif;border:none;background:var(--gold);color:#fff;font-size:13px;font-weight:700;padding:9px 16px;border-radius:18px;cursor:pointer;white-space:nowrap;}
+.list{padding:0.6rem 1.5rem 0;}
+.zlabel{font-size:11px;letter-spacing:2px;color:var(--text3);font-weight:700;margin:1.4rem 0 0.7rem;}
+.row{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-bottom:9px;display:flex;align-items:center;gap:12px;}
+.row-stripe{width:4px;align-self:stretch;border-radius:3px;flex-shrink:0;}
+.s-course{background:var(--green);} .s-partner{background:var(--navy);} .s-past{background:var(--gold);} .s-coming{background:#5A9E7A;}
+.row-main{flex:1;min-width:0;}
+.row-title{font-size:14px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.row-meta{font-size:11px;color:var(--text3);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.row-act{display:flex;gap:5px;flex-shrink:0;}
+.row-act button{border:none;background:var(--warm);width:34px;height:34px;border-radius:8px;cursor:pointer;font-size:14px;}
+.row-act button:hover{background:var(--sand);}
+.empty{text-align:center;color:var(--text3);font-size:13px;padding:2rem;}
+.spin{display:inline-block;width:22px;height:22px;border:2.5px solid var(--sand);border-top-color:var(--gold);border-radius:50%;animation:sp .7s linear infinite;}
+@keyframes sp{to{transform:rotate(360deg);}}
+/* modal */
+.mbg{position:fixed;inset:0;background:rgba(43,61,82,0.55);backdrop-filter:blur(3px);display:none;align-items:flex-start;justify-content:center;z-index:100;overflow-y:auto;padding:20px 0;}
+.mbg.show{display:flex;}
+.modal{background:#fff;width:100%;max-width:560px;border-radius:16px;padding:1.6rem 1.5rem 2rem;margin:auto;}
+.mtitle{font-family:'Noto Serif TC',serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:1rem;}
+.mstatus{font-size:13px;padding:9px 13px;border-radius:8px;margin-bottom:12px;display:none;}
+.mstatus.show{display:block;} .mstatus.ok{background:#e6f4ec;color:#256447;} .mstatus.err{background:#fbe9e7;color:#a33;} .mstatus.wait{background:var(--warm);color:var(--text3);}
+.f{margin-bottom:12px;} .f label{display:block;font-size:12px;color:var(--text3);font-weight:500;margin-bottom:4px;}
+.f input,.f textarea,.f select{width:100%;font-family:'Noto Sans TC',sans-serif;font-size:13.5px;padding:9px 11px;border:1px solid var(--sand);border-radius:8px;background:#fff;color:var(--text);}
+.f textarea{resize:vertical;min-height:74px;line-height:1.7;}
+.f input:focus,.f textarea:focus,.f select:focus{outline:none;border-color:var(--gold);}
+.f .hint{font-size:11px;color:var(--text3);margin-top:3px;}
+.frow{display:flex;gap:10px;} .frow .f{flex:1;}
+.mbtns{display:flex;gap:10px;margin-top:6px;}
+.mb{flex:1;font-family:'Noto Sans TC',sans-serif;font-size:14px;font-weight:700;padding:12px;border-radius:9px;border:none;cursor:pointer;}
+.mb-go{background:var(--navy);color:#fff;} .mb-cancel{background:var(--warm);color:var(--text3);flex:0 0 auto;padding:12px 20px;}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;font-size:13px;padding:11px 20px;border-radius:22px;opacity:0;pointer-events:none;transition:all .25s;z-index:200;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div class="head-title">馥芸學苑 <em>課程後台</em></div>
+    <div class="head-sub">新增・修改・刪除課程與活動　→　網站自動同步</div>
+    <div class="head-links">
+      <a href="https://angie26501-lgtm.github.io/active/fuyun-academy.html" target="_blank">🔗 看公開頁</a>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="filt">
+      <button class="on" data-z="all" onclick="setFilt('all',this)">全部</button>
+      <button data-z="course" onclick="setFilt('course',this)">馥芸課程</button>
+      <button data-z="partner" onclick="setFilt('partner',this)">合作活動</button>
+      <button data-z="past" onclick="setFilt('past',this)">過往實績</button>
+      <button data-z="coming" onclick="setFilt('coming',this)">預計開辦</button>
+    </div>
+    <button class="btn-add" onclick="openAdd()">＋ 新增</button>
+  </div>
+
+  <div class="list" id="list"><div class="empty"><span class="spin"></span><br>載入中…</div></div>
+</div>
+
+<div class="mbg" id="mbg">
+  <div class="modal">
+    <div class="mtitle" id="mtitle">新增課程</div>
+    <div class="mstatus" id="mstatus"></div>
+    <div class="frow">
+      <div class="f"><label>區塊</label><select id="f-zone"><option value="course">馥芸課程</option><option value="partner">合作活動</option><option value="past">過往實績</option><option value="coming">預計開辦</option></select></div>
+      <div class="f"><label>年份（過往實績用）</label><input type="text" id="f-year" placeholder="2025"></div>
+    </div>
+    <div class="f"><label>分類標籤</label><input type="text" id="f-category" placeholder="初階課程 · 財務整理入門 · AI應用"></div>
+    <div class="f"><label>標題 *</label><input type="text" id="f-title" placeholder="女人要有錢｜從0開始的財務整理"></div>
+    <div class="f"><label>副標</label><input type="text" id="f-slogan" placeholder="一句吸引人的介紹"></div>
+    <div class="frow">
+      <div class="f"><label>日期</label><input type="text" id="f-date" placeholder="6/13（六） 或 6/3・6/10"></div>
+      <div class="f"><label>時間</label><input type="text" id="f-time" placeholder="14:00－16:00"></div>
+    </div>
+    <div class="f"><label>地點</label><input type="text" id="f-location" placeholder="蘇澳鎮和平路203號"></div>
+    <div class="f"><label>主辦／對象說明</label><input type="text" id="f-organizer" placeholder="馥芸財富學苑"></div>
+    <div class="f"><label>重點標題</label><input type="text" id="f-points_label" placeholder="課程5大重點 / 活動重點 / 課程方向"></div>
+    <div class="f"><label>重點內容（每行一條）</label><textarea id="f-points" placeholder="看懂為什麼你需要有錢&#10;找到你的錢在哪裡&#10;從0開始的一桶金"></textarea></div>
+    <div class="f"><label>適合對象（每行一條，可留空）</label><textarea id="f-audience" placeholder="有收入卻存不到錢&#10;想學理財不知從何開始"></textarea></div>
+    <div class="f"><label>講師</label><input type="text" id="f-speaker" placeholder="陳芸琪｜財顧芸"></div>
+    <div class="frow">
+      <div class="f"><label>講師資歷（綠字）</label><input type="text" id="f-speaker_certs" placeholder="MDRT · RFC · RFA · RFP"></div>
+      <div class="f"><label>講師職稱</label><input type="text" id="f-speaker_title" placeholder="馥芸財富學苑創辦人"></div>
+    </div>
+    <div class="frow">
+      <div class="f"><label>費用</label><input type="text" id="f-price" placeholder="NT$ 8,500 / 人 或 免費"></div>
+      <div class="f"><label>原價（劃線）</label><input type="text" id="f-price_original" placeholder="9,000"></div>
+    </div>
+    <div class="f"><label>費用備註</label><input type="text" id="f-price_note" placeholder="早鳥團報另有優惠"></div>
+    <div class="f"><label>課程簡介連結（選填）</label><input type="text" id="f-intro_link" placeholder="https://canva.link/…"></div>
+    <div class="frow">
+      <div class="f"><label>報名連結</label><input type="text" id="f-link" placeholder="https://forms.gle/…"></div>
+      <div class="f"><label>按鈕文字</label><input type="text" id="f-link_text" placeholder="預先登記 / 我要報名"></div>
+    </div>
+    <div class="f"><label>狀態</label><input type="text" id="f-status" placeholder="開放報名 / 即將舉辦 / 已結束"></div>
+    <div class="mbtns">
+      <button class="mb mb-cancel" onclick="closeModal()">取消</button>
+      <button class="mb mb-go" id="mgo" onclick="submitRow()">新增</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+var API_URL = 'https://script.google.com/macros/s/AKfycby-WSJSkuGKujuOzGCLMj5N72pOqYRT78CC3KfX-OTm3Zau9aF5D_4veEBXim5aO78NpA/exec';
+var SHEET = 'COURSE';
+var FIELDS = ['zone','year','category','title','slogan','date','time','location','organizer','points_label','points','audience','speaker','speaker_certs','speaker_title','price','price_original','price_note','intro_link','link','link_text','status'];
+var ZONE_NAME = {course:'馥芸課程', partner:'合作活動', past:'過往實績', coming:'預計開辦'};
+var ROWS=[], filt='all', editRow=null, editExpect=null;
+
+function esc(s){return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function g(id){return document.getElementById(id);}
+
+function load(cb){
+  fetch(API_URL+'?sheet='+SHEET)
+    .then(function(r){return r.json();})
+    .then(function(data){
+      ROWS=(data||[]).map(function(r){
+        var o={_row:r._row}; FIELDS.forEach(function(k){o[k]=(r[k]||'').toString();}); return o;
+      }).filter(function(r){return r.zone && r.title;});
+      if(cb)cb(); else render();
+    })
+    .catch(function(){ g('list').innerHTML='<div class="empty">⚠️ 讀取失敗，請確認後台部署與分頁名稱 COURSE</div>'; });
+}
+function setFilt(z,el){ filt=z; document.querySelectorAll('.filt button').forEach(function(b){b.classList.remove('on');}); el.classList.add('on'); render(); }
+
+function render(){
+  var box=g('list');
+  var zones = filt==='all' ? ['course','partner','past','coming'] : [filt];
+  var html='';
+  zones.forEach(function(z){
+    var items=ROWS.filter(function(r){return r.zone===z;});
+    if(items.length===0) return;
+    html += '<div class="zlabel">'+ZONE_NAME[z]+'（'+items.length+'）</div>';
+    items.forEach(function(it){
+      var meta=[it.date, it.time, it.speaker].filter(Boolean).join('　');
+      html += '<div class="row"><div class="row-stripe s-'+z+'"></div>'
+        +'<div class="row-main"><div class="row-title">'+esc(it.title)+'</div>'
+        +'<div class="row-meta">'+esc(meta||it.category)+(it.status?'　·　'+esc(it.status):'')+'</div></div>'
+        +'<div class="row-act"><button title="修改" onclick="openEdit('+it._row+')">✏️</button><button title="刪除" onclick="delRow('+it._row+')">🗑️</button></div></div>';
+    });
+  });
+  box.innerHTML = html || '<div class="empty">沒有項目</div>';
+}
+
+function findRow(rn){for(var i=0;i<ROWS.length;i++)if(ROWS[i]._row===rn)return ROWS[i];return null;}
+function mStatus(m,t){var s=g('mstatus');s.textContent=m;s.className='mstatus show '+t;}
+function hideStatus(){g('mstatus').className='mstatus';}
+
+function fillForm(it){
+  g('f-zone').value=it.zone||'course';
+  ['year','category','title','slogan','date','time','location','organizer','points_label','speaker','speaker_certs','speaker_title','price','price_original','price_note','intro_link','link','link_text','status'].forEach(function(k){ g('f-'+k).value=it[k]||''; });
+  g('f-points').value=(it.points||'').split('|').join('\n');
+  g('f-audience').value=(it.audience||'').split('|').join('\n');
+}
+function readForm(){
+  var o={};
+  g('f-points_label'); // noop
+  FIELDS.forEach(function(k){
+    if(k==='points'||k==='audience') return;
+    o[k]=(g('f-'+k).value||'').trim();
+  });
+  o.points=(g('f-points').value||'').split('\n').map(function(x){return x.trim();}).filter(Boolean).join('|');
+  o.audience=(g('f-audience').value||'').split('\n').map(function(x){return x.trim();}).filter(Boolean).join('|');
+  return o;
+}
+
+function openAdd(){
+  editRow=null; editExpect=null;
+  g('mtitle').textContent='新增課程'; g('mgo').textContent='新增';
+  fillForm({zone:'course', points_label:'課程重點', link_text:'預先登記', speaker:'陳芸琪｜財顧芸', speaker_title:'馥芸財富學苑創辦人'});
+  g('f-points').value=''; g('f-audience').value='';
+  hideStatus(); g('mbg').classList.add('show');
+}
+function openEdit(rn){
+  var it=findRow(rn); if(!it)return;
+  editRow=rn; editExpect={}; FIELDS.forEach(function(k){editExpect[k]=it[k]||'';});
+  g('mtitle').textContent='修改課程'; g('mgo').textContent='儲存修改';
+  fillForm(it); hideStatus(); g('mbg').classList.add('show');
+}
+function closeModal(){ g('mbg').classList.remove('show'); }
+
+function submitRow(){
+  var row=readForm();
+  if(!row.title){ mStatus('⚠️ 請填標題','err'); return; }
+  if(editRow){ post({sheet:SHEET,action:'update',rowNum:editRow,row:row,expect:editExpect},'已儲存'); }
+  else { post({sheet:SHEET,action:'add',row:row},'已新增'); }
+}
+function delRow(rn){
+  var it=findRow(rn); if(!it)return;
+  if(!confirm('確定刪除？\n\n'+it.title)) return;
+  var expect={}; FIELDS.forEach(function(k){expect[k]=it[k]||'';});
+  post({sheet:SHEET,action:'delete',rowNum:rn,expect:expect},'已刪除');
+}
+function post(payload,okMsg){
+  mStatus('處理中…','wait');
+  fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)})
+    .then(function(r){return r.text();})
+    .then(function(t){var res=null;try{res=JSON.parse(t);}catch(e){}finish(res,okMsg);})
+    .catch(function(){finish(null,okMsg);});
+}
+function finish(res,okMsg){
+  if(res&&res.ok===false&&res.error){ mStatus('⚠️ '+res.error,'err'); return; }
+  mStatus('✅ '+okMsg,'ok');
+  setTimeout(function(){ closeModal(); load(function(){render(); toast('✅ '+okMsg);}); }, 700);
+}
+var tt=null;
+function toast(m){var e=g('toast');e.textContent=m;e.classList.add('show');clearTimeout(tt);tt=setTimeout(function(){e.classList.remove('show');},2200);}
+g('mbg').addEventListener('click',function(e){if(e.target===this)closeModal();});
+
+load();
+</script>
+</body>
+</html>
