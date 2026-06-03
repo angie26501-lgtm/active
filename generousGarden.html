@@ -52,6 +52,10 @@
   .taskbtn .bi{font-size:3.6vw;flex:0 0 auto;line-height:1;}
   .taskbtn .bt{font-family:'Noto Serif CJK TC',serif;font-size:2.7vw;font-weight:900;display:block;}
   .taskbtn .bs{font-size:1.6vw;color:#5b7a60;font-weight:400;display:block;margin-top:.5vh;}
+  .gatebox{margin-top:3.5vh;display:flex;flex-direction:column;gap:2vh;width:100%;max-width:440px;}
+  .gatebox input{width:100%;font-size:clamp(20px,3.4vw,40px);text-align:center;letter-spacing:.35em;padding:14px 16px;border-radius:14px;border:2px solid var(--gold);background:rgba(246,241,228,.96);color:#1f4a2e;outline:none;font-family:inherit;}
+  .gatebox button{width:100%;font-size:clamp(18px,3vw,34px);font-weight:900;padding:14px;border:none;border-radius:14px;background:var(--goldL);color:#26301f;cursor:pointer;font-family:inherit;}
+  .gateerr{font-size:clamp(14px,2vw,24px);color:#ffb1a1;min-height:1.2em;font-weight:700;text-align:center;}
   /* entrance helpers */
   .scene.active .fade{animation:fadeUp 1s ease forwards;}
   .scene.active .fade2{animation:fadeUp 1s ease .4s both;}
@@ -68,6 +72,10 @@
   @keyframes grow{to{transform:scaleY(1);opacity:1;}}
 
   /* controls */
+  #tobtn{position:fixed;left:50%;bottom:62px;transform:translateX(-50%);z-index:30;background:#e3c885;color:#26301f;
+    border:none;border-radius:40px;padding:15px 32px;font-size:20px;font-weight:900;font-family:inherit;cursor:pointer;
+    box-shadow:0 10px 24px rgba(0,0,0,.35);animation:pulse 1.8s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{transform:translateX(-50%) scale(1);}50%{transform:translateX(-50%) scale(1.05);}}
   #bar{position:fixed;left:0;right:0;bottom:0;display:flex;align-items:center;gap:14px;
     padding:12px 18px;background:linear-gradient(to top,rgba(0,0,0,.5),transparent);z-index:20;
     opacity:0;transition:opacity .3s;}
@@ -86,37 +94,11 @@
   #startveil .ps{font-size:2vw;color:#cdbf9f;margin-top:2vh;}
   #startveil .pp{font-size:6vw;color:var(--goldL);margin-bottom:3vh;}
 
-  .view{min-height:100vh;}
-  #enterbtn{position:fixed;left:50%;bottom:34px;transform:translateX(-50%);z-index:50;
-    background:#e3c885;color:#26301f;border:none;border-radius:40px;padding:16px 34px;font-size:20px;font-weight:900;
-    font-family:inherit;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.3);}
-  #view-home{background:radial-gradient(130% 60% at 50% 0%,#27502f,#1f4a2e 55%,#163522);padding:30px 16px 50px;}
-  .hwrap{max-width:480px;margin:0 auto;}
-  .hhead{text-align:center;color:#f6f1e4;margin:14px 0 24px;}
-  .ht{font-family:'Noto Serif CJK TC',serif;font-size:42px;font-weight:900;color:#e3c885;}
-  .hs{font-size:17px;color:#dcd2b6;margin-top:12px;line-height:1.8;}
-  .mcard{display:flex;align-items:center;gap:16px;background:#f6f1e4;border-radius:18px;padding:22px 20px;margin-bottom:16px;
-    text-decoration:none;color:#1f4a2e;box-shadow:0 8px 22px rgba(0,0,0,.2);cursor:pointer;position:relative;}
-  .mcard .mi{font-size:38px;flex:0 0 auto;}
-  .mcard .mtx{display:flex;flex-direction:column;gap:4px;}
-  .mcard .mtx b{font-family:'Noto Serif CJK TC',serif;font-size:22px;}
-  .mcard .mtx span{font-size:15px;color:#5b7a60;}
-  .mcard .lock{position:absolute;right:18px;top:18px;font-size:18px;}
-  .gate{background:#f6f1e4;border-radius:18px;padding:20px;margin-bottom:16px;box-shadow:0 8px 22px rgba(0,0,0,.2);}
-  .gate .gl{font-size:17px;font-weight:900;color:#1f4a2e;margin-bottom:12px;text-align:center;}
-  .gate input{width:100%;font-size:24px;text-align:center;letter-spacing:6px;border:1.5px solid #e0d4ad;border-radius:12px;
-    padding:14px;background:#fffdf7;outline:none;font-family:inherit;}
-  .gate button{width:100%;margin-top:12px;border:none;border-radius:12px;padding:15px;font-size:19px;font-weight:900;
-    font-family:inherit;color:#f6f1e4;background:#1f4a2e;cursor:pointer;}
-  .gerr{text-align:center;color:#c0392b;font-size:15px;font-weight:700;margin-top:10px;min-height:18px;}
-  .course{background:#f6f1e4;border-radius:18px;padding:20px;box-shadow:0 8px 22px rgba(0,0,0,.2);}
-  .ctitle{font-family:'Noto Serif CJK TC',serif;font-size:19px;font-weight:900;color:#1f4a2e;margin-bottom:14px;text-align:center;}
-  .lcard{display:block;text-align:center;text-decoration:none;background:#1f4a2e;color:#e3c885;border-radius:13px;
-    padding:16px;font-size:18px;font-weight:900;margin-bottom:10px;}
-  .cnote{font-size:14px;color:#5b7a60;text-align:center;margin-top:6px;}
-</style></head><body>
-<div id="view-intro" class="view">
-  <div id="stage"><section class="scene" data-d="5200">
+#enterbtn{position:fixed;left:50%;bottom:48px;transform:translateX(-50%);z-index:30;background:#e3c885;color:#26301f;
+  border:none;border-radius:40px;padding:17px 36px;font-size:22px;font-weight:900;font-family:inherit;cursor:pointer;
+  text-decoration:none;display:inline-block;box-shadow:0 10px 26px rgba(0,0,0,.38);animation:pulse 1.8s ease-in-out infinite;}
+@keyframes pulse{0%,100%{transform:translateX(-50%) scale(1);}50%{transform:translateX(-50%) scale(1.05);}}
+</style></head><body><div id="stage"><section class="scene" data-d="5200">
     <div class="org fade"><b>馥芸財富學苑</b> ╳ 福氣協會</div>
     <svg class="bloom" viewBox="0 0 120 120" style="width:18vw;height:18vw;margin:2vh 0;">
       <path d="M60 118V64" stroke="#3f7d4f" stroke-width="6" stroke-linecap="round"/>
@@ -186,48 +168,10 @@
       <circle cx="60" cy="50" r="11" fill="#9a7621"/>
     </svg>
     <div class="closing fade2">今天，先把土翻鬆。<br>接下來，我們一起，<span class="g">慢慢種成一座花園。</span></div>
-  </section></div>
-  <button id="enterbtn" onclick="enterHome()">進入財富花園 →</button>
-</div>
-
-<div id="view-home" class="view" style="display:none">
-  <div class="hwrap">
-    <div class="hhead">
-      <div class="ht">財富花園</div>
-      <div class="hs">陪你把人生與錢，慢慢種成一座花園。<br>選一個開始吧 🌱</div>
-    </div>
-    <a class="mcard" href="seed-garden.html" target="_blank" rel="noopener">
-      <span class="mi">🌼</span><span class="mtx"><b>財富花園圖卡</b><span>做一張你的專屬花園圖卡</span></span>
-    </a>
-    <div class="mcard" onclick="openCourse()">
-      <span class="mi">📚</span><span class="mtx"><b>蘇澳福氣協會 · 五堂課</b><span>課程內容與課後作業</span></span>
-      <span class="lock">🔒</span>
-    </div>
-    <div id="gate" class="gate" style="display:none">
-      <div class="gl">請輸入課程密碼</div>
-      <input id="pw" inputmode="numeric" placeholder="密碼" onkeydown="if(event.key==='Enter')checkPw()">
-      <button onclick="checkPw()">進入</button>
-      <div id="gateerr" class="gerr"></div>
-    </div>
-    <div id="course" class="course" style="display:none">
-      <div class="ctitle">蘇澳福氣協會 · 五堂課 ｜ 課後作業</div>
-      <a class="lcard" href="1150603-homework.html" target="_blank" rel="noopener">第一堂 · 回家作業 →</a>
-      <div class="cnote">（後面幾堂的作業，老師會陸續放上來）</div>
-    </div>
-  </div>
-</div>
-
-<script>
-  var scenes=[].slice.call(document.querySelectorAll('#stage .scene'));
-  var i=0,timer=null;
-  function show(k){ scenes.forEach(function(s){s.classList.remove('active');}); var s=scenes[k]; void s.offsetWidth; s.classList.add('active'); i=k;
-    clearTimeout(timer); var d=parseInt(s.getAttribute('data-d'))||5500;
-    if(k<scenes.length-1) timer=setTimeout(function(){ show(k+1); }, d);
-  }
-  document.getElementById('stage').addEventListener('click',function(e){ if(e.target.closest('#enterbtn'))return; if(i<scenes.length-1) show(i+1); });
-  show(0);
-  function enterHome(){ clearTimeout(timer); document.getElementById('view-intro').style.display='none'; document.getElementById('view-home').style.display='block'; window.scrollTo(0,0); }
-  function openCourse(){ var g=document.getElementById('gate'); g.style.display='block'; document.getElementById('gateerr').textContent=''; g.scrollIntoView({behavior:'smooth'}); setTimeout(function(){document.getElementById('pw').focus();},300); }
-  function checkPw(){ var v=(document.getElementById('pw').value||'').trim(); if(v==='0603'){ document.getElementById('gate').style.display='none'; var c=document.getElementById('course'); c.style.display='block'; c.scrollIntoView({behavior:'smooth'}); } else { document.getElementById('gateerr').textContent='密碼不對，再試一次'; } }
-</script>
-</body></html>
+  </section></div><a id="enterbtn" href="generousGarden.html">進入財富花園 →</a><script>
+var scenes=[].slice.call(document.querySelectorAll('#stage .scene'));
+var i=0,timer=null;
+function show(k){scenes.forEach(function(s){s.classList.remove('active');});var s=scenes[k];void s.offsetWidth;s.classList.add('active');i=k;clearTimeout(timer);var d=parseInt(s.getAttribute('data-d'))||5500;if(k<scenes.length-1)timer=setTimeout(function(){show(k+1);},d);}
+document.getElementById('stage').addEventListener('click',function(e){if(e.target.closest('#enterbtn'))return;if(i<scenes.length-1)show(i+1);});
+show(0);
+</script></body></html>
