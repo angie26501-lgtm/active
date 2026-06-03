@@ -1,10 +1,5 @@
 
-<!DOCTYPE html>
-<html lang="zh-Hant"><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>財富花園 · 開場動畫 ｜ 女人要有錢</title>
-<style>
+<!DOCTYPE html><html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nosnippet"><title>財富花園 ｜ 女人要有錢</title><style>
   :root{--green:#1f4a2e;--green2:#2c5433;--gold:#9a7621;--goldL:#e3c885;--cream:#f6f1e4;--soft:#bcae8e;}
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{height:100%;}
@@ -90,11 +85,38 @@
   #startveil .pt{font-family:'Noto Serif CJK TC',serif;font-size:4.5vw;color:var(--goldL);font-weight:900;}
   #startveil .ps{font-size:2vw;color:#cdbf9f;margin-top:2vh;}
   #startveil .pp{font-size:6vw;color:var(--goldL);margin-bottom:3vh;}
-</style></head>
-<body>
-<div id="stage">
 
-  <section class="scene" data-d="5200">
+  .view{min-height:100vh;}
+  #enterbtn{position:fixed;left:50%;bottom:34px;transform:translateX(-50%);z-index:50;
+    background:#e3c885;color:#26301f;border:none;border-radius:40px;padding:16px 34px;font-size:20px;font-weight:900;
+    font-family:inherit;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.3);}
+  #view-home{background:radial-gradient(130% 60% at 50% 0%,#27502f,#1f4a2e 55%,#163522);padding:30px 16px 50px;}
+  .hwrap{max-width:480px;margin:0 auto;}
+  .hhead{text-align:center;color:#f6f1e4;margin:14px 0 24px;}
+  .ht{font-family:'Noto Serif CJK TC',serif;font-size:42px;font-weight:900;color:#e3c885;}
+  .hs{font-size:17px;color:#dcd2b6;margin-top:12px;line-height:1.8;}
+  .mcard{display:flex;align-items:center;gap:16px;background:#f6f1e4;border-radius:18px;padding:22px 20px;margin-bottom:16px;
+    text-decoration:none;color:#1f4a2e;box-shadow:0 8px 22px rgba(0,0,0,.2);cursor:pointer;position:relative;}
+  .mcard .mi{font-size:38px;flex:0 0 auto;}
+  .mcard .mtx{display:flex;flex-direction:column;gap:4px;}
+  .mcard .mtx b{font-family:'Noto Serif CJK TC',serif;font-size:22px;}
+  .mcard .mtx span{font-size:15px;color:#5b7a60;}
+  .mcard .lock{position:absolute;right:18px;top:18px;font-size:18px;}
+  .gate{background:#f6f1e4;border-radius:18px;padding:20px;margin-bottom:16px;box-shadow:0 8px 22px rgba(0,0,0,.2);}
+  .gate .gl{font-size:17px;font-weight:900;color:#1f4a2e;margin-bottom:12px;text-align:center;}
+  .gate input{width:100%;font-size:24px;text-align:center;letter-spacing:6px;border:1.5px solid #e0d4ad;border-radius:12px;
+    padding:14px;background:#fffdf7;outline:none;font-family:inherit;}
+  .gate button{width:100%;margin-top:12px;border:none;border-radius:12px;padding:15px;font-size:19px;font-weight:900;
+    font-family:inherit;color:#f6f1e4;background:#1f4a2e;cursor:pointer;}
+  .gerr{text-align:center;color:#c0392b;font-size:15px;font-weight:700;margin-top:10px;min-height:18px;}
+  .course{background:#f6f1e4;border-radius:18px;padding:20px;box-shadow:0 8px 22px rgba(0,0,0,.2);}
+  .ctitle{font-family:'Noto Serif CJK TC',serif;font-size:19px;font-weight:900;color:#1f4a2e;margin-bottom:14px;text-align:center;}
+  .lcard{display:block;text-align:center;text-decoration:none;background:#1f4a2e;color:#e3c885;border-radius:13px;
+    padding:16px;font-size:18px;font-weight:900;margin-bottom:10px;}
+  .cnote{font-size:14px;color:#5b7a60;text-align:center;margin-top:6px;}
+</style></head><body>
+<div id="view-intro" class="view">
+  <div id="stage"><section class="scene" data-d="5200">
     <div class="org fade"><b>馥芸財富學苑</b> ╳ 福氣協會</div>
     <svg class="bloom" viewBox="0 0 120 120" style="width:18vw;height:18vw;margin:2vh 0;">
       <path d="M60 118V64" stroke="#3f7d4f" stroke-width="6" stroke-linecap="round"/>
@@ -110,20 +132,17 @@
     <div class="ribbon fade3"><span class="ln"></span>財富花園<span class="ln"></span></div>
     <div class="sub fade3">五堂課，陪你把人生與錢，種成一座花園</div>
   </section>
-
-  <section class="scene" data-d="5200">
+<section class="scene" data-d="5200">
     <div class="lead fade">我們做的，不是「理財」</div>
     <div class="big fade2" style="margin-top:2vh;">是 <span class="g">種一座花園</span></div>
     <div class="sub fade3" style="font-size:2.3vw;margin-top:4vh;">老師是園丁，而你，是即將發芽的種子。</div>
   </section>
-
-  <section class="scene" data-d="5600">
+<section class="scene" data-d="5600">
     <div class="kick fade">今天 · 第一堂</div>
     <div class="huge bloom">翻土</div>
     <div class="lead fade3" style="font-size:2.6vw;">先把心裡對錢的不安，<span class="g">翻鬆</span>──<br>讓種子，有地方住。</div>
   </section>
-
-  <section class="scene" data-d="9800">
+<section class="scene" data-d="9800">
     <div class="lead fade">今天，我們種下 <span class="g">五顆種子</span></div>
     <div class="sub fade" style="font-size:1.9vw;margin-top:1.4vh;">每一顆，都是為自己和家人，種下的一份安心</div>
     <div class="slist">
@@ -134,8 +153,7 @@
       <div class="srow" style="animation-delay:2.9s"><svg class="ic" viewBox="0 0 40 40"><circle cx="20" cy="20" r="11" fill="#e3c885"/><path d="M20 11a9 9 0 000 18" fill="#9a7621"/></svg><span class="nm">資產傳承</span><span class="dash">──</span><span class="mn">把愛和財富，好好留給你在乎的人</span></div>
     </div>
   </section>
-
-  <section class="scene" data-d="8000">
+<section class="scene" data-d="8000">
     <div class="lead fade">這一季，五堂課 ＝ 一座花園的成長</div>
     <div class="stages">
       <div class="stg" style="animation-delay:.3s">
@@ -160,8 +178,7 @@
       </div>
     </div>
   </section>
-
-  <section class="scene" data-d="6500">
+<section class="scene" data-d="6500">
     <svg class="bloom" viewBox="0 0 120 120" style="width:16vw;height:16vw;margin-bottom:3vh;">
       <path d="M60 118V64" stroke="#3f7d4f" stroke-width="6" stroke-linecap="round"/>
       <ellipse cx="60" cy="34" rx="13" ry="20" fill="#e3c885"/><ellipse cx="86" cy="50" rx="20" ry="13" fill="#e3c885"/>
@@ -169,83 +186,48 @@
       <circle cx="60" cy="50" r="11" fill="#9a7621"/>
     </svg>
     <div class="closing fade2">今天，先把土翻鬆。<br>接下來，我們一起，<span class="g">慢慢種成一座花園。</span></div>
-  </section>
+  </section></div>
+  <button id="enterbtn" onclick="enterHome()">進入財富花園 →</button>
+</div>
 
-  <section class="scene" data-d="999999">
-    <div class="lead fade">今天的任務 🌱</div>
-    <div class="sub fade" style="font-size:1.9vw;margin-top:1.2vh;">點一下，開始今天的小任務</div>
-    <div class="menu">
-      <a class="taskbtn" href="https://reurl.cc/53xM5n" target="_blank" rel="noopener" style="animation-delay:.4s"><span class="bi">🌱</span><span><span class="bt">安心感輕健診</span><span class="bs">3 個小問題，看看你現在的安心感</span></span></a>
-      <a class="taskbtn" href="1150603-practice.html" style="animation-delay:.85s"><span class="bi">📝</span><span><span class="bt">數字練習單（AI 任務）</span><span class="bs">動手算算看你的「安心底」和退休缺口</span></span></a>
-      <a class="taskbtn" href="1150603-homework.html" style="animation-delay:1.3s"><span class="bi">📖</span><span><span class="bt">回家作業</span><span class="bs">寫下今天的收穫，種進你的花園</span></span></a>
+<div id="view-home" class="view" style="display:none">
+  <div class="hwrap">
+    <div class="hhead">
+      <div class="ht">財富花園</div>
+      <div class="hs">陪你把人生與錢，慢慢種成一座花園。<br>選一個開始吧 🌱</div>
     </div>
-  </section>
-
-</div>
-
-<div id="bar">
-  <button id="prev">◀</button>
-  <button id="play">⏸</button>
-  <button id="next">▶</button>
-  <div id="prog"><div id="fill"></div></div>
-  <div id="dots"></div>
-  <button id="restart">⟳</button>
-  <button id="fs">⛶</button>
-</div>
-
-<div id="startveil">
-  <div class="pp">▶</div>
-  <div class="pt">財富花園 · 開場</div>
-  <div class="ps">點一下開始播放（建議按 ⛶ 全螢幕投影）</div>
+    <a class="mcard" href="seed-garden.html" target="_blank" rel="noopener">
+      <span class="mi">🌼</span><span class="mtx"><b>財富花園圖卡</b><span>做一張你的專屬花園圖卡</span></span>
+    </a>
+    <div class="mcard" onclick="openCourse()">
+      <span class="mi">📚</span><span class="mtx"><b>蘇澳福氣協會 · 五堂課</b><span>課程內容與課後作業</span></span>
+      <span class="lock">🔒</span>
+    </div>
+    <div id="gate" class="gate" style="display:none">
+      <div class="gl">請輸入課程密碼</div>
+      <input id="pw" inputmode="numeric" placeholder="密碼" onkeydown="if(event.key==='Enter')checkPw()">
+      <button onclick="checkPw()">進入</button>
+      <div id="gateerr" class="gerr"></div>
+    </div>
+    <div id="course" class="course" style="display:none">
+      <div class="ctitle">蘇澳福氣協會 · 五堂課 ｜ 課後作業</div>
+      <a class="lcard" href="1150603-homework.html" target="_blank" rel="noopener">第一堂 · 回家作業 →</a>
+      <div class="cnote">（後面幾堂的作業，老師會陸續放上來）</div>
+    </div>
+  </div>
 </div>
 
 <script>
-  var scenes=[].slice.call(document.querySelectorAll('.scene'));
-  var fill=document.getElementById('fill'), dots=document.getElementById('dots');
-  var i=0, playing=true, timer=null, rafStart=0, curDur=0, rafId=null;
-  scenes.forEach(function(_,k){var d=document.createElement('div');d.className='dot';d.onclick=function(){go(k);};dots.appendChild(d);});
-  var dotEls=[].slice.call(document.querySelectorAll('.dot'));
-
-  function show(k){
-    scenes.forEach(function(s){s.classList.remove('active');});
-    var s=scenes[k]; void s.offsetWidth; s.classList.add('active');
-    dotEls.forEach(function(d,j){d.classList.toggle('on',j===k);});
-    i=k; curDur=parseInt(s.getAttribute('data-d'))||5500;
-    startProgress();
-    clearTimeout(timer);
-    if(playing) timer=setTimeout(function(){ if(i<scenes.length-1) go(i+1); else { playing=false; document.getElementById('play').textContent='⟳'; } }, curDur);
+  var scenes=[].slice.call(document.querySelectorAll('#stage .scene'));
+  var i=0,timer=null;
+  function show(k){ scenes.forEach(function(s){s.classList.remove('active');}); var s=scenes[k]; void s.offsetWidth; s.classList.add('active'); i=k;
+    clearTimeout(timer); var d=parseInt(s.getAttribute('data-d'))||5500;
+    if(k<scenes.length-1) timer=setTimeout(function(){ show(k+1); }, d);
   }
-  function startProgress(){
-    cancelAnimationFrame(rafId); rafStart=performance.now();
-    function step(t){
-      var p=Math.min(1,(t-rafStart)/curDur); fill.style.width=(p*100)+'%';
-      if(p<1 && playing) rafId=requestAnimationFrame(step);
-    }
-    if(playing) rafId=requestAnimationFrame(step); else fill.style.width='100%';
-  }
-  function go(k){ if(k<0)k=0; if(k>scenes.length-1)k=scenes.length-1; show(k); }
-  function toggle(){
-    if(i>=scenes.length-1 && !playing){ playing=true; document.getElementById('play').textContent='⏸'; go(0); return; }
-    playing=!playing; document.getElementById('play').textContent=playing?'⏸':'▶';
-    if(playing){ show(i); } else { clearTimeout(timer); cancelAnimationFrame(rafId); }
-  }
-  document.getElementById('next').onclick=function(){playing=true;document.getElementById('play').textContent='⏸';go(i+1);};
-  document.getElementById('prev').onclick=function(){playing=true;document.getElementById('play').textContent='⏸';go(i-1);};
-  document.getElementById('play').onclick=toggle;
-  document.getElementById('restart').onclick=function(){playing=true;document.getElementById('play').textContent='⏸';go(0);};
-  document.getElementById('fs').onclick=function(){ if(!document.fullscreenElement) document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen(); else document.exitFullscreen&&document.exitFullscreen(); };
-  document.addEventListener('keydown',function(e){
-    if(e.key==='ArrowRight') document.getElementById('next').click();
-    else if(e.key==='ArrowLeft') document.getElementById('prev').click();
-    else if(e.key===' '){e.preventDefault();toggle();}
-  });
-  document.getElementById('stage').addEventListener('click',function(e){ if(e.target.closest('#bar')||e.target.closest('a'))return; toggle(); });
-  document.getElementById('bar').classList.add('show'); setTimeout(function(){document.getElementById('bar').classList.remove('show');},2600);
-
-  document.getElementById('startveil').onclick=function(){
-    this.style.display='none';
-    if(document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(function(){});
-    show(0);
-  };
+  document.getElementById('stage').addEventListener('click',function(e){ if(e.target.closest('#enterbtn'))return; if(i<scenes.length-1) show(i+1); });
+  show(0);
+  function enterHome(){ clearTimeout(timer); document.getElementById('view-intro').style.display='none'; document.getElementById('view-home').style.display='block'; window.scrollTo(0,0); }
+  function openCourse(){ var g=document.getElementById('gate'); g.style.display='block'; document.getElementById('gateerr').textContent=''; g.scrollIntoView({behavior:'smooth'}); setTimeout(function(){document.getElementById('pw').focus();},300); }
+  function checkPw(){ var v=(document.getElementById('pw').value||'').trim(); if(v==='0603'){ document.getElementById('gate').style.display='none'; var c=document.getElementById('course'); c.style.display='block'; c.scrollIntoView({behavior:'smooth'}); } else { document.getElementById('gateerr').textContent='密碼不對，再試一次'; } }
 </script>
 </body></html>
