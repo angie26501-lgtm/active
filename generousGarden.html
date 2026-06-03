@@ -31,6 +31,14 @@
   .scene.active .seed{animation:drop .7s ease forwards;}
   .seed svg{width:6vw;height:6vw;}
   .seed .lb{font-size:1.7vw;color:var(--cream);margin-top:1.2vh;font-weight:700;}
+  .slist{margin-top:3.5vh;display:flex;flex-direction:column;gap:2.5vh;width:100%;max-width:1080px;}
+  .srow{display:flex;align-items:center;gap:1.4vw;opacity:0;transform:translateX(-26px);}
+  .scene.active .srow{animation:slin .65s ease forwards;}
+  .srow .ic{width:3.6vw;height:3.6vw;flex:0 0 auto;}
+  .srow .nm{font-family:'Noto Serif CJK TC',serif;font-size:2.8vw;color:var(--goldL);font-weight:900;width:11.5vw;text-align:right;flex:0 0 auto;}
+  .srow .dash{color:var(--gold);font-size:1.9vw;flex:0 0 auto;}
+  .srow .mn{font-size:2.2vw;color:var(--cream);text-align:left;}
+  @keyframes slin{to{opacity:1;transform:none;}}
   .stages{display:flex;gap:1.6vw;margin-top:5vh;align-items:flex-end;justify-content:center;width:100%;}
   .stg{flex:1;max-width:17vw;opacity:0;transform:translateY(24px);}
   .scene.active .stg{animation:rise .7s ease forwards;}
@@ -40,6 +48,15 @@
   .stg .de{font-size:1.45vw;color:#cdbf9f;margin-top:.6vh;line-height:1.45;}
   .closing{font-family:'Noto Serif CJK TC',serif;font-size:4vw;color:var(--cream);line-height:1.5;}
   .closing .g{color:var(--goldL);}
+  .menu{display:flex;flex-direction:column;gap:2.2vh;width:100%;max-width:640px;margin-top:3.5vh;}
+  .taskbtn{display:flex;align-items:center;gap:2.2vw;background:var(--cream);color:var(--green);
+    text-decoration:none;border-radius:18px;padding:2.4vh 3.2vw;box-shadow:0 6px 20px rgba(0,0,0,.28);
+    opacity:0;transform:translateY(22px);}
+  .scene.active .taskbtn{animation:rise .6s ease forwards;}
+  .taskbtn:hover{transform:translateY(-3px);}
+  .taskbtn .bi{font-size:3.6vw;flex:0 0 auto;line-height:1;}
+  .taskbtn .bt{font-family:'Noto Serif CJK TC',serif;font-size:2.7vw;font-weight:900;display:block;}
+  .taskbtn .bs{font-size:1.6vw;color:#5b7a60;font-weight:400;display:block;margin-top:.5vh;}
   /* entrance helpers */
   .scene.active .fade{animation:fadeUp 1s ease forwards;}
   .scene.active .fade2{animation:fadeUp 1s ease .4s both;}
@@ -106,16 +123,16 @@
     <div class="lead fade3" style="font-size:2.6vw;">先把心裡對錢的不安，<span class="g">翻鬆</span>──<br>讓種子，有地方住。</div>
   </section>
 
-  <section class="scene" data-d="6200">
-    <div class="lead fade">今天，我們一起種下 <span class="g">五顆種子</span></div>
-    <div class="seeds">
-      <div class="seed" style="animation-delay:.2s"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="11" fill="#e3c885"/><path d="M20 11a9 9 0 000 18" fill="#9a7621"/></svg><div class="lb">醫療保障</div></div>
-      <div class="seed" style="animation-delay:.6s"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="11" fill="#e3c885"/><path d="M20 11a9 9 0 000 18" fill="#9a7621"/></svg><div class="lb">家庭保障</div></div>
-      <div class="seed" style="animation-delay:1.0s"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="11" fill="#e3c885"/><path d="M20 11a9 9 0 000 18" fill="#9a7621"/></svg><div class="lb">子女教育</div></div>
-      <div class="seed" style="animation-delay:1.4s"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="11" fill="#e3c885"/><path d="M20 11a9 9 0 000 18" fill="#9a7621"/></svg><div class="lb">財務自由</div></div>
-      <div class="seed" style="animation-delay:1.8s"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="11" fill="#e3c885"/><path d="M20 11a9 9 0 000 18" fill="#9a7621"/></svg><div class="lb">資產傳承</div></div>
+  <section class="scene" data-d="9800">
+    <div class="lead fade">今天，我們種下 <span class="g">五顆種子</span></div>
+    <div class="sub fade" style="font-size:1.9vw;margin-top:1.4vh;">每一顆，都是為自己和家人，種下的一份安心</div>
+    <div class="slist">
+      <div class="srow" style="animation-delay:.5s"><svg class="ic" viewBox="0 0 40 40"><circle cx="20" cy="20" r="11" fill="#e3c885"/><path d="M20 11a9 9 0 000 18" fill="#9a7621"/></svg><span class="nm">醫療保障</span><span class="dash">──</span><span class="mn">生病、住院時，不用為錢煩惱，能安心治療</span></div>
+      <div class="srow" style="animation-delay:1.1s"><svg class="ic" viewBox="0 0 40 40"><circle cx="20" cy="20" r="11" fill="#e3c885"/><path d="M20 11a9 9 0 000 18" fill="#9a7621"/></svg><span class="nm">家庭保障</span><span class="dash">──</span><span class="mn">萬一家裡少了一份收入，生活還是撐得住</span></div>
+      <div class="srow" style="animation-delay:1.7s"><svg class="ic" viewBox="0 0 40 40"><circle cx="20" cy="20" r="11" fill="#e3c885"/><path d="M20 11a9 9 0 000 18" fill="#9a7621"/></svg><span class="nm">子女教育</span><span class="dash">──</span><span class="mn">孩子的學費和未來，早點準備、不慌張</span></div>
+      <div class="srow" style="animation-delay:2.3s"><svg class="ic" viewBox="0 0 40 40"><circle cx="20" cy="20" r="11" fill="#e3c885"/><path d="M20 11a9 9 0 000 18" fill="#9a7621"/></svg><span class="nm">財務自由</span><span class="dash">──</span><span class="mn">有一天不工作，錢也會自己流進來</span></div>
+      <div class="srow" style="animation-delay:2.9s"><svg class="ic" viewBox="0 0 40 40"><circle cx="20" cy="20" r="11" fill="#e3c885"/><path d="M20 11a9 9 0 000 18" fill="#9a7621"/></svg><span class="nm">資產傳承</span><span class="dash">──</span><span class="mn">把愛和財富，好好留給你在乎的人</span></div>
     </div>
-    <div class="sub fade3" style="margin-top:5vh;animation-delay:2.2s;">這一季，我們會一顆一顆，把它們種下、照顧長大。</div>
   </section>
 
   <section class="scene" data-d="8000">
@@ -152,6 +169,16 @@
       <circle cx="60" cy="50" r="11" fill="#9a7621"/>
     </svg>
     <div class="closing fade2">今天，先把土翻鬆。<br>接下來，我們一起，<span class="g">慢慢種成一座花園。</span></div>
+  </section>
+
+  <section class="scene" data-d="999999">
+    <div class="lead fade">今天的任務 🌱</div>
+    <div class="sub fade" style="font-size:1.9vw;margin-top:1.2vh;">點一下，開始今天的小任務</div>
+    <div class="menu">
+      <a class="taskbtn" href="https://reurl.cc/53xM5n" target="_blank" rel="noopener" style="animation-delay:.4s"><span class="bi">🌱</span><span><span class="bt">安心感輕健診</span><span class="bs">3 個小問題，看看你現在的安心感</span></span></a>
+      <a class="taskbtn" href="1150603-practice.html" style="animation-delay:.85s"><span class="bi">📝</span><span><span class="bt">數字練習單（AI 任務）</span><span class="bs">動手算算看你的「安心底」和退休缺口</span></span></a>
+      <a class="taskbtn" href="1150603-homework.html" style="animation-delay:1.3s"><span class="bi">📖</span><span><span class="bt">回家作業</span><span class="bs">寫下今天的收穫，種進你的花園</span></span></a>
+    </div>
   </section>
 
 </div>
@@ -212,7 +239,7 @@
     else if(e.key==='ArrowLeft') document.getElementById('prev').click();
     else if(e.key===' '){e.preventDefault();toggle();}
   });
-  document.getElementById('stage').addEventListener('click',function(e){ if(e.target.closest('#bar'))return; toggle(); });
+  document.getElementById('stage').addEventListener('click',function(e){ if(e.target.closest('#bar')||e.target.closest('a'))return; toggle(); });
   document.getElementById('bar').classList.add('show'); setTimeout(function(){document.getElementById('bar').classList.remove('show');},2600);
 
   document.getElementById('startveil').onclick=function(){
