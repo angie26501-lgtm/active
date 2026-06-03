@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="robots" content="noindex,nosnippet">
+<title>第一堂 · 回家作業 ｜ 女人要有錢</title>
+<style>
+  :root{--green:#1f4a2e;--green2:#2c5433;--gold:#9a7621;--goldL:#c9a24b;--cream:#f6f1e4;--ink:#26301f;--soft:#5b7a60;}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{font-family:-apple-system,'Noto Sans CJK TC','PingFang TC',sans-serif;color:var(--ink);
+    background:radial-gradient(130% 70% at 50% 0%,#27502f,#1f4a2e 55%,#163522);min-height:100vh;padding:16px 14px 40px;}
+  .wrap{max-width:480px;margin:0 auto;}
+  .menu{display:flex;gap:9px;margin-bottom:14px;}
+  .menu a{flex:1;text-align:center;text-decoration:none;font-size:16px;font-weight:700;color:var(--cream);
+    background:rgba(255,255,255,.08);border:1px solid rgba(227,200,133,.35);border-radius:11px;padding:13px 6px;}
+  .head{text-align:center;color:var(--cream);margin-bottom:16px;}
+  .head .t{font-size:27px;font-weight:900;}
+  .head .t .g{color:var(--goldL);}
+  .head .s{font-size:16.5px;color:#dcd2b6;margin-top:9px;line-height:1.85;}
+  .card{background:var(--cream);border-radius:18px;padding:22px 20px;margin-bottom:16px;box-shadow:0 8px 24px rgba(0,0,0,.18);}
+  label{display:block;font-size:18.5px;font-weight:700;color:var(--green);margin:16px 0 8px;}
+  label:first-child{margin-top:0;}
+  input[type=text],textarea,select{width:100%;font-size:19px;font-family:inherit;color:var(--ink);
+    border:1.5px solid #e0d4ad;border-radius:12px;padding:14px 15px;background:#fffdf7;outline:none;}
+  textarea{min-height:84px;resize:vertical;}
+  input:focus,textarea:focus,select:focus{border-color:var(--goldL);}
+  .hint{font-size:15px;color:var(--soft);margin-top:6px;}
+  .seedopt{display:flex;flex-direction:column;gap:3px;border:1.5px solid #e0d4ad;border-radius:14px;
+    padding:14px 16px;margin-bottom:10px;cursor:pointer;background:#fffdf7;}
+  .seedopt.sel{border-color:var(--gold);background:#f3ead2;box-shadow:inset 0 0 0 2px rgba(154,118,33,.3);}
+  .seedopt .sn{font-size:19px;font-weight:900;color:var(--green);}
+  .seedopt.sel .sn::after{content:" ✓";color:var(--gold);}
+  .seedopt .sd{font-size:15px;color:var(--soft);line-height:1.5;}
+  .btn{width:100%;margin-top:20px;border:none;border-radius:14px;padding:17px;font-size:20px;font-weight:900;
+    font-family:inherit;color:var(--cream);background:var(--green);cursor:pointer;}
+  .btn:active{opacity:.9;}
+  #sendstat{text-align:center;font-size:15.5px;font-weight:700;margin-top:12px;color:#9aa58f;min-height:20px;}
+  .reward{display:none;}
+  .reward .done{text-align:center;font-size:23px;font-weight:900;color:var(--green);margin-bottom:5px;}
+  .reward .dsub{text-align:center;font-size:16px;color:var(--soft);margin-bottom:14px;}
+  .prompt{background:#f3ead2;border-radius:12px;padding:16px;font-size:16.5px;line-height:1.85;color:#3a4232;white-space:pre-wrap;}
+  .copy{width:100%;margin-top:12px;border:1.5px solid var(--gold);background:#fff;color:var(--gold);
+    border-radius:12px;padding:14px;font-size:17px;font-weight:700;font-family:inherit;cursor:pointer;}
+  .note{font-size:15px;color:var(--soft);margin-top:12px;line-height:1.75;}
+  .line{display:block;text-align:center;margin-top:14px;text-decoration:none;background:var(--green);color:var(--cream);
+    border-radius:12px;padding:15px;font-weight:700;font-size:17px;}
+  .foot{text-align:center;color:var(--cream);font-size:15px;line-height:2;margin-top:8px;}
+</style></head>
+<body>
+<div class="wrap">
+
+  <div class="menu">
+    <a href="https://reurl.cc/53xM5n" target="_blank" rel="noopener">🌱 安心感輕健診</a>
+    <a href="1150603-practice.html">📝 數字練習單</a>
+  </div>
+
+  <div class="head">
+    <div class="t">第一堂 · <span class="g">回家作業</span></div>
+    <div class="s">把今天的收穫，種進你的花園。<br>寫完送出，就會拿到一份專屬的「圖卡指示詞」🌱</div>
+  </div>
+
+  <div class="card" id="formcard">
+    <label>你的名字／暱稱</label>
+    <input type="text" id="name" placeholder="讓老師認得你">
+
+    <label>① 今天上課最大的收穫</label>
+    <textarea id="gain" placeholder="可以是一個觀念，也可以是一句話 ✍️"></textarea>
+
+    <label>② 我最擔心的一件跟錢有關的事</label>
+    <textarea id="worry" placeholder="誠實寫下來，沒有對錯"></textarea>
+
+    <label>③ 今天起，我決定先做的「一小步」</label>
+    <textarea id="step" placeholder="再小都可以，能做到最重要"></textarea>
+
+    <label>④ 五顆種子裡，我最想先種的一顆</label>
+    <div class="hint" style="margin-bottom:10px;">點一下你今天最放不下、最想守護的那一顆。</div>
+    <div id="seedwrap">
+      <div class="seedopt" data-v="醫療保障" onclick="pickSeed(this)"><span class="sn">醫療保障</span><span class="sd">生病、住院時，不用為錢煩惱</span></div>
+      <div class="seedopt" data-v="家庭保障" onclick="pickSeed(this)"><span class="sn">家庭保障</span><span class="sd">萬一少了一份收入，生活也撐得住</span></div>
+      <div class="seedopt" data-v="子女教育" onclick="pickSeed(this)"><span class="sn">子女教育</span><span class="sd">孩子的學費和未來，早點準備</span></div>
+      <div class="seedopt" data-v="財務自由" onclick="pickSeed(this)"><span class="sn">財務自由</span><span class="sd">有一天不工作，也有錢自己進來</span></div>
+      <div class="seedopt" data-v="資產傳承" onclick="pickSeed(this)"><span class="sn">資產傳承</span><span class="sd">把愛和財富，好好留給在乎的人</span></div>
+    </div>
+
+    <button class="btn" id="submit" onclick="submitHw()">完成任務 · 送出</button>
+    <div id="sendstat"></div>
+  </div>
+
+  <div class="card reward" id="reward">
+    <div class="done">🌱 任務完成！</div>
+    <div class="dsub" id="dsub">這是你的專屬「財富花園圖卡指示詞」</div>
+    <div class="prompt" id="prompt"></div>
+    <button class="copy" onclick="copyPrompt()" id="copybtn">複製指示詞</button>
+    <div class="note">把這段貼到 AI 繪圖（ChatGPT／Gemini／Copilot 的畫圖功能），或直接傳到馥芸 LINE 群，<b>琪琪老師可以幫你生成</b>你的專屬花園圖卡。</div>
+    <a class="line" href="https://lin.ee/6Tm8pI7" target="_blank" rel="noopener">傳到馥芸 LINE，請老師幫我生成 🌿</a>
+  </div>
+
+  <div class="foot">琪琪老師 · 馥芸財富學苑<br>願你的財富花園，花開豐盛 🌿</div>
+</div>
+
+<iframe name="hw_target" title="gf" style="display:none" aria-hidden="true"></iframe>
+
+<script>
+  var GFORM="TODO_FORM_URL";
+  var GENTRY={name:"entry.NAME_TODO", gain:"entry.GAIN_TODO", worry:"entry.WORRY_TODO", step:"entry.STEP_TODO", seed:"entry.SEED_TODO"};
+
+  function val(id){return (document.getElementById(id).value||'').trim();}
+  var selectedSeed="";
+  function pickSeed(el){
+    var all=document.querySelectorAll('.seedopt');
+    for(var k=0;k<all.length;k++){all[k].classList.remove('sel');}
+    el.classList.add('sel'); selectedSeed=el.getAttribute('data-v');
+  }
+  function buildPrompt(name,seed){
+    var who=name||'我'; var sd=seed||'我最在乎的那件事';
+    return '請幫我畫一張溫暖療癒的「財富花園」插畫風格圖卡：清晨柔光下的一座小花園，畫面中央有一株代表「'+sd+'」、正在綻放的花，象徵 '+who+' 為自己種下的願望。色調用米白、嫩綠、暖金，手繪水彩質感；畫面下方寫一句話：「'+who+' 的財富花園，正在發芽。」整體溫柔、有希望感，適合做成手機桌布。';
+  }
+  var stat=document.getElementById('sendstat');
+  function submitHw(){
+    var name=val('name'), gain=val('gain'), worry=val('worry'), step=val('step'), seed=selectedSeed;
+    if(!name){ stat.style.color='#c0392b'; stat.textContent='請先填上你的名字／暱稱'; return; }
+    if(!gain && !worry && !step && !seed){ stat.style.color='#c0392b'; stat.textContent='至少寫一題再送出喔'; return; }
+    var done=false;
+    function ok(){ if(done)return; done=true; stat.style.color='#2e7d4f'; stat.textContent='✓ 已成功送出，謝謝你！';
+      document.getElementById('prompt').textContent=buildPrompt(name,seed);
+      document.getElementById('reward').style.display='block';
+      document.getElementById('submit').textContent='已送出 ✓';
+      document.getElementById('reward').scrollIntoView({behavior:'smooth'});
+    }
+    stat.style.color='#9aa58f'; stat.textContent='傳送中…';
+    try{
+      var ifr=document.querySelector('iframe[name="hw_target"]'); if(ifr) ifr.onload=ok;
+      var f=document.createElement('form'); f.action=GFORM; f.method='POST'; f.target='hw_target'; f.style.display='none';
+      var map=[[GENTRY.name,name],[GENTRY.gain,gain],[GENTRY.worry,worry],[GENTRY.step,step],[GENTRY.seed,seed]];
+      map.forEach(function(p){if(!p[1]||!p[0]||p[0].indexOf('TODO')>=0)return;var x=document.createElement('input');x.type='hidden';x.name=p[0];x.value=p[1];f.appendChild(x);});
+      document.body.appendChild(f);
+      if(GFORM.indexOf('TODO')<0) f.submit();
+      setTimeout(ok,4000);
+    }catch(e){ ok(); }
+  }
+  function copyPrompt(){
+    var t=document.getElementById('prompt').textContent;
+    if(navigator.clipboard){ navigator.clipboard.writeText(t).then(function(){var b=document.getElementById('copybtn');b.textContent='已複製 ✓';setTimeout(function(){b.textContent='複製指示詞';},1800);}); }
+    else { var r=document.createRange();r.selectNode(document.getElementById('prompt'));getSelection().removeAllRanges();getSelection().addRange(r);try{document.execCommand('copy');}catch(e){} }
+  }
+</script>
+</body></html>
