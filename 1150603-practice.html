@@ -12,31 +12,31 @@
     background:radial-gradient(130% 70% at 50% 0%,#27502f,#1f4a2e 55%,#163522);min-height:100vh;padding:18px 14px 40px;}
   .wrap{max-width:480px;margin:0 auto;}
   .head{text-align:center;color:var(--cream);margin-bottom:16px;}
-  .head .t{font-size:23px;font-weight:900;letter-spacing:1px;}
+  .head .t{font-size:27px;font-weight:900;letter-spacing:1px;}
   .head .t .g{color:var(--goldL);}
-  .head .s{font-size:13.5px;color:#cdbf9f;margin-top:9px;line-height:1.7;}
-  .card{background:var(--cream);border-radius:18px;padding:20px 18px;margin-bottom:16px;box-shadow:0 8px 24px rgba(0,0,0,.18);}
-  .card h2{font-size:19px;color:var(--green);font-weight:900;margin-bottom:4px;}
-  .card .lead{font-size:13px;color:var(--soft);margin-bottom:15px;line-height:1.6;}
-  .step{display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:15.5px;line-height:2.5;margin-bottom:4px;color:#2c3320;}
-  .num{display:inline-flex;width:24px;height:24px;align-items:center;justify-content:center;border-radius:50%;
-    background:var(--green);color:var(--goldL);font-size:13px;font-weight:700;flex:0 0 24px;}
-  input[type=number]{width:108px;font-size:17px;font-family:inherit;text-align:right;color:var(--green);font-weight:700;
-    border:none;border-bottom:2px solid var(--goldL);background:transparent;padding:4px 4px;outline:none;}
+  .head .s{font-size:16.5px;color:#dcd2b6;margin-top:10px;line-height:1.85;}
+  .card{background:var(--cream);border-radius:18px;padding:22px 20px;margin-bottom:16px;box-shadow:0 8px 24px rgba(0,0,0,.18);}
+  .card h2{font-size:23px;color:var(--green);font-weight:900;margin-bottom:6px;}
+  .card .lead{font-size:16px;color:var(--soft);margin-bottom:16px;line-height:1.7;}
+  .step{display:flex;align-items:center;flex-wrap:wrap;gap:7px;font-size:19px;line-height:2.7;margin-bottom:6px;color:#2c3320;}
+  .num{display:inline-flex;width:29px;height:29px;align-items:center;justify-content:center;border-radius:50%;
+    background:var(--green);color:var(--goldL);font-size:16px;font-weight:700;flex:0 0 29px;}
+  input[type=number]{width:122px;font-size:22px;font-family:inherit;text-align:right;color:var(--green);font-weight:700;
+    border:none;border-bottom:2px solid var(--goldL);background:transparent;padding:5px 4px;outline:none;}
   input[type=number]:focus{border-color:var(--green);}
   input::placeholder{color:#c4b894;font-weight:400;}
   /* hide number spinners */
   input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
   input[type=number]{-moz-appearance:textfield;}
-  .unit{font-size:14px;color:var(--soft);}
-  .res{background:#f3ead2;border-radius:12px;padding:13px 15px;margin-top:13px;font-size:16px;color:var(--green);font-weight:900;
-    display:flex;justify-content:space-between;align-items:center;}
-  .res .v{font-size:20px;color:var(--gold);}
-  .ai{font-size:12.5px;color:var(--gold);font-style:italic;margin-top:11px;line-height:1.6;}
-  .feel{width:100%;margin-top:12px;border:1.5px solid #e0d4ad;border-radius:12px;padding:11px 13px;font-size:15px;
-    font-family:inherit;color:var(--ink);min-height:64px;outline:none;background:#fffdf7;}
+  .unit{font-size:17px;color:var(--soft);}
+  .res{background:#f3ead2;border-radius:12px;padding:15px 16px;margin-top:14px;font-size:19.5px;color:var(--green);font-weight:900;
+    display:flex;justify-content:space-between;align-items:center;gap:10px;}
+  .res .v{font-size:25px;color:var(--gold);}
+  .ai{font-size:15px;color:var(--gold);font-style:italic;margin-top:12px;line-height:1.7;}
+  .feel{width:100%;margin-top:13px;border:1.5px solid #e0d4ad;border-radius:12px;padding:13px 14px;font-size:18px;
+    font-family:inherit;color:var(--ink);min-height:72px;outline:none;background:#fffdf7;}
   .feel:focus{border-color:var(--goldL);}
-  .foot{text-align:center;color:var(--cream);font-size:13.5px;line-height:1.9;margin-top:8px;padding:0 6px;}
+  .foot{text-align:center;color:var(--cream);font-size:15.5px;line-height:2;margin-top:8px;padding:0 6px;}
   .foot b{color:var(--goldL);}
 </style></head>
 <body>
@@ -71,11 +71,21 @@
     <textarea class="feel" id="feel" placeholder="看到這個數字，我現在的感覺是……"></textarea>
   </div>
 
+  <div class="card" id="sendcard">
+    <h2 style="font-size:20px;">完成了嗎？把數字傳給老師（選填）</h2>
+    <div class="lead">想讓老師看到你的數字、課後給你建議，就填名字送出；不想也完全沒關係。</div>
+    <input type="text" id="pname" placeholder="你的名字／暱稱" style="width:100%;font-size:19px;font-family:inherit;color:#26301f;border:1.5px solid #e0d4ad;border-radius:12px;padding:14px 15px;background:#fffdf7;outline:none;">
+    <button onclick="sendPractice()" style="width:100%;margin-top:14px;border:none;border-radius:14px;padding:16px;font-size:19px;font-weight:900;font-family:inherit;color:#f6f1e4;background:#1f4a2e;cursor:pointer;">送出給老師</button>
+    <div id="pstat" style="text-align:center;font-size:15.5px;font-weight:700;margin-top:10px;color:#9aa58f;min-height:20px;"></div>
+  </div>
+
   <div class="foot">
     你會發現 —— <b>數字是死的，方向是你定的。</b><br>
     今天只是「翻土」，把問題看清楚就好；後面幾堂，我們一起把它變成做得到的計畫。
   </div>
 </div>
+
+<iframe name="pr_target" title="gf" style="display:none" aria-hidden="true"></iframe>
 
 <script>
   function num(id){var v=parseFloat(document.getElementById(id).value);return isNaN(v)?0:v;}
@@ -90,6 +100,27 @@
     var total=gap*12*num('b3');
     document.getElementById('r3').textContent=fmt(gap);
     document.getElementById('r4').textContent=fmt(total);
+  }
+  var GFORM="TODO_FORM_URL";
+  var GENTRY={name:"entry.NAME_TODO", safe:"entry.SAFE_TODO", gap:"entry.GAP_TODO"};
+  function sendPractice(){
+    var ps=document.getElementById('pstat');
+    var name=(document.getElementById('pname').value||'').trim();
+    if(!name){ ps.style.color='#c0392b'; ps.textContent='請先填上你的名字／暱稱'; return; }
+    var living=num('a1'),emerg=living*6,med=num('a2')*num('a3'),safe=emerg+med;
+    var gap=num('b1')-num('b2'); if(gap<0)gap=0; var total=gap*12*num('b3');
+    var done=false;
+    function ok(){ if(done)return; done=true; ps.style.color='#2e7d4f'; ps.textContent='✓ 已成功送出，謝謝你！'; }
+    ps.style.color='#9aa58f'; ps.textContent='傳送中…';
+    try{
+      var ifr=document.querySelector('iframe[name="pr_target"]'); if(ifr) ifr.onload=ok;
+      var f=document.createElement('form'); f.action=GFORM; f.method='POST'; f.target='pr_target'; f.style.display='none';
+      var map=[[GENTRY.name,name],[GENTRY.safe,String(Math.round(safe))],[GENTRY.gap,String(Math.round(total))]];
+      map.forEach(function(p){if(!p[1]||!p[0]||p[0].indexOf('TODO')>=0)return;var x=document.createElement('input');x.type='hidden';x.name=p[0];x.value=p[1];f.appendChild(x);});
+      document.body.appendChild(f);
+      if(GFORM.indexOf('TODO')<0) f.submit();
+      setTimeout(ok,4000);
+    }catch(e){ ok(); }
   }
   document.querySelectorAll('input[type=number]').forEach(function(el){el.addEventListener('input',calc);});
   calc();
