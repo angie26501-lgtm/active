@@ -1,177 +1,56 @@
 
 <!DOCTYPE html><html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nosnippet"><title>財富花園 ｜ 女人要有錢</title><style>
-  :root{--green:#1f4a2e;--green2:#2c5433;--gold:#9a7621;--goldL:#e3c885;--cream:#f6f1e4;--soft:#bcae8e;}
-  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-  html,body{height:100%;}
-  body{background:#0e2417;font-family:-apple-system,'Noto Sans CJK TC','PingFang TC',sans-serif;
-    overflow:hidden;color:var(--cream);}
-  #stage{position:fixed;inset:0;background:radial-gradient(130% 80% at 50% 8%,#2c5433,#1f4a2e 50%,#11301d 100%);
-    display:flex;align-items:center;justify-content:center;}
-  .scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    text-align:center;padding:6vh 7vw;opacity:0;pointer-events:none;transition:opacity .9s ease;}
-  .scene.active{opacity:1;pointer-events:auto;}
-  .org{font-size:1.5vw;letter-spacing:.4em;color:var(--soft);margin-bottom:2.5vh;}
-  .org b{color:var(--goldL);}
-  .big{font-family:'Noto Serif CJK TC',serif;font-weight:900;font-size:8.5vw;line-height:1.05;letter-spacing:.04em;}
-  .big .g{color:var(--goldL);}
-  .ribbon{font-size:2.6vw;color:var(--goldL);letter-spacing:.5em;margin-top:2vh;font-weight:700;}
-  .ribbon .ln{display:inline-block;width:6vw;height:1px;background:var(--gold);vertical-align:middle;margin:0 1.2vw;}
-  .sub{font-size:2vw;color:#cdbf9f;margin-top:3vh;letter-spacing:.06em;line-height:1.6;}
-  .lead{font-size:3vw;color:var(--cream);line-height:1.6;}
-  .lead .g{color:var(--goldL);font-weight:900;}
-  .huge{font-family:'Noto Serif CJK TC',serif;font-weight:900;font-size:13vw;color:var(--goldL);line-height:1;margin:1.5vh 0;}
-  .kick{font-size:2.2vw;color:var(--soft);letter-spacing:.4em;}
-  .seeds{display:flex;gap:2.5vw;margin-top:5vh;flex-wrap:wrap;justify-content:center;}
-  .seed{display:flex;flex-direction:column;align-items:center;opacity:0;transform:translateY(-30px);}
-  .scene.active .seed{animation:drop .7s ease forwards;}
-  .seed svg{width:6vw;height:6vw;}
-  .seed .lb{font-size:1.7vw;color:var(--cream);margin-top:1.2vh;font-weight:700;}
-  .slist{margin-top:3.5vh;display:flex;flex-direction:column;gap:2.5vh;width:100%;max-width:1080px;}
-  .srow{display:flex;align-items:center;gap:1.4vw;opacity:0;transform:translateX(-26px);}
-  .scene.active .srow{animation:slin .65s ease forwards;}
-  .srow .ic{width:3.6vw;height:3.6vw;flex:0 0 auto;}
-  .srow .nm{font-family:'Noto Serif CJK TC',serif;font-size:2.8vw;color:var(--goldL);font-weight:900;width:11.5vw;text-align:right;flex:0 0 auto;}
-  .srow .dash{color:var(--gold);font-size:1.9vw;flex:0 0 auto;}
-  .srow .mn{font-size:2.2vw;color:var(--cream);text-align:left;}
-  @keyframes slin{to{opacity:1;transform:none;}}
-  .stages{display:flex;gap:1.6vw;margin-top:5vh;align-items:flex-end;justify-content:center;width:100%;}
-  .stg{flex:1;max-width:17vw;opacity:0;transform:translateY(24px);}
-  .scene.active .stg{animation:rise .7s ease forwards;}
-  .stg svg{width:6.5vw;height:6.5vw;}
-  .stg .no{font-size:1.4vw;color:var(--gold);font-weight:900;letter-spacing:.1em;margin-top:1vh;}
-  .stg .st{font-family:'Noto Serif CJK TC',serif;font-size:2.2vw;color:var(--goldL);font-weight:900;}
-  .stg .de{font-size:1.45vw;color:#cdbf9f;margin-top:.6vh;line-height:1.45;}
-  .closing{font-family:'Noto Serif CJK TC',serif;font-size:4vw;color:var(--cream);line-height:1.5;}
-  .closing .g{color:var(--goldL);}
-  .menu{display:flex;flex-direction:column;gap:2.2vh;width:100%;max-width:640px;margin-top:3.5vh;}
-  .taskbtn{display:flex;align-items:center;gap:2.2vw;background:var(--cream);color:var(--green);
-    text-decoration:none;border-radius:18px;padding:2.4vh 3.2vw;box-shadow:0 6px 20px rgba(0,0,0,.28);
-    opacity:0;transform:translateY(22px);}
-  .scene.active .taskbtn{animation:rise .6s ease forwards;}
-  .taskbtn:hover{transform:translateY(-3px);}
-  .taskbtn .bi{font-size:3.6vw;flex:0 0 auto;line-height:1;}
-  .taskbtn .bt{font-family:'Noto Serif CJK TC',serif;font-size:2.7vw;font-weight:900;display:block;}
-  .taskbtn .bs{font-size:1.6vw;color:#5b7a60;font-weight:400;display:block;margin-top:.5vh;}
-  .gatebox{margin-top:3.5vh;display:flex;flex-direction:column;gap:2vh;width:100%;max-width:440px;}
-  .gatebox input{width:100%;font-size:clamp(20px,3.4vw,40px);text-align:center;letter-spacing:.35em;padding:14px 16px;border-radius:14px;border:2px solid var(--gold);background:rgba(246,241,228,.96);color:#1f4a2e;outline:none;font-family:inherit;}
-  .gatebox button{width:100%;font-size:clamp(18px,3vw,34px);font-weight:900;padding:14px;border:none;border-radius:14px;background:var(--goldL);color:#26301f;cursor:pointer;font-family:inherit;}
-  .gateerr{font-size:clamp(14px,2vw,24px);color:#ffb1a1;min-height:1.2em;font-weight:700;text-align:center;}
-  /* entrance helpers */
-  .scene.active .fade{animation:fadeUp 1s ease forwards;}
-  .scene.active .fade2{animation:fadeUp 1s ease .4s both;}
-  .scene.active .fade3{animation:fadeUp 1s ease .8s both;}
-  .fade,.fade2,.fade3{opacity:0;}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:none;}}
-  @keyframes drop{to{opacity:1;transform:translateY(0);}}
-  @keyframes rise{to{opacity:1;transform:none;}}
-  .scene.active .bloom{animation:bloom 1.4s cubic-bezier(.2,.8,.3,1) forwards;transform-origin:center 80%;}
-  .bloom{opacity:0;transform:scale(.2) rotate(-20deg);}
-  @keyframes bloom{to{opacity:1;transform:scale(1) rotate(0);}}
-  .scene.active .grow{animation:grow 1.2s ease forwards;transform-origin:bottom;}
-  .grow{transform:scaleY(0);opacity:0;}
-  @keyframes grow{to{transform:scaleY(1);opacity:1;}}
-
-  /* controls */
-  #tobtn{position:fixed;left:50%;bottom:62px;transform:translateX(-50%);z-index:30;background:#e3c885;color:#26301f;
-    border:none;border-radius:40px;padding:15px 32px;font-size:20px;font-weight:900;font-family:inherit;cursor:pointer;
-    box-shadow:0 10px 24px rgba(0,0,0,.35);animation:pulse 1.8s ease-in-out infinite;}
-  @keyframes pulse{0%,100%{transform:translateX(-50%) scale(1);}50%{transform:translateX(-50%) scale(1.05);}}
-  #bar{position:fixed;left:0;right:0;bottom:0;display:flex;align-items:center;gap:14px;
-    padding:12px 18px;background:linear-gradient(to top,rgba(0,0,0,.5),transparent);z-index:20;
-    opacity:0;transition:opacity .3s;}
-  #stage:hover #bar,#bar.show{opacity:1;}
-  #bar button{background:rgba(246,241,228,.12);border:1px solid rgba(227,200,133,.4);color:var(--cream);
-    font-size:16px;border-radius:10px;padding:7px 13px;cursor:pointer;font-family:inherit;}
-  #bar button:hover{background:rgba(227,200,133,.25);}
-  #prog{flex:1;height:5px;background:rgba(255,255,255,.15);border-radius:3px;overflow:hidden;}
-  #fill{height:100%;width:0;background:var(--goldL);}
-  #dots{display:flex;gap:7px;}
-  .dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;}
-  .dot.on{background:var(--goldL);}
-  #startveil{position:fixed;inset:0;background:rgba(11,30,20,.92);z-index:40;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;cursor:pointer;}
-  #startveil .pt{font-family:'Noto Serif CJK TC',serif;font-size:4.5vw;color:var(--goldL);font-weight:900;}
-  #startveil .ps{font-size:2vw;color:#cdbf9f;margin-top:2vh;}
-  #startveil .pp{font-size:6vw;color:var(--goldL);margin-bottom:3vh;}
-
-#enterbtn{position:fixed;left:50%;bottom:48px;transform:translateX(-50%);z-index:30;background:#e3c885;color:#26301f;
-  border:none;border-radius:40px;padding:17px 36px;font-size:22px;font-weight:900;font-family:inherit;cursor:pointer;
-  text-decoration:none;display:inline-block;box-shadow:0 10px 26px rgba(0,0,0,.38);animation:pulse 1.8s ease-in-out infinite;}
-@keyframes pulse{0%,100%{transform:translateX(-50%) scale(1);}50%{transform:translateX(-50%) scale(1.05);}}
-</style></head><body><div id="stage"><section class="scene" data-d="5200">
-    <div class="org fade"><b>馥芸財富學苑</b></div>
-    <svg class="bloom" viewBox="0 0 120 120" style="width:18vw;height:18vw;margin:2vh 0;">
-      <path d="M60 118V64" stroke="#3f7d4f" stroke-width="6" stroke-linecap="round"/>
-      <g>
-        <ellipse cx="60" cy="34" rx="13" ry="20" fill="#e3c885"/>
-        <ellipse cx="86" cy="50" rx="20" ry="13" fill="#e3c885"/>
-        <ellipse cx="60" cy="66" rx="13" ry="20" fill="#e3c885"/>
-        <ellipse cx="34" cy="50" rx="20" ry="13" fill="#e3c885"/>
-        <circle cx="60" cy="50" r="11" fill="#9a7621"/>
-      </g>
-    </svg>
-    <div class="big fade2">女人要有<span class="g">錢</span></div>
-    <div class="ribbon fade3"><span class="ln"></span>財富花園<span class="ln"></span></div>
-    <div class="sub fade3">五堂課，陪你把人生與錢，種成一座花園</div>
-  </section>
-<section class="scene" data-d="5200">
-    <div class="lead fade">我們做的，不是「理財」</div>
-    <div class="big fade2" style="margin-top:2vh;">是 <span class="g">種一座花園</span></div>
-    <div class="sub fade3" style="font-size:2.3vw;margin-top:4vh;">老師是園丁，而你，是即將發芽的種子。</div>
-  </section>
-<section class="scene" data-d="5600">
-    <div class="kick fade">今天 · 第一堂</div>
-    <div class="huge bloom">翻土</div>
-    <div class="lead fade3" style="font-size:2.6vw;">先把心裡對錢的不安，<span class="g">翻鬆</span>──<br>讓種子，有地方住。</div>
-  </section>
-<section class="scene" data-d="9800">
-    <div class="lead fade">今天，我們種下 <span class="g">五顆種子</span></div>
-    <div class="sub fade" style="font-size:1.9vw;margin-top:1.4vh;">每一顆，都是為自己和家人，種下的一份安心</div>
-    <div class="slist">
-      <div class="srow" style="animation-delay:.5s"><svg class="ic" viewBox="0 0 40 40"><circle cx="20" cy="20" r="11" fill="#e3c885"/><path d="M20 11a9 9 0 000 18" fill="#9a7621"/></svg><span class="nm">醫療保障</span><span class="dash">──</span><span class="mn">生病、住院時，不用為錢煩惱，能安心治療</span></div>
-      <div class="srow" style="animation-delay:1.1s"><svg class="ic" viewBox="0 0 40 40"><circle cx="20" cy="20" r="11" fill="#e3c885"/><path d="M20 11a9 9 0 000 18" fill="#9a7621"/></svg><span class="nm">家庭保障</span><span class="dash">──</span><span class="mn">萬一家裡少了一份收入，生活還是撐得住</span></div>
-      <div class="srow" style="animation-delay:1.7s"><svg class="ic" viewBox="0 0 40 40"><circle cx="20" cy="20" r="11" fill="#e3c885"/><path d="M20 11a9 9 0 000 18" fill="#9a7621"/></svg><span class="nm">子女教育</span><span class="dash">──</span><span class="mn">孩子的學費和未來，早點準備、不慌張</span></div>
-      <div class="srow" style="animation-delay:2.3s"><svg class="ic" viewBox="0 0 40 40"><circle cx="20" cy="20" r="11" fill="#e3c885"/><path d="M20 11a9 9 0 000 18" fill="#9a7621"/></svg><span class="nm">財務自由</span><span class="dash">──</span><span class="mn">有一天不工作，錢也會自己流進來</span></div>
-      <div class="srow" style="animation-delay:2.9s"><svg class="ic" viewBox="0 0 40 40"><circle cx="20" cy="20" r="11" fill="#e3c885"/><path d="M20 11a9 9 0 000 18" fill="#9a7621"/></svg><span class="nm">資產傳承</span><span class="dash">──</span><span class="mn">把愛和財富，好好留給你在乎的人</span></div>
-    </div>
-  </section>
-<section class="scene" data-d="8000">
-    <div class="lead fade">這一季，五堂課 ＝ 一座花園的成長</div>
-    <div class="stages">
-      <div class="stg" style="animation-delay:.3s">
-        <svg viewBox="0 0 64 64"><ellipse cx="32" cy="50" rx="22" ry="6" fill="#5b3a22"/><circle cx="32" cy="44" r="5" fill="#e3c885"/></svg>
-        <div class="no">第 1 堂 · 翻土</div><div class="st">為什麼需要有錢</div><div class="de">建立安全感</div>
-      </div>
-      <div class="stg" style="animation-delay:.8s">
-        <svg viewBox="0 0 64 64"><path d="M32 54V36" stroke="#3f7d4f" stroke-width="4" stroke-linecap="round"/><path d="M32 40q-11-2-13-11 11 0 13 11z" fill="#4f9a63"/></svg>
-        <div class="no">第 2 堂 · 整地</div><div class="st">找到錢在哪裡</div><div class="de">盤點金流</div>
-      </div>
-      <div class="stg" style="animation-delay:1.3s">
-        <svg viewBox="0 0 64 64"><path d="M32 54V30" stroke="#3f7d4f" stroke-width="4" stroke-linecap="round"/><path d="M32 38q-12-1-15-11 12-1 15 11z" fill="#4f9a63"/><path d="M32 34q12-1 15-11-12-1-15 11z" fill="#62b277"/></svg>
-        <div class="no">第 3 堂 · 播種</div><div class="st">從 0 存一桶金</div><div class="de">存錢系統</div>
-      </div>
-      <div class="stg" style="animation-delay:1.8s">
-        <svg viewBox="0 0 64 64"><path d="M32 55V26" stroke="#3f7d4f" stroke-width="4" stroke-linecap="round"/><path d="M32 36q-13-1-16-12 13-1 16 12z" fill="#4f9a63"/><path d="M32 31q13-1 16-12-13-1-16 12z" fill="#62b277"/><circle cx="46" cy="16" r="5" fill="#9ec7ff"/></svg>
-        <div class="no">第 4 堂 · 灌溉</div><div class="st">AI 放大財務</div><div class="de">用 AI 整理</div>
-      </div>
-      <div class="stg" style="animation-delay:2.3s">
-        <svg viewBox="0 0 64 64"><path d="M32 56V32" stroke="#3f7d4f" stroke-width="4" stroke-linecap="round"/><circle cx="32" cy="22" r="6" fill="#9a7621"/><ellipse cx="32" cy="12" rx="5" ry="8" fill="#e3c885"/><ellipse cx="42" cy="22" rx="8" ry="5" fill="#e3c885"/><ellipse cx="32" cy="32" rx="5" ry="8" fill="#e3c885"/><ellipse cx="22" cy="22" rx="8" ry="5" fill="#e3c885"/></svg>
-        <div class="no">第 5 堂 · 開花</div><div class="st">讓錢為你工作</div><div class="de">五顆種子收割</div>
-      </div>
-    </div>
-  </section>
-<section class="scene" data-d="6500">
-    <svg class="bloom" viewBox="0 0 120 120" style="width:16vw;height:16vw;margin-bottom:3vh;">
-      <path d="M60 118V64" stroke="#3f7d4f" stroke-width="6" stroke-linecap="round"/>
-      <ellipse cx="60" cy="34" rx="13" ry="20" fill="#e3c885"/><ellipse cx="86" cy="50" rx="20" ry="13" fill="#e3c885"/>
-      <ellipse cx="60" cy="66" rx="13" ry="20" fill="#e3c885"/><ellipse cx="34" cy="50" rx="20" ry="13" fill="#e3c885"/>
-      <circle cx="60" cy="50" r="11" fill="#9a7621"/>
-    </svg>
-    <div class="closing fade2">今天，先把土翻鬆。<br>接下來，我們一起，<span class="g">慢慢種成一座花園。</span></div>
-  </section></div><a id="enterbtn" href="generousGarden.html">進入財富花園 →</a><script>
-var scenes=[].slice.call(document.querySelectorAll('#stage .scene'));
-var i=0,timer=null;
-function show(k){scenes.forEach(function(s){s.classList.remove('active');});var s=scenes[k];void s.offsetWidth;s.classList.add('active');i=k;clearTimeout(timer);var d=parseInt(s.getAttribute('data-d'))||5500;if(k<scenes.length-1)timer=setTimeout(function(){show(k+1);},d);}
-document.getElementById('stage').addEventListener('click',function(e){if(e.target.closest('#enterbtn'))return;if(i<scenes.length-1)show(i+1);});
-show(0);
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{--green:#1f4a2e;--gold:#9a7621;--goldL:#c9a24b;--cream:#f6f1e4;--ink:#26301f;--soft:#5b7a60;}
+body{font-family:-apple-system,'Noto Sans CJK TC','PingFang TC',sans-serif;color:var(--cream);
+  background:radial-gradient(130% 55% at 50% 0%,#27502f,#1f4a2e 55%,#163522);min-height:100vh;padding:28px 16px 50px;}
+.wrap{max-width:520px;margin:0 auto;}
+.ph{text-align:center;margin-bottom:26px;}
+.ph .t{font-family:'Noto Serif CJK TC',serif;font-size:40px;font-weight:900;color:#e3c885;}
+.ph .s{font-size:17px;color:#dcd2b6;margin-top:10px;line-height:1.8;}
+.block{background:var(--cream);color:var(--ink);border-radius:20px;padding:22px 18px;margin-bottom:18px;box-shadow:0 10px 26px rgba(0,0,0,.22);}
+.bt{font-family:'Noto Serif CJK TC',serif;font-size:21px;font-weight:900;color:var(--green);text-align:center;margin-bottom:18px;}
+.tl{display:flex;align-items:flex-end;justify-content:center;flex-wrap:wrap;gap:4px;}
+.tln{display:flex;flex-direction:column;align-items:center;width:74px;}
+.tln svg{width:52px;height:52px;}
+.tln span{font-size:14px;font-weight:700;color:var(--green);margin-top:4px;}
+.tla{color:var(--goldL);font-size:20px;font-weight:900;align-self:center;margin-bottom:18px;}
+.goal{display:flex;align-items:center;gap:14px;background:#fffdf7;border:1px solid #ece1c4;border-radius:14px;padding:13px 14px;margin-bottom:10px;}
+.goal .gic svg{width:48px;height:48px;display:block;}
+.goal .gtx{display:flex;flex-direction:column;gap:3px;}
+.goal .gtx b{font-size:18px;color:var(--green);font-weight:900;}
+.goal .gtx span{font-size:14.5px;color:var(--soft);line-height:1.5;}
+.mcard{display:flex;align-items:center;gap:15px;background:#fffdf7;border:1.5px solid #e0d4ad;border-radius:16px;padding:20px 18px;margin-bottom:14px;text-decoration:none;color:var(--green);cursor:pointer;position:relative;}
+.mcard .mi{font-size:34px;}
+.mcard .mtx b{font-family:'Noto Serif CJK TC',serif;font-size:20px;display:block;}
+.mcard .mtx span{font-size:14.5px;color:var(--soft);}
+.mcard .lk{position:absolute;right:16px;top:16px;font-size:17px;}
+.gate{margin-top:4px;}
+.gate input{width:100%;font-size:24px;text-align:center;letter-spacing:6px;border:1.5px solid #e0d4ad;border-radius:12px;padding:14px;background:#fffdf7;outline:none;font-family:inherit;color:var(--green);}
+.gate button{width:100%;margin-top:12px;border:none;border-radius:12px;padding:15px;font-size:19px;font-weight:900;font-family:inherit;color:var(--cream);background:var(--green);cursor:pointer;}
+.gerr{text-align:center;color:#c0392b;font-size:15px;font-weight:700;margin-top:10px;min-height:18px;}
+.task{display:block;text-decoration:none;background:var(--green);color:#e3c885;border-radius:13px;padding:15px;font-size:17px;font-weight:900;margin-bottom:10px;text-align:center;}
+.task small{display:block;color:#cdbf9f;font-weight:400;font-size:13px;margin-top:3px;}
+.pfoot{text-align:center;color:#dcd2b6;font-size:14px;margin-top:8px;line-height:1.8;}
+</style></head><body><div class="wrap">
+<div class="ph"><div class="t">財富花園</div><div class="s">從一顆種子，到一片花園──<br>陪你把人生與錢，慢慢種起來 🌱</div></div>
+<div class="block"><div class="bt">財富花園的成長</div><div class="tl"><div class="tln"><svg viewBox="0 0 56 56"><ellipse cx="28" cy="44" rx="15" ry="4" fill="#cdbf9f"/><ellipse cx="28" cy="32" rx="8" ry="11" fill="#9a7621"/><path d="M28 27 q4 4 0 9 q-4 -5 0 -9z" fill="#b8893a"/></svg><span>種子</span></div><span class="tla">→</span><div class="tln"><svg viewBox="0 0 56 56"><ellipse cx="28" cy="46" rx="15" ry="4" fill="#cdbf9f"/><path d="M28 46 V30" stroke="#7fb069" stroke-width="4" stroke-linecap="round"/><path d="M28 36 q-12 -3 -15 -12 q12 0 15 8z" fill="#8cbd73"/></svg><span>發芽</span></div><span class="tla">→</span><div class="tln"><svg viewBox="0 0 56 56"><ellipse cx="28" cy="48" rx="15" ry="4" fill="#cdbf9f"/><path d="M28 48 V24" stroke="#6f9e5b" stroke-width="4" stroke-linecap="round"/><path d="M28 34 q-13 -3 -16 -13 q13 0 16 9z" fill="#8cbd73"/><path d="M28 30 q13 -3 16 -13 q-13 0 -16 9z" fill="#9ac489"/></svg><span>幼苗</span></div><span class="tla">→</span><div class="tln"><svg viewBox="0 0 56 56"><path d="M28 50 V30" stroke="#6f9e5b" stroke-width="4" stroke-linecap="round"/><path d="M28 38 q-12 -3 -15 -11 q12 0 15 8z" fill="#8cbd73"/><g fill="#7fb6d6"><path d="M16 14 q3 6 0 8 q-3 -2 0 -8z"/><path d="M28 10 q3 6 0 8 q-3 -2 0 -8z"/><path d="M40 14 q3 6 0 8 q-3 -2 0 -8z"/></g></svg><span>灌溉</span></div><span class="tla">→</span><div class="tln"><svg viewBox="0 0 56 56"><path d="M28 50 V30" stroke="#6f9e5b" stroke-width="4" stroke-linecap="round"/><ellipse cx="28" cy="16" rx="6" ry="11" fill="#edc579" transform="rotate(0 28 26)"/><ellipse cx="28" cy="16" rx="6" ry="11" fill="#edc579" transform="rotate(72 28 26)"/><ellipse cx="28" cy="16" rx="6" ry="11" fill="#edc579" transform="rotate(144 28 26)"/><ellipse cx="28" cy="16" rx="6" ry="11" fill="#edc579" transform="rotate(216 28 26)"/><ellipse cx="28" cy="16" rx="6" ry="11" fill="#edc579" transform="rotate(288 28 26)"/><circle cx="28" cy="26" r="6" fill="#b5862a"/></svg><span>開花</span></div><span class="tla">→</span><div class="tln"><svg viewBox="0 0 56 56"><ellipse cx="28" cy="50" rx="22" ry="4" fill="#bcd49b"/><g transform="scale(1)" transform-origin="15 34"><ellipse cx="15" cy="27" rx="3.4" ry="6" fill="#f0b6a4" transform="rotate(0 15 34)"/><ellipse cx="15" cy="27" rx="3.4" ry="6" fill="#f0b6a4" transform="rotate(72 15 34)"/><ellipse cx="15" cy="27" rx="3.4" ry="6" fill="#f0b6a4" transform="rotate(144 15 34)"/><ellipse cx="15" cy="27" rx="3.4" ry="6" fill="#f0b6a4" transform="rotate(216 15 34)"/><ellipse cx="15" cy="27" rx="3.4" ry="6" fill="#f0b6a4" transform="rotate(288 15 34)"/><circle cx="15" cy="34" r="3.3" fill="#b5862a"/></g><g transform="scale(1)" transform-origin="40 32"><ellipse cx="40" cy="25" rx="3.4" ry="6" fill="#cabfe8" transform="rotate(0 40 32)"/><ellipse cx="40" cy="25" rx="3.4" ry="6" fill="#cabfe8" transform="rotate(72 40 32)"/><ellipse cx="40" cy="25" rx="3.4" ry="6" fill="#cabfe8" transform="rotate(144 40 32)"/><ellipse cx="40" cy="25" rx="3.4" ry="6" fill="#cabfe8" transform="rotate(216 40 32)"/><ellipse cx="40" cy="25" rx="3.4" ry="6" fill="#cabfe8" transform="rotate(288 40 32)"/><circle cx="40" cy="32" r="3.3" fill="#b5862a"/></g><g transform="scale(1.05)" transform-origin="28 28"><ellipse cx="28" cy="21" rx="3.4" ry="6" fill="#edc579" transform="rotate(0 28 28)"/><ellipse cx="28" cy="21" rx="3.4" ry="6" fill="#edc579" transform="rotate(72 28 28)"/><ellipse cx="28" cy="21" rx="3.4" ry="6" fill="#edc579" transform="rotate(144 28 28)"/><ellipse cx="28" cy="21" rx="3.4" ry="6" fill="#edc579" transform="rotate(216 28 28)"/><ellipse cx="28" cy="21" rx="3.4" ry="6" fill="#edc579" transform="rotate(288 28 28)"/><circle cx="28" cy="28" r="3.3" fill="#b5862a"/></g></svg><span>一片花園</span></div></div></div>
+<div class="block"><div class="bt">今天種下的五顆種子 · 五大財務目標</div><div class="goal"><div class="gic"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="26" fill="#e08f79"/><rect x="24" y="14" width="8" height="28" rx="2" fill="#fff"/><rect x="14" y="24" width="28" height="8" rx="2" fill="#fff"/></svg></div><div class="gtx"><b>醫療保障</b><span>生病、住院時，不用為錢煩惱，能安心治療</span></div></div><div class="goal"><div class="gic"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="26" fill="#e8a857"/><path d="M28 13 L43 27 H39 V42 H17 V27 H13 Z" fill="#fff"/></svg></div><div class="gtx"><b>家庭保障</b><span>萬一家裡少了一份收入，生活還是撐得住</span></div></div><div class="goal"><div class="gic"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="26" fill="#e886a8"/><path d="M13 25 L28 18 L43 25 L28 32 Z" fill="#fff"/><path d="M21 30 v7 q7 4 14 0 v-7" fill="#fff"/></svg></div><div class="gtx"><b>子女教育</b><span>孩子的學費和未來，早點準備、不慌張</span></div></div><div class="goal"><div class="gic"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="26" fill="#a08fce"/><circle cx="28" cy="28" r="14" fill="#fff"/><text x="28" y="35" text-anchor="middle" font-family="serif" font-size="20" font-weight="900" fill="#7d6cae">$</text></svg></div><div class="gtx"><b>財務自由</b><span>有一天不工作，錢也會自己流進來</span></div></div><div class="goal"><div class="gic"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="26" fill="#dba94f"/><path d="M28 40 C10 27 16 13 28 22 C40 13 46 27 28 40 Z" fill="#fff"/></svg></div><div class="gtx"><b>資產傳承</b><span>把愛和財富，好好留給你在乎的人</span></div></div></div>
+<div class="block"><div class="bt">接下來</div>
+  <a class="mcard" href="seed-garden.html" target="_blank" rel="noopener"><span class="mi">🌼</span><span class="mtx"><b>財富花園圖卡產生器</b><span>做一張你的專屬花園圖卡</span></span></a>
+  <div class="mcard" onclick="openCourse()"><span class="mi">📚</span><span class="mtx"><b>福氣協會學員專屬</b><span>課後任務與作業（需密碼）</span></span><span class="lk">🔒</span></div>
+  <div id="gate" class="gate" style="display:none">
+    <input id="pw" inputmode="numeric" placeholder="課程密碼" onkeydown="if(event.key==='Enter')checkPw()">
+    <button onclick="checkPw()">進入</button><div id="gerr" class="gerr"></div>
+  </div>
+  <div id="course" style="display:none;margin-top:6px;">
+    <a class="task" href="https://reurl.cc/53xM5n" target="_blank" rel="noopener">🌱 安心感輕健診<small>3 個小問題，看看你現在的安心感</small></a>
+    <a class="task" href="1150603-practice.html">📝 數字練習單<small>算算你的「安心底」和退休缺口</small></a>
+    <a class="task" href="1150603-homework.html">📖 第一堂 · 回家作業<small>寫下今天的收穫，種進你的花園</small></a>
+  </div>
+</div>
+<div class="pfoot">琪琪老師 · 馥芸財富學苑</div>
+</div><script>
+function openCourse(){var g=document.getElementById('gate');g.style.display=(g.style.display==='block'?'none':'block');if(g.style.display==='block'){document.getElementById('gerr').textContent='';setTimeout(function(){document.getElementById('pw').focus();},200);}}
+function checkPw(){var v=(document.getElementById('pw').value||'').trim();if(v==='0603'){document.getElementById('gate').style.display='none';var c=document.getElementById('course');c.style.display='block';c.scrollIntoView({behavior:'smooth'});}else{document.getElementById('gerr').textContent='密碼不對，再試一次';}}
 </script></body></html>
