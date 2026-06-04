@@ -1,0 +1,531 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>賓士圖財顧工具箱</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f6f1e8;--paper-2:#efe7d8;--card:rgba(255,255,255,.72);
+    --ink:#2a2520;--ink-soft:#6c6358;--line:#e0d6c4;--gold:#bd9851;
+    --gray:#7e8388;--gray-soft:#c4c8cb;--gray-deep:#5d6166;
+    --orange:#cb6736;--orange-soft:#e7b694;--orange-deep:#a44e1e;
+    --blue:#3f6fa3;--blue-soft:#a9c2db;--blue-deep:#2c5681;
+    --resp:#cb6736;--resp-soft:#ecc1a3;--resp-deep:#a44e1e;
+    --med:#7c9a3e;--med-soft:#d6deae;--med-deep:#5f7a2c;
+    --crit:#3f6fa3;--crit-soft:#b3c8de;--crit-deep:#2c5681;
+    --teal:#3f8a86;--shadow:0 18px 48px -22px rgba(60,45,25,.5);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{font-family:"Noto Sans TC",system-ui,sans-serif;color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;
+    background:radial-gradient(120% 90% at 12% 0%,#fbf7ef 0%,var(--paper) 42%,var(--paper-2) 100%);min-height:100vh}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.5;z-index:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E")}
+
+  /* topbar */
+  .topbar{position:sticky;top:0;z-index:20;backdrop-filter:blur(10px);background:rgba(246,241,232,.82);border-bottom:1px solid var(--line)}
+  .tbin{max-width:1080px;margin:0 auto;padding:.7rem clamp(14px,4vw,36px);display:flex;align-items:center;gap:1rem}
+  .brand{font-family:"Noto Serif TC",serif;font-weight:900;letter-spacing:.08em;font-size:1.05rem;cursor:pointer;white-space:nowrap}
+  .brand .d{color:var(--orange)}
+  .tabs{margin-left:auto;display:flex;gap:.3rem;overflow-x:auto}
+  .tab{font-size:.85rem;letter-spacing:.03em;padding:.4rem .8rem;border-radius:999px;cursor:pointer;color:var(--ink-soft);white-space:nowrap;border:1px solid transparent;transition:.2s}
+  .tab:hover{color:var(--ink)}
+  .tab.on{background:var(--ink);color:var(--paper)}
+
+  .wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:clamp(20px,4vw,44px) clamp(14px,4vw,36px) 54px}
+  .view{animation:fade .5s ease both}
+  .eyebrow{font-family:"Cormorant Garamond",serif;font-style:italic;color:var(--gold);letter-spacing:.04em;font-size:1.02rem}
+  h1{font-family:"Noto Serif TC",serif;font-weight:900;font-size:clamp(1.9rem,5.2vw,3rem);letter-spacing:.06em;line-height:1.14;margin:.15rem 0 .35rem}
+  h1 .d{color:var(--orange)}
+  .tag{color:var(--ink-soft);font-size:clamp(.9rem,2.2vw,1.04rem)}
+  .creed{font-family:"Noto Serif TC",serif;color:var(--ink-soft);letter-spacing:.18em;font-size:.82rem;margin-top:.4rem}
+
+  /* home cards */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:clamp(24px,4vw,38px)}
+  .hcard{position:relative;overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:1.5rem 1.4rem;cursor:pointer;transition:.28s;box-shadow:0 10px 30px -24px rgba(60,45,25,.6)}
+  .hcard:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .hcard .ic{width:54px;height:54px;border-radius:14px;display:grid;place-items:center;margin-bottom:1rem}
+  .hcard .num{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:1.5rem;color:#fff}
+  .hcard h3{font-family:"Noto Serif TC",serif;font-weight:900;font-size:1.25rem;letter-spacing:.04em;margin-bottom:.35rem}
+  .hcard p{font-size:.9rem;color:var(--ink-soft)}
+  .hcard .go{margin-top:1rem;font-size:.85rem;color:var(--gold);font-weight:700;display:inline-flex;align-items:center;gap:.35rem}
+  .hcard .stripe{position:absolute;left:0;top:0;bottom:0;width:5px}
+  .homefoot{margin-top:1.6rem;font-size:.85rem;color:var(--ink-soft);border-left:3px solid var(--gold);padding-left:.8rem;max-width:62ch}
+
+  /* page head */
+  .phead{margin-bottom:1.4rem}
+  .skicker{font-family:"Cormorant Garamond",serif;font-style:italic;color:var(--gold);letter-spacing:.05em;font-size:.95rem}
+  .ptitle{font-family:"Noto Serif TC",serif;font-weight:900;font-size:clamp(1.6rem,4vw,2.3rem);letter-spacing:.05em;line-height:1.15;margin:.1rem 0}
+  .ptitle .d{color:var(--orange)}
+  .pbar{width:48px;height:4px;border-radius:4px;margin:.6rem 0 .8rem}
+  .pdesc{color:var(--ink-soft);font-size:clamp(.9rem,2.1vw,1rem);max-width:64ch}
+
+  /* wheel layout */
+  .wheelgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(16px,3vw,34px);align-items:start}
+  @media(max-width:840px){.wheelgrid{grid-template-columns:1fr}}
+  .wheelwrap{width:100%;display:flex;flex-direction:column;align-items:center}
+  svg.wheel{width:100%;max-width:480px;height:auto;display:block;overflow:visible;filter:drop-shadow(var(--shadow))}
+  .legend{display:flex;gap:1rem;margin-top:.9rem;flex-wrap:wrap;justify-content:center}
+  .legend i{display:inline-block;width:.78rem;height:.78rem;border-radius:3px;margin-right:.35rem;vertical-align:-1px}
+  .legend span{font-size:.8rem;color:var(--ink-soft)}
+  .seg{cursor:pointer;transition:opacity .3s,filter .25s}
+  .seg path{transition:fill .25s}
+  .seg:hover{filter:brightness(1.05)}
+  .seg.pale:hover{filter:brightness(.97)}
+  .seg.dim{opacity:.27}
+  .seg text{pointer-events:none;letter-spacing:.03em;font-family:"Noto Sans TC"}
+  .seg.inner text{font-family:"Noto Serif TC";font-weight:800;letter-spacing:.08em}
+  .selring{fill:none;stroke:var(--gold);stroke-width:2.6;opacity:0;transition:.3s;pointer-events:none}
+  .hub{cursor:pointer}.hub text{font-family:"Noto Serif TC";font-weight:700;letter-spacing:.12em}
+
+  .panel{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.62);padding:clamp(16px,2.6vw,26px);min-height:300px;backdrop-filter:blur(4px)}
+  .pbody{animation:fade .4s ease both}
+  .crumb{font-size:.78rem;color:var(--ink-soft);letter-spacing:.05em;margin-bottom:.5rem;min-height:1rem}
+  .ntitle{font-family:"Noto Serif TC";font-weight:900;font-size:clamp(1.35rem,3vw,1.7rem);letter-spacing:.04em}
+  .nbar{width:42px;height:4px;border-radius:4px;margin:.45rem 0 1rem}
+  .lead{color:var(--ink-soft);font-size:.96rem;margin-bottom:1.1rem}
+  .block{margin-bottom:1rem}
+  .blabel{font-family:"Noto Serif TC";font-weight:700;font-size:.92rem;letter-spacing:.05em;display:inline-flex;align-items:center;gap:.5rem;margin-bottom:.45rem}
+  .blabel::before{content:"";width:7px;height:7px;border-radius:2px;background:currentColor;transform:rotate(45deg)}
+  ul.lines{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+  ul.lines li{position:relative;padding-left:1.3rem;font-size:.92rem;color:#403a32}
+  ul.lines li::before{content:"";position:absolute;left:.12rem;top:.62rem;width:.42rem;height:.42rem;border-radius:50%;background:var(--gold)}
+  .std{background:rgba(0,0,0,.035);border-radius:10px;padding:.6rem .8rem;font-size:.88rem}
+  .confirm,.check{background:rgba(189,152,81,.12);border-left:3px solid var(--gold);padding:.6rem .85rem;border-radius:0 10px 10px 0;font-size:.88rem}
+  .confirm b,.check b{font-family:"Noto Serif TC";letter-spacing:.05em}
+  .goals{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.4rem}
+  .goal{cursor:pointer;border:1px solid var(--line);background:rgba(255,255,255,.6);border-radius:999px;padding:.38rem .8rem;font-size:.84rem;color:var(--ink);transition:.2s}
+  .goal:hover{transform:translateY(-2px)}
+  .goal .n{font-family:"Cormorant Garamond",serif;color:var(--ink-soft);margin-right:.35rem;font-style:italic}
+  .hint{font-size:.84rem;color:var(--ink-soft);margin-top:1rem;display:flex;align-items:center;gap:.4rem}
+  .flowribbon{margin-top:clamp(22px,3.5vw,38px)}
+  .flowribbon h4{font-family:"Noto Serif TC";font-weight:700;letter-spacing:.08em;color:var(--ink-soft);font-size:.95rem;text-align:center;margin-bottom:.8rem}
+  .steps{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;align-items:center}
+  .stepb{font-family:"Noto Serif TC";background:rgba(255,255,255,.7);border:1px solid var(--line);border-radius:10px;padding:.4rem .75rem;font-size:.83rem;font-weight:700;white-space:nowrap}
+  .arr{color:var(--gold)}
+
+  /* guided */
+  .stepper{display:flex;align-items:flex-start;margin:0 0 1.4rem;overflow-x:auto;padding-bottom:6px}
+  .stp{flex:1 1 0;min-width:70px;display:flex;flex-direction:column;align-items:center;position:relative;cursor:pointer}
+  .stp::before{content:"";position:absolute;top:16px;left:-50%;width:100%;height:2px;background:var(--line);z-index:0}
+  .stp:first-child::before{display:none}
+  .stp.done::before,.stp.active::before{background:var(--gold)}
+  .stp i{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#fff;border:2px solid var(--line);font-family:"Cormorant Garamond",serif;font-size:1rem;color:var(--ink-soft);position:relative;z-index:1;transition:.25s}
+  .stp.active i{border-color:var(--gold);background:var(--gold);color:#fff}
+  .stp.done i{border-color:var(--gold);color:var(--gold)}
+  .stp span{font-size:.7rem;margin-top:.35rem;text-align:center;color:var(--ink-soft);line-height:1.3}
+  .stp.active span{color:var(--ink);font-weight:700}
+  .gstage{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:clamp(18px,3vw,32px);min-height:340px;backdrop-filter:blur(5px)}
+  .acc{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:.7rem;background:rgba(255,255,255,.5);transition:.25s}
+  .acc.open{background:rgba(255,255,255,.85)}
+  .ah{display:flex;align-items:center;gap:.7rem;padding:.8rem 1rem;cursor:pointer;user-select:none}
+  .ah .dotc{width:11px;height:11px;border-radius:3px;flex:0 0 auto;transform:rotate(45deg)}
+  .ah .htxt{font-family:"Noto Serif TC";font-weight:700;font-size:1rem;flex:1}
+  .ah .sub{font-size:.78rem;color:var(--ink-soft)}
+  .ah .chev{transition:transform .25s;color:var(--ink-soft)}
+  .acc.open .chev{transform:rotate(90deg)}
+  .ab{max-height:0;overflow:hidden;transition:max-height .35s;padding:0 1rem}
+  .acc.open .ab{max-height:1000px;padding:0 1rem 1rem}
+  .qcard{border:1px solid var(--line);border-radius:14px;margin-bottom:.7rem;background:rgba(255,255,255,.5);cursor:pointer;transition:.25s}
+  .qcard.open{background:rgba(255,255,255,.85)}
+  .qrow{display:flex;gap:.7rem;padding:.85rem 1rem}
+  .qrow .qn{font-family:"Cormorant Garamond",serif;font-style:italic;color:var(--gold);font-size:1.05rem}
+  .qans{max-height:0;overflow:hidden;transition:max-height .35s;padding:0 1rem 0 2.5rem}
+  .qcard.open .qans{max-height:300px;padding:0 1rem .9rem 2.5rem}
+  .qans .ca{display:inline-block;background:rgba(63,111,163,.1);color:var(--crit-deep);border-radius:999px;padding:.16rem .65rem;font-size:.83rem;margin-bottom:.4rem}
+  .qans .pp{font-size:.86rem;color:var(--ink-soft)}
+  .calc{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-end;background:rgba(255,255,255,.55);border:1px solid var(--line);border-radius:14px;padding:1rem;margin:.3rem 0 1.1rem}
+  .calc label{font-size:.8rem;color:var(--ink-soft);display:block;margin-bottom:.3rem}
+  .calc input{font-size:1.05rem;padding:.5rem .7rem;border:1px solid var(--line);border-radius:10px;width:150px;background:#fff;color:var(--ink)}
+  .resb{display:flex;gap:1.3rem;flex-wrap:wrap}
+  .resb div b{font-family:"Cormorant Garamond",serif;font-size:1.4rem;color:var(--gold);display:block;line-height:1.1}
+  .resb div span{font-size:.76rem;color:var(--ink-soft)}
+  .zones{display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem}
+  @media(max-width:560px){.zones{grid-template-columns:1fr}}
+  .goalbox{margin-top:1rem;background:rgba(63,138,134,.1);border-left:3px solid var(--teal);padding:.7rem .9rem;border-radius:0 10px 10px 0;font-size:.88rem}
+  .chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
+  .rchip{font-size:.82rem;padding:.38rem .75rem;border-radius:10px;background:rgba(255,255,255,.6);border:1px solid var(--line)}
+  .inds{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.6rem}
+  .ind{background:rgba(255,255,255,.6);border:1px solid var(--line);border-radius:12px;padding:.75rem}
+  .ind b{font-family:"Noto Serif TC";display:block;font-size:.92rem}.ind span{font-size:.8rem;color:var(--ink-soft)}
+  .note{margin-top:.9rem;font-size:.85rem;color:var(--ink-soft);border-left:3px solid var(--gold);padding-left:.7rem}
+  .gnav{display:flex;justify-content:space-between;align-items:center;margin-top:1.3rem;gap:1rem}
+  .btn{font-weight:700;letter-spacing:.05em;border:none;cursor:pointer;border-radius:999px;padding:.65rem 1.3rem;font-size:.92rem;transition:.2s;font-family:"Noto Sans TC"}
+  .btn.prev{background:transparent;border:1px solid var(--line);color:var(--ink-soft)}
+  .btn.prev:hover{border-color:var(--gold);color:var(--ink)}
+  .btn.next{background:var(--ink);color:var(--paper)}
+  .btn.next:hover{transform:translateY(-2px)}
+  .btn:disabled{opacity:.3;cursor:not-allowed;transform:none}
+  .count{font-family:"Cormorant Garamond",serif;font-style:italic;color:var(--ink-soft)}
+  footer{margin-top:34px;text-align:center;color:var(--ink-soft);font-size:.76rem}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  @keyframes segIn{from{opacity:0}to{opacity:1}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="tbin">
+  <div class="brand" id="brand">賓士圖財顧工具箱<span class="d">.</span></div>
+  <div class="tabs" id="tabs"></div>
+</div></div>
+
+<div class="wrap"><div class="view" id="view"></div>
+  <footer>賓士圖風險需求規劃法 ‧ 整合工具 — 話術與金額口徑為範例,實際依個案調整</footer>
+</div>
+
+<script>
+/* ============ data: first-meeting wheel ============ */
+const CF={gray:{solid:'#7e8388',soft:'#c4c8cb',deep:'var(--gray-deep)',otext:'#3c4044',name:'職業介紹'},
+  orange:{solid:'#cb6736',soft:'#e7b694',deep:'var(--orange-deep)',otext:'#7a3c1c',name:'營造會談氛圍'},
+  blue:{solid:'#3f6fa3',soft:'#a9c2db',deep:'var(--blue-deep)',otext:'#284763',name:'財富手冊'}};
+const WFIRST=[
+ {id:'career',color:'gray',a0:90,a1:210,lines:['職業','介紹'],fs:21,
+  overview:'以「收費財務顧問」的客觀立場切入,用診斷取代賣商品,先讓客戶認同你的角色與專業。',
+  nodes:[
+   {label:'傳達定位',purpose:'讓客戶清楚你是誰、和一般業務員不一樣。',points:['談金融業亂象:理專、電話行銷、人情保','「你有沒有被推銷的經驗?那感覺如何?」','用健檢報告比喻——我是幫你做財務健檢的人'],check:'客戶理解你「收費財務顧問」的角色定位。'},
+   {label:'認同理念',purpose:'讓客戶認同「先診斷、再規劃,規劃重於商品」。',points:['「蓋房子之前要先評估什麼?」先診斷不先賣商品','預售屋比喻:從格局圖看見全生涯藍圖','使命:引導價值觀與目標,有限資源有效分配'],check:'客戶認同診斷與整體規劃的價值。'},
+   {label:'展現專業',purpose:'用案例與比喻展現專業高度。',points:['醫生 vs 藥師、顧問 vs 業務員','重病個案見證:風險發生時的無力感'],check:'客戶感受到與一般業務員的專業差異。'},
+   {label:'確認分數',purpose:'收斂鋪陳,確認客戶的認同度。',points:['做結論與確認(確認分數)','說明收費方式、40 分鐘免費諮詢'],check:'取得正向分數、客戶願意繼續談。'}
+ ]},
+ {id:'rapport',color:'orange',a0:-30,a1:90,lines:['營造','會談','氛圍'],fs:21,
+  overview:'先把關係與信任建立好,再談需求——客戶要先願意聽、願意說。',
+  nodes:[
+   {label:'拉近彼此距離',short:'拉近距離',purpose:'縮短心理距離,讓對話自然展開。',points:['找到共同點、同理客戶處境','輕鬆、不推銷的態度開場'],check:'氛圍輕鬆、客戶卸下防衛。'},
+   {label:'建立信任關係',short:'建立信任',purpose:'建立可被信賴的顧問關係。',points:['專業加真誠、客觀立場','先服務、後成交'],check:'客戶願意開放分享。'},
+   {label:'認識對方',short:'認識對方',purpose:'了解客戶背景與生活脈絡。',points:['家庭結構、工作、價值觀','為找痛點、抓需求鋪路'],check:'掌握可切入的脈絡。'},
+   {label:'關心客戶',short:'關心客戶',purpose:'以真誠關心開場,降低防衛。',points:['從生活、家庭、近況切入','真誠傾聽'],check:'客戶感受到被在乎。'}
+ ]},
+ {id:'wealth',color:'blue',a0:210,a1:330,lines:['財富','手冊'],fs:21,
+  overview:'引導出需求與意願,把客戶帶進風險觀念與量化,銜接內圈與外圈。',
+  nodes:[
+   {label:'找到痛點或滿足點',short:'找到痛點',purpose:'讓客戶看見風險與急迫性。',points:['引言:重要→來不及→事先評估→買剛好→需求標準線','內圈三大架構:責任、醫療、重病重殘'],check:'客戶認同風險需要事先準備。'},
+   {label:'有規劃意願',short:'規劃意願',purpose:'引導出主動規劃、把需求數字化。',points:['外圈量化拿數字,抓出需求標準線(應備)','讓客戶自己說出需求年期/金額'],check:'客戶願意把需求數字化。'},
+   {label:'有付費意願',short:'付費意願',purpose:'在預算內達成共識,引導付費。',points:['取得預算、對照 631 與安全值 10–15%','達成共識:解決問題、符合預算、相對成本最低'],check:'客戶接受第二次面談(建議書)。'}
+ ]}
+];
+
+/* ============ data: risk wheel ============ */
+const CR={resp:{deep:'var(--resp-deep)',soft:'#ecc1a3',text:'#b3551f',name:'責任'},
+  med:{deep:'var(--med-deep)',soft:'#d6deae',text:'#5f7a2c',name:'醫療'},
+  crit:{deep:'var(--crit-deep)',soft:'#b3c8de',text:'#2c5681',name:'重病/失能'}};
+const WRISK=[
+ {id:'resp',color:'resp',a0:-30,a1:90,lines:['責任'],fs:30,
+  overview:'人不在時收入中斷,家裡該支出的責任仍要繼續。逐項問出要準備幾年、多少。',
+  nodes:[
+   {label:'孝養費',title:'孝養費',ask:['父母現在幾歲?','希望風險來臨時由保險續孝養嗎?','要準備到父母幾歲?'],std:'準備到父母約 80 歲(平均餘命約 85)。',confirm:'幫父母準備孝養金到 80 歲。'},
+   {label:'教育費',title:'教育費',ask:['孩子幾歲、到幾歲能獨立?','最小的孩子幾歲?'],std:'準備到最小孩子大學畢業(如還有 10 年)。',confirm:'教育費備到大學畢業。'},
+   {label:'貸款',title:'貸款',ask:['人不在時房貸會繼續繳嗎?(會)','距繳清還有幾年?'],std:'準備到貸款期滿(如剩 15 年)。',confirm:'幫家人準備到貸款期滿。'},
+   {label:'生活費',title:'生活費',ask:['人不在時家裡開銷要繼續嗎?(要)','有哪些開銷?','希望準備幾年渡過難關?'],std:'常見準備至少 10 年。',confirm:'準備至少 10 年生活費給家人。'}
+ ]},
+ {id:'med',color:'med',a0:90,a1:210,lines:['醫療'],fs:30,
+  overview:'住院期間收入中斷且有額外支出。醫療費用/日 = 病房費 + 看護費 + 薪資補償。',
+  nodes:[
+   {label:'病房費',title:'病房費',ask:['住院會有哪些費用?','以哪家醫院為主?','選單人還是雙人房?'],std:'依醫院與房型估每日病房差額。',confirm:'準備 __ 房型病房費。'},
+   {label:'看護費',title:'看護費',ask:['有 24 小時免費親友可照護嗎?','沒有的話怎麼辦?','怎麼準備有概念嗎?'],std:'半日 1,200–1,500、全日 2,000。',confirm:'準備 __ 看護費比較安心。'},
+   {label:'薪資補償',title:'薪資補償',ask:['住院時薪水還會進來嗎?(不會)','由保險幫你付薪水,如何?'],std:'以日額補上薪資缺口,合理預算內完成。',confirm:'備齊住院費、看護、薪資補償三塊。'},
+   {label:'雜費',title:'醫療雜費',ask:['對雜費安排有概念嗎?','希望多少額度?'],std:'合理範圍;預算不足以輕重緩急規劃。',confirm:'雜費落在合理範圍。'}
+ ]},
+ {id:'crit',color:'crit',a0:210,a1:330,lines:['重病/失能'],fs:22,
+  overview:'出院後需長期照顧一輩子、收入中斷的最重一塊。',
+  nodes:[
+   {label:'重大疾病(癌症)',lines:['重大疾病','(癌症)'],title:'重大疾病(癌症)',ask:['重病時還會繼續工作嗎?(先治療)','有救命錢補收入中斷,如何?'],std:'準備 2–5 年(低標2、高標5–10);標靶另備 100–200 萬。',confirm:'預算允許做 5 年、不允許做 2 年。'},
+   {label:'意外/傷殘',title:'意外 / 傷殘',ask:['意外解決殘廢還是身故?(殘廢)','因意外無法工作,收入進得來嗎?(不一定)'],std:'基本 300 萬(7–11級殘);已婚壽險 2 倍/1 倍。',confirm:'個人開銷不造成家人負擔。'},
+   {label:'失能照護',title:'失能照護',ask:['什麼狀況出院後需長期照顧?(中風、植物人…)','收入會持續進來嗎?開銷要繼續嗎?'],std:'以每月需求換算殘廢/失能照護金(薪資+看護)。',confirm:'備每月失能照護金撐住開銷。'}
+ ]}
+];
+
+/* ============ shared wheel engine ============ */
+const SVGNS='http://www.w3.org/2000/svg';
+const CX=300,CY=300,R_HUB=62,R_MID=164,R_OUT=278,GAP=1.7,CGAP=0.8;
+const pt=(r,d)=>{const a=d*Math.PI/180;return[CX+r*Math.cos(a),CY-r*Math.sin(a)];};
+function sector(rIn,rOut,a0,a1){const[xa,ya]=pt(rOut,a0),[xb,yb]=pt(rOut,a1),[xc,yc]=pt(rIn,a1),[xd,yd]=pt(rIn,a0);const lg=Math.abs(a1-a0)>180?1:0,f=n=>n.toFixed(2);return `M${f(xa)} ${f(ya)} A${rOut} ${rOut} 0 ${lg} 0 ${f(xb)} ${f(yb)} L${f(xc)} ${f(yc)} A${rIn} ${rIn} 0 ${lg} 1 ${f(xd)} ${f(yd)} Z`;}
+function txt(p,x,y,lines,size,fill,lh){const t=document.createElementNS(SVGNS,'text');t.setAttribute('x',x);t.setAttribute('y',y);t.setAttribute('text-anchor','middle');t.setAttribute('dominant-baseline','middle');t.setAttribute('font-size',size);if(fill)t.setAttribute('fill',fill);const st=-(lines.length-1)/2;lines.forEach((ln,i)=>{const ts=document.createElementNS(SVGNS,'tspan');ts.setAttribute('x',x);ts.setAttribute('dy',i===0?(st*lh)+'px':lh+'px');ts.textContent=ln;t.appendChild(ts);});p.appendChild(t);}
+
+function buildWheel(svg,panel,WHEEL,CMAP,style,hubLines){
+  svg.innerHTML='';
+  if(style==='pale'){const defs=document.createElementNS(SVGNS,'defs');defs.innerHTML=`<radialGradient id="inYel" cx="50%" cy="50%" r="70%"><stop offset="0%" stop-color="#f8f3c2"/><stop offset="100%" stop-color="#ebe28c"/></radialGradient>`;svg.appendChild(defs);}
+  let order=0;
+  WHEEL.forEach(p=>{
+    const col=CMAP[p.color],ia0=p.a0+GAP,ia1=p.a1-GAP;
+    const gi=document.createElementNS(SVGNS,'g');gi.setAttribute('class','seg inner'+(style==='pale'?' pale':''));gi.dataset.pillar=p.id;gi.dataset.type='pillar';gi.style.animation=`segIn .5s ${.2+order*.04}s both`;order++;
+    const pi=document.createElementNS(SVGNS,'path');pi.setAttribute('d',sector(R_HUB,R_MID,ia0,ia1));pi.setAttribute('fill',style==='pale'?'url(#inYel)':col.solid);pi.setAttribute('stroke','#fff');pi.setAttribute('stroke-width',style==='pale'?'2.5':'1.5');gi.appendChild(pi);
+    const mid=(p.a0+p.a1)/2,[lx,ly]=pt((R_HUB+R_MID)/2+5,mid);txt(gi,lx,ly,p.lines,p.fs,style==='pale'?col.deep:'#fff',p.fs+2);svg.appendChild(gi);
+    const span=ia1-ia0,n=p.nodes.length,slice=span/n;
+    p.nodes.forEach((nd,idx)=>{const s0=ia0+idx*slice+CGAP,s1=ia0+(idx+1)*slice-CGAP;
+      const go=document.createElementNS(SVGNS,'g');go.setAttribute('class','seg outer'+(style==='pale'?' pale':''));go.dataset.pillar=p.id;go.dataset.type='node';go.dataset.idx=idx;go.style.animation=`segIn .5s ${.25+order*.03}s both`;order++;
+      const po=document.createElementNS(SVGNS,'path');po.setAttribute('d',sector(R_MID+5,R_OUT,s0,s1));po.setAttribute('fill',style==='pale'?'#e7e4db':col.soft);po.setAttribute('stroke','#fff');po.setAttribute('stroke-width',style==='pale'?'2.5':'1.5');go.appendChild(po);
+      const cm=(s0+s1)/2,[ox,oy]=pt((R_MID+R_OUT)/2+2,cm);const lbl=nd.lines||[nd.short||nd.label];txt(go,ox,oy,lbl,14,style==='pale'?col.text:col.otext,15);svg.appendChild(go);});
+  });
+  const sr=document.createElementNS(SVGNS,'path');sr.setAttribute('class','selring');sr.id='selring';svg.appendChild(sr);
+  const hub=document.createElementNS(SVGNS,'g');hub.setAttribute('class','hub');
+  const hc=document.createElementNS(SVGNS,'circle');hc.setAttribute('cx',CX);hc.setAttribute('cy',CY);hc.setAttribute('r',R_HUB-4);hc.setAttribute('fill',style==='pale'?'#fff':'var(--paper)');hc.setAttribute('stroke','var(--line)');hc.setAttribute('stroke-width','1.5');hub.appendChild(hc);
+  txt(hub,CX,CY,hubLines,hubLines.length>1?14:20,'var(--ink-soft)',16);svg.appendChild(hub);
+
+  const segs=[...svg.querySelectorAll('.seg')];
+  const baseFill=s=>style==='pale'?(s.dataset.type==='pillar'?'url(#inYel)':'#e7e4db'):(CMAP[s.dataset.pillar][s.dataset.type==='pillar'?'solid':'soft']);
+  function reset(){segs.forEach(s=>s.querySelector('path').setAttribute('fill',baseFill(s)));}
+  function dim(pid,idx){reset();segs.forEach(s=>{s.classList.remove('dim');if(pid===null)return;const same=s.dataset.pillar===pid;if(idx===null){if(!same)s.classList.add('dim');}else{const isN=s.dataset.type==='node'&&same&&s.dataset.idx==idx,isI=s.dataset.type==='pillar'&&same;if(!isN&&!isI)s.classList.add('dim');if(isN&&style==='pale')s.querySelector('path').setAttribute('fill',CMAP[s.dataset.pillar].soft);}});}
+  function ring(el){const r=svg.querySelector('#selring');if(!el){r.style.opacity=0;return;}r.setAttribute('d',el.querySelector('path').getAttribute('d'));r.style.opacity=1;}
+  function refresh(){panel.firstChild&&panel.firstChild.classList&&panel.firstChild.classList.remove('pbody');panel.innerHTML='<div class="pbody">'+panel._html+'</div>';}
+  const isRisk = WHEEL===WRISK || (WHEEL[0]&&WHEEL[0].nodes[0].ask);
+
+  function setPanel(html){panel.innerHTML=`<div class="pbody">${html}</div>`;bindGoals();}
+  function intro(){dim(null,null);ring(null);
+    const items=WHEEL.map(p=>`<li><b style="color:var(--${p.color}-deep)">${CMAP[p.color].name}</b> — ${p.overview}</li>`).join('');
+    setPanel(`<div class="crumb">${isRisk?'風險問診 ‧ 三大架構':'賓士圖 ‧ 三大主軸'}</div><div class="ntitle">${isRisk?'一切源自工作收入中斷':'把人帶到願意面對風險'}</div><div class="nbar" style="background:linear-gradient(90deg,${WHEEL.map(p=>`var(--${p.color})`).join(',')})"></div><ul class="lines">${items}</ul><div class="hint">點圖上任一區塊看細節</div>`);}
+  function pillar(p){dim(p.id,null);ring(svg.querySelector(`.seg.inner[data-pillar="${p.id}"]`));
+    const goals=p.nodes.map((n,i)=>`<span class="goal" data-p="${p.id}" data-i="${i}"><span class="n">${String(i+1).padStart(2,'0')}</span>${n.short||n.label}</span>`).join('');
+    setPanel(`<div class="crumb" style="color:var(--${p.color}-deep)">${CMAP[p.color].name}</div><div class="ntitle">${CMAP[p.color].name}</div><div class="nbar" style="background:var(--${p.color})"></div><p class="lead">${p.overview}</p><div class="block"><div class="blabel" style="color:var(--${p.color}-deep)">${isRisk?'外圈量化項目':'外圈著力點'}</div><div class="goals">${goals}</div></div><div class="hint">點項目看細節</div>`);}
+  function node(p,idx){const nd=p.nodes[idx],c=p.color;dim(p.id,idx);ring(svg.querySelector(`.seg.outer[data-pillar="${p.id}"][data-idx="${idx}"]`));
+    const goals=p.nodes.map((n,i)=>`<span class="goal" data-p="${p.id}" data-i="${i}" ${i===idx?'style="border-color:var(--'+c+')"':''}><span class="n">${String(i+1).padStart(2,'0')}</span>${n.short||n.label}</span>`).join('');
+    let body;
+    if(isRisk){body=`<div class="block"><div class="blabel" style="color:var(--${c}-deep)">怎麼問</div><ul class="lines">${nd.ask.map(q=>`<li>${q}</li>`).join('')}</ul></div><div class="block"><div class="blabel" style="color:var(--${c}-deep)">量化口徑</div><div class="std">${nd.std}</div></div><div class="confirm"><b>結論確認 ‧ </b>${nd.confirm}</div>`;}
+    else{body=`<div class="block"><div class="blabel" style="color:var(--${c}-deep)">目的</div><p style="font-size:.94rem">${nd.purpose}</p></div><div class="block"><div class="blabel" style="color:var(--${c}-deep)">重點與話術</div><ul class="lines">${nd.points.map(x=>`<li>${x}</li>`).join('')}</ul></div><div class="check"><b>檢核點 ‧ </b>${nd.check}</div>`;}
+    setPanel(`<div class="crumb"><b style="color:var(--${c}-deep)">${CMAP[c].name}</b> › ${nd.title||nd.label}</div><div class="ntitle">${nd.title||nd.label}</div><div class="nbar" style="background:var(--${c})"></div>${body}<div class="goals" style="margin-top:.9rem">${goals}</div>`);}
+  function bindGoals(){panel.querySelectorAll('.goal[data-p]').forEach(g=>g.addEventListener('click',()=>node(WHEEL.find(x=>x.id===g.dataset.p),+g.dataset.i)));}
+  segs.forEach(s=>s.addEventListener('click',()=>{const p=WHEEL.find(x=>x.id===s.dataset.pillar);s.dataset.type==='pillar'?pillar(p):node(p,+s.dataset.idx);}));
+  hub.addEventListener('click',intro);
+  intro();
+}
+
+/* ============ guided stages ============ */
+const STAGES=[
+ {key:'我是誰',kicker:'Step 1 ‧ 財顧賓士圖',title:'我是誰',accent:'var(--resp)',lead:'首次面談先建立關係與專業定位——點開兩大主軸看實際話術。',type:'pillars',
+  data:[{name:'營造會談氛圍',sub:'關心 ‧ 認識 ‧ 建立信任 ‧ 拉近距離',color:'var(--resp-deep)',dot:'var(--resp)',lines:['「早上還陪兒子上課,好爸爸耶!」','「開車來的嗎?剛才停車還順利嗎?」','「怎麼稱呼?太太怎麼稱呼?」「這項鍊好別緻!」','「在哪高就?你們是同事!怎麼認識的?好有緣份!」'],note:'先閒聊、真誠關心,讓客戶卸下防衛、建立信任。'},
+   {name:'職業介紹',sub:'傳達定位 ‧ 認同理念 ‧ 展現專業 ‧ 確認分數',color:'var(--med-deep)',dot:'var(--med)',lines:['「(轉介人)是怎麼介紹我的?」','「身邊應該有銀行/保險的朋友,怎麼沒找他們?」','「有聽過財務顧問嗎?知道在做什麼嗎?」','金融亂象→「你有被推銷的經驗嗎?感覺如何?」','財務健康比喻→我就是財務醫生;醫生vs藥師、顧問vs業務員;預售屋看全生涯藍圖'],note:'用診斷取代賣商品,建立財務醫生定位,最後確認分數。'}]},
+ {key:'風險觀念',kicker:'Step 2 ‧ 引言',title:'風險觀念 · 急迫性',accent:'var(--crit)',lead:'點開每一句,看客戶常見回應與引導重點。',type:'script',
+  data:[{q:'你覺得風險管理(保單檢視)重要嗎?為什麼?',a:'重要(怕萬一)',p:'先聽客戶的 WHY,不急著講商品。'},
+   {q:'萬一風險發生會產生什麼?那怎麼辦?',a:'有費用支出 / 花積蓄',p:'點出風險=工作收入中斷的財務負擔。'},
+   {q:'保險什麼時候會用得到?',a:'風險發生的時候',p:'帶到急迫性。'},
+   {q:'等用到時再評估夠不夠,來得及嗎?',a:'來不及',p:'所以「事先評估」很重要。'},
+   {q:'買太多、太少、還是剛好?(畫三條線)',a:'買剛好',p:'剛好 = 需求標準線。'},
+   {q:'要怎麼評估「剛好」?找出標準線重要嗎?',a:'沒概念 / 重要',p:'專業顧問事先協助找出標準線 → 進入賓士圖。'}],
+  note:'觀念到位後,進入風險賓士圖逐項拿數字。'},
+ {key:'風險問診',kicker:'Step 3 ‧ 風險賓士圖',title:'風險問診',accent:'var(--crit)',lead:'點內圈看三大架構,點外圈看怎麼問與量化口徑。',type:'wheel'},
+ {key:'預算共識',kicker:'Step 4 ‧ 取得預算 · 達成共識',title:'預算 · 共識',accent:'var(--gold)',lead:'在有限預算內做到符合需求的規劃——輸入年收入,抓出保費安全值區間。',type:'budget',
+  points:['「保險要準備多少才夠?買越多就越好嗎?」','「如何在有限預算內做到符合需求的規劃?」','概念:保險成本越低越好——把資源留給其他人生目標','取捨:以不損失為優先、不損失為原則,有損失降到最低','達成共識:解決問題、符合預算、相對成本最低'],
+  note:'理財金三角(631)中「風險管理 10%」延伸為保費安全值約 10–15%。'},
+ {key:'財富水庫',kicker:'Step 5 ‧ 全面財務規劃',title:'財富水庫',accent:'var(--teal)',lead:'「家裡突然停水過嗎?水塔的用意是什麼?」——把規劃從單點拉到全面。',type:'reservoir',
+  data:[{name:'收支管理',color:'#3f8a86',lines:['主要收入來自哪裡?','收入進來能全部存下來嗎?為什麼?','怎麼把錢最有效存下來,重要嗎?']},
+   {name:'投資管理',color:'#c79a3e',lines:['存了錢會怎麼運用?為什麼?','投資是為了什麼?','只要有生息資產就一定能創造理財收入嗎?']},
+   {name:'風險管理',color:'#3f6fa3',lines:['工作收入有沒有可能中斷?什麼情況?','收入中斷、理財收入又不夠,支出怎麼辦?','事先啟動「備用水源」支應必要支出,如何?']},
+   {name:'緊急預備金 ‧ 備用水源',color:'#7c9a3e',lines:['保險要準備多少才夠?買越多越好嗎?','如何在預算內做最充分準備?(銜接賓士圖)']}],
+  goal:'最終目標:理財收入 > 支出。讓客戶選擇「全面財務規劃」而非單點。'},
+ {key:'建議書',kicker:'Step 6 ‧ 第二次面談',title:'建議書',accent:'var(--resp)',lead:'第二次面談呈現量身訂做的全方位報告書,進入執行與追蹤。',type:'report',
+  chapters:['人生價值觀','各階段財務目標','現金流量/損益','資產負債/淨值','投資屬性','財務診斷','規劃建議','全生涯模型 現況','全生涯模型 規劃','執行方案','附件:支出/保費明細'],
+  inds:[['財務自由度','理財收入÷年支出 ‧ 理想=1'],['有效儲蓄率','理想 20–30%'],['應急準備金','3–6 個月支出'],['資產負債率','理想 ＜50%'],['達成率','規劃後 ≥100%']],
+  note:'執行四大管理 → 收集客戶見證 → 回到「理論｜見證｜實務」閉環。'}
+];
+
+/* ============ router / views ============ */
+let view='home', gcur=0;
+const ROUTES=[['home','首頁'],['first','首次面談'],['risk','風險問診'],['calc','應備試算'],['guide','引導流程']];
+const root=document.getElementById('view'), tabs=document.getElementById('tabs');
+document.getElementById('brand').addEventListener('click',()=>go('home'));
+
+function buildTabs(){tabs.innerHTML='';ROUTES.forEach(([k,l])=>{const b=document.createElement('div');b.className='tab'+(view===k?' on':'');b.textContent=l;b.addEventListener('click',()=>go(k));tabs.appendChild(b);});}
+
+function go(v){view=v;render();}
+
+function flowRibbon(){return `<div class="flowribbon"><h4>首次面談操作流程</h4><div class="steps">${['引言','內圈','外圈','取得預算·631','達成共識','建議書'].map((s,i,a)=>`<span class="stepb">${s}</span>${i<a.length-1?'<span class="arr">→</span>':''}`).join('')}</div></div>`;}
+
+function viewHome(){
+  const cards=[
+    {k:'first',n:'01',c:'var(--gray)',t:'首次面談賓士圖',d:'職業介紹 · 營造會談氛圍 · 財富手冊——建立關係與專業定位。'},
+    {k:'risk',n:'02',c:'var(--med)',t:'風險問診賓士圖',d:'責任 · 醫療 · 重病/失能——逐項拿數字,抓出需求標準線。'},
+    {k:'calc',n:'03',c:'var(--gold)',t:'應備試算',d:'把問診的年期、月支出、日額導入,即時算出各項應備與需求標準線總額。'},
+    {k:'guide',n:'04',c:'var(--crit)',t:'引導式面談流程',d:'點一步走一步,從我是誰到建議書的完整 SOP 導覽。'}
+  ];
+  root.innerHTML=`
+    <div class="eyebrow">Financial Advisor Toolkit</div>
+    <h1>賓士圖財顧工具箱<span class="d">.</span></h1>
+    <div class="tag">四套互動工具,同一入口——點卡片進入,或用上方導覽切換。</div>
+    <div class="creed">理論 ｜ 見證 ｜ 實務</div>
+    <div class="cards">${cards.map(c=>`
+      <div class="hcard" data-go="${c.k}">
+        <div class="stripe" style="background:${c.c}"></div>
+        <div class="ic" style="background:${c.c}"><span class="num">${c.n}</span></div>
+        <h3>${c.t}</h3><p>${c.d}</p>
+        <span class="go">進入 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>`).join('')}</div>
+    <div class="homefoot">核心命題:保險與財務規劃是在解決「工作收入中斷」造成的財務風險。首次面談用賓士圖談出需求與共識,第二次面談呈現建議書,最後執行追蹤並收集見證。</div>`;
+  root.querySelectorAll('.hcard').forEach(c=>c.addEventListener('click',()=>go(c.dataset.go)));
+}
+
+function viewWheel(which){
+  const isR=which==='risk';
+  root.innerHTML=`
+    <div class="phead">
+      <div class="skicker">${isR?'Risk Diagnosis ‧ 風險問診':'First Meeting ‧ 首次面談'}</div>
+      <div class="ptitle">${isR?'風險問診賓士圖':'首次面談賓士圖'}<span class="d">.</span></div>
+      <div class="pbar" style="background:${isR?'linear-gradient(90deg,var(--resp),var(--med),var(--crit))':'linear-gradient(90deg,var(--gray),var(--orange),var(--blue))'}"></div>
+      <div class="pdesc">${isR?'一切源自工作收入中斷。點內圈看責任/醫療/重病失能三大架構,點外圈看怎麼問、量化口徑與結論確認。':'點內圈三大主軸看總覽,點外圈著力點看目的、重點話術與檢核點。'}</div>
+    </div>
+    <div class="wheelgrid">
+      <div class="wheelwrap"><svg class="wheel" id="wsvg" viewBox="0 0 600 600"></svg>
+        <div class="legend">${(isR?[['var(--resp)','責任'],['var(--med)','醫療'],['var(--crit)','重病/失能']]:[['var(--gray)','職業介紹'],['var(--orange)','營造會談氛圍'],['var(--blue)','財富手冊']]).map(x=>`<span><i style="background:${x[0]}"></i>${x[1]}</span>`).join('')}</div>
+      </div>
+      <div class="panel" id="wpanel"></div>
+    </div>
+    ${flowRibbon()}`;
+  const svg=document.getElementById('wsvg'),panel=document.getElementById('wpanel');
+  if(isR)buildWheel(svg,panel,WRISK,CR,'pale',['收入','中斷']);
+  else buildWheel(svg,panel,WFIRST,CF,'filled',['賓士圖']);
+}
+
+function viewGuide(){
+  root.innerHTML=`<div class="phead"><div class="skicker">Guided Walkthrough ‧ 點一步,走一步</div><div class="ptitle">引導式面談流程<span class="d">.</span></div><div class="pbar" style="background:var(--gold)"></div></div>
+    <div class="stepper" id="stepper"></div>
+    <div class="gstage"><div id="gbody"></div></div>
+    <div class="gnav"><button class="btn prev" id="gprev">‹ 上一步</button><div class="count" id="gcount"></div><button class="btn next" id="gnext">下一步 ›</button></div>`;
+  const stepper=document.getElementById('stepper'),gbody=document.getElementById('gbody'),gprev=document.getElementById('gprev'),gnext=document.getElementById('gnext'),gcount=document.getElementById('gcount');
+  function steps(){stepper.innerHTML='';STAGES.forEach((s,i)=>{const d=document.createElement('div');d.className='stp'+(i===gcur?' active':'')+(i<gcur?' done':'');d.innerHTML=`<i>${i<gcur?'✓':i+1}</i><span>${s.key}</span>`;d.addEventListener('click',()=>{gcur=i;rg();});stepper.appendChild(d);});}
+  function rg(){
+    steps();const s=STAGES[gcur];let inner='';
+    if(s.type==='pillars')inner=`<div class="lead">${s.lead}</div>`+s.data.map((p,i)=>`<div class="acc" data-acc="${i}"><div class="ah"><span class="dotc" style="background:${p.dot}"></span><span class="htxt">${p.name}</span><span class="sub">${p.sub}</span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div><div class="ab"><ul class="lines">${p.lines.map(l=>`<li>${l}</li>`).join('')}</ul><div class="note">${p.note}</div></div></div>`).join('');
+    else if(s.type==='script')inner=`<div class="lead">${s.lead}</div>`+s.data.map((q,i)=>`<div class="qcard" data-q="${i}"><div class="qrow"><span class="qn">Q${i+1}</span><span>${q.q}</span></div><div class="qans"><span class="ca">客戶:${q.a}</span><div class="pp">${q.p}</div></div></div>`).join('')+`<div class="note">${s.note}</div>`;
+    else if(s.type==='wheel')inner=`<div class="lead">${s.lead}</div><div class="wheelgrid"><div class="wheelwrap"><svg class="wheel" id="gsvg" viewBox="0 0 600 600"></svg></div><div class="panel" id="gpanel"></div></div>`;
+    else if(s.type==='budget')inner=`<div class="lead">${s.lead}</div><div class="calc"><div><label>家庭年收入(元)</label><input id="ginc" type="number" inputmode="numeric" value="600000"></div><div class="resb"><div><b id="glo">—</b><span>安全值下限 10%/年</span></div><div><b id="ghi">—</b><span>上限 15%/年</span></div><div><b id="gmo">—</b><span>每月上限(15%)</span></div></div></div><ul class="lines">${s.points.map(p=>`<li>${p}</li>`).join('')}</ul><div class="note">${s.note}</div>`;
+    else if(s.type==='reservoir')inner=`<div class="lead">${s.lead}</div><div class="zones">${s.data.map((z,i)=>`<div class="acc" data-acc="${i}"><div class="ah"><span class="dotc" style="background:${z.color}"></span><span class="htxt">${z.name}</span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div><div class="ab"><ul class="lines">${z.lines.map(l=>`<li>${l}</li>`).join('')}</ul></div></div>`).join('')}</div><div class="goalbox">${s.goal}</div>`;
+    else if(s.type==='report')inner=`<div class="lead">${s.lead}</div><div class="chips">${s.chapters.map(c=>`<span class="rchip">${c}</span>`).join('')}</div><div class="blabel" style="margin-bottom:.5rem">關鍵診斷指標</div><div class="inds">${s.inds.map(x=>`<div class="ind"><b>${x[0]}</b><span>${x[1]}</span></div>`).join('')}</div><div class="note">${s.note}</div>`;
+    gbody.innerHTML=`<div class="pbody"><div class="skicker">${s.kicker}</div><div class="ntitle">${s.title}</div><div class="nbar" style="background:${s.accent}"></div>${inner}</div>`;
+    gbody.querySelectorAll('.acc').forEach(a=>a.querySelector('.ah').addEventListener('click',()=>a.classList.toggle('open')));
+    gbody.querySelectorAll('.qcard').forEach(q=>q.addEventListener('click',()=>q.classList.toggle('open')));
+    if(s.type==='wheel')buildWheel(document.getElementById('gsvg'),document.getElementById('gpanel'),WRISK,CR,'pale',['收入','中斷']);
+    if(s.type==='budget'){const inc=document.getElementById('ginc');const calc=()=>{const v=+inc.value||0,lo=Math.round(v*.1),hi=Math.round(v*.15);glo.textContent=lo?lo.toLocaleString():'—';ghi.textContent=hi?hi.toLocaleString():'—';gmo.textContent=hi?Math.round(hi/12).toLocaleString():'—';};inc.addEventListener('input',calc);calc();}
+    gprev.disabled=gcur===0;gnext.disabled=gcur===STAGES.length-1;gnext.textContent=gcur===STAGES.length-1?'完成 ✓':'下一步 ›';gcount.textContent=`${gcur+1} / ${STAGES.length}`;
+  }
+  gprev.addEventListener('click',()=>{if(gcur>0){gcur--;rg();}});
+  gnext.addEventListener('click',()=>{if(gcur<STAGES.length-1){gcur++;rg();}});
+  rg();
+}
+
+function fmt(n){return (Math.round(n)||0).toLocaleString();}
+function viewCalc(){
+  const IST="width:84px;padding:.32rem .45rem;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:.92rem;color:var(--ink)";
+  const inp=(id,v)=>`<input id="${id}" type="number" inputmode="numeric" value="${v}" style="${IST}">`;
+  const row=(label,resId)=>`<div style="display:flex;justify-content:space-between;align-items:center;gap:.6rem;flex-wrap:wrap;padding:.55rem 0;border-bottom:1px dashed var(--line)"><div style="font-size:.9rem;line-height:2.1">${label}</div><b id="${resId}" style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--gold);white-space:nowrap">—</b></div>`;
+  const subtotal=(label,id,color)=>`<div style="display:flex;justify-content:space-between;align-items:center;margin-top:.7rem;padding:.6rem .8rem;background:rgba(0,0,0,.035);border-radius:10px"><span style="font-family:'Noto Serif TC';font-weight:700;color:${color}">${label}</span><b id="${id}" style="font-family:'Noto Serif TC';font-size:1.15rem">—</b></div>`;
+
+  root.innerHTML=`
+    <div class="phead">
+      <div class="skicker">Needs Calculation ‧ 導出結果</div>
+      <div class="ptitle">應備試算<span class="d">.</span></div>
+      <div class="pbar" style="background:var(--gold)"></div>
+      <div class="pdesc">上半部把問診數字輸入算出「應備」;下方需求表填入「已備」與「規劃」,即時得出規劃前的缺口與完成率,以及規劃後的達成率。</div>
+    </div>
+    <div id="calc" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1rem;align-items:start">
+      <div class="panel">
+        <div class="blabel" style="color:var(--resp-deep)">責任(本金)</div>
+        ${row(`生活費 月${inp('liv_m',30000)} ×12× ${inp('liv_y',10)}年`,'liv_r')}
+        ${row(`房貸 月${inp('loan_m',25000)} ×12× ${inp('loan_y',15)}年`,'loan_r')}
+        ${row(`教育費 月${inp('edu_m',20000)} ×12× ${inp('edu_y',10)}年`,'edu_r')}
+        ${row(`孝養費 月${inp('par_m',10000)} ×12× ${inp('par_y',23)}年`,'par_r')}
+        ${row(`最後費用 ${inp('fin_v',300000)} 元`,'fin_r')}
+        ${subtotal('責任應備總額','resp_total','var(--resp-deep)')}
+      </div>
+      <div class="panel">
+        <div class="blabel" style="color:var(--med-deep)">醫療(日額 + 雜費)</div>
+        ${row(`病房費 / 日 ${inp('ward_d',2000)}`,'ward_r')}
+        ${row(`看護費 / 日 ${inp('care_d',2000)}`,'care_r')}
+        ${row(`薪資補償 / 日 ${inp('sal_d',2000)}`,'sal_r')}
+        ${subtotal('醫療費用 / 日 合計','med_day','var(--med-deep)')}
+        ${row(`醫療雜費(一次性) ${inp('misc_v',200000)} 元`,'misc_r')}
+      </div>
+      <div class="panel">
+        <div class="blabel" style="color:var(--crit-deep)">重病 / 失能(本金)</div>
+        ${row(`重大疾病(癌症) 月${inp('crit_m',30000)} ×12× ${inp('crit_y',3)}年 + 標靶 ${inp('crit_t',1000000)}`,'crit_r')}
+        ${row(`意外 / 傷殘 基本保額 ${inp('acc_v',3000000)}`,'acc_r')}
+        ${row(`失能照護 月${inp('dis_m',50000)} ×12× ${inp('dis_y',10)}年`,'dis_r')}
+        ${subtotal('重病/失能應備總額','crit_total','var(--crit-deep)')}
+      </div>
+    </div>
+    <div class="panel" style="margin-top:1rem">
+      <div class="blabel" style="color:var(--gold)">風險需求表 ‧ 規劃前 → 規劃後</div>
+      <div style="overflow-x:auto;margin-top:.4rem">
+        <style>
+          .ntab{width:100%;border-collapse:collapse;min-width:720px;font-size:.86rem}
+          .ntab th,.ntab td{padding:.5rem .45rem;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+          .ntab th{font-family:'Noto Serif TC';font-weight:700;color:var(--ink-soft);font-size:.78rem;border-bottom:2px solid var(--line)}
+          .ntab td.lbl,.ntab th.lbl{text-align:left;font-family:'Noto Serif TC';font-weight:700}
+          .ntab input{width:92px;padding:.3rem .4rem;border:1px solid var(--line);border-radius:8px;text-align:right;font-size:.85rem;background:#fff;color:var(--ink)}
+          .ntab td.num{font-variant-numeric:tabular-nums}
+          .ntab tbody tr:hover{background:rgba(0,0,0,.02)}
+        </style>
+        <table class="ntab">
+          <thead><tr><th class="lbl">項目</th><th>應備</th><th>已備</th><th>規劃前差額</th><th>完成率</th><th>規劃</th><th>合計</th><th>規劃後差額</th><th>達成率</th></tr></thead>
+          <tbody>
+          ${[['resp','責任分析',1000000,5000000],['medday','醫療費用 / 日',4500,1600],['misc','醫療雜費',0,200000],['crit','重大疾病(癌症)',0,2000000],['acc','意外 / 傷殘',1000000,2000000],['dis','失能照護',0,6000000]].map(([k,l,h,p])=>`
+            <tr>
+              <td class="lbl">${l}</td>
+              <td class="num" id="${k}_ab">—</td>
+              <td><input id="${k}_have" type="number" inputmode="numeric" value="${h}"></td>
+              <td class="num" id="${k}_d0">—</td>
+              <td class="num" id="${k}_r0">—</td>
+              <td><input id="${k}_plan" type="number" inputmode="numeric" value="${p}"></td>
+              <td class="num" id="${k}_sum">—</td>
+              <td class="num" id="${k}_d1">—</td>
+              <td class="num" id="${k}_r1">—</td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+      <div class="note">差額為負＝缺口(買太少);完成率 = 已備 ÷ 應備,合計 = 已備 + 規劃。「醫療費用/日」為日額,其餘為本金/一次性。目標:規劃後達成率 ≥ 100%。</div>
+    </div>
+
+    <div class="panel" style="margin-top:1rem;background:linear-gradient(180deg,rgba(189,152,81,.14),rgba(255,255,255,.5))">
+      <div class="blabel" style="color:var(--gold)">達成率總覽(本金類)</div>
+      <div class="inds">
+        <div class="ind"><b id="s_ab">—</b><span>本金應備合計</span></div>
+        <div class="ind"><b id="s_have">—</b><span>本金已備合計</span></div>
+        <div class="ind"><b id="s_gap0" style="color:var(--resp-deep)">—</b><span>規劃前缺口</span></div>
+        <div class="ind" style="background:rgba(63,111,163,.1)"><b id="s_r0">—</b><span>規劃前達成率</span></div>
+        <div class="ind" style="background:rgba(189,152,81,.16);border-color:var(--gold)"><b id="s_r1" style="color:var(--gold)">—</b><span>規劃後達成率</span></div>
+      </div>
+      <div class="note">整套流程的脊椎:應備(需求標準線)→ 已備(現有保單)→ 缺口/完成率 → 規劃 → 規劃後達成率。最後進「取得預算」用安全值 10–15% 把關。</div>
+    </div>`;
+
+  const g=id=>+document.getElementById(id).value||0;
+  const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=fmt(v);};
+  const pct=(id,v)=>{const e=document.getElementById(id);if(!e)return;e.textContent=(isFinite(v)?Math.round(v):0)+'%';e.style.color=v>=100?'var(--med-deep)':'var(--resp-deep)';};
+  const diff=(id,v)=>{const e=document.getElementById(id);if(!e)return;e.textContent=fmt(v);e.style.color=v<0?'var(--resp-deep)':'var(--ink)';};
+  function recompute(){
+    const liv=g('liv_m')*12*g('liv_y'),loan=g('loan_m')*12*g('loan_y'),edu=g('edu_m')*12*g('edu_y'),par=g('par_m')*12*g('par_y'),fin=g('fin_v');
+    const resp=liv+loan+edu+par+fin;
+    const ward=g('ward_d'),care=g('care_d'),sal=g('sal_d'),medDay=ward+care+sal,misc=g('misc_v');
+    const crit=g('crit_m')*12*g('crit_y')+g('crit_t'),acc=g('acc_v'),dis=g('dis_m')*12*g('dis_y'),critT=crit+acc+dis;
+    set('liv_r',liv);set('loan_r',loan);set('edu_r',edu);set('par_r',par);set('fin_r',fin);set('resp_total',resp);
+    set('ward_r',ward);set('care_r',care);set('sal_r',sal);set('med_day',medDay);set('misc_r',misc);
+    set('crit_r',crit);set('acc_r',acc);set('dis_r',dis);set('crit_total',critT);
+    const ab={resp:resp,medday:medDay,misc:misc,crit:crit,acc:acc,dis:dis};
+    let pAb=0,pHave=0,pSum=0;
+    ['resp','medday','misc','crit','acc','dis'].forEach(k=>{
+      const a=ab[k],have=g(k+'_have'),plan=g(k+'_plan'),sum=have+plan;
+      set(k+'_ab',a);diff(k+'_d0',have-a);pct(k+'_r0',a?have/a*100:0);
+      set(k+'_sum',sum);diff(k+'_d1',sum-a);pct(k+'_r1',a?sum/a*100:0);
+      if(k!=='medday'){pAb+=a;pHave+=have;pSum+=sum;}
+    });
+    set('s_ab',pAb);set('s_have',pHave);set('s_gap0',Math.max(pAb-pHave,0));
+    pct('s_r0',pAb?pHave/pAb*100:0);pct('s_r1',pAb?pSum/pAb*100:0);
+  }
+  root.querySelectorAll('input').forEach(i=>i.addEventListener('input',recompute));
+  recompute();
+}
+
+function render(){
+  buildTabs();
+  if(view==='home')viewHome();
+  else if(view==='first')viewWheel('first');
+  else if(view==='risk')viewWheel('risk');
+  else if(view==='calc')viewCalc();
+  else if(view==='guide')viewGuide();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+render();
+</script>
+</body>
+</html>
