@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-Hant"><head>
 <meta charset="UTF-8">
@@ -430,9 +431,7 @@
   var FORM_URL="https://forms.gle/REPLACE_WITH_YOUR_FORM";
   // ===== 老師可調整區：財務計算機選單（把 url 換成你做好的計算機網頁；可自由增刪） =====
   var CALC_LINKS=[
-    {name:"複利 / 時間試算機", url:"https://angie26501-lgtm.github.io/active/REPLACE_ME.html"},
-    {name:"退休金缺口試算",   url:"https://angie26501-lgtm.github.io/active/REPLACE_ME.html"},
-    {name:"保障缺口試算",     url:"https://angie26501-lgtm.github.io/active/REPLACE_ME.html"}
+    {name:"財務計算機 · 13 項試算", url:"https://angie26501-lgtm.github.io/business/cal.html"}
   ];
   // ====================================================
   (function(){
@@ -455,23 +454,29 @@
       });
     }
 
-    // ---- 財務計算機下拉選單 ----
+    // ---- 財務計算機（單一連結直接開；多個則用下拉選單）----
     var calcBtn=document.getElementById('calcBtn'),calcMenu=document.getElementById('calcMenu');
     if(calcBtn&&calcMenu){
-      var ch='<div class="ct">點一個，在新分頁打開計算機</div>';
-      CALC_LINKS.forEach(function(c){
-        var ph=c.url.indexOf('REPLACE_ME')!==-1;
-        ch+='<a href="'+c.url+'" target="_blank" rel="noopener"'+(ph?' data-ph="1"':'')+'>'+c.name+(ph?'（未設定）':'')+' →</a>';
-      });
-      calcMenu.innerHTML=ch;
-      calcBtn.addEventListener('click',function(e){e.stopPropagation();calcMenu.classList.toggle('show');});
-      calcMenu.querySelectorAll('a').forEach(function(a){
-        a.addEventListener('click',function(e){
-          if(a.getAttribute('data-ph')){e.preventDefault();alert('這個計算機連結還沒設定。\n請老師在 HTML 檔最上方的 CALC_LINKS，把對應的 url 換成你的計算機網址。');return;}
-          calcMenu.classList.remove('show');
+      var single = CALC_LINKS.length===1 && CALC_LINKS[0].url.indexOf('REPLACE_ME')===-1;
+      if(single){
+        calcBtn.textContent='🧮 財務計算機';
+        calcBtn.addEventListener('click',function(){window.open(CALC_LINKS[0].url,'_blank','noopener');});
+      } else {
+        var ch='<div class="ct">點一個，在新分頁打開計算機</div>';
+        CALC_LINKS.forEach(function(c){
+          var ph=c.url.indexOf('REPLACE_ME')!==-1;
+          ch+='<a href="'+c.url+'" target="_blank" rel="noopener"'+(ph?' data-ph="1"':'')+'>'+c.name+(ph?'（未設定）':'')+' →</a>';
         });
-      });
-      document.addEventListener('click',function(){calcMenu.classList.remove('show');});
+        calcMenu.innerHTML=ch;
+        calcBtn.addEventListener('click',function(e){e.stopPropagation();calcMenu.classList.toggle('show');});
+        calcMenu.querySelectorAll('a').forEach(function(a){
+          a.addEventListener('click',function(e){
+            if(a.getAttribute('data-ph')){e.preventDefault();alert('這個計算機連結還沒設定。\n請老師在 HTML 檔最上方的 CALC_LINKS，把對應的 url 換成你的計算機網址。');return;}
+            calcMenu.classList.remove('show');
+          });
+        });
+        document.addEventListener('click',function(){calcMenu.classList.remove('show');});
+      }
     }
 
     // ---- 行動記錄表 ----
