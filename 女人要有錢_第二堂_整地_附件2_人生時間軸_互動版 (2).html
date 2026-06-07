@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>附件2 我的人生時間軸（互動版）｜女人要有錢</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  @page { size:A4 portrait; margin:11mm 12mm; }
+  :root{--green:#1f4a2e;--green2:#2f5d3f;--gold:#9a7621;--goldL:#c9a24b;--cream:#f6f1e4;--creamD:#efe7d2;--ink:#26301f;--soft:#5b7a60;--line:#c9b990;}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{font-family:"Noto Sans CJK TC","Microsoft JhengHei",sans-serif;color:var(--ink);line-height:1.5;font-size:16px;background:#e9e3d3;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+
+  /* toolbar */
+  .bar{position:sticky;top:0;z-index:50;background:var(--green);color:#fff;display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:9px 14px;}
+  .bar .brand{font-weight:700;letter-spacing:.5px;margin-right:auto;font-size:15px;}
+  .bar button{font-family:inherit;font-size:14px;font-weight:700;border:none;border-radius:20px;padding:7px 15px;cursor:pointer;background:var(--goldL);color:#3a2c08;}
+  .bar button.ghost{background:transparent;color:#fff;border:1.5px solid #ffffff88;}
+  .bar button:active{transform:translateY(1px);}
+
+  .sheet{max-width:820px;margin:14px auto;background:#fff;border-radius:8px;padding:20px 22px 26px;box-shadow:0 4px 16px #0002;}
+
+  .top{text-align:center;}
+  .tag{display:inline-block;background:var(--gold);color:#fff;font-weight:700;font-size:14px;border-radius:13px;padding:3px 16px;letter-spacing:1px;}
+  .title{font-family:"Noto Serif CJK TC",serif;font-size:30px;font-weight:900;color:var(--green);margin-top:7px;}
+  .title .g{color:var(--goldL);}
+  .subt{font-size:14px;color:var(--soft);margin-top:5px;}
+  .name{margin-top:9px;font-size:15px;color:var(--green);font-weight:700;text-align:left;display:flex;align-items:center;gap:8px;}
+  .name input{flex:1;font-family:inherit;font-size:15px;border:none;border-bottom:1.6px solid var(--line);padding:3px 4px;background:transparent;color:var(--ink);outline:none;max-width:340px;}
+  .name input:focus{border-color:var(--gold);}
+  .rule{height:2px;background:var(--goldL);margin:9px 0 12px;border-radius:2px;}
+
+  .sh{margin-bottom:7px;}
+  .sh .no{display:inline-block;background:var(--green);color:var(--cream);font-family:"Noto Serif CJK TC",serif;font-weight:900;width:26px;height:26px;line-height:26px;border-radius:50%;text-align:center;font-size:15px;vertical-align:middle;margin-right:8px;}
+  .sh .ht{font-family:"Noto Serif CJK TC",serif;font-size:19px;font-weight:900;color:var(--green);vertical-align:middle;}
+  .sh .hs{font-size:13px;color:var(--soft);margin-left:7px;vertical-align:middle;}
+
+  /* seed palette */
+  .seedwrap{background:var(--creamD);border-radius:10px;padding:9px 12px;margin-bottom:9px;}
+  .seedwrap .lab{font-size:13.5px;color:var(--green2);margin-bottom:6px;}
+  .seedwrap .lab b{color:var(--gold);}
+  .seedchip{display:inline-block;font-size:15px;font-weight:700;color:var(--green2);background:#fff;border:1.7px solid var(--goldL);border-radius:18px;padding:5px 14px;margin:3px 6px 3px 0;cursor:pointer;user-select:none;transition:.12s;}
+  .seedchip.active{background:var(--green);color:#fff;border-color:var(--green);box-shadow:0 0 0 3px #1f4a2e33;}
+  .seedchip.custom{border-color:var(--gold);border-style:dashed;color:var(--gold);}
+  .seedchip.custom.active{background:var(--gold);color:#fff;border-style:solid;box-shadow:0 0 0 3px #9a762133;}
+  .seedchip .rmseed{margin-left:6px;font-weight:900;cursor:pointer;opacity:.7;}
+  .seedchip .rmseed:hover{opacity:1;}
+  .addwrap{display:inline-flex;align-items:center;gap:5px;margin:3px 0 3px 2px;vertical-align:middle;}
+  .addwrap input{font-family:inherit;font-size:14px;border:1.6px dashed var(--goldL);border-radius:16px;padding:5px 12px;outline:none;width:130px;color:var(--ink);background:#fff;}
+  .addwrap input:focus{border-color:var(--gold);border-style:solid;}
+  .addwrap button{font-family:inherit;font-size:13.5px;font-weight:700;border:none;border-radius:16px;padding:6px 13px;background:var(--green);color:#fff;cursor:pointer;}
+  .addwrap button:active{transform:translateY(1px);}
+  .grouplab{font-size:12.5px;font-weight:700;color:var(--green2);margin:7px 0 4px;}
+  .seedchip.life{border-color:#5b7a8c;color:#3c5a6b;background:#fff;}
+  .seedchip.life.active{background:#3c5a6b;color:#fff;border-color:#3c5a6b;box-shadow:0 0 0 3px #3c5a6b33;}
+  .addrow{margin-top:6px;}
+  .seedinfo{margin-top:8px;font-size:13.5px;line-height:1.45;color:var(--green2);min-height:1.2em;}
+  .seedinfo .si-name{font-weight:900;color:var(--green);font-family:"Noto Serif CJK TC",serif;}
+  .seedinfo .si-tip{color:var(--soft);font-size:12.5px;}
+  .seedinfo .si-hint{margin-top:5px;font-size:13px;color:var(--gold);font-weight:700;}
+  .seedinfo .si-hint b{color:var(--green);background:#f3ead3;border-radius:6px;padding:0 6px;}
+  .seedinfo.show{background:#fff;border:1.5px solid var(--line);border-radius:9px;padding:7px 11px;}
+  .zcard.suggest{border-color:var(--gold);box-shadow:0 0 0 3px #c9a24b66;}
+  .zcard.suggest .zadd{color:var(--gold);font-weight:900;}
+
+  /* timeline grid */
+  .tlgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:6px;}
+  .zcard{border:1.6px solid var(--line);border-radius:11px;overflow:hidden;background:#fffdf8;display:flex;flex-direction:column;}
+  .zhead{background:var(--green);color:var(--cream);text-align:center;font-family:"Noto Serif CJK TC",serif;font-weight:900;font-size:17px;padding:6px 2px;}
+  .zhead small{display:block;font-family:"Noto Sans CJK TC",sans-serif;font-size:11px;color:#cfe0d0;font-weight:400;margin-top:1px;}
+  .zbody{padding:8px 9px;min-height:96px;cursor:pointer;flex:1;}
+  .zq{font-size:12px;color:var(--soft);margin-bottom:5px;}
+  .placed{display:inline-block;font-size:13.5px;font-weight:700;color:#fff;background:var(--green2);border-radius:14px;padding:3px 8px 3px 11px;margin:2px 4px 4px 0;}
+  .placed .rm{display:inline-block;margin-left:5px;font-weight:900;cursor:pointer;opacity:.85;}
+  .placed .rm:hover{opacity:1;}
+  .zadd{font-size:11.5px;color:var(--goldL);font-weight:700;margin-top:2px;}
+  .axis{height:0;border-top:3px solid var(--goldL);position:relative;margin:2px 6px 12px;}
+  .axis .ar{position:absolute;right:-2px;top:-9px;color:var(--goldL);font-size:18px;line-height:1;}
+
+  /* apple-tree growth cards */
+  .tree-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-bottom:4px;}
+  .treecard{border:1.6px solid var(--line);border-radius:12px;background:#fffdf8;padding:8px 7px 10px;text-align:center;display:flex;flex-direction:column;align-items:center;}
+  .treecard .tname{font-family:"Noto Serif CJK TC",serif;font-weight:900;color:var(--green);font-size:14.5px;line-height:1.2;}
+  .treecard .tname small{display:block;font-family:"Noto Sans CJK TC",sans-serif;font-weight:400;color:var(--soft);font-size:10.6px;margin-top:2px;line-height:1.2;min-height:2.4em;}
+  .tsvg{width:100%;margin:4px 0 2px;}
+  .treesvg{width:100%;height:120px;display:block;}
+  .tstage{font-size:12.5px;color:var(--green2);font-weight:700;margin:2px 0 6px;line-height:1.3;}
+  .tstage .stg-pct{color:var(--gold);margin-left:5px;}
+  .tslider{width:94%;accent-color:var(--green);height:22px;cursor:pointer;}
+  /* progress table styles (legacy, kept harmless) */
+  table.pg{width:100%;border-collapse:collapse;margin-bottom:4px;}
+  table.pg th,table.pg td{border:1.5px solid var(--line);padding:7px 9px;}
+  table.pg th{background:var(--green);color:#fff;font-size:14px;font-weight:700;}
+  table.pg td.g{font-family:"Noto Serif CJK TC",serif;font-weight:900;color:var(--green);width:32%;font-size:15.5px;}
+  table.pg td.g small{display:block;font-family:"Noto Sans CJK TC",sans-serif;font-weight:400;color:var(--soft);font-size:12px;margin-top:2px;}
+  .opts{display:flex;flex-wrap:wrap;gap:6px 16px;}
+  .popt{display:inline-flex;align-items:center;font-size:15px;color:#33402b;cursor:pointer;user-select:none;border-radius:8px;padding:2px 6px;}
+  .popt:hover{background:#f4efe0;}
+  .ck{display:inline-block;width:18px;height:18px;border:1.8px solid var(--green);border-radius:5px;margin-right:6px;position:relative;flex:none;}
+  .popt.sel{color:var(--green);font-weight:700;}
+  .popt.sel .ck,.stepopt.sel .ck{background:var(--green);}
+  .popt.sel .ck::after,.stepopt.sel .ck::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg);}
+
+  .nonum{background:#fbf6ea;border:1.7px dashed var(--goldL);border-radius:11px;padding:8px 13px;font-size:14.5px;color:var(--green);font-weight:700;margin:11px 0;}
+  .nonum b{color:var(--gold);}
+
+  .close{font-size:15.5px;color:#33402b;margin-top:8px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;}
+  .prchip{display:inline-block;border:1.7px solid var(--goldL);border-radius:20px;padding:4px 14px;font-weight:700;color:var(--green2);background:#fff;cursor:pointer;user-select:none;transition:.12s;}
+  .prchip.sel{background:var(--gold);color:#fff;border-color:var(--gold);box-shadow:0 0 0 3px #9a762133;}
+  .prscene{display:none;margin-top:9px;background:#fffdf8;border:1.6px solid var(--line);border-radius:12px;padding:8px 12px;align-items:center;gap:12px;}
+  .prscene.show{display:flex;}
+  .prscene-svg{width:180px;height:90px;flex:none;}
+  .prscene-cap{font-size:13.5px;line-height:1.5;color:var(--green2);}
+  .prscene-cap b{color:var(--green);font-family:"Noto Serif CJK TC",serif;}
+  @media (max-width:640px){.prscene{flex-direction:column;text-align:center;}.prscene-svg{width:200px;}}
+
+  .steplead{font-size:15.5px;color:#33402b;margin-top:11px;margin-bottom:6px;}
+  .steplead b{color:var(--gold);}
+  .steplead .hint{font-size:13px;color:var(--soft);font-weight:400;}
+  .stepbox{background:#fbf6ea;border:1.6px solid var(--line);border-radius:11px;padding:9px 13px;margin-bottom:8px;display:grid;grid-template-columns:1fr 1fr;gap:4px 18px;}
+  .stepopt{display:inline-flex;align-items:flex-start;font-size:14.5px;color:#33402b;cursor:pointer;user-select:none;padding:3px 4px;border-radius:8px;}
+  .stepopt:hover{background:#f3ead3;}
+  .stepopt .ck{margin-top:1px;}
+  .stepopt.sel{color:var(--green);font-weight:700;}
+  .ownstep{font-size:15.5px;color:#33402b;display:flex;align-items:center;gap:8px;}
+  .ownstep input{flex:1;font-family:inherit;font-size:15px;border:none;border-bottom:1.6px solid var(--line);padding:3px 4px;background:transparent;color:var(--ink);outline:none;}
+  .ownstep input:focus{border-color:var(--gold);}
+
+  /* device / browser notice */
+  .notice{background:#fff7e6;border-bottom:1.5px solid var(--goldL);color:#6b531a;font-size:13px;line-height:1.45;padding:8px 14px;display:flex;align-items:flex-start;gap:8px;}
+  .notice b{color:var(--green);}
+  .notice .nx{margin-left:auto;cursor:pointer;font-weight:900;color:#9a7621;flex:none;padding:0 2px;}
+  .mobile-gate{display:none;position:fixed;inset:0;z-index:200;background:rgba(31,74,46,.94);color:#fff;padding:30px 24px;text-align:center;flex-direction:column;align-items:center;justify-content:center;gap:14px;}
+  .mobile-gate.show{display:flex;}
+  .mobile-gate .mg-ico{font-size:42px;}
+  .mobile-gate h2{font-family:"Noto Serif CJK TC",serif;font-size:22px;font-weight:900;}
+  .mobile-gate p{font-size:15px;line-height:1.65;max-width:330px;}
+  .mobile-gate b{color:var(--goldL);}
+  .mobile-gate button{font-family:inherit;font-size:15px;font-weight:700;border:none;border-radius:22px;padding:11px 24px;background:var(--goldL);color:#3a2c08;cursor:pointer;margin-top:4px;}
+  .mobile-gate .mg-small{font-size:12.5px;opacity:.85;max-width:330px;}
+  /* google form CTA */
+  .formcta{text-align:center;margin:12px 0 2px;}
+  .formcta a{display:inline-block;background:var(--green);color:#fff;text-decoration:none;font-weight:700;font-size:15px;border-radius:24px;padding:11px 24px;box-shadow:0 2px 8px #1f4a2e44;}
+  .formcta a:active{transform:translateY(1px);}
+  .formcta .fnote{display:block;font-size:12px;color:var(--soft);margin-top:6px;}
+  .foot{text-align:center;color:var(--soft);font-size:13px;margin-top:16px;}
+
+  /* calculator dropdown in toolbar */
+  .calcwrap{position:relative;}
+  .calcmenu{display:none;position:absolute;right:0;top:calc(100% + 6px);background:#fff;border:1.5px solid var(--line);border-radius:12px;box-shadow:0 8px 24px #0003;padding:6px;min-width:210px;z-index:60;}
+  .calcmenu.show{display:block;}
+  .calcmenu a{display:block;text-decoration:none;color:var(--green);font-size:14px;font-weight:700;padding:9px 12px;border-radius:8px;}
+  .calcmenu a:hover{background:#f3ead3;}
+  .calcmenu .ct{font-size:11.5px;color:var(--soft);font-weight:400;padding:3px 12px 6px;}
+  /* record button */
+  .reccta{text-align:center;margin:4px 0 2px;}
+  .reccta button{font-family:inherit;font-size:14.5px;font-weight:700;border:1.7px solid var(--green);background:#fff;color:var(--green);border-radius:24px;padding:10px 22px;cursor:pointer;}
+  .reccta button:active{transform:translateY(1px);}
+  /* record overlay + printable sheet */
+  .ro{display:none;position:fixed;inset:0;z-index:300;background:rgba(31,74,46,.55);overflow:auto;}
+  .ro.show{display:block;}
+  .ro-bar{position:sticky;top:0;background:var(--green);display:flex;gap:8px;align-items:center;padding:9px 14px;}
+  .ro-bar .rt{color:#fff;font-weight:700;margin-right:auto;font-size:14px;}
+  .ro-bar button{font-family:inherit;font-size:13.5px;font-weight:700;border:none;border-radius:18px;padding:7px 14px;cursor:pointer;background:var(--goldL);color:#3a2c08;}
+  .ro-bar button.ghost{background:transparent;color:#fff;border:1.5px solid #ffffff88;}
+  #recordSheet{max-width:760px;margin:18px auto;background:#fff;border-radius:8px;padding:26px 28px;box-shadow:0 6px 24px #0005;}
+  .rec-tag{display:inline-block;background:var(--gold);color:#fff;font-weight:700;font-size:12px;border-radius:12px;padding:2px 13px;}
+  .rec-head{text-align:center;}
+  .rec-title{font-family:"Noto Serif CJK TC",serif;font-size:24px;font-weight:900;color:var(--green);margin-top:6px;}
+  .rec-title .g{color:var(--goldL);}
+  .rec-sub{font-size:13px;color:var(--soft);margin-top:4px;}
+  .rec-meta{display:flex;flex-wrap:wrap;gap:6px 24px;margin-top:12px;font-size:13.5px;color:var(--green);font-weight:700;}
+  .rec-meta .v{font-weight:400;color:var(--ink);border-bottom:1.4px solid var(--line);min-width:120px;display:inline-block;padding:0 6px;}
+  .rec-rule{height:2px;background:var(--goldL);margin:12px 0;border-radius:2px;}
+  table.rec{width:100%;border-collapse:collapse;}
+  table.rec th,table.rec td{border:1.4px solid var(--line);padding:9px;font-size:13px;vertical-align:middle;}
+  table.rec th{background:var(--green);color:#fff;font-weight:700;}
+  table.rec td.n{text-align:center;width:34px;color:var(--green);font-weight:900;}
+  table.rec td.item{font-weight:700;color:var(--green2);width:32%;}
+  table.rec td.when{width:24%;}
+  table.rec td.done{width:56px;text-align:center;}
+  table.rec .cbx{display:inline-block;width:18px;height:18px;border:1.7px solid var(--green);border-radius:5px;}
+  .rec-note{margin-top:13px;background:#fbf6ea;border:1.5px dashed var(--goldL);border-radius:10px;padding:9px 13px;font-size:13px;color:var(--green);font-weight:700;}
+  .rec-foot{text-align:center;color:var(--soft);font-size:12px;margin-top:14px;}
+
+  /* tap-to-place action plan */
+  .actpalette{background:var(--creamD);border-radius:10px;padding:9px 12px;margin-bottom:6px;}
+  .actchip{display:inline-block;font-size:14px;font-weight:700;color:var(--green2);background:#fff;border:1.7px solid var(--green2);border-radius:18px;padding:5px 13px;margin:3px 6px 3px 0;cursor:pointer;user-select:none;transition:.12s;}
+  .actchip.adv{color:var(--gold);border-color:var(--goldL);border-style:dashed;}
+  .actchip.added{opacity:.45;text-decoration:line-through;}
+  .actchip:active{transform:translateY(1px);}
+  .actnote{font-size:11.5px;color:var(--soft);margin:0 0 6px 2px;}
+  .actresult{border:1.7px dashed var(--goldL);border-radius:11px;background:#fffdf8;padding:9px 12px;min-height:46px;margin-bottom:6px;}
+  .actresult .ar-q{font-size:14.5px;font-weight:700;color:var(--green);margin-right:6px;}
+  .actresult .ar-empty{font-size:13px;color:var(--soft);}
+  .picked{display:inline-block;font-size:14px;font-weight:700;color:#fff;background:var(--green2);border-radius:15px;padding:4px 9px 4px 13px;margin:3px 6px 4px 0;}
+  .picked.advp{background:var(--gold);}
+  .picked .rm{display:inline-block;margin-left:6px;font-weight:900;cursor:pointer;opacity:.85;}
+  .picked .rm:hover{opacity:1;}
+
+  /* mobile */
+  @media (max-width:640px){
+    .tlgrid{grid-template-columns:repeat(2,1fr);}
+    .tree-grid{grid-template-columns:repeat(2,1fr);}
+    .treesvg{height:130px;}
+    .title{font-size:25px;}
+    .stepbox{grid-template-columns:1fr;}
+    table.pg td.g{width:42%;font-size:14px;}
+    .sheet{padding:16px 14px 22px;border-radius:0;margin:10px 6px;}
+  }
+
+  /* print */
+  @media print{
+    body{background:#fff;font-size:12px;line-height:1.4;}
+    .no-print{display:none!important;}
+    .sheet{box-shadow:none;margin:0;max-width:none;padding:0;border-radius:0;}
+    .title{font-size:21px;margin-top:5px;}
+    .subt{font-size:11px;margin-top:3px;}
+    .name{font-size:11.5px;margin-top:6px;}
+    .name input{font-size:11.5px;}
+    .rule{margin:6px 0 9px;}
+    .sh{margin-bottom:4px;}
+    .sh .no{width:22px;height:22px;line-height:22px;font-size:12px;}
+    .sh .ht{font-size:15px;}
+    .sh .hs{font-size:10.5px;}
+    .seedwrap{padding:5px 11px;margin-bottom:7px;}
+    .seedchip{font-size:11.5px;padding:3px 11px;margin:2px 5px 2px 0;}
+    .tlgrid{grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:4px;}
+    .zhead{font-size:14px;padding:5px 0;}
+    .zhead small{font-size:9.4px;}
+    .zbody{min-height:74px;padding:6px 8px;}
+    .zq{font-size:10.4px;margin-bottom:4px;}
+    .placed{font-size:11px;padding:2px 8px;}
+    .axis{margin:0 6px 7px;}
+    table.pg th,table.pg td{padding:4px 9px;}
+    table.pg th{font-size:11.5px;}
+    table.pg td.g{font-size:12.5px;}
+    table.pg td.g small{font-size:10px;}
+    .popt{font-size:11.5px;}
+    .ck{width:15px;height:15px;}
+    .popt.sel .ck::after,.stepopt.sel .ck::after{left:4px;top:1px;width:4px;height:8px;}
+    .nonum{font-size:11.2px;padding:6px 12px;margin:7px 0;}
+    .close{font-size:12px;margin-top:6px;}
+    .prchip{font-size:11.5px;padding:3px 11px;}
+    .steplead{font-size:12px;margin-top:7px;margin-bottom:4px;}
+    .steplead .hint{font-size:10px;}
+    .stepbox{grid-template-columns:1fr 1fr;padding:6px 12px;margin-bottom:5px;gap:2px 16px;}
+    .stepopt{font-size:11.3px;padding:1px 3px;}
+    .ownstep{font-size:12px;}
+    .ownstep input{font-size:11.5px;}
+    .foot{font-size:10.4px;margin-top:7px;}
+    .placed .rm{display:none;}
+    .addwrap{display:none!important;}
+    .seedchip .rmseed{display:none;}
+    .tree-grid{grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:4px;}
+    .treecard{padding:5px 3px 6px;}
+    .treecard .tname{font-size:10.5px;}
+    .treecard .tname small{font-size:8.6px;min-height:0;margin-top:1px;}
+    .treesvg{height:74px;}
+    .tstage{font-size:9.6px;margin:1px 0 0;}
+    .tslider{display:none;}
+    .actpalette{display:none;}
+    .actnote{display:none;}
+    .actresult{min-height:62px;}
+    .picked .rm{display:none;}
+    .seedinfo{display:none;}
+    .prscene-svg{width:130px;height:65px;}
+    .prscene{padding:6px 10px;}
+    .ro{display:none!important;}
+  }
+  @media print{
+    body.printing-record .bar,
+    body.printing-record .notice,
+    body.printing-record .sheet,
+    body.printing-record .mobile-gate{display:none!important;}
+    body.printing-record .ro{display:block!important;position:static;background:#fff;overflow:visible;}
+    body.printing-record .ro-bar{display:none!important;}
+    body.printing-record #recordSheet{box-shadow:none;margin:0;border-radius:0;padding:0;max-width:none;}
+  }
+</style></head>
+<body>
+
+  <div class="mobile-gate no-print" id="mobileGate">
+    <div class="mg-ico">📱➡️💻</div>
+    <h2>建議用電腦或平板開啟</h2>
+    <p>這份學習單有<b>會長大的蘋果樹、拖拉與點選</b>等互動，用手機螢幕比較小、不好操作。<br>建議改用<b>電腦或平板</b>開啟，體驗最完整。</p>
+    <p class="mg-small">若是從 LINE／Facebook 點進來，請點右上角選單選擇「<b>用瀏覽器開啟</b>」，再另開新分頁。</p>
+    <button id="gateClose">我了解，仍要在手機上繼續</button>
+  </div>
+
+  <div class="bar no-print">
+    <span class="brand">🌿 馥芸財富學苑 · 互動學習單</span>
+    <span class="calcwrap">
+      <button id="calcBtn">🧮 財務計算機 ▾</button>
+      <div class="calcmenu" id="calcMenu"></div>
+    </span>
+    <button id="btnPrint">🖨 列印 / 存成 PDF</button>
+    <button id="btnImg">🖼 存成圖片</button>
+    <button id="btnReset" class="ghost">↺ 清除重填</button>
+  </div>
+
+  <div class="notice no-print" id="notice">
+    <span>💻 建議用<b>電腦或平板</b>操作；若用手機，請以<b>瀏覽器「另開新頁」</b>開啟（LINE／FB 內請選「用瀏覽器開啟」），互動才會完整。</span>
+    <span class="nx" id="noticeX" title="關閉">✕</span>
+  </div>
+
+  <div class="sheet" id="sheet">
+    <div class="top">
+      <span class="tag">附件 2</span>
+      <div class="title">我的<span class="g">人生時間軸</span></div>
+      <div class="subt">把五大目標，種在「最需要它」的時間；再勾一勾，看看每顆種子長到哪了 🌱</div>
+      <div class="name">姓名∕暱稱：<input type="text" placeholder="在這裡寫上你的名字"></div>
+    </div>
+    <div class="rule"></div>
+
+    <div class="sh"><span class="no">1</span><span class="ht">把五大目標，填到時間軸上</span></div>
+    <div class="seedwrap">
+      <div class="lab no-print">👉 先點一顆<b>種子</b>或<b>夢想</b>，再點下面的時間段把它種進去（同一顆可種在不只一段）。也可以<b>加上自己的目標</b> 🌱</div>
+      <div class="grouplab">🌳 五顆種子 · 保障與財富</div>
+      <div id="palette">
+        <span class="seedchip" data-seed="醫療保障">醫療保障</span>
+        <span class="seedchip" data-seed="家庭保障">家庭保障</span>
+        <span class="seedchip" data-seed="子女教育">子女教育</span>
+        <span class="seedchip" data-seed="財務自由">財務自由</span>
+        <span class="seedchip" data-seed="資產傳承">資產傳承</span>
+      </div>
+      <div class="grouplab">🌟 生活夢想 · 想完成的事</div>
+      <div id="lifepalette">
+        <span class="seedchip life" data-seed="買房">🏠 買房</span>
+        <span class="seedchip life" data-seed="買車">🚗 買車</span>
+        <span class="seedchip life" data-seed="旅遊">✈️ 旅遊</span>
+        <span class="seedchip life" data-seed="退休生活">🌴 退休生活</span>
+        <span class="seedchip life" data-seed="進修圓夢">🎓 進修圓夢</span>
+      </div>
+      <div class="addrow">
+        <span class="addwrap no-print" id="addwrap">
+          <input type="text" id="customSeed" placeholder="其他目標／夢想…" maxlength="14">
+          <button type="button" id="addSeedBtn">＋ 加入</button>
+        </span>
+      </div>
+      <div class="seedinfo" id="seedInfo"><span class="si-tip no-print">👆 點一顆種子或夢想，這裡會告訴你它在做什麼、建議種在哪一段</span></div>
+    </div>
+
+    <div class="tlgrid">
+      <div class="zcard"><div class="zhead">現在<small>此刻的我</small></div><div class="zbody" data-zone="現在"><div class="zq">這一段要先顧的目標：</div><div class="zadd no-print">＋ 點一下放入</div></div></div>
+      <div class="zcard"><div class="zhead">近幾年<small>接下來 3～5 年</small></div><div class="zbody" data-zone="近幾年"><div class="zq">這一段要先顧的目標：</div><div class="zadd no-print">＋ 點一下放入</div></div></div>
+      <div class="zcard"><div class="zhead">退休<small>不再為錢工作</small></div><div class="zbody" data-zone="退休"><div class="zq">這一段要先顧的目標：</div><div class="zadd no-print">＋ 點一下放入</div></div></div>
+      <div class="zcard"><div class="zhead">傳承<small>留給在乎的人</small></div><div class="zbody" data-zone="傳承"><div class="zq">這一段要先顧的目標：</div><div class="zadd no-print">＋ 點一下放入</div></div></div>
+    </div>
+    <div class="axis"><span class="ar">▶</span></div>
+
+    <div class="sh"><span class="no">2</span><span class="ht">每棵蘋果樹，長到哪了？</span><span class="hs no-print">拉一拉進度，樹就會跟著長大 🌳</span></div>
+    <div class="tree-grid">
+      <div class="treecard" data-goal="醫療保障">
+        <div class="tname">醫療保障<small>生病住院不為錢煩惱</small></div>
+        <div class="tsvg"><svg class="treesvg" viewBox="0 0 100 120" preserveAspectRatio="xMidYMax meet"></svg></div>
+        <div class="tstage"><span class="stg-em"></span> <span class="stg-txt"></span><span class="stg-pct"></span></div>
+        <input type="range" class="tslider no-print" min="0" max="100" value="0">
+      </div>
+      <div class="treecard" data-goal="家庭保障">
+        <div class="tname">家庭保障<small>少一份收入也撐得住</small></div>
+        <div class="tsvg"><svg class="treesvg" viewBox="0 0 100 120" preserveAspectRatio="xMidYMax meet"></svg></div>
+        <div class="tstage"><span class="stg-em"></span> <span class="stg-txt"></span><span class="stg-pct"></span></div>
+        <input type="range" class="tslider no-print" min="0" max="100" value="0">
+      </div>
+      <div class="treecard" data-goal="子女教育">
+        <div class="tname">子女教育<small>孩子的未來早點準備</small></div>
+        <div class="tsvg"><svg class="treesvg" viewBox="0 0 100 120" preserveAspectRatio="xMidYMax meet"></svg></div>
+        <div class="tstage"><span class="stg-em"></span> <span class="stg-txt"></span><span class="stg-pct"></span></div>
+        <input type="range" class="tslider no-print" min="0" max="100" value="0">
+      </div>
+      <div class="treecard" data-goal="財務自由">
+        <div class="tname">財務自由<small>不工作錢也會進來</small></div>
+        <div class="tsvg"><svg class="treesvg" viewBox="0 0 100 120" preserveAspectRatio="xMidYMax meet"></svg></div>
+        <div class="tstage"><span class="stg-em"></span> <span class="stg-txt"></span><span class="stg-pct"></span></div>
+        <input type="range" class="tslider no-print" min="0" max="100" value="0">
+      </div>
+      <div class="treecard" data-goal="資產傳承">
+        <div class="tname">資產傳承<small>把愛和財富留給在乎的人</small></div>
+        <div class="tsvg"><svg class="treesvg" viewBox="0 0 100 120" preserveAspectRatio="xMidYMax meet"></svg></div>
+        <div class="tstage"><span class="stg-em"></span> <span class="stg-txt"></span><span class="stg-pct"></span></div>
+        <input type="range" class="tslider no-print" min="0" max="100" value="0">
+      </div>
+    </div>
+
+    <div class="nonum">🌿 這裡<b>不用寫金額、不用算數字</b>——憑你心裡的感覺勾就好。錢的細節，留到一對一時，老師再陪你慢慢看。</div>
+
+    <div class="close">我最想先照顧的那一顆（點選一個）：
+      <span class="prchip" data-pr="醫療保障">醫療保障</span><span class="prchip" data-pr="家庭保障">家庭保障</span><span class="prchip" data-pr="子女教育">子女教育</span><span class="prchip" data-pr="財務自由">財務自由</span><span class="prchip" data-pr="資產傳承">資產傳承</span>
+    </div>
+    <div class="prscene" id="prScene">
+      <svg class="prscene-svg" viewBox="0 0 200 100" preserveAspectRatio="xMidYMid meet" id="prSceneSvg"></svg>
+      <div class="prscene-cap" id="prSceneCap"></div>
+    </div>
+
+    <div class="steplead">為了它，<b>我願意先做的一小步</b>　<span class="hint no-print">點一下建議，放進下面的行動方案；也可以自己加 🌱</span></div>
+    <div class="actpalette" id="actpalette">
+      <span class="actchip" data-act="整理保單，看哪些有保障" data-result="保單健診">整理保單，看哪些有保障</span>
+      <span class="actchip" data-act="記錄一個禮拜的收支" data-result="收支記帳">記錄一個禮拜的收支</span>
+      <span class="actchip" data-act="跟家人聊「如果少一份收入」" data-result="家庭風險對話">跟家人聊「如果少一份收入」</span>
+      <span class="actchip" data-act="每個月固定存下一筆" data-result="定期儲蓄">每個月固定存下一筆</span>
+      <span class="actchip" data-act="指定保單受益人" data-result="受益人規劃">指定保單受益人</span>
+      <span class="actchip" data-act="預約 15 分鐘線上小輕診" data-result="財務小輕診">預約 15 分鐘線上小輕診</span>
+      <span class="actchip adv" data-act="預立醫療決定" data-result="預立醫療決定">預立醫療決定</span>
+      <span class="actchip adv" data-act="預立遺囑" data-result="遺囑規劃">預立遺囑</span>
+      <span class="actchip adv" data-act="安養信託" data-result="安養信託">安養信託</span>
+      <span class="actchip adv" data-act="以房養老" data-result="以房養老">以房養老</span>
+      <span class="addwrap no-print" id="actaddwrap">
+        <input type="text" id="customAct" placeholder="其他行動…" maxlength="16">
+        <button type="button" id="addActBtn">＋ 加入</button>
+      </span>
+    </div>
+    <div class="actnote no-print">🟢 綠色：現在就能做的小事　🟡 金色：進階規劃，先了解就好，之後一對一時老師再陪你看</div>
+    <div class="actresult" id="actresult">
+      <span class="ar-q">我選的行動方案：</span><span class="ar-empty no-print" id="arEmpty">（點上面的建議放進來，或自己加一個）</span>
+    </div>
+    <div class="formcta no-print">
+      <!-- ▼▼▼ 老師：把下面 href 換成你的 Google 表單連結（form_url 那一行也要一起換） ▼▼▼ -->
+      <a id="formBtn" href="https://forms.gle/REPLACE_WITH_YOUR_FORM" target="_blank" rel="noopener">📋 送出我的行動方案 · 申請 15 分鐘小輕診 →</a>
+      <span class="fnote">填好上面的方案後，點這裡到 Google 表單留下聯絡方式，老師會與你預約。</span>
+    </div>
+    <div class="reccta no-print">
+      <button id="recBtn">📄 把方案做成「行動記錄表」（可列印／存成圖片）</button>
+    </div>
+
+    <div class="foot">琪琪老師 · 馥芸財富學苑　｜　把它帶回家，貼在看得到的地方 🌿</div>
+  </div>
+
+<script>
+  // ===== 老師可調整區：把下面換成你的 Google 表單連結 =====
+  var FORM_URL="https://forms.gle/REPLACE_WITH_YOUR_FORM";
+  // ===== 老師可調整區：財務計算機選單（把 url 換成你做好的計算機網頁；可自由增刪） =====
+  var CALC_LINKS=[
+    {name:"複利 / 時間試算機", url:"https://angie26501-lgtm.github.io/active/REPLACE_ME.html"},
+    {name:"退休金缺口試算",   url:"https://angie26501-lgtm.github.io/active/REPLACE_ME.html"},
+    {name:"保障缺口試算",     url:"https://angie26501-lgtm.github.io/active/REPLACE_ME.html"}
+  ];
+  // ====================================================
+  (function(){
+    // browser notice dismiss
+    var nx=document.getElementById('noticeX'),notice=document.getElementById('notice');
+    if(nx)nx.addEventListener('click',function(){notice.style.display='none';});
+    // mobile gate: show on small screens
+    var gate=document.getElementById('mobileGate'),gc=document.getElementById('gateClose');
+    if(gate&&window.innerWidth<=600)gate.classList.add('show');
+    if(gc)gc.addEventListener('click',function(){gate.classList.remove('show');});
+    // google form button
+    var fb=document.getElementById('formBtn');
+    if(fb){
+      fb.setAttribute('href',FORM_URL);
+      fb.addEventListener('click',function(e){
+        if(FORM_URL.indexOf('REPLACE_WITH_YOUR_FORM')!==-1){
+          e.preventDefault();
+          alert('表單連結還沒設定。\n請老師在 HTML 檔最上方把 FORM_URL 換成你的 Google 表單網址。');
+        }
+      });
+    }
+
+    // ---- 財務計算機下拉選單 ----
+    var calcBtn=document.getElementById('calcBtn'),calcMenu=document.getElementById('calcMenu');
+    if(calcBtn&&calcMenu){
+      var ch='<div class="ct">點一個，在新分頁打開計算機</div>';
+      CALC_LINKS.forEach(function(c){
+        var ph=c.url.indexOf('REPLACE_ME')!==-1;
+        ch+='<a href="'+c.url+'" target="_blank" rel="noopener"'+(ph?' data-ph="1"':'')+'>'+c.name+(ph?'（未設定）':'')+' →</a>';
+      });
+      calcMenu.innerHTML=ch;
+      calcBtn.addEventListener('click',function(e){e.stopPropagation();calcMenu.classList.toggle('show');});
+      calcMenu.querySelectorAll('a').forEach(function(a){
+        a.addEventListener('click',function(e){
+          if(a.getAttribute('data-ph')){e.preventDefault();alert('這個計算機連結還沒設定。\n請老師在 HTML 檔最上方的 CALC_LINKS，把對應的 url 換成你的計算機網址。');return;}
+          calcMenu.classList.remove('show');
+        });
+      });
+      document.addEventListener('click',function(){calcMenu.classList.remove('show');});
+    }
+
+    // ---- 行動記錄表 ----
+    var overlay=document.getElementById('recordOverlay');
+    function buildRecord(){
+      var nmEl=document.querySelector('.name input');
+      document.getElementById('recName').textContent=nmEl?nmEl.value:'';
+      var pr=document.querySelector('.prchip.sel');
+      document.getElementById('recPr').textContent=pr?pr.dataset.pr:'';
+      var d=new Date();
+      document.getElementById('recDate').textContent=d.getFullYear()+' / '+(d.getMonth()+1)+' / '+d.getDate();
+      var picks=Array.prototype.map.call(document.querySelectorAll('#actresult .picked'),function(p){return p.textContent.replace(/×\s*$/,'').trim();});
+      var rows='',total=Math.max(picks.length,6);
+      for(var i=0;i<total;i++){
+        rows+='<tr><td class="n">'+(i+1)+'</td><td class="item">'+(picks[i]||'')+'</td><td class="when"></td><td class="done"><span class="cbx"></span></td><td></td></tr>';
+      }
+      document.getElementById('recRows').innerHTML=rows;
+    }
+    var recBtn=document.getElementById('recBtn');
+    if(recBtn)recBtn.addEventListener('click',function(){buildRecord();overlay.classList.add('show');});
+    var recClose=document.getElementById('recClose');
+    if(recClose)recClose.addEventListener('click',function(){overlay.classList.remove('show');});
+    var recPrint=document.getElementById('recPrint');
+    if(recPrint)recPrint.addEventListener('click',function(){
+      document.body.classList.add('printing-record');window.print();
+      setTimeout(function(){document.body.classList.remove('printing-record');},400);
+    });
+    var recImg=document.getElementById('recImg');
+    if(recImg)recImg.addEventListener('click',function(){
+      if(typeof html2canvas==='undefined'){alert('「存成圖片」需要網路連線；沒網路時請改用「列印 / 存成 PDF」。');return;}
+      html2canvas(document.getElementById('recordSheet'),{scale:2,backgroundColor:'#ffffff',useCORS:true}).then(function(c){
+        var a=document.createElement('a');a.download='我的行動記錄表.png';a.href=c.toDataURL('image/png');a.click();
+      }).catch(function(){alert('圖片產生失敗，請改用「列印 / 存成 PDF」。');});
+    });
+  })();
+
+  // ---- seed palette + timeline ----
+  var activeSeed=null;
+  var SEED_DESC={
+    '醫療保障':'生病、住院、長期照顧時，不用為昂貴的醫療費煩惱，也補上自己萬一不能工作的缺口。',
+    '家庭保障':'萬一家裡少了一份收入，家人的生活、貸款和開銷還是撐得住。',
+    '子女教育':'孩子的學費和未來，從現在開始一點一滴提早準備好。',
+    '財務自由':'就算不工作，也有穩定的「被動收入」自己進來，生活不愁。',
+    '資產傳承':'把這輩子的財富和心意，順順利利、不傷感情地留給最在乎的人。',
+    '買房':'給家人一個安穩的窩——提早規劃頭期款與貸款，住得安心。',
+    '買車':'代步或全家出遊更方便——先想好預算與後續養車的花費。',
+    '旅遊':'把想去的地方放進人生，存一筆「圓夢基金」，慢慢實現。',
+    '退休生活':'退休後想過的日子——越早準備，越能從容過自己想要的生活。',
+    '進修圓夢':'投資自己、學一項技能或完成一個夢想，也值得排進時間裡。'
+  };
+  var seedInfo=document.getElementById('seedInfo');
+  var SEED_ZONE={
+    '醫療保障':{z:'現在',r:'生病、意外不挑時間，這是現在就要先顧好的根基。'},
+    '家庭保障':{z:'現在',r:'家人正靠著你，少一份收入的風險，現在就先補起來。'},
+    '子女教育':{z:'近幾年',r:'孩子的教育金，趁這幾年提早一點一滴準備最輕鬆。'},
+    '財務自由':{z:'退休',r:'讓被動收入在不工作的階段，穩穩撐起生活。'},
+    '資產傳承':{z:'傳承',r:'把累積的果實，順順利利留給最在乎的人。'},
+    '買房':{z:'近幾年',r:'頭期款要時間累積，趁這幾年定目標、慢慢存。'},
+    '買車':{z:'近幾年',r:'抓好預算，這幾年存夠再出手，不勉強。'},
+    '旅遊':{z:'現在',r:'別等以後——圓夢基金現在就開始一點一滴存。'},
+    '退休生活':{z:'退休',r:'這是退休後的日子，越早準備越輕鬆。'},
+    '進修圓夢':{z:'近幾年',r:'投資自己的最好時機，就是接下來這幾年。'}
+  };
+  function highlightZone(zoneName){
+    document.querySelectorAll('.zcard').forEach(function(card){
+      card.classList.remove('suggest');
+      var add=card.querySelector('.zadd');if(add)add.textContent='＋ 點一下放入';
+    });
+    if(!zoneName) return;
+    var body=document.querySelector('.zbody[data-zone="'+zoneName+'"]');
+    if(body){var card=body.closest('.zcard');card.classList.add('suggest');var add=body.querySelector('.zadd');if(add)add.textContent='👍 老師建議種這裡';}
+  }
+  function showSeedInfo(c){
+    if(!c){seedInfo.className='seedinfo';seedInfo.innerHTML='<span class="si-tip no-print">👆 點一顆種子或夢想，這裡會告訴你它在做什麼、建議種在哪一段</span>';highlightZone(null);return;}
+    var name=c.dataset.seed;var d=SEED_DESC[name];var z=SEED_ZONE[name];
+    seedInfo.className='seedinfo show';
+    var html='<span class="si-name">'+name+'：</span>'+(d||'這是你自己加的目標／夢想，種到最適合的時間段吧 🌱');
+    if(z){html+='<div class="si-hint">🌱 老師建議：先種在 <b>'+z.z+'</b>　'+z.r+'</div>';}
+    seedInfo.innerHTML=html;
+    highlightZone(z?z.z:null);
+  }
+  function clearActive(){document.querySelectorAll('.seedchip').forEach(function(p){p.classList.remove('active');});}
+  function wireSeed(c){
+    c.addEventListener('click',function(e){
+      if(e.target.classList.contains('rmseed')) return;
+      if(c.classList.contains('active')){c.classList.remove('active');activeSeed=null;showSeedInfo(null);return;}
+      clearActive();c.classList.add('active');activeSeed=c;showSeedInfo(c);
+    });
+  }
+  document.querySelectorAll('.seedchip').forEach(wireSeed);
+
+  // add a custom goal as a new seed
+  function addCustomSeed(){
+    var inp=document.getElementById('customSeed');
+    var v=(inp.value||'').trim();
+    if(!v) return;
+    var dup=Array.prototype.some.call(document.querySelectorAll('.seedchip'),function(p){return p.dataset.seed===v;});
+    if(dup){inp.value='';inp.focus();return;}
+    var chip=document.createElement('span');
+    chip.className='seedchip custom';chip.dataset.seed=v;
+    chip.innerHTML=v+'<span class="rmseed">×</span>';
+    wireSeed(chip);
+    chip.querySelector('.rmseed').addEventListener('click',function(ev){
+      ev.stopPropagation();
+      if(activeSeed===chip)activeSeed=null;
+      chip.remove();
+    });
+    var aw=document.getElementById('addwrap');aw.parentNode.insertBefore(chip,aw);
+    inp.value='';inp.focus();
+  }
+  document.getElementById('addSeedBtn').addEventListener('click',addCustomSeed);
+  document.getElementById('customSeed').addEventListener('keydown',function(e){
+    if(e.key==='Enter'){e.preventDefault();addCustomSeed();}
+  });
+  document.querySelectorAll('.zbody').forEach(function(z){
+    z.addEventListener('click',function(e){
+      if(e.target.classList.contains('rm')) return;
+      if(!activeSeed){
+        var pal=document.getElementById('palette');
+        pal.animate([{boxShadow:'0 0 0 0 #1f4a2e00'},{boxShadow:'0 0 0 4px #1f4a2e55'},{boxShadow:'0 0 0 0 #1f4a2e00'}],{duration:600});
+        return;
+      }
+      var label=activeSeed.dataset.seed;
+      var exists=Array.prototype.some.call(z.querySelectorAll('.placed'),function(p){return p.dataset.seed===label;});
+      if(exists) return;
+      var chip=document.createElement('span');
+      chip.className='placed';chip.dataset.seed=label;
+      chip.innerHTML=label+'<span class="rm">×</span>';
+      chip.querySelector('.rm').addEventListener('click',function(ev){ev.stopPropagation();chip.remove();});
+      var add=z.querySelector('.zadd');
+      z.insertBefore(chip,add);
+    });
+  });
+
+  // ---- apple-tree growth cards ----
+  function clampT(v,a,b){return Math.max(a,Math.min(b,v));}
+  function lerpT(p,p0,p1,v0,v1){if(p<=p0)return v0;if(p>=p1)return v1;return v0+(v1-v0)*(p-p0)/(p1-p0);}
+  function treeInner(p){
+    p=clampT(p,0,100);var g='';var GROUND=108;
+    g+='<ellipse cx="50" cy="'+GROUND+'" rx="33" ry="7.5" fill="#caa86a"/>';
+    g+='<ellipse cx="50" cy="'+(GROUND-1.5)+'" rx="27" ry="5.5" fill="#b98f4e"/>';
+    if(p<6){
+      g+='<ellipse cx="50" cy="103" rx="5" ry="6.5" fill="#7a4a1e"/>';
+      g+='<path d="M50 97 q2 3 0 6 q-2 -3 0 -6 z" fill="#9c6a2e"/>';
+      return g;
+    }
+    if(p<22){
+      var topY=lerpT(p,6,22,101,84);
+      g+='<rect x="48.7" y="'+topY+'" width="2.6" height="'+(GROUND-2-topY)+'" rx="1.3" fill="#4f7a3a"/>';
+      var ly=topY+3;
+      g+='<path d="M50 '+ly+' q-13 -5 -16 4 q11 4 16 -4 z" fill="#5f9248"/>';
+      g+='<path d="M50 '+(ly+5)+' q13 -5 16 4 q-11 4 -16 -4 z" fill="#6fa256"/>';
+      return g;
+    }
+    var trunkTop=lerpT(p,22,100,94,58);
+    var trunkW=lerpT(p,22,100,4.5,10);
+    var canopyR=lerpT(p,22,100,11,30);
+    var cCy=trunkTop-canopyR*0.35;var cCx=50;
+    g+='<rect x="'+(50-trunkW/2)+'" y="'+trunkTop+'" width="'+trunkW+'" height="'+(GROUND-2-trunkTop)+'" rx="'+(trunkW/2)+'" fill="#7a5230"/>';
+    if(p>=45){
+      g+='<rect x="50" y="'+(trunkTop+4)+'" width="'+(canopyR*0.7)+'" height="2.4" rx="1.2" fill="#7a5230" transform="rotate(-28 50 '+(trunkTop+5)+')"/>';
+      g+='<rect x="'+(50-canopyR*0.7)+'" y="'+(trunkTop+8)+'" width="'+(canopyR*0.7)+'" height="2.4" rx="1.2" fill="#7a5230" transform="rotate(28 50 '+(trunkTop+9)+')"/>';
+    }
+    g+='<circle cx="'+(cCx-canopyR*0.55)+'" cy="'+(cCy+canopyR*0.2)+'" r="'+(canopyR*0.72)+'" fill="#3f7a44"/>';
+    g+='<circle cx="'+(cCx+canopyR*0.55)+'" cy="'+(cCy+canopyR*0.2)+'" r="'+(canopyR*0.72)+'" fill="#3f7a44"/>';
+    g+='<circle cx="'+cCx+'" cy="'+(cCy-canopyR*0.35)+'" r="'+(canopyR*0.82)+'" fill="#4a8c4f"/>';
+    g+='<circle cx="'+cCx+'" cy="'+cCy+'" r="'+canopyR+'" fill="#56994f"/>';
+    g+='<circle cx="'+(cCx-canopyR*0.3)+'" cy="'+(cCy-canopyR*0.25)+'" r="'+(canopyR*0.5)+'" fill="#62a85a" opacity="0.7"/>';
+    if(p>=30&&p<60){
+      var bl=[[-canopyR*0.5,0],[canopyR*0.45,-canopyR*0.2],[0,canopyR*0.35],[canopyR*0.1,-canopyR*0.5]];
+      bl.forEach(function(b){g+='<circle cx="'+(cCx+b[0])+'" cy="'+(cCy+b[1])+'" r="2.2" fill="#f4c6d6"/>';});
+    }
+    if(p>=55&&p<100){
+      var pos=[[-10,4],[11,2],[2,14],[-15,-8],[15,-6]];
+      var n=clampT(Math.floor((p-55)/9)+1,0,5);
+      for(var i=0;i<n;i++){
+        var ax=cCx+pos[i][0]*(canopyR/16);var ay=cCy+pos[i][1]*(canopyR/16);
+        g+='<rect x="'+(ax-0.5)+'" y="'+(ay-5.5)+'" width="1" height="2.6" fill="#5b3a1a"/>';
+        g+='<circle cx="'+ax+'" cy="'+ay+'" r="3.5" fill="#d33b2c"/>';
+      }
+    }
+    if(p>=100){
+      var gpos=[[0,0.02],[0.52,0.10],[-0.52,0.10],[0.27,-0.42],[-0.27,-0.42],[0.30,0.50],[-0.30,0.50],[0.80,-0.12],[-0.80,-0.12],[0.02,-0.78],[0.02,0.80]];
+      var R=canopyR*0.235;
+      for(var k=0;k<gpos.length;k++){
+        var gx=cCx+gpos[k][0]*canopyR;var gy=cCy+gpos[k][1]*canopyR;
+        g+='<circle cx="'+gx+'" cy="'+(gy-R*0.55)+'" r="'+(R*0.32)+'" fill="#7a5230"/>';
+        g+='<circle cx="'+gx+'" cy="'+gy+'" r="'+R+'" fill="#caa11a"/>';
+        g+='<circle cx="'+gx+'" cy="'+gy+'" r="'+(R*0.86)+'" fill="#e8b51f"/>';
+        g+='<ellipse cx="'+(gx-R*0.34)+'" cy="'+(gy-R*0.34)+'" rx="'+(R*0.34)+'" ry="'+(R*0.24)+'" fill="#fff3bf" opacity="0.95" transform="rotate(-35 '+(gx-R*0.34)+' '+(gy-R*0.34)+')"/>';
+      }
+      var sp=[[cCx-canopyR*0.9,cCy-canopyR*0.5,2.4],[cCx+canopyR*0.85,cCy-canopyR*0.6,2.0],[cCx+canopyR*0.2,cCy-canopyR,1.8],[cCx-canopyR*0.2,cCy+canopyR*0.85,1.7]];
+      for(var t=0;t<sp.length;t++){
+        var sx=sp[t][0],sy=sp[t][1],sr=sp[t][2];
+        g+='<path d="M'+sx+' '+(sy-sr*2.2)+' L'+(sx+sr*0.5)+' '+(sy-sr*0.5)+' L'+(sx+sr*2.2)+' '+sy+' L'+(sx+sr*0.5)+' '+(sy+sr*0.5)+' L'+sx+' '+(sy+sr*2.2)+' L'+(sx-sr*0.5)+' '+(sy+sr*0.5)+' L'+(sx-sr*2.2)+' '+sy+' L'+(sx-sr*0.5)+' '+(sy-sr*0.5)+' Z" fill="#fff6cf"/>';
+      }
+    }
+    return g;
+  }
+  function stageInfo(p){
+    if(p<=0) return {em:'🌰',txt:'還沒種下'};
+    if(p<22) return {em:'🌱',txt:'發芽中'};
+    if(p<45) return {em:'🌿',txt:'長成小樹'};
+    if(p<60) return {em:'🌸',txt:'開花了'};
+    if(p<100) return {em:'🍎',txt:'開始結果'};
+    return {em:'🎉',txt:'滿樹金蘋果！'};
+  }
+  document.querySelectorAll('.treecard').forEach(function(card){
+    var svg=card.querySelector('.treesvg');
+    var slider=card.querySelector('.tslider');
+    var em=card.querySelector('.stg-em'),txt=card.querySelector('.stg-txt'),pct=card.querySelector('.stg-pct');
+    function render(){
+      var p=parseInt(slider.value,10)||0;
+      svg.innerHTML=treeInner(p);
+      var s=stageInfo(p);
+      em.textContent=s.em;txt.textContent=s.txt;pct.textContent=p+'%';
+    }
+    slider.addEventListener('input',render);
+    render();
+  });
+
+  // ---- priority single-select + scene illustration ----
+  function spk(x,y,r,c){return '<path d="M'+x+' '+(y-r*2.1)+' L'+(x+r*0.5)+' '+(y-r*0.5)+' L'+(x+r*2.1)+' '+y+' L'+(x+r*0.5)+' '+(y+r*0.5)+' L'+x+' '+(y+r*2.1)+' L'+(x-r*0.5)+' '+(y+r*0.5)+' L'+(x-r*2.1)+' '+y+' L'+(x-r*0.5)+' '+(y-r*0.5)+' Z" fill="'+(c||'#f3d57a')+'"/>';}
+  function sceneInner(goal){
+    if(goal==='醫療保障'){return '<circle cx="95" cy="20" r="5" fill="#dca617"/><circle cx="105" cy="20" r="5" fill="#dca617"/><path d="M89 23 L100 36 L111 23 Z" fill="#dca617"/><path d="M70 34 H130 V60 Q130 82 100 92 Q70 82 70 60 Z" fill="#2f5d3f"/><path d="M76 39 H124 V59 Q124 77 100 85 Q76 77 76 59 Z" fill="#3f7a44"/><rect x="94" y="48" width="12" height="30" rx="2.5" fill="#fff"/><rect x="85" y="57" width="30" height="12" rx="2.5" fill="#fff"/>'+spk(140,40,2.2)+spk(60,46,1.9);}
+    if(goal==='家庭保障'){return '<path d="M52 50 Q100 8 148 50 Q136 42 124 50 Q112 42 100 50 Q88 42 76 50 Q64 42 52 50 Z" fill="#c9a24b"/><path d="M100 12 v6" stroke="#9a7621" stroke-width="3" stroke-linecap="round"/><rect x="98.5" y="50" width="3" height="30" fill="#9a7621"/><path d="M101.5 80 q0 7 -7 7" fill="none" stroke="#9a7621" stroke-width="3" stroke-linecap="round"/><circle cx="78" cy="64" r="6.5" fill="#2f5d3f"/><path d="M70 88 q0 -16 8 -16 q8 0 8 16 z" fill="#2f5d3f"/><circle cx="122" cy="64" r="6.5" fill="#2f5d3f"/><path d="M114 88 q0 -16 8 -16 q8 0 8 16 z" fill="#2f5d3f"/><circle cx="100" cy="70" r="5" fill="#3f7a44"/><path d="M94 88 q0 -12 6 -12 q6 0 6 12 z" fill="#3f7a44"/>'+spk(48,30,1.8)+spk(152,30,1.8);}
+    if(goal==='子女教育'){return '<path d="M100 84 L66 77 V60 L100 67 Z" fill="#f3ead3" stroke="#2f5d3f" stroke-width="1.8"/><path d="M100 84 L134 77 V60 L100 67 Z" fill="#fffdf8" stroke="#2f5d3f" stroke-width="1.8"/><path d="M100 30 L128 40 L100 50 L72 40 Z" fill="#1f4a2e"/><path d="M86 45 H114 V52 Q100 59 86 52 Z" fill="#2f5d3f"/><line x1="128" y1="40" x2="131" y2="54" stroke="#c9a24b" stroke-width="2"/><circle cx="131" cy="56" r="3" fill="#c9a24b"/>'+spk(60,34,2.1)+spk(140,30,1.8);}
+    if(goal==='財務自由'){return '<circle cx="156" cy="26" r="9" fill="#dca617"/><g stroke="#dca617" stroke-width="2" stroke-linecap="round"><line x1="156" y1="10" x2="156" y2="14"/><line x1="156" y1="38" x2="156" y2="42"/><line x1="140" y1="26" x2="144" y2="26"/><line x1="168" y1="26" x2="172" y2="26"/><line x1="145" y1="15" x2="148" y2="18"/><line x1="164" y1="34" x2="167" y2="37"/></g><path d="M100 24 A28 28 0 0 1 126 64" fill="none" stroke="#c9a24b" stroke-width="5" stroke-linecap="round"/><path d="M126 64 l5 -8 l-9 1 z" fill="#c9a24b"/><path d="M100 80 A28 28 0 0 1 74 40" fill="none" stroke="#c9a24b" stroke-width="5" stroke-linecap="round"/><path d="M74 40 l-5 8 l9 -1 z" fill="#c9a24b"/><ellipse cx="100" cy="60" rx="15" ry="5.5" fill="#9a7621"/><ellipse cx="100" cy="54" rx="15" ry="5.5" fill="#c9a24b"/><ellipse cx="100" cy="48" rx="15" ry="5.5" fill="#e8b51f"/><text x="100" y="51.5" font-size="9" font-weight="900" text-anchor="middle" fill="#7a5d12" font-family="sans-serif">$</text>'+spk(78,30,1.8);}
+    if(goal==='資產傳承'){return '<ellipse cx="52" cy="86" rx="26" ry="5" fill="#caa86a"/><ellipse cx="150" cy="88" rx="20" ry="4.5" fill="#caa86a"/><rect x="48" y="56" width="6" height="28" rx="3" fill="#7a5230"/><circle cx="40" cy="46" r="15" fill="#3f7a44"/><circle cx="60" cy="46" r="15" fill="#3f7a44"/><circle cx="51" cy="38" r="17" fill="#56994f"/><circle cx="44" cy="44" r="4.5" fill="#e8b51f"/><circle cx="58" cy="48" r="4.5" fill="#e8b51f"/><rect x="148.5" y="68" width="3" height="20" rx="1.5" fill="#4f7a3a"/><path d="M150 74 q-12 -5 -15 3 q10 4 15 -3 z" fill="#5f9248"/><path d="M150 79 q12 -5 15 3 q-10 4 -15 -3 z" fill="#6fa256"/><path d="M74 44 Q108 30 134 56" fill="none" stroke="#c9a24b" stroke-width="3" stroke-dasharray="3 3" stroke-linecap="round"/><path d="M134 56 l1 -9 l-7 5 z" fill="#c9a24b"/><circle cx="104" cy="34" r="5" fill="#e8b51f"/><ellipse cx="102.5" cy="32.5" rx="1.6" ry="1.1" fill="#fff3bf"/>'+spk(120,28,2.0)+spk(170,40,1.7);}
+    return '';
+  }
+  var PR_CAP={
+    '醫療保障':'<b>守護健康</b><br>看病、住院、長照都不慌張，先把自己顧好。',
+    '家庭保障':'<b>像一把傘</b><br>為最愛的家人遮風擋雨，少一份收入也安心。',
+    '子女教育':'<b>鋪一條安心的路</b><br>孩子的未來，從現在開始慢慢準備。',
+    '財務自由':'<b>讓錢替你工作</b><br>被動收入自己進來，日子越過越從容。',
+    '資產傳承':'<b>溫柔地傳下去</b><br>把豐收的果實，留給最在乎的人。'
+  };
+  var prScene=document.getElementById('prScene');
+  var prSceneSvg=document.getElementById('prSceneSvg');
+  var prSceneCap=document.getElementById('prSceneCap');
+  var prChips=document.querySelectorAll('.prchip');
+  prChips.forEach(function(c){
+    c.addEventListener('click',function(){
+      prChips.forEach(function(p){p.classList.remove('sel');});
+      c.classList.add('sel');
+      var g=c.dataset.pr;
+      prSceneSvg.innerHTML=sceneInner(g);
+      prSceneCap.innerHTML=PR_CAP[g]||'';
+      prScene.className='prscene show';
+    });
+  });
+
+  // ---- action plan: tap a suggestion to place it below ----
+  (function(){
+    var result=document.getElementById('actresult');
+    var empty=document.getElementById('arEmpty');
+    function refreshEmpty(){empty.style.display=result.querySelector('.picked')?'none':'';}
+    function addAction(key,display,adv,sourceChip){
+      var dup=Array.prototype.some.call(result.querySelectorAll('.picked'),function(p){return p.dataset.act===key;});
+      if(dup) return;
+      var chip=document.createElement('span');
+      chip.className='picked'+(adv?' advp':'');
+      chip.dataset.act=key;
+      chip.innerHTML=display+'<span class="rm">×</span>';
+      chip.querySelector('.rm').addEventListener('click',function(e){
+        e.stopPropagation();chip.remove();
+        if(sourceChip)sourceChip.classList.remove('added');
+        refreshEmpty();
+      });
+      result.appendChild(chip);refreshEmpty();
+    }
+    document.querySelectorAll('.actchip').forEach(function(c){
+      c.addEventListener('click',function(){
+        var key=c.dataset.act,disp=c.dataset.result||c.dataset.act,adv=c.classList.contains('adv');
+        if(c.classList.contains('added')){
+          Array.prototype.forEach.call(result.querySelectorAll('.picked'),function(p){if(p.dataset.act===key)p.remove();});
+          c.classList.remove('added');refreshEmpty();return;
+        }
+        c.classList.add('added');addAction(key,disp,adv,c);
+      });
+    });
+    var inp=document.getElementById('customAct'),btn=document.getElementById('addActBtn');
+    function addCustomAct(){var v=(inp.value||'').trim();if(!v)return;addAction(v,v,false,null);inp.value='';inp.focus();}
+    btn.addEventListener('click',addCustomAct);
+    inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();addCustomAct();}});
+    refreshEmpty();
+  })();
+
+  // ---- toolbar ----
+  document.getElementById('btnPrint').addEventListener('click',function(){window.print();});
+  document.getElementById('btnReset').addEventListener('click',function(){
+    if(confirm('確定清除全部填寫內容，重新開始嗎？')) location.reload();
+  });
+  document.getElementById('btnImg').addEventListener('click',function(){
+    if(typeof html2canvas==='undefined'){alert('「存成圖片」需要網路連線才能使用。\n沒有網路時，請改用「列印 / 存成 PDF」。');return;}
+    var sheet=document.getElementById('sheet');
+    html2canvas(sheet,{scale:2,backgroundColor:'#ffffff',useCORS:true}).then(function(canvas){
+      var a=document.createElement('a');
+      a.download='我的人生時間軸.png';
+      a.href=canvas.toDataURL('image/png');
+      a.click();
+    }).catch(function(){alert('圖片產生失敗，請改用「列印 / 存成 PDF」。');});
+  });
+</script>
+  <div class="ro no-print" id="recordOverlay">
+    <div class="ro-bar">
+      <span class="rt">📄 我的行動記錄表</span>
+      <button id="recPrint">🖨 列印 / 存成 PDF</button>
+      <button id="recImg">🖼 存成圖片</button>
+      <button id="recClose" class="ghost">✕ 關閉</button>
+    </div>
+    <div id="recordSheet">
+      <div class="rec-head">
+        <span class="rec-tag">馥芸財富學苑 🌿</span>
+        <div class="rec-title">我的<span class="g">行動記錄表</span></div>
+        <div class="rec-sub">把你選好的行動帶回家，從一小步開始，做到就打個勾 ✓</div>
+      </div>
+      <div class="rec-meta">
+        <span>姓名：<span class="v" id="recName"></span></span>
+        <span>最想先照顧：<span class="v" id="recPr"></span></span>
+        <span>日期：<span class="v" id="recDate"></span></span>
+      </div>
+      <div class="rec-rule"></div>
+      <table class="rec">
+        <thead><tr><th>序</th><th>行動項目</th><th>打算何時開始</th><th>完成</th><th>小筆記</th></tr></thead>
+        <tbody id="recRows"></tbody>
+      </table>
+      <div class="rec-note">🌱 一次先做一兩件就好，做到記得回來打勾、給自己一個鼓勵。有任何不確定，預約 15 分鐘小輕診，琪琪老師陪你看一次。</div>
+      <div class="rec-foot">琪琪老師 · 馥芸財富學苑　｜　LINE@ lin.ee/6Tm8pI7　｜　把它貼在看得到的地方 🌿</div>
+    </div>
+  </div>
+
+</body></html>
