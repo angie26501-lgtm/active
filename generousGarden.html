@@ -31,6 +31,10 @@ body{font-family:-apple-system,'Noto Sans CJK TC','PingFang TC',sans-serif;color
 .gerr{text-align:center;color:#c0392b;font-size:15px;font-weight:700;margin-top:10px;min-height:18px;}
 .task{display:block;text-decoration:none;background:var(--green);color:#e3c885;border-radius:13px;padding:15px;font-size:17px;font-weight:900;margin-bottom:10px;text-align:center;}
 .task small{display:block;color:#cdbf9f;font-weight:400;font-size:13px;margin-top:3px;}
+.task.soon{background:#e8e0cb;color:#9a8c66;cursor:default;}
+.task.soon small{color:#b3a684;}
+.lesson-divider{display:flex;align-items:center;gap:10px;margin:16px 2px 12px;color:var(--soft);font-size:13px;font-weight:700;letter-spacing:.08em;}
+.lesson-divider::before,.lesson-divider::after{content:"";flex:1;height:1px;background:#d8cba6;}
 .pfoot{text-align:center;color:#dcd2b6;font-size:14px;margin-top:8px;line-height:1.8;}
 </style></head><body><div class="wrap">
 <div class="ph"><div class="t">財富花園</div><div class="s">從一顆種子，到一片花園──<br>陪你把人生與錢，慢慢種起來 🌱</div></div>
@@ -44,9 +48,18 @@ body{font-family:-apple-system,'Noto Sans CJK TC','PingFang TC',sans-serif;color
     <button onclick="checkPw()">進入</button><div id="gerr" class="gerr"></div>
   </div>
   <div id="course" style="display:none;margin-top:6px;">
+    <div class="lesson-divider">第一堂 · 翻土</div>
     <a class="task" href="https://reurl.cc/53xM5n" target="_blank" rel="noopener">🌱 安心感輕健診<small>3 個小問題，看看你現在的安心感</small></a>
     <a class="task" href="1150603-practice.html">📝 數字練習單<small>算算你的「安心底」和退休缺口</small></a>
     <a class="task" href="1150603-homework.html">📖 第一堂 · 回家作業<small>寫下今天的收穫，種進你的花園</small></a>
+
+    <div class="lesson-divider">第二堂 · 整地</div>
+    <a class="task" href="https://angie26501-lgtm.github.io/active/1150610-homework.html">📖 第二堂 · 學習單<small>找到錢在哪裡，盤點你的金流</small></a>
+
+    <div class="lesson-divider">後續課程學習單</div>
+    <div class="task soon">📖 第三堂 · 播種｜學習單<small>即將開放</small></div>
+    <div class="task soon">📖 第四堂 · 灌溉｜學習單<small>即將開放</small></div>
+    <div class="task soon">📖 第五堂 · 開花｜學習單<small>即將開放</small></div>
   </div>
 </div>
 <div class="pfoot">琪琪老師 · 馥芸財富學苑</div>
