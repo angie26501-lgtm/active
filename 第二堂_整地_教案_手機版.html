@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -65,8 +66,8 @@
   .flow{list-style:none;margin:0;padding:0}
   .flow li{display:flex;gap:12px;padding:10px 0;border-bottom:1px dashed var(--line)}
   .flow li:last-child{border-bottom:none}
-  .flow .t{flex:0 0 56px;text-align:center}
-  .flow .t b{display:block;font-size:1.15rem;color:var(--green);line-height:1.1}
+  .flow .t{flex:0 0 58px;text-align:center}
+  .flow .t b{display:block;font-size:1.02rem;color:var(--green);line-height:1.15;font-variant-numeric:tabular-nums}
   .flow .t span{font-size:.66rem;color:var(--muted)}
   .flow .body{flex:1}
   .flow .body .title{font-weight:700;font-size:.95rem}
@@ -137,6 +138,16 @@
   .rcol .lead-in{font-size:.72rem;color:var(--muted)}
   @media(max-width:560px){.roster{grid-template-columns:1fr}}
 
+  .runrow{display:flex;gap:10px;padding:8px 2px;border-bottom:1px solid var(--line)}
+  .runrow .rt{flex:0 0 42px;color:var(--green);font-weight:700;font-size:.84rem;text-align:right;font-variant-numeric:tabular-nums;padding-top:1px}
+  .runrow .rb{flex:1;font-size:.86rem;line-height:1.55}
+  .runrow .rpg{display:inline-block;background:var(--cream);border:1px solid var(--line);color:var(--muted);
+    border-radius:5px;padding:0 6px;font-size:.68rem;margin-right:6px;vertical-align:middle}
+  .runrow .rwho{color:var(--muted);font-size:.72rem;margin-left:4px;white-space:nowrap}
+  .runrow.act{background:var(--gold-lite);border-radius:9px;margin:3px -6px;padding:8px;border-bottom:none}
+  .runrow.act .rb{color:var(--gold);font-weight:700}
+  .runrow.kenny{background:var(--green-lite);border-radius:9px;margin:3px -6px;padding:8px;border-bottom:none}
+
   .tipbox{background:var(--green);color:#fff;border-radius:12px;padding:14px 16px;font-size:.9rem}
   .tipbox b{color:var(--gold2)}
   .tipbox ul{margin:8px 0 0;padding-left:18px}
@@ -177,13 +188,14 @@
   <div class="kicker">馥芸財富學苑 ｜ 女人要有錢 · 財富花園</div>
   <div class="badge">🌿 第二堂 · 整地</div>
   <h1>當「<em>時間</em>」遇上<em>複利</em></h1>
-  <div class="sub">完整教案 · 逐字稿 · 流程 · 三組活動與計分</div>
-  <div class="who">主講｜陳芸琪 財顧芸　·　防詐段｜KENNY</div>
+  <div class="sub">完整教案 · 逐字稿 · 三組活動與計分</div>
+  <div class="who">下午 3:00–4:30（90 分鐘）　·　主講｜陳芸琪 財顧芸　·　防詐段｜KENNY</div>
 </header>
 
 <nav><div class="nwrap">
   <a href="#overview">總覽</a>
   <a href="#flow">流程</a>
+  <a href="#detail">詳細</a>
   <a href="#script">逐字稿</a>
   <a href="#fraud">防詐 · KENNY</a>
   <a href="#acts">活動</a>
@@ -214,17 +226,24 @@
 
 <!-- ===== 流程 ===== -->
 <section id="flow">
-  <h2 class="sec"><span class="n">2</span>教學流程（100 分鐘）</h2>
-  <p class="lead">數字是「時鐘該到第幾分」的累計時間。超前放慢、抽備援題；落後就濃縮翻轉觀念。</p>
+  <h2 class="sec"><span class="n">2</span>教學流程（90 分鐘 · 3:00–4:30）</h2>
+  <p class="lead">左邊是每段的「開始時間」。每段結束對一下時鐘，超前抽備援題、落後濃縮翻轉觀念。</p>
   <ul class="flow" id="flowlist"></ul>
   <div class="card cream" style="margin-top:12px;font-size:.84rem;color:var(--muted)">
-    <b style="color:var(--green)">90 分鐘精簡版：</b>翻轉觀念由 12 分壓到 7 分（只留口訣、儲蓄率、先守再攻、三種錢），個案壓到 7 分，即可省 10 分鐘。
+    <b style="color:var(--green)">時間掌控：</b>落後就濃縮「翻轉觀念」（只留口訣、儲蓄率、先守再攻、三種錢）與個案細節；超前就抽備援分享題。三場活動務必各留 6–7 分鐘完整跑完。
   </div>
+</section>
+
+<!-- ===== 逐分鐘詳細流程 ===== -->
+<section id="detail">
+  <h2 class="sec"><span class="n">3</span>逐分鐘詳細流程</h2>
+  <p class="lead">時間 · 簡報頁 · 講稿重點 · 主持。完整逐字稿見下一段。<span style="color:var(--gold)">金底＝計分活動</span>、<span style="color:var(--green2)">綠底＝KENNY 防詐段</span>。</p>
+  <div class="card" id="runsheet"></div>
 </section>
 
 <!-- ===== 逐字稿 ===== -->
 <section id="script">
-  <h2 class="sec"><span class="n">3</span>分段逐字稿</h2>
+  <h2 class="sec"><span class="n">4</span>分段逐字稿</h2>
   <p class="lead">「框起來」的是照念的口語逐字稿，斜體灰字是動作提示。語氣放慢、多用「我們」。</p>
 
   <details class="acc" open>
@@ -340,7 +359,7 @@
 
 <!-- ===== 防詐 KENNY ===== -->
 <section id="fraud">
-  <h2 class="sec"><span class="n">4</span>防詐段 · 人生金錢偵探社</h2>
+  <h2 class="sec"><span class="n">5</span>防詐段 · 人生金錢偵探社</h2>
   <p class="lead">由 KENNY 主持。完整帶領腳本、情境解答、備援題已做成「KENNY 手卡」，點下方按鈕開啟。</p>
 
   <div class="kennybox">
@@ -388,7 +407,7 @@
 
 <!-- ===== 活動規則 ===== -->
 <section id="acts">
-  <h2 class="sec"><span class="n">5</span>三組活動與計分規則</h2>
+  <h2 class="sec"><span class="n">6</span>三組活動與計分規則</h2>
   <div class="card cream">
     <b style="color:var(--green)">計分總原則</b>
     <ul class="qlist">
@@ -420,7 +439,7 @@
 
 <!-- ===== 互動計分 ===== -->
 <section id="score">
-  <h2 class="sec"><span class="n">6</span>互動計分（自動加總）</h2>
+  <h2 class="sec"><span class="n">7</span>互動計分（自動加總）</h2>
   <p class="lead">每場活動把第 1／2／3 名選好，下方總表會自動算出累計。第一堂分數已預填。</p>
   <div id="scoreBlocks"></div>
   <table class="tot" id="totTable">
@@ -435,14 +454,14 @@
 
 <!-- ===== 名單 ===== -->
 <section id="roster">
-  <h2 class="sec"><span class="n">7</span>分組名單</h2>
+  <h2 class="sec"><span class="n">8</span>分組名單</h2>
   <p class="lead">直接在格子裡打名字，會自動存在這台手機上。沿用第一堂的第 1、2、3 組。</p>
   <div class="roster" id="rosterGrid"></div>
 </section>
 
 <!-- ===== 控速 ===== -->
 <section id="tips">
-  <h2 class="sec"><span class="n">8</span>控速與提醒</h2>
+  <h2 class="sec"><span class="n">9</span>控速與提醒</h2>
   <div class="tipbox">
     <b>想衝快時，提醒自己一句：「換他們了。」</b>
     <ul>
@@ -479,28 +498,89 @@ document.getElementById("pw").addEventListener("keydown",e=>{if(e.key==="Enter")
 
 /* ---------- flow ---------- */
 const flow=[
-  ["5","封面","開場・分組就位","Angie＋KENNY",false,false],
-  ["13","RECAP","回顧：三錦囊＋五顆種子","Angie",false,false],
-  ["15","搭橋","搭橋：時間與樹根","Angie",false,false],
-  ["23","5–7頁","當時間遇上複利","Angie",false,false],
-  ["30","—","★活動一：時間複利搶答賽","Angie主持／KENNY計分",true,false],
-  ["42","8–14頁","翻轉觀念（三根基・儲蓄率・三種錢…）","Angie",false,false],
-  ["50","15頁","動手做：畫人生藍圖","Angie",false,false],
-  ["53","16頁","理財三根基","Angie",false,false],
-  ["63","17–22頁","真實個案：美玲姐","Angie",false,false],
-  ["70","—","★活動二：美玲姐三根基會診","Angie主持／KENNY計分",true,false],
-  ["74","23–24頁","規劃後：定期險達標＋傳承","Angie",false,false],
-  ["77","25頁","一起想想 Q&A","Angie",false,false],
-  ["90","番外篇～拼貼","防詐段：人生金錢偵探社","KENNY 主持",false,true],
-  ["96","—","★活動三：防詐辨識賽","KENNY主持／計分",true,false],
-  ["100","結尾","結尾＋本週任務＋公布累計","Angie＋KENNY",false,false],
+  ["3:00","封面","開場・分組就位","Angie＋KENNY","5",false,false],
+  ["3:05","RECAP","回顧：三錦囊＋五顆種子","Angie","7",false,false],
+  ["3:12","搭橋","搭橋：時間與樹根","Angie","2",false,false],
+  ["3:14","5–7頁","當時間遇上複利","Angie","7",false,false],
+  ["3:21","—","★活動一：時間複利搶答賽","Angie主持／KENNY計分","7",true,false],
+  ["3:28","8–14頁","翻轉觀念（三根基・儲蓄率・三種錢…）","Angie","8",false,false],
+  ["3:36","15頁","動手做：畫人生藍圖","Angie","8",false,false],
+  ["3:44","16頁","理財三根基","Angie","3",false,false],
+  ["3:47","17–22頁","真實個案：美玲姐","Angie","8",false,false],
+  ["3:55","—","★活動二：美玲姐三根基會診","Angie主持／KENNY計分","7",true,false],
+  ["4:02","23–24頁","規劃後：定期險達標＋傳承","Angie","4",false,false],
+  ["4:06","25頁","一起想想 Q&A","Angie","3",false,false],
+  ["4:09","番外篇～拼貼","防詐段：人生金錢偵探社","KENNY 主持","11",false,true],
+  ["4:20","—","★活動三：防詐辨識賽","KENNY主持／計分","6",true,false],
+  ["4:26","結尾","結尾＋本週任務＋公布累計","Angie＋KENNY","4",false,false],
 ];
 document.getElementById("flowlist").innerHTML=flow.map(f=>`
-  <li class="${f[4]?'act':''} ${f[5]?'kenny':''}">
-    <div class="t"><b>${f[0]}</b><span>分</span></div>
+  <li class="${f[5]?'act':''} ${f[6]?'kenny':''}">
+    <div class="t"><b>${f[0]}</b><span>${f[4]} 分</span></div>
     <div class="body"><div class="title">${f[2]}</div>
       <div class="meta">${f[1]} · ${f[3]}</div></div>
   </li>`).join("");
+
+/* ---------- detailed run-sheet ---------- */
+const detail=[
+  ["3:00","封面","開場白：種花前要先「整地」，地整好種子才長得大","Angie",""],
+  ["3:02","封面","以紙本為主、AI 由老師示範，不會用手機沒關係","Angie",""],
+  ["3:03","封面","分三組、KENNY 計分；第一堂積分保留（20／15／10）","Angie＋KENNY",""],
+  ["3:05","RECAP","錦囊 1 健康——身體是本錢","Angie",""],
+  ["3:06","RECAP","錦囊 2 安全、錦囊 3 快樂；要有錢＝守住健康安全快樂","Angie",""],
+  ["3:08","五顆種子","五顆種子：醫療／家庭／子女／財務自由／傳承","Angie",""],
+  ["3:11","五顆種子","今天先整地，種子才長得大","Angie",""],
+  ["3:12","搭橋","種子長大＝時間＋樹根；先講時間、再講樹根","Angie",""],
+  ["3:14","5","先想一個問題：每月存小錢，10／20 年後變多少？","Angie",""],
+  ["3:16","6","複利魔法：月存 3,000 → 47／123／250 萬（示意）","Angie",""],
+  ["3:19","7","100 萬問題：定存約 80 萬 vs 有方法約 300 萬","Angie",""],
+  ["3:21","—","★活動一 宣布規則：5 題舉牌搶答","Angie","act"],
+  ["3:22","—","★活動一 出題（複利 5 題）","Angie","act"],
+  ["3:27","—","★活動一 計分：依答對題數 20／15／10","KENNY","act"],
+  ["3:28","8·13","三根基：留得下／守得住／長得大；先守再攻","Angie",""],
+  ["3:30","9","儲蓄率＝存下÷賺到；先付給自己","Angie",""],
+  ["3:31","10","先守住才談進攻；風險控管永遠優先","Angie",""],
+  ["3:32","11","三種錢：保命錢／靈活錢／投資錢","Angie",""],
+  ["3:34","12·14","時間＞時機、72 法則、配置決定 9 成（示意）","Angie",""],
+  ["3:35","—","口訣：先守再攻、把錢分對位置、讓時間幫你工作","Angie",""],
+  ["3:36","15","說明：把五顆種子種到時間軸（學習單）","Angie",""],
+  ["3:38","15","老師先示範種一顆（如醫療保障放現在）","Angie",""],
+  ["3:39","—","學員動手寫（約 3–4 分鐘）","全體",""],
+  ["3:43","—","跟旁邊姊妹聊：最想先種哪一顆","全體",""],
+  ["3:44","16","理財三根基撐住所有目標；地基穩樹才大","Angie",""],
+  ["3:47","17·18","美玲姐背景：52 歲、房貸、不記帳、保障薄","Angie",""],
+  ["3:49","19","攤開數字：月結餘約 -2 千、卡循環 8 萬、現金薄","Angie",""],
+  ["3:51","20","三根基燈號：收支黃、資產負債紅、風險紅","Angie",""],
+  ["3:52","21","壓力測試：先生開刀停工，衝擊 21 萬、存款見底","Angie",""],
+  ["3:54","22","生涯模擬：有沒有整地，到 85 歲差約 330 萬","Angie",""],
+  ["3:55","—","★活動二 宣布：當顧問，3 分鐘白板寫「根基＋行動」","Angie","act"],
+  ["3:56","—","★活動二 各組討論（3 分鐘）","各組","act"],
+  ["3:59","—","★活動二 各組念答案、老師回饋","Angie","act"],
+  ["4:01","—","★活動二 計分：依完成順序 20／15／10","KENNY","act"],
+  ["4:02","23","定期險把保障補到達標，每月只多 2 千","Angie",""],
+  ["4:04","24","傳承：受益人／遺囑／生前贈與／預立醫療","Angie",""],
+  ["4:06","25","Q&A：你哪一根基最該補？寫學習單、跟姊妹分享","Angie",""],
+  ["4:08","25","交棒引言：被詐騙前功盡棄，交給 KENNY","Angie",""],
+  ["4:09","番外篇","KENNY 開場：一起當偵探、保護自己的錢","KENNY","kenny"],
+  ["4:10","EP.1","火鍋店倒了、300 多人受害、損失好幾億","KENNY","kenny"],
+  ["4:11","EP.2","投資的其實是「信任感」六元素","KENNY","kenny"],
+  ["4:13","人情≠風控","制度與數字，才是真正保護你的關鍵","KENNY","kenny"],
+  ["4:14","EP.3","投資前五問：賺／放／監督／退出／失敗","KENNY","kenny"],
+  ["4:16","EP.4","最危險四句話（「保證穩定獲利」最危險）","KENNY","kenny"],
+  ["4:18","EP.5·6","守住本金、不懂不投、算對再出手","KENNY","kenny"],
+  ["4:19","拼貼","口訣：先停、再查、後問＋打 165","KENNY","kenny"],
+  ["4:20","—","★活動三 宣布：舉牌判斷 可疑／查證／安全","KENNY","act"],
+  ["4:21","—","★活動三 5 情境題、抽組答「哪一招」","KENNY","act"],
+  ["4:25","—","★活動三 計分＋加總三場與第一堂累計","KENNY","act"],
+  ["4:26","33","結尾複習：三錦囊／複利／藍圖／三根基／防詐","Angie",""],
+  ["4:28","33","本週小任務：選一小步，下週帶藍圖來","Angie",""],
+  ["4:29","—","KENNY 公布累計分數、頒鼓勵；我們下週見","Angie＋KENNY",""],
+];
+document.getElementById("runsheet").innerHTML=detail.map(d=>`
+  <div class="runrow ${d[4]}">
+    <div class="rt">${d[0]}</div>
+    <div class="rb"><span class="rpg">${d[1]}</span>${d[2]}<span class="rwho">· ${d[3]}</span></div>
+  </div>`).join("");
 
 /* ---------- scoring ---------- */
 const BASE={1:20,2:15,3:10};
