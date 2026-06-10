@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1F4A2E">
+<title>防詐騙單元 · 小組活動 · KENNY 手卡</title>
+<style>
+  :root{
+    --green:#1F4A2E;
+    --green-deep:#143020;
+    --gold:#9A7621;
+    --gold-light:#C9A24B;
+    --cream:#F6F1E4;
+    --paper:#FBF8F0;
+    --red:#B23A2E;
+    --ink:#28281f;
+    --muted:#6f6651;
+    --line:#e2d8bf;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+  body{
+    margin:0;
+    font-family:"Noto Sans CJK TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+    color:var(--ink);
+    background:var(--cream);
+    font-size:18px;
+    line-height:1.7;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:0 16px 64px;}
+
+  /* ---------- sticky header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:var(--green);
+    box-shadow:0 2px 10px rgba(0,0,0,.18);
+  }
+  .hbar{max-width:680px;margin:0 auto;padding:12px 16px 10px;}
+  .htitle{color:var(--cream);font-weight:800;font-size:18px;letter-spacing:.5px;display:flex;align-items:center;gap:8px;}
+  .htitle .mag{font-size:20px;}
+  .hsub{color:var(--gold-light);font-size:13px;margin-top:2px;}
+  nav.jump{display:flex;gap:8px;overflow-x:auto;padding:10px 16px 12px;max-width:680px;margin:0 auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  nav.jump::-webkit-scrollbar{display:none;}
+  nav.jump a{
+    flex:0 0 auto;color:var(--cream);text-decoration:none;
+    border:1px solid rgba(201,162,75,.55);border-radius:999px;
+    padding:7px 15px;font-size:15px;font-weight:600;white-space:nowrap;
+    transition:background .15s,color .15s;
+  }
+  nav.jump a.active,nav.jump a:active{background:var(--gold-light);color:var(--green-deep);border-color:var(--gold-light);}
+
+  /* ---------- hero ---------- */
+  .hero{
+    background:var(--green);color:var(--cream);
+    border-radius:0 0 18px 18px;padding:18px 18px 22px;margin:0 -16px 22px;
+    text-align:center;
+  }
+  .hero .kick{color:var(--gold-light);font-size:14px;letter-spacing:2px;}
+  .hero h1{font-size:27px;margin:6px 0 4px;font-weight:800;}
+  .hero p{font-size:15px;margin:8px auto 0;max-width:30ch;color:#e8e0cc;}
+  .hero .who{display:inline-block;margin-top:14px;background:rgba(201,162,75,.18);border:1px solid var(--gold-light);color:var(--gold-light);font-weight:700;border-radius:999px;padding:5px 16px;font-size:14px;}
+
+  /* ---------- sections ---------- */
+  section{margin:26px 0;scroll-margin-top:118px;}
+  .sh{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .sh .tag{
+    flex:0 0 auto;width:30px;height:30px;border-radius:9px;background:var(--green);
+    color:var(--gold-light);font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center;
+  }
+  .sh h2{font-size:21px;margin:0;color:var(--green);font-weight:800;}
+  .sh .mini{font-size:13px;color:var(--gold);margin-top:1px;}
+
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 16px;margin-bottom:12px;box-shadow:0 1px 4px rgba(31,74,46,.05);}
+  .card h3{margin:0 0 6px;font-size:17px;color:var(--green);font-weight:800;}
+  ul{margin:6px 0 0;padding-left:22px;}
+  li{margin-bottom:7px;}
+  b{color:var(--green-deep);}
+  .q{color:var(--red);font-weight:700;}
+
+  /* ---------- timeline ---------- */
+  .tl{list-style:none;margin:0;padding:0;}
+  .tl li{display:flex;gap:13px;padding:12px 0;border-bottom:1px dashed var(--line);margin:0;}
+  .tl li:last-child{border-bottom:0;}
+  .tl .min{flex:0 0 64px;text-align:center;}
+  .tl .min b{display:block;font-size:20px;color:var(--green);line-height:1.1;}
+  .tl .min span{font-size:12px;color:var(--gold);}
+  .tl .body{flex:1;}
+  .tl .body .w{font-size:13px;font-weight:700;color:var(--gold);}
+  .pause{color:var(--gold);font-weight:600;}
+
+  /* ---------- script ---------- */
+  .speak{background:var(--paper);border-left:5px solid var(--gold);border-radius:0 12px 12px 0;padding:13px 15px;margin-bottom:12px;}
+  .speak .lbl{font-weight:800;color:var(--green);font-size:16px;margin-bottom:5px;}
+  .speak p{margin:0;font-size:17px;}
+
+  /* ---------- scoring ---------- */
+  .dim{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:12px;}
+  .dim .name{font-weight:800;color:var(--green);font-size:18px;margin-bottom:9px;display:flex;align-items:center;gap:8px;}
+  .tier{display:flex;align-items:flex-start;gap:11px;padding:7px 0;border-top:1px solid var(--paper);}
+  .tier:first-of-type{border-top:0;}
+  .pt{flex:0 0 52px;text-align:center;font-weight:800;color:#fff;border-radius:8px;padding:4px 0;font-size:16px;line-height:1.25;}
+  .pt small{display:block;font-size:10px;font-weight:600;opacity:.9;}
+  .p20{background:var(--green);}
+  .p15{background:#3f7a52;}
+  .p10{background:var(--gold);}
+  .p5{background:#b9a06a;}
+  .tier .d{flex:1;font-size:15.5px;padding-top:2px;}
+  .bonus{background:var(--green);color:var(--cream);border-radius:14px;padding:15px 16px;}
+  .bonus h3{color:var(--gold-light);margin:0 0 7px;font-size:17px;}
+  .bonus ul{padding-left:20px;}
+  .bonus li{color:#eee4cd;}
+  .bonus b{color:#fff;}
+
+  /* ---------- answers ---------- */
+  .ans{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:12px;}
+  .ans .s{font-weight:800;color:var(--green);font-size:17px;}
+  .badge{display:inline-block;background:var(--red);color:#fff;border-radius:999px;padding:2px 11px;font-size:13px;font-weight:700;margin-left:4px;vertical-align:middle;}
+  .ans .act{margin-top:6px;font-size:16px;}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px;}
+  .chips span{background:var(--green);color:var(--cream);border-radius:999px;padding:6px 14px;font-size:15px;font-weight:600;}
+
+  .casebox{background:var(--paper);border:1px dashed var(--gold);border-radius:14px;padding:14px 15px;}
+  .casebox h3{color:var(--gold);margin:0 0 5px;font-size:16px;}
+
+  /* ---------- key footer ---------- */
+  .key{background:var(--green);color:var(--cream);border-radius:16px;padding:20px 18px;text-align:center;margin-top:26px;}
+  .key .big{font-size:22px;font-weight:800;letter-spacing:1px;}
+  .key .big b{color:var(--gold-light);}
+  .key .sub{font-size:16px;margin-top:8px;color:#e8e0cc;}
+  .key .h165{display:inline-block;margin-top:12px;background:var(--gold-light);color:var(--green-deep);font-weight:800;border-radius:999px;padding:8px 20px;font-size:17px;}
+  .credit{text-align:center;color:var(--muted);font-size:12.5px;margin-top:20px;}
+
+  .totop{position:fixed;right:14px;bottom:14px;z-index:60;background:var(--green);color:var(--gold-light);border:1px solid var(--gold-light);border-radius:50%;width:48px;height:48px;display:flex;align-items:center;justify-content:center;font-size:22px;text-decoration:none;box-shadow:0 3px 10px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .2s;}
+  .totop.show{opacity:1;pointer-events:auto;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hbar">
+    <div class="htitle"><span class="mag">🔍</span>防詐騙單元 · 小組活動</div>
+    <div class="hsub">KENNY 帶領＋計分手卡 · 手機版</div>
+  </div>
+  <nav class="jump" id="jump">
+    <a href="#a">總覽</a>
+    <a href="#b">流程</a>
+    <a href="#c">腳本</a>
+    <a href="#d">評分</a>
+    <a href="#e">解答</a>
+    <a href="#f">備援</a>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="kick">人生金錢偵探社</div>
+    <h1>破解詐騙大作戰</h1>
+    <p>用一個真實的火鍋店詐騙案，帶姐妹們學會「先停、再查、後問、再決定」。</p>
+    <div class="who">🎯 KENNY：宣布規則 · 控時 · 巡場 · 計分</div>
+  </div>
+
+  <!-- A -->
+  <section id="a">
+    <div class="sh"><span class="tag">A</span><div><h2>活動總覽</h2><div class="mini">五分鐘掌握全貌</div></div></div>
+    <div class="card">
+      <h3>這個活動在做什麼</h3>
+      <ul>
+        <li>用一個<b>真實在地的火鍋店詐騙案</b>當引子。</li>
+        <li>小組討論學習單第 2 頁的<b>三個情境</b>，判斷風險、寫下行動，再上台分享。</li>
+        <li>以小組競賽進行，<b>KENNY 負責宣布規則、控時、巡場、計分。</b></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>課前準備物料</h3>
+      <ul>
+        <li>學習單第 2 頁（每人一張，已印）</li>
+        <li>小組競賽計分表（現有的 Excel／白板皆可）</li>
+        <li>各組組牌、計時器（手機即可）</li>
+        <li>165 反詐騙專線提醒小卡（收尾發放）</li>
+      </ul>
+      <p style="margin:10px 0 0;color:var(--muted);font-size:15px;">分組：每組 5–6 人，組長 1 位負責上台分享，建議 4–6 組。</p>
+    </div>
+  </section>
+
+  <!-- B -->
+  <section id="b">
+    <div class="sh"><span class="tag">B</span><div><h2>時間流程</h2><div class="mini">全段約 18 分鐘 · 數字是「時鐘該到第幾分」</div></div></div>
+    <div class="card" style="padding:6px 16px;">
+      <ul class="tl">
+        <li><div class="min"><b>2</b><span>分</span></div><div class="body"><span class="w">老師</span><br>引子：播 EP.1「丹水滾火鍋倒了，300 多人受害」<span class="pause"> ⏸ 留白讓她們驚一下</span></div></li>
+        <li><div class="min"><b>5</b><span>分</span></div><div class="body"><span class="w">老師</span><br>為什麼好人也會中招：六個信任元素＋「人情 ≠ 風控」</div></li>
+        <li><div class="min"><b>6</b><span>分</span></div><div class="body"><span class="w">KENNY 上場</span><br><b>宣布小組任務與計分規則</b></div></li>
+        <li><div class="min"><b>12</b><span>分</span></div><div class="body"><span class="w">各組</span><br>小組任務：討論三情境、勾判斷、寫行動<span class="pause"> ⏸ 巡場、計時</span></div></li>
+        <li><div class="min"><b>16</b><span>分</span></div><div class="body"><span class="w">各組</span><br>小組分享：每組派人講一個情境的判斷與行動</div></li>
+        <li><div class="min"><b>18</b><span>分</span></div><div class="body"><span class="w">老師</span><br>總結：投資前五個必問 ·「最危險的四句話」· 打 165</div></li>
+      </ul>
+    </div>
+    <p style="color:var(--muted);font-size:14.5px;margin:4px 2px;">超前 → 多問一題備援題（見 F）；落後 → 第 5 段只請 2 組分享。</p>
+  </section>
+
+  <!-- C -->
+  <section id="c">
+    <div class="sh"><span class="tag">C</span><div><h2>帶領腳本</h2><div class="mini">照著念就好，口語、慢一點</div></div></div>
+
+    <div class="speak">
+      <div class="lbl">① 宣布規則（第 5–6 分）</div>
+      <p>「姐姐妹妹們，現在換我們來辦案！這一關叫『人生金錢偵探社』。等一下每一組會看到<b>三個常見的詐騙情境</b>，請大家一起討論：這是<span class="q">可疑</span>、<span class="q">需要查證</span>、還是<span class="q">安全</span>？再在學習單寫下『你會怎麼做』。等一下每組派一位上來分享——<b>判斷準、行動具體、講得清楚的組別，分數最高！</b>給大家 6 分鐘，開始！」</p>
+    </div>
+
+    <div class="speak">
+      <div class="lbl">② 巡場提醒（討論中 6–12 分）</div>
+      <p>繞各組走，看到卡住的就丟一句：「這個聽起來『穩賺不賠』，世界上真的有穩賺的東西嗎？」「如果真的這麼好賺，為什麼要找你？」<span class="q">問完就閉嘴，等她們自己講。</span>剩 1 分鐘提醒：「再 1 分鐘，把『行動』那格寫上去！」</p>
+    </div>
+
+    <div class="speak">
+      <div class="lbl">③ 收分享、給分（12–16 分）</div>
+      <p>「時間到！請第一組先來——你們覺得哪一題最可疑？為什麼？打算怎麼做？」每組講完帶大家拍手，<b>當場或記在計分表上給分</b>（標準見 D）。</p>
+    </div>
+
+    <div class="speak">
+      <div class="lbl">④ 交回給老師（第 16 分）</div>
+      <p>「大家辦案辦得很好！這些騙局到底有什麼共同點、怎麼一眼識破，交給琪琪老師幫我們破案——」（把麥克風交回老師）。</p>
+    </div>
+  </section>
+
+  <!-- D -->
+  <section id="d">
+    <div class="sh"><span class="tag">D</span><div><h2>評分標準</h2><div class="mini">沿用 20／15／10／5 · 每面向各給一個分數，加總即得分</div></div></div>
+
+    <div class="dim">
+      <div class="name">📋 判斷準確</div>
+      <div class="tier"><span class="pt p20">20<small>很棒</small></span><div class="d">三情境都抓出風險，說得出原因</div></div>
+      <div class="tier"><span class="pt p15">15<small>不錯</small></span><div class="d">兩個判斷正確</div></div>
+      <div class="tier"><span class="pt p10">10<small>普通</small></span><div class="d">一個判斷正確</div></div>
+      <div class="tier"><span class="pt p5">5<small>加強</small></span><div class="d">多數勾「安全」，沒抓到風險</div></div>
+    </div>
+
+    <div class="dim">
+      <div class="name">🎯 行動具體</div>
+      <div class="tier"><span class="pt p20">20<small>很棒</small></span><div class="d">提出 2 個以上具體做法（查證／打165／不點連結）</div></div>
+      <div class="tier"><span class="pt p15">15<small>不錯</small></span><div class="d">提出 1 個具體做法</div></div>
+      <div class="tier"><span class="pt p10">10<small>普通</small></span><div class="d">只籠統說「要小心」</div></div>
+      <div class="tier"><span class="pt p5">5<small>加強</small></span><div class="d">沒有寫出行動</div></div>
+    </div>
+
+    <div class="dim">
+      <div class="name">🎤 上台分享</div>
+      <div class="tier"><span class="pt p20">20<small>很棒</small></span><div class="d">主動、清楚、有重點</div></div>
+      <div class="tier"><span class="pt p15">15<small>不錯</small></span><div class="d">願意分享但較簡略</div></div>
+      <div class="tier"><span class="pt p10">10<small>普通</small></span><div class="d">被點名才開口</div></div>
+      <div class="tier"><span class="pt p5">5<small>加強</small></span><div class="d">無人代表分享</div></div>
+    </div>
+
+    <div class="dim">
+      <div class="name">🤝 團隊參與</div>
+      <div class="tier"><span class="pt p20">20<small>很棒</small></span><div class="d">全組投入、互相補充</div></div>
+      <div class="tier"><span class="pt p15">15<small>不錯</small></span><div class="d">多數人有參與</div></div>
+      <div class="tier"><span class="pt p10">10<small>普通</small></span><div class="d">少數人主導</div></div>
+      <div class="tier"><span class="pt p5">5<small>加強</small></span><div class="d">明顯冷場</div></div>
+    </div>
+
+    <p style="color:var(--muted);font-size:14.5px;margin:2px 2px 14px;">＊每組單關最高 80 分，可直接填進現有計分表自動加總。</p>
+
+    <div class="bonus">
+      <h3>⚡ 加分搶答題（答對 +5）</h3>
+      <ul>
+        <li>「最危險的四句話」是哪四句？<br><b>我朋友也有投／很多人都投了／老闆人很好／保證穩定獲利</b></li>
+        <li>投資前一定要問的問題，講出 3 個就得分。（見 E）</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- E -->
+  <section id="e">
+    <div class="sh"><span class="tag">E</span><div><h2>參考答案</h2><div class="mini">KENNY 口袋解答 · 學員卡住時用來引導</div></div></div>
+
+    <div class="ans">
+      <div class="s">情境 1 · 高報酬、保證獲利、穩賺不賠？<span class="badge">✔ 可疑</span></div>
+      <div class="act">高報酬一定伴隨高風險；「保證獲利」往往就是詐騙話術。<br><b>行動：</b>不被「穩賺」沖昏頭、查證標的與公司、撥打 165 確認。</div>
+    </div>
+    <div class="ans">
+      <div class="s">情境 2 · 陌生連結或要求提供個資？<span class="badge">✔ 可疑　✔ 查證</span></div>
+      <div class="act"><b>行動：</b>不點不明連結、不提供帳號／個資、直接刪除；向官方或家人查證，必要時打 165。</div>
+    </div>
+    <div class="ans">
+      <div class="s">情境 3 · 投資群組「老師」帶你飆股？<span class="badge">✔ 可疑</span></div>
+      <div class="act">名人或「老師」背書 ≠ 合法；群體效應＋拉人入會要小心金字塔。<br><b>行動：</b>退出群組、不匯款、確認有無合法監管、打 165。</div>
+    </div>
+
+    <div class="ans">
+      <div class="s">🔑 投資前五個必問</div>
+      <div class="chips">
+        <span>錢怎麼賺？</span><span>錢放哪裡？</span><span>誰在監督？</span><span>怎麼退出？</span><span>失敗怎麼辦？</span>
+      </div>
+    </div>
+
+    <div class="casebox">
+      <h3>真實案例小抄 · 丹水滾火鍋</h3>
+      <p style="margin:0;font-size:15.5px;">以房地產投資、二胎放款為名，年利率約 12% 高報酬誘因，受害逾 300 人、金額達數億元，最後無預警倒閉。<b>共同點：只談獲利、沒人談風險。</b></p>
+    </div>
+  </section>
+
+  <!-- F -->
+  <section id="f">
+    <div class="sh"><span class="tag">F</span><div><h2>備援題</h2><div class="mini">提早講完、或要拉長時間時抽一題</div></div></div>
+    <div class="card">
+      <ul>
+        <li>你身邊有沒有人遇過「投資群組」或假老師？後來怎麼樣？</li>
+        <li>如果收到一則「保證獲利」的訊息，第一步會先做什麼？</li>
+        <li>為什麼「老闆人很好」不能當作投資安全的理由？</li>
+        <li>回去之後，跟「防詐騙」有關的事，你想先提醒家裡的誰？</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="key">
+    <div class="big">遇到可疑 →<br>「<b>先停、再查、後問、再決定</b>」</div>
+    <div class="sub">不懂不投，算對再出手</div>
+    <a class="h165" href="tel:165">☎ 有疑問打 165</a>
+  </div>
+
+  <div class="credit">🌱 馥芸財富學苑 · 願你花開豐盛<br>節奏比語速重要——停頓，是讓話沉進她們心裡</div>
+
+</div>
+
+<a href="#" class="totop" id="totop" aria-label="回到頂端">↑</a>
+
+<script>
+  // active nav highlight
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav.jump a'));
+  var secs = links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+  var totop = document.getElementById('totop');
+  function onScroll(){
+    var y = window.scrollY + 140;
+    var idx = 0;
+    for (var i=0;i<secs.length;i++){ if(secs[i] && secs[i].offsetTop <= y) idx = i; }
+    links.forEach(function(l,i){ l.classList.toggle('active', i===idx); });
+    totop.classList.toggle('show', window.scrollY > 400);
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+</script>
+</body>
+</html>
