@@ -307,6 +307,7 @@
   </div>
 
   <div class="bar no-print">
+    <button id="btnBack" class="ghost">← 回上一頁</button>
     <span class="brand">🌿 馥芸財富學苑 · 互動學習單</span>
     <span class="calcwrap">
       <button id="calcBtn">🧮 財務計算機 ▾</button>
@@ -454,7 +455,7 @@
     if(gc)gc.addEventListener('click',function(){gate.classList.remove('show');});
 
     // ---- 課堂密碼門 ----
-    var PW="0610";
+    var PW="0603";
     var pwGate=document.getElementById('pwGate'),pwInput=document.getElementById('pwInput'),pwBtn=document.getElementById('pwBtn'),pwErr=document.getElementById('pwErr');
     function passOK(){
       if(pwGate)pwGate.style.display='none';
@@ -783,6 +784,11 @@
   })();
 
   // ---- toolbar ----
+  var btnBack=document.getElementById('btnBack');
+  if(btnBack)btnBack.addEventListener('click',function(){
+    if(document.referrer&&history.length>1){history.back();}
+    else{location.href='generousGarden.html';}
+  });
   document.getElementById('btnPrint').addEventListener('click',function(){window.print();});
   document.getElementById('btnReset').addEventListener('click',function(){
     if(confirm('確定清除全部填寫內容，重新開始嗎？')) location.reload();
