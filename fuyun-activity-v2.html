@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>馥芸財富學苑｜活動量登錄系統</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:#1f5b43; --green-dark:#16392e; --gold:#c8a94b; --gold-deep:#a8862f;
+    --beige:#f7f1e4; --paper:#fffdf8; --ink:#243129; --muted:#6b7a6f;
+    --line:#e4ddc9; --shadow:0 2px 10px rgba(22,57,46,.08);
+    --teal-soft:#e8f0ea; --gold-soft:#f6eed6;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Noto Sans TC",-apple-system,BlinkMacSystemFont,sans-serif;
+    background:var(--beige);color:var(--ink);line-height:1.55;}
+  header{background:var(--green-dark);color:var(--paper);padding:1.4rem 1rem;text-align:center;}
+  header h1{margin:0;font-family:"Noto Serif TC",serif;font-size:1.5rem;letter-spacing:1px;}
+  header p{margin:.35rem 0 0;font-size:.82rem;color:var(--gold);letter-spacing:.5px;}
+  .wrap{max-width:960px;margin:0 auto;padding:1rem;}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:12px;
+    box-shadow:var(--shadow);padding:1.1rem;margin-bottom:1rem;}
+  .card h2{margin:0 0 .2rem;font-family:"Noto Serif TC",serif;font-size:1.1rem;color:var(--green);}
+  .card .hint{margin:0 0 .9rem;font-size:.78rem;color:var(--muted);}
+  .eyebrow{display:inline-block;font-size:.7rem;letter-spacing:2px;color:var(--gold-deep);
+    font-weight:700;margin-bottom:.3rem;}
+  label{font-size:.85rem;display:block;margin-bottom:.7rem;color:var(--ink);}
+  input[type=text],input[type=tel],input[type=number],input[type=date],input[type=month],textarea{
+    width:100%;padding:.6rem;border:1px solid var(--line);border-radius:8px;margin-top:.25rem;
+    font-size:.92rem;background:var(--paper);color:var(--ink);font-family:inherit;}
+  input:focus,textarea:focus{outline:2px solid var(--green);outline-offset:1px;border-color:var(--green);}
+  textarea{resize:vertical;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;}
+  @media(max-width:520px){.grid2{grid-template-columns:1fr;}}
+  /* 過程：活動量計數卡 */
+  .group-title{font-size:.8rem;font-weight:700;color:var(--green);margin:.9rem 0 .5rem;
+    padding-left:.5rem;border-left:3px solid var(--gold);}
+  .act-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.6rem;}
+  .act{background:var(--teal-soft);border:1px solid var(--line);border-radius:10px;padding:.55rem .6rem;}
+  .act .nm{font-size:.86rem;font-weight:500;display:flex;justify-content:space-between;align-items:center;gap:.3rem;}
+  .act .pt{font-size:.68rem;color:var(--gold-deep);font-weight:700;white-space:nowrap;}
+  .stepper{display:flex;align-items:center;justify-content:space-between;margin-top:.45rem;gap:.4rem;}
+  .stepper button{width:34px;height:34px;border:none;border-radius:8px;font-size:1.15rem;
+    cursor:pointer;background:var(--paper);border:1px solid var(--line);color:var(--green);line-height:1;}
+  .stepper button:active{transform:scale(.94);}
+  .stepper .cnt{font-size:1.2rem;font-weight:700;min-width:1.6rem;text-align:center;color:var(--green-dark);}
+  /* 財顧六步驟 chips */
+  .chips{display:flex;flex-wrap:wrap;gap:.45rem;}
+  .chip{padding:.5rem .7rem;border:1px solid var(--line);border-radius:20px;background:var(--paper);
+    font-size:.82rem;cursor:pointer;color:var(--ink);transition:.15s;}
+  .chip.on{background:var(--green);color:var(--paper);border-color:var(--green);}
+  /* 結果欄 */
+  .result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.7rem;}
+  .result-grid .gold-field input{border-color:var(--gold);}
+  /* 得分卡 */
+  .score{border-radius:12px;padding:1.1rem;text-align:center;margin-bottom:1rem;color:var(--paper);}
+  .score.low{background:linear-gradient(135deg,#7d8b80,#5f6e62);}
+  .score.mid{background:linear-gradient(135deg,var(--green),var(--green-dark));}
+  .score.high{background:linear-gradient(135deg,var(--gold),var(--gold-deep));color:var(--green-dark);}
+  .score .big{font-family:"Noto Serif TC",serif;font-size:2.6rem;font-weight:700;line-height:1;}
+  .score .phase{font-size:1.05rem;font-weight:700;margin:.4rem 0 .2rem;}
+  .score .msg{font-size:.82rem;opacity:.95;}
+  /* 統計 */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;}
+  @media(max-width:520px){.stats{grid-template-columns:repeat(2,1fr);}}
+  .stat{background:var(--beige);border-radius:10px;padding:.6rem;text-align:center;}
+  .stat .k{font-size:.72rem;color:var(--muted);}
+  .stat .v{font-size:1.35rem;font-weight:700;color:var(--green-dark);font-family:"Noto Serif TC",serif;}
+  /* 按鈕列 */
+  .bar{display:flex;flex-wrap:wrap;gap:.5rem;}
+  .bar button{flex:1 1 calc(50% - .5rem);padding:.75rem;border:none;border-radius:9px;cursor:pointer;
+    font-size:.9rem;font-weight:500;color:var(--paper);font-family:inherit;}
+  .b-save{background:var(--green);} .b-csv{background:var(--green-dark);}
+  .b-reset{background:var(--gold);color:var(--green-dark);} .b-clear{background:#9a9a94;}
+  /* 紀錄表 */
+  .rec{width:100%;border-collapse:collapse;font-size:.78rem;}
+  .rec th,.rec td{padding:.45rem .35rem;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap;}
+  .rec th{background:var(--beige);position:sticky;top:0;}
+  .rec-scroll{overflow-x:auto;}
+  .rec .act-btn{background:none;border:1px solid var(--line);border-radius:6px;padding:.2rem .45rem;
+    cursor:pointer;font-size:.74rem;margin-right:.25rem;color:var(--green);}
+  .empty{color:var(--muted);font-size:.85rem;padding:.5rem 0;}
+  .pill{display:inline-block;background:var(--gold-soft);color:var(--gold-deep);border-radius:10px;
+    padding:.05rem .4rem;font-size:.7rem;margin:0 .15rem .15rem 0;}
+  .note-cfg{font-size:.72rem;color:var(--muted);border-top:1px dashed var(--line);margin-top:.8rem;padding-top:.6rem;}
+  .week{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:.5rem .7rem;margin-bottom:.5rem;}
+  .week h4{margin:0 0 .3rem;font-size:.85rem;color:var(--green-dark);display:flex;justify-content:space-between;}
+  .day{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding:.3rem 0;font-size:.76rem;color:var(--muted);}
+</style>
+</head>
+<body>
+<header>
+  <h1>馥芸財富學苑｜活動量登錄</h1>
+  <p>每日三訪是必然　·　過程計分 × 結果統計 × 成長紀錄</p>
+</header>
+
+<div class="wrap">
+
+  <!-- 身分識別 -->
+  <div class="card">
+    <span class="eyebrow">身分識別</span>
+    <h2>誰在登錄</h2>
+    <p class="hint">手機為唯一識別，查詢自己的紀錄就用這支手機。</p>
+    <div class="grid2">
+      <label>夥伴姓名<input type="text" id="name" placeholder="陳芸琪"></label>
+      <label>手機（唯一識別）<input type="tel" id="phone" placeholder="0912345678"></label>
+      <label>登錄日期<input type="date" id="date"></label>
+      <label>客戶／案件名稱<input type="text" id="customer" placeholder="如：王先生退休規劃"></label>
+    </div>
+  </div>
+
+  <!-- 過程：活動量 -->
+  <div class="card">
+    <span class="eyebrow">過程 · 活動量</span>
+    <h2>這次拜訪做了什麼</h2>
+    <p class="hint">點 ＋ 計次，系統依公勝官方分數自動加總（只有「過程」計分）。</p>
+    <div id="actContainer"></div>
+  </div>
+
+  <!-- 財顧六步驟 -->
+  <div class="card">
+    <span class="eyebrow">財顧流程</span>
+    <h2>推進到哪一步（可複選）</h2>
+    <p class="hint">純標記階段，不影響分數。</p>
+    <div class="chips" id="stepChips"></div>
+  </div>
+
+  <!-- 結果：成果 -->
+  <div class="card">
+    <span class="eyebrow">結果 · 成果</span>
+    <h2>這次拿到什麼</h2>
+    <p class="hint">結果另外統計，不混進活動量分數。</p>
+    <div class="result-grid">
+      <div class="gold-field"><label>成交件數<input type="number" id="deals" min="0" value="0"></label></div>
+      <div class="gold-field"><label>FYP<input type="number" id="fyp" min="0" value="0"></label></div>
+      <div class="gold-field"><label>FYC<input type="number" id="fyc" min="0" value="0"></label></div>
+    </div>
+    <div class="grid2" style="margin-top:.5rem;">
+      <label>下一步行動<input type="text" id="next" placeholder="如：送建議書"></label>
+      <label>下次追蹤日期<input type="date" id="nextDate"></label>
+    </div>
+    <label style="margin-top:.5rem;">今日重點／特殊狀況<textarea id="note" rows="2"></textarea></label>
+  </div>
+
+  <!-- 得分 -->
+  <div class="score low" id="scoreCard">
+    <div class="big" id="curScore">0</div>
+    <div class="phase" id="phase">尚未開始</div>
+    <div class="msg" id="phaseMsg">今天先補 3 通電話聯繫，或安排 1 場面談。</div>
+  </div>
+
+  <div class="bar" style="margin-bottom:1rem;">
+    <button class="b-save" id="saveBtn">儲存紀錄</button>
+    <button class="b-csv" id="csvBtn">匯出我的 CSV</button>
+    <button class="b-reset" id="resetBtn">清空表單</button>
+    <button class="b-clear" id="clearBtn">清除本機紀錄</button>
+  </div>
+
+  <!-- 我的統計 -->
+  <div class="card">
+    <span class="eyebrow">我的統計</span>
+    <h2 id="statTitle">本月戰況</h2>
+    <div class="stats">
+      <div class="stat"><div class="k">今日得分</div><div class="v" id="sToday">0</div></div>
+      <div class="stat"><div class="k">本月得分</div><div class="v" id="sMonth">0</div></div>
+      <div class="stat"><div class="k">有紀錄天數</div><div class="v" id="sDays">0</div></div>
+      <div class="stat"><div class="k">本月成交</div><div class="v" id="sDeals">0</div></div>
+      <div class="stat"><div class="k">本月 FYP</div><div class="v" id="sFyp">0</div></div>
+      <div class="stat"><div class="k">本月 FYC</div><div class="v" id="sFyc">0</div></div>
+    </div>
+    <div id="monthActs" style="margin-top:.8rem;"></div>
+  </div>
+
+  <!-- 我的紀錄 -->
+  <div class="card">
+    <span class="eyebrow">我的紀錄</span>
+    <h2>查詢／修改自己的登錄</h2>
+    <p class="hint">依上方手機帶出你自己的紀錄，可編輯或刪除。</p>
+    <div class="rec-scroll"><div id="myRecords"></div></div>
+  </div>
+
+  <!-- 週月檢視 -->
+  <div class="card">
+    <span class="eyebrow">回顧</span>
+    <h2>每日得分彙整</h2>
+    <label>選擇月份<input type="month" id="monthSel"></label>
+    <div class="stats" style="margin:.6rem 0;">
+      <div class="stat"><div class="k">月總分</div><div class="v" id="mTotal">0</div></div>
+      <div class="stat"><div class="k">天數</div><div class="v" id="mDays">0</div></div>
+      <div class="stat"><div class="k">日均</div><div class="v" id="mAvg">0</div></div>
+    </div>
+    <div id="weekly"></div>
+  </div>
+
+  <div class="note-cfg">
+    雲端同步：尚未接表單。取得 Google 表單預填連結後，在程式 <b>CFG</b> 區填入欄位代碼即可自動同步至回覆試算表。目前資料存在本機瀏覽器，並可隨時匯出 CSV。
+  </div>
+</div>
+
+<script>
+/* ===== CFG：公勝官方活動量計分（過程才計分） ===== */
+var ACTIVITIES = [
+  {id:'fb',       name:'臉書行銷',        pt:1, group:'行銷推廣'},
+  {id:'line',     name:'LINE 聯繫',       pt:2, group:'行銷推廣'},
+  {id:'call',     name:'電話聯繫',        pt:3, group:'行銷推廣'},
+  {id:'build',    name:'建立關係',        pt:1, group:'關係建立'},
+  {id:'first',    name:'初次面談',        pt:2, group:'關係建立'},
+  {id:'need',     name:'需求面談',        pt:3, group:'關係建立'},
+  {id:'risk',     name:'分享風險觀念',     pt:1, group:'觀念溝通'},
+  {id:'fin',      name:'分享財務觀念',     pt:1, group:'觀念溝通'},
+  {id:'survey',   name:'退休理財問卷',     pt:2, group:'觀念溝通'},
+  {id:'triangle', name:'財務金三角',       pt:2, group:'觀念溝通'},
+  {id:'benz',     name:'賓士圖',          pt:2, group:'觀念溝通'},
+  {id:'proposal', name:'建議書／基金配置', pt:2, group:'方案促成'},
+  {id:'leverage', name:'活動借力',        pt:2, group:'方案促成'},
+  {id:'sign',     name:'簽約締結',        pt:3, group:'方案促成'},
+  {id:'referral', name:'轉介紹名單',       pt:2, group:'成果連結'}
+];
+var STEPS = ['① 建立關係','② 蒐集資料設目標','③ 分析財務現況','④ 提出建議書','⑤ 執行／成交','⑥ 檢視／服務'];
+
+/* Google 表單接好後填這裡（取得預填連結後對應）：
+var GOOGLE_FORM_ACTION = 'https://docs.google.com/forms/d/e/XXXX/formResponse';
+var ENTRY = { name:'entry.111', phone:'entry.222', date:'entry.333', score:'entry.444', ... };
+*/
+var GOOGLE_FORM_ACTION = '';
+var ENTRY = {};
+
+/* ===== 安全的本機儲存（預覽不會壞、上線正常） ===== */
+var KEY='fuyun_activity_v2', mem=null;
+function loadAll(){
+  if(mem) return mem;
+  try{ mem = JSON.parse(localStorage.getItem(KEY)||'[]'); }catch(e){ mem=[]; }
+  return mem;
+}
+function saveAll(arr){
+  mem=arr;
+  try{ localStorage.setItem(KEY, JSON.stringify(arr)); }catch(e){}
+}
+
+var counts={}, steps={}, editingId=null;
+
+document.addEventListener('DOMContentLoaded', function(){
+  ACTIVITIES.forEach(function(a){ counts[a.id]=0; });
+  buildActivities(); buildSteps();
+  var t=new Date(); var today=fmt(t);
+  document.getElementById('date').value=today;
+  document.getElementById('monthSel').value=today.slice(0,7);
+  document.getElementById('saveBtn').onclick=saveRecord;
+  document.getElementById('csvBtn').onclick=exportCSV;
+  document.getElementById('resetBtn').onclick=function(){resetForm(true);};
+  document.getElementById('clearBtn').onclick=clearAll;
+  document.getElementById('phone').addEventListener('input', refreshStats);
+  document.getElementById('monthSel').addEventListener('change', renderWeekly);
+  ['deals','fyp','fyc'].forEach(function(id){ document.getElementById(id).addEventListener('input', renderScore); });
+  renderScore(); refreshStats(); renderWeekly();
+});
+
+function fmt(d){ return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
+
+function buildActivities(){
+  var box=document.getElementById('actContainer'); box.innerHTML='';
+  var groups={};
+  ACTIVITIES.forEach(function(a){ (groups[a.group]=groups[a.group]||[]).push(a); });
+  Object.keys(groups).forEach(function(g){
+    var t=document.createElement('div'); t.className='group-title'; t.textContent=g; box.appendChild(t);
+    var grid=document.createElement('div'); grid.className='act-grid';
+    groups[g].forEach(function(a){
+      var c=document.createElement('div'); c.className='act';
+      c.innerHTML='<div class="nm"><span>'+a.name+'</span><span class="pt">'+a.pt+'分</span></div>'+
+        '<div class="stepper"><button type="button" data-m="'+a.id+'">−</button>'+
+        '<span class="cnt" id="cnt-'+a.id+'">0</span>'+
+        '<button type="button" data-p="'+a.id+'">＋</button></div>';
+      grid.appendChild(c);
+    });
+    box.appendChild(grid);
+  });
+  box.querySelectorAll('button[data-p]').forEach(function(b){ b.onclick=function(){ step(b.dataset.p,1); }; });
+  box.querySelectorAll('button[data-m]').forEach(function(b){ b.onclick=function(){ step(b.dataset.m,-1); }; });
+}
+function step(id,d){
+  counts[id]=Math.max(0,(counts[id]||0)+d);
+  document.getElementById('cnt-'+id).textContent=counts[id];
+  renderScore();
+}
+function buildSteps(){
+  var box=document.getElementById('stepChips'); box.innerHTML='';
+  STEPS.forEach(function(s,i){
+    var c=document.createElement('div'); c.className='chip'; c.textContent=s;
+    c.onclick=function(){ steps[i]=!steps[i]; c.classList.toggle('on',!!steps[i]); };
+    box.appendChild(c);
+  });
+}
+
+function calcScore(){
+  var t=0; ACTIVITIES.forEach(function(a){ t+=(counts[a.id]||0)*a.pt; }); return t;
+}
+function renderScore(){
+  var s=calcScore();
+  document.getElementById('curScore').textContent=s;
+  var card=document.getElementById('scoreCard'), ph=document.getElementById('phase'), msg=document.getElementById('phaseMsg');
+  card.classList.remove('low','mid','high');
+  var p,m,cls;
+  if(s===0){ p='尚未開始'; m='今天先補 3 通電話聯繫，或安排 1 場面談。'; cls='low'; }
+  else if(s<=7){ p='醞釀期'; m='開始播種了，持續加溫，往面談推進。'; cls='low'; }
+  else if(s<=15){ p='行動期'; m='動起來了！朝需求面談與建議書邁進。'; cls='mid'; }
+  else if(s<=25){ p='衝刺期'; m='火力全開，離成交越來越近。'; cls='mid'; }
+  else { p='爆發期'; m='今天非常給力，記得留住轉介紹的動能。'; cls='high'; }
+  ph.textContent=p; msg.textContent=m; card.classList.add(cls);
+  refreshStats();
+}
+
+function saveRecord(){
+  var name=val('name'), phone=val('phone').trim();
+  if(!phone){ alert('請先填「手機」，這是登錄與查詢的唯一識別。'); return; }
+  var rec={
+    id: editingId || ('r'+Date.now()),
+    date: val('date'), name:name, phone:phone, customer:val('customer'),
+    counts: Object.assign({},counts),
+    steps: STEPS.filter(function(s,i){return steps[i];}),
+    deals:num('deals'), fyp:num('fyp'), fyc:num('fyc'),
+    next:val('next'), nextDate:val('nextDate'), note:val('note'),
+    score: calcScore(), ts: Date.now()
+  };
+  var all=loadAll();
+  if(editingId){ all=all.map(function(r){return r.id===editingId?rec:r;}); }
+  else { all.push(rec); }
+  saveAll(all);
+  syncToGoogle(rec);
+  editingId=null;
+  resetForm(false);
+  refreshStats(); renderMyRecords(); renderWeekly();
+  alert('已儲存！');
+}
+
+function syncToGoogle(rec){
+  if(!GOOGLE_FORM_ACTION || !ENTRY.phone) return;
+  var fd=new FormData();
+  if(ENTRY.name) fd.append(ENTRY.name, rec.name);
+  if(ENTRY.phone) fd.append(ENTRY.phone, rec.phone);
+  if(ENTRY.date) fd.append(ENTRY.date, rec.date);
+  if(ENTRY.score) fd.append(ENTRY.score, rec.score);
+  if(ENTRY.deals) fd.append(ENTRY.deals, rec.deals);
+  if(ENTRY.fyp) fd.append(ENTRY.fyp, rec.fyp);
+  if(ENTRY.fyc) fd.append(ENTRY.fyc, rec.fyc);
+  fetch(GOOGLE_FORM_ACTION,{method:'POST',mode:'no-cors',body:fd}).catch(function(){});
+}
+
+function resetForm(clearIdentity){
+  ACTIVITIES.forEach(function(a){ counts[a.id]=0; document.getElementById('cnt-'+a.id).textContent='0'; });
+  steps={}; document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('on');});
+  ['deals','fyp','fyc'].forEach(function(id){document.getElementById(id).value=0;});
+  ['customer','next','note'].forEach(function(id){document.getElementById(id).value='';});
+  document.getElementById('date').value=fmt(new Date());
+  document.getElementById('nextDate').value='';
+  if(clearIdentity){ editingId=null; }
+  renderScore();
+}
+
+function myRecs(){
+  var phone=val('phone').trim();
+  return loadAll().filter(function(r){ return phone && r.phone===phone; });
+}
+function refreshStats(){
+  var phone=val('phone').trim();
+  document.getElementById('statTitle').textContent = phone ? '我的本月戰況' : '本月戰況（請先填手機）';
+  var recs=myRecs(); var now=new Date(); var ym=fmt(now).slice(0,7); var today=fmt(now);
+  var sToday=0,sMonth=0,deals=0,fyp=0,fyc=0; var days={}; var acts={};
+  recs.forEach(function(r){
+    if(r.date===today) sToday+=r.score;
+    if(r.date.slice(0,7)===ym){
+      sMonth+=r.score; deals+=r.deals; fyp+=r.fyp; fyc+=r.fyc; days[r.date]=1;
+      ACTIVITIES.forEach(function(a){ acts[a.id]=(acts[a.id]||0)+((r.counts&&r.counts[a.id])||0); });
+    }
+  });
+  // 加上正在填、尚未儲存的
+  sToday+=calcScore();
+  set('sToday',sToday); set('sMonth',sMonth+calcScore()); set('sDays',Object.keys(days).length);
+  set('sDeals',deals); set('sFyp',fyp); set('sFyc',fyc);
+  var mc=document.getElementById('monthActs'); mc.innerHTML='';
+  var any=ACTIVITIES.filter(function(a){return acts[a.id];});
+  if(any.length){
+    mc.innerHTML='<div style="font-size:.74rem;color:var(--muted);margin-bottom:.3rem;">本月各活動累計</div>'+
+      any.map(function(a){return '<span class="pill">'+a.name+' '+acts[a.id]+'</span>';}).join('');
+  }
+  renderMyRecords();
+}
+
+function renderMyRecords(){
+  var box=document.getElementById('myRecords'); var recs=myRecs().slice().reverse();
+  if(!recs.length){ box.innerHTML='<p class="empty">填入手機後，這裡會顯示你的紀錄。</p>'; return; }
+  var html='<table class="rec"><thead><tr><th>日期</th><th>客戶</th><th>得分</th><th>成交</th><th>FYP</th><th>下一步</th><th>操作</th></tr></thead><tbody>';
+  recs.forEach(function(r){
+    html+='<tr><td>'+r.date+'</td><td>'+(r.customer||'')+'</td><td>'+r.score+'</td><td>'+r.deals+'</td><td>'+r.fyp+'</td><td>'+(r.next||'')+'</td>'+
+      '<td><button class="act-btn" data-edit="'+r.id+'">編輯</button><button class="act-btn" data-del="'+r.id+'">刪除</button></td></tr>';
+  });
+  html+='</tbody></table>';
+  box.innerHTML=html;
+  box.querySelectorAll('button[data-edit]').forEach(function(b){ b.onclick=function(){editRecord(b.dataset.edit);}; });
+  box.querySelectorAll('button[data-del]').forEach(function(b){ b.onclick=function(){delRecord(b.dataset.del);}; });
+}
+function editRecord(id){
+  var r=loadAll().filter(function(x){return x.id===id;})[0]; if(!r) return;
+  editingId=id;
+  document.getElementById('name').value=r.name||''; document.getElementById('phone').value=r.phone||'';
+  document.getElementById('date').value=r.date; document.getElementById('customer').value=r.customer||'';
+  ACTIVITIES.forEach(function(a){ counts[a.id]=(r.counts&&r.counts[a.id])||0; document.getElementById('cnt-'+a.id).textContent=counts[a.id]; });
+  steps={}; document.querySelectorAll('.chip').forEach(function(c,i){ var on=r.steps&&r.steps.indexOf(STEPS[i])>=0; steps[i]=on; c.classList.toggle('on',on); });
+  document.getElementById('deals').value=r.deals; document.getElementById('fyp').value=r.fyp; document.getElementById('fyc').value=r.fyc;
+  document.getElementById('next').value=r.next||''; document.getElementById('nextDate').value=r.nextDate||''; document.getElementById('note').value=r.note||'';
+  renderScore(); window.scrollTo({top:0,behavior:'smooth'});
+}
+function delRecord(id){
+  if(!confirm('確定刪除這筆紀錄？')) return;
+  saveAll(loadAll().filter(function(x){return x.id!==id;}));
+  refreshStats(); renderWeekly();
+}
+
+function exportCSV(){
+  var recs=myRecs();
+  if(!recs.length){ alert('目前沒有你的紀錄可匯出（請先填手機並儲存）。'); return; }
+  var head=['日期','姓名','手機','客戶','財顧步驟'].concat(ACTIVITIES.map(function(a){return a.name;})).concat(['得分','成交件','FYP','FYC','下一步','下次日期','備註']);
+  var rows=[head];
+  recs.forEach(function(r){
+    var row=[r.date,r.name,r.phone,r.customer,(r.steps||[]).join('｜')];
+    ACTIVITIES.forEach(function(a){ row.push((r.counts&&r.counts[a.id])||0); });
+    row.push(r.score,r.deals,r.fyp,r.fyc,r.next,r.nextDate,r.note);
+    rows.push(row);
+  });
+  var csv='\ufeff'+rows.map(function(r){return r.map(function(v){return '"'+String(v==null?'':v).replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  var blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}); var url=URL.createObjectURL(blob);
+  var a=document.createElement('a'); a.href=url; a.download='活動量_'+val('phone')+'.csv'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+
+function clearAll(){
+  if(!confirm('確定清除「本機」所有紀錄？此動作無法復原（建議先匯出 CSV）。')) return;
+  saveAll([]); refreshStats(); renderWeekly();
+  alert('已清除本機紀錄。');
+}
+
+function renderWeekly(){
+  var m=val('monthSel'); if(!m) return;
+  var recs=myRecs().filter(function(r){return r.date.slice(0,7)===m;});
+  var daily={}; var total=0;
+  recs.forEach(function(r){ daily[r.date]=(daily[r.date]||0)+r.score; total+=r.score; });
+  var days=Object.keys(daily).sort();
+  set('mTotal',total); set('mDays',days.length); set('mAvg', days.length?Math.round(total/days.length):0);
+  var wk={}; days.forEach(function(d){ var n=Math.ceil(parseInt(d.slice(-2),10)/7); (wk[n]=wk[n]||[]).push(d); });
+  var box=document.getElementById('weekly'); box.innerHTML='';
+  if(!days.length){ box.innerHTML='<p class="empty">這個月還沒有紀錄。</p>'; return; }
+  for(var i=1;i<=5;i++){ if(!wk[i]) continue;
+    var ws=0; wk[i].forEach(function(d){ws+=daily[d];});
+    var el=document.createElement('div'); el.className='week';
+    el.innerHTML='<h4><span>第 '+i+' 週</span><span>'+ws+' 分</span></h4>'+
+      wk[i].map(function(d){return '<div class="day"><span>'+d+'</span><span>'+daily[d]+' 分</span></div>';}).join('');
+    box.appendChild(el);
+  }
+}
+
+function val(id){return document.getElementById(id).value;}
+function num(id){return Number(document.getElementById(id).value)||0;}
+function set(id,v){document.getElementById(id).textContent=v;}
+</script>
+</body>
+</html>
