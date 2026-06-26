@@ -379,20 +379,20 @@
    ========================================================= */
 const CONFIG = {
   // ── 寫入：Google 表單的提交網址（以 /formResponse 結尾）
-  formAction: "",   // 例：https://docs.google.com/forms/d/e/XXXXXXXX/formResponse
-  // ── 各欄位的 entry 編號（從「取得預先填入的連結」複製，見 表單設定說明.txt）
+  formAction: "https://docs.google.com/forms/d/e/1FAIpQLSe8GTIr5O7ekaxiJJAizfCGcGWv4CJmmYHUD9PPUVDEkg99AQ/formResponse",
+  // ── 各欄位的 entry 編號
   entries: {
-    name:    "",    // 例：entry.1111111111
-    pax:     "",
-    contact: "",
-    note:    ""
+    name:    "entry.1572750366",   // 姓名／暱稱
+    pax:     "entry.276366765",    // 報名人數
+    contact: "entry.560049989",    // 聯絡方式
+    note:    "entry.1891767289"    // 想說的話
   },
-  // ── 讀取：把表單回覆試算表「發布到網路 → CSV」後的網址（用來顯示接龍名單）
-  csvUrl: "",       // 例：https://docs.google.com/spreadsheets/d/e/XXXX/pub?output=csv
+  // ── 讀取：回覆試算表（需設為「知道連結的任何人→檢視者」）
+  csvUrl: "https://docs.google.com/spreadsheets/d/1E8KphR5SE-dQQtg9t4YtuO5whwRZNWok1B2psXxoW9s/gviz/tq?tqx=out:csv",
   // ── 成班目標總人數
   groupTarget: 20,
   // ── 分享文字標題
-  shareTitle: "宜蘭365包班 團報接龍",
+  shareTitle: "宜蘭 AI 365 包班 團報接龍",
   // ── 名單是否遮罩姓名（陳〇〇）
   maskName: true,
 };
