@@ -11,12 +11,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@500;700;900&display=swap" rel="stylesheet" />
 <style>
   :root{
-    --navy:#14304d;        /* 主色 海軍藍 */
+    --navy:#14304d;
     --navy-deep:#0e2238;
-    --gold:#c79a3e;        /* 強調色 金 */
+    --gold:#c79a3e;
     --gold-soft:#e3c577;
-    --sea:#2e8b96;         /* 宜蘭海 teal */
-    --cream:#faf6ec;       /* 背景 米白 */
+    --sea:#2e8b96;
+    --cream:#faf6ec;
     --paper:#fffdf8;
     --ink:#26261f;
     --muted:#6f6a5d;
@@ -43,7 +43,7 @@
       radial-gradient(120% 90% at 80% -10%, rgba(199,154,62,.22), transparent 55%),
       linear-gradient(165deg,var(--navy) 0%,var(--navy-deep) 100%);
     color:#fdf8ec;
-    padding:42px 0 56px;
+    padding:32px 0 56px;
     position:relative;
     overflow:hidden;
   }
@@ -52,14 +52,24 @@
     background-image:radial-gradient(circle at 1px 1px, rgba(255,255,255,.05) 1px, transparent 0);
     background-size:22px 22px;pointer-events:none;
   }
-  .brandbar{display:flex;align-items:center;gap:10px;font-size:13px;letter-spacing:.12em;color:var(--gold-soft);margin-bottom:26px;position:relative;z-index:1}
+
+  /* 表頭：馥芸財富學苑 / 財顧芸 連結（大字） */
+  .site-banner{display:block;margin-bottom:26px;padding:18px 22px;border-radius:16px;
+    background:rgba(255,255,255,.06);border:1px solid rgba(227,197,119,.45);
+    text-decoration:none;position:relative;z-index:1;transition:background .2s, transform .15s}
+  .site-banner:hover{background:rgba(227,197,119,.13);transform:translateY(-2px)}
+  .site-banner .sb-main{display:block;font-family:"Noto Serif TC",serif;font-weight:900;
+    font-size:clamp(22px,6vw,32px);color:#fff;line-height:1.35;letter-spacing:.01em}
+  .site-banner .sb-sub{display:block;margin-top:8px;font-size:clamp(15px,3.8vw,18px);
+    font-weight:700;color:var(--gold-soft)}
+
+  .brandbar{display:flex;align-items:center;gap:10px;font-size:13px;letter-spacing:.12em;color:var(--gold-soft);margin-bottom:22px;position:relative;z-index:1}
   .brandbar .dot{width:6px;height:6px;border-radius:50%;background:var(--gold)}
   .eyebrow{display:inline-block;font-size:13px;letter-spacing:.28em;color:var(--gold-soft);border:1px solid rgba(199,154,62,.45);padding:5px 14px;border-radius:999px;position:relative;z-index:1}
   .hero h1{font-size:clamp(30px,7.5vw,46px);font-weight:900;margin:18px 0 10px;color:#fff;position:relative;z-index:1}
   .hero h1 .accent{color:var(--gold-soft)}
   .hero .lede{font-size:16px;color:#d8e0ea;max-width:46ch;position:relative;z-index:1}
 
-  /* 進度環 */
   .progress-card{
     margin-top:30px;background:rgba(255,255,255,.07);
     border:1px solid rgba(227,197,119,.28);border-radius:var(--radius);
@@ -94,7 +104,6 @@
   .sec-title{font-size:clamp(22px,5vw,30px);font-weight:900;color:var(--navy);margin-bottom:8px}
   .sec-desc{color:var(--muted);font-size:15px;margin-bottom:24px}
 
-  /* 課程資訊卡 */
   .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   @media(max-width:560px){.info-grid{grid-template-columns:1fr}}
   .info{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
@@ -103,27 +112,23 @@
   .info .v small{display:block;color:var(--muted);font-size:13px;font-weight:400;margin-top:2px}
   .course-link{display:inline-flex;align-items:center;gap:6px;margin-top:18px;color:var(--navy);font-weight:700;font-size:14px;text-decoration:none;border-bottom:2px solid var(--gold);padding-bottom:1px}
 
-  /* 主打文案 */
   .hook{margin-bottom:22px;padding-left:16px;border-left:4px solid var(--gold)}
   .hook .big{font-family:"Noto Serif TC",serif;font-size:clamp(20px,5vw,28px);font-weight:900;color:var(--navy);line-height:1.4}
   .hook .big em{font-style:normal;color:var(--sea)}
   .hook .sub{margin-top:6px;color:var(--muted);font-size:15px;font-weight:500}
 
-  /* 四大特色 */
   .feat-list{margin-top:26px;display:grid;gap:12px}
   .feat{display:flex;gap:14px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
   .feat .ic{flex:0 0 auto;width:40px;height:40px;border-radius:11px;background:var(--navy);color:var(--gold-soft);display:flex;align-items:center;justify-content:center;font-size:20px}
   .feat .t{font-weight:700;color:var(--navy);font-size:16px}
   .feat .d{color:var(--muted);font-size:14px;margin-top:2px}
 
-  /* 每月主題 chips */
   .topics{margin-top:26px}
   .topics .lbl{font-size:13px;letter-spacing:.18em;color:var(--gold);font-weight:700;margin-bottom:10px}
   .chips{display:flex;flex-wrap:wrap;gap:9px}
   .chip{background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 15px;font-size:14px;font-weight:500;color:var(--ink)}
   .chip.more{background:var(--gold);border-color:var(--gold);color:#1c1402;font-weight:700}
 
-  /* 比較表 */
   .compare{margin-top:28px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--paper)}
   .compare .row{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
   .compare .row:first-child{border-top:none}
@@ -134,7 +139,6 @@
   .compare .head .l{color:#8a8472}
   .compare .head .r{color:var(--gold);background:var(--navy)}
 
-  /* 價格亮點 */
   .price-banner{margin-top:28px;background:linear-gradient(135deg,var(--navy),var(--navy-deep));color:#fff;border-radius:18px;padding:26px 24px;text-align:center;position:relative;overflow:hidden}
   .price-banner::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 50% -20%,rgba(199,154,62,.3),transparent 60%)}
   .price-banner .was{color:#9fb0c2;text-decoration:line-through;font-size:16px;position:relative}
@@ -143,7 +147,6 @@
   .price-banner .per{color:#dbe3ec;font-size:14px;position:relative}
   .price-banner .limit{display:inline-block;margin-top:14px;background:var(--gold);color:#1c1402;font-weight:700;font-size:14px;padding:7px 16px;border-radius:999px;position:relative}
 
-  /* ---------- 接龍鏈 ---------- */
   .chain-sec{background:linear-gradient(180deg,#fff 0%, var(--cream) 100%)}
   .count-line{display:flex;align-items:baseline;gap:10px;margin-bottom:22px}
   .count-line b{font-family:"Noto Serif TC",serif;font-size:40px;color:var(--navy);line-height:1}
@@ -166,7 +169,6 @@
   .empty{text-align:center;color:var(--muted);padding:30px 10px;border:1px dashed var(--line);border-radius:14px;background:var(--paper)}
   .empty b{display:block;color:var(--navy);font-family:"Noto Serif TC",serif;font-size:18px;margin-bottom:4px}
 
-  /* ---------- 報名表單 ---------- */
   .form-sec{background:var(--navy);color:#fdf8ec}
   .form-sec .sec-label{color:var(--gold-soft)}
   .form-sec .sec-title{color:#fff}
@@ -189,7 +191,6 @@
   .msg.ok{display:block;background:rgba(63,143,91,.18);border:1px solid rgba(63,143,91,.5);color:#cdebd6}
   .msg.err{display:block;background:rgba(176,60,60,.18);border:1px solid rgba(176,60,60,.5);color:#f3cccc}
 
-  /* ---------- 邀請 ---------- */
   .share-sec{text-align:center}
   .share-sec .sec-title{color:var(--navy)}
   .share-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px}
@@ -197,15 +198,10 @@
   .btn-copy{background:var(--navy);color:#fff}
   .btn-line:hover,.btn-copy:hover{transform:translateY(-2px)}
 
-  /* ---------- FOOTER ---------- */
   footer{background:var(--navy-deep);color:#cdd6e1;padding:34px 0;text-align:center}
   footer .b{font-family:"Noto Serif TC",serif;color:var(--gold-soft);font-size:18px;font-weight:700;margin-bottom:6px}
   footer .small{font-size:13px;color:#90a0b2;line-height:1.9}
   footer a{color:var(--gold-soft);text-decoration:none}
-
-  .demo-flag{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:50;
-    background:rgba(20,48,77,.94);color:#e3c577;font-size:12px;padding:8px 16px;border-radius:999px;
-    box-shadow:var(--shadow);border:1px solid rgba(227,197,119,.4)}
 
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -215,6 +211,10 @@
 <!-- ============ HERO ============ -->
 <header class="hero">
   <div class="wrap">
+    <a class="site-banner" href="https://www.allfreedom.info/" target="_blank" rel="noopener">
+      <span class="sb-main">用一張紙，看懂你的人生財務藍圖</span>
+      <span class="sb-sub">財顧芸．幸福財務領航員　｜　馥芸財富學苑 →</span>
+    </a>
     <div class="brandbar"><span class="dot"></span>財顧芸 ｜ 馥芸財富學苑　·　陳芸琪 AI 財務建築師</div>
     <span class="eyebrow">團 報 接 龍</span>
     <h1>宜蘭 AI 365 包班<br><span class="accent">一起接龍，揪滿就開班</span></h1>
@@ -366,41 +366,34 @@
   <div class="wrap">
     <div class="b">財顧芸 ｜ 馥芸財富學苑</div>
     <div class="small">
-      陳芸琪　AI 財務建築師 ｜ 公勝財富管理顧問公司 資深顧問<br>
+      陳芸琪　AI 財務建築師<br>
       財務健康 · 品味生活 · 持盈保泰　｜　宜蘭
     </div>
+    <a class="site-link" href="https://www.allfreedom.info/" target="_blank" rel="noopener" style="display:inline-block;margin-top:14px;color:var(--gold-soft);font-weight:700">用一張紙，看懂你的人生財務藍圖 →</a>
   </div>
 </footer>
-
-<div class="demo-flag" id="demoFlag" style="display:none">示範模式：名單僅存在本機，尚未連線雲端</div>
 
 <script>
 /* =========================================================
    設定區 —— 之後只要改這裡
    ========================================================= */
 const CONFIG = {
-  // ── 寫入：Google 表單的提交網址（以 /formResponse 結尾）
-  formAction: "",   // 例：https://docs.google.com/forms/d/e/XXXXXXXX/formResponse
-  // ── 各欄位的 entry 編號（從「取得預先填入的連結」複製，見 表單設定說明.txt）
+  formAction: "https://docs.google.com/forms/d/e/1FAIpQLSe8GTIr5O7ekaxiJJAizfCGcGWv4CJmmYHUD9PPUVDEkg99AQ/formResponse",
   entries: {
-    name:    "",    // 例：entry.1111111111
-    pax:     "",
-    contact: "",
-    note:    ""
+    name:    "entry.1572750366",
+    pax:     "entry.276366765",
+    contact: "entry.560049989",
+    note:    "entry.1891767289"
   },
-  // ── 讀取：把表單回覆試算表「發布到網路 → CSV」後的網址（用來顯示接龍名單）
-  csvUrl: "",       // 例：https://docs.google.com/spreadsheets/d/e/XXXX/pub?output=csv
-  // ── 成班目標總人數
+  csvUrl: "https://docs.google.com/spreadsheets/d/1E8KphR5SE-dQQtg9t4YtuO5whwRZNWok1B2psXxoW9s/gviz/tq?tqx=out:csv",
   groupTarget: 20,
-  // ── 分享文字標題
-  shareTitle: "宜蘭365包班 團報接龍",
-  // ── 名單是否遮罩姓名（陳〇〇）
+  shareTitle: "宜蘭 AI 365 包班 團報接龍",
   maskName: true,
 };
 
 const STORE_KEY = "yilan365-signups";
-let currentList = [];      // 目前顯示中的名單
-let localAdds = [];        // 本機剛送出、CSV 還沒同步的暫存
+let currentList = [];
+let localAdds = [];
 
 /* ---------- CSV 解析 ---------- */
 function parseCsvRaw(text){
@@ -423,7 +416,6 @@ function parseCsvRaw(text){
 function parseCsv(text){
   const rows=parseCsvRaw(text);
   const out=[];
-  // 欄位順序＝表單題目順序：時間戳記, 姓名, 報名人數, 聯絡方式, 想說的話
   for(let i=1;i<rows.length;i++){
     const r=rows[i];
     if(!r[1]) continue;
@@ -440,15 +432,12 @@ async function loadList(){
       const r = await fetch(CONFIG.csvUrl + (CONFIG.csvUrl.includes("?")?"&":"?") + "_=" + Date.now());
       const text = await r.text();
       const server = parseCsv(text);
-      // 把 CSV 還沒同步到的本機紀錄補上，避免剛報名的人看不到自己
       const seen = new Set(server.map(x=>x.name+"|"+x.pax));
       const extra = localAdds.filter(x=>!seen.has(x.name+"|"+x.pax));
-      localAdds = extra; // CSV 已含的就清掉
+      localAdds = extra;
       return [...server, ...extra];
     }catch(e){ console.error(e); return currentList; }
   }
-  // 示範模式（尚未填 CSV 網址）
-  document.getElementById("demoFlag").style.display = "block";
   try{ return JSON.parse(localStorage.getItem(STORE_KEY) || "[]"); }catch(e){ return []; }
 }
 
@@ -460,12 +449,10 @@ async function saveRecord(rec){
     if(CONFIG.entries.pax)     fd.append(CONFIG.entries.pax, rec.pax);
     if(CONFIG.entries.contact) fd.append(CONFIG.entries.contact, rec.contact);
     if(CONFIG.entries.note)    fd.append(CONFIG.entries.note, rec.note);
-    // 表單為跨網域，用 no-cors 送出（無法讀回應，視為成功）
     await fetch(CONFIG.formAction, {method:"POST", mode:"no-cors", body:fd});
-    localAdds.push(rec); // 先在本機記著，等 CSV 同步
+    localAdds.push(rec);
     return;
   }
-  // 示範模式
   const list = JSON.parse(localStorage.getItem(STORE_KEY) || "[]");
   list.push(rec);
   localStorage.setItem(STORE_KEY, JSON.stringify(list));
@@ -485,7 +472,6 @@ function render(list, freshTime){
   document.getElementById("paxCount").textContent = list.length;
   document.getElementById("headCount").textContent = paxTotal;
 
-  // 進度環 / 進度條
   const target = CONFIG.groupTarget;
   const pct = Math.min(paxTotal / target, 1);
   document.getElementById("ringNum").textContent = paxTotal;
@@ -553,7 +539,6 @@ async function submitForm(){
     document.getElementById("f-contact").value="";
     document.getElementById("f-note").value="";
     setTimeout(()=>document.querySelector(".chain-sec").scrollIntoView({behavior:"smooth"}),300);
-    // 表單回覆試算表發布有快取延遲，數秒後再同步一次
     if(CONFIG.csvUrl){
       setTimeout(async ()=>{ currentList = await loadList(); render(currentList, rec.time); }, 9000);
     }
