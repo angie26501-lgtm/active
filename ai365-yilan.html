@@ -430,7 +430,7 @@ function parseCsv(text){
   }
   return out;
 }
-function fmtTime(s){ return String(s||"").replace(/:\d{2}\s*$/,"").replace(/上午|下午/,"").trim(); }
+function fmtTime(s){ return String(s||"").replace(/:\d{2}\s*$/," ").replace(/上午|下午/,"").trim(); }
 
 /* ---------- 資料讀取 ---------- */
 async function loadList(){
