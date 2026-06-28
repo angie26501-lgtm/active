@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第三堂 · 收支有餘｜教師主控頁</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{--green:#1F4A2E;--green2:#2C6E45;--gold:#9A7621;--gold2:#C9A24B;
+    --cream:#F6F1E4;--paper:#FBF8F0;--ink:#2B2B2B;--soft:#5A5A5A;--line:#E3DAC4;--red:#B5462F;--shadow:0 6px 22px rgba(31,74,46,.10);}
+  *{box-sizing:border-box;} html{scroll-behavior:smooth;}
+  body{margin:0;font-family:"Noto Sans TC",system-ui,sans-serif;color:var(--ink);background:var(--paper);font-size:17px;line-height:1.72;-webkit-font-smoothing:antialiased;}
+  .topbar{position:sticky;top:0;z-index:50;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:11px clamp(14px,4vw,40px);box-shadow:0 2px 12px rgba(0,0,0,.18);}
+  .brand{font-weight:900;font-size:clamp(16px,2.4vw,20px);}
+  .brand small{display:block;font-weight:500;font-size:11px;color:var(--gold2);letter-spacing:2px;}
+  .tb-actions{display:flex;gap:8px;}
+  .tb-btn{font-family:inherit;font-size:14px;font-weight:700;color:#fff;background:transparent;border:1.5px solid var(--gold2);border-radius:999px;padding:6px 14px;cursor:pointer;text-decoration:none;transition:all .18s;}
+  .tb-btn:hover{background:var(--gold2);color:var(--green);}
+  .notice{background:var(--cream);border-bottom:1px solid var(--line);color:var(--green);text-align:center;font-weight:700;font-size:14px;padding:8px 16px;}
+  .notice b{color:var(--gold);}
+  /* quick nav */
+  .qnav{position:sticky;top:53px;z-index:40;background:rgba(251,248,240,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);padding:8px clamp(10px,3vw,20px);display:flex;gap:8px;overflow-x:auto;}
+  .qnav a{flex:0 0 auto;font-size:13.5px;font-weight:700;color:var(--green);background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 13px;text-decoration:none;white-space:nowrap;}
+  .qnav a:hover{background:var(--green);color:#fff;border-color:var(--green);}
+  .wrap{max-width:940px;margin:0 auto;padding:0 clamp(14px,4vw,28px);}
+  .hero{text-align:center;padding:34px 0 18px;}
+  .hero .eyebrow{color:var(--gold);font-weight:700;letter-spacing:4px;font-size:13px;}
+  .hero h1{font-size:clamp(28px,6vw,44px);font-weight:900;color:var(--green);margin:8px 0 4px;}
+  .hero .sub{color:var(--gold2);font-weight:700;font-size:clamp(16px,3vw,20px);}
+  .sec{margin:34px 0 6px;scroll-margin-top:108px;}
+  .sec-h{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .sec-h .k{font-size:12px;font-weight:700;color:var(--gold);letter-spacing:2px;}
+  .sec-h h2{font-size:clamp(21px,4vw,27px);font-weight:900;color:var(--green);margin:2px 0 0;}
+  .sec-h .rule{flex:1;height:3px;background:linear-gradient(90deg,var(--gold2),transparent);border-radius:2px;}
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;}
+  .card.cream{background:var(--cream);} .card.green{background:var(--green);color:#fff;border:none;}
+  .lead-line{font-style:italic;color:var(--gold);font-weight:600;margin:6px 0 0;}
+  table{width:100%;border-collapse:collapse;font-size:15px;background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);}
+  th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top;}
+  th{background:var(--green);color:#fff;font-weight:700;font-size:14px;}
+  tr:nth-child(even) td{background:var(--cream);}
+  .tcenter{text-align:center;} .gold{color:var(--gold);font-weight:700;} .grn{color:var(--green);font-weight:700;}
+  ul.clean{margin:6px 0;padding-left:20px;} ul.clean li{margin:5px 0;}
+  /* segment / script */
+  .seg{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px;}
+  .seg .sh{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:var(--green);color:#fff;padding:12px 18px;}
+  .seg .time{background:var(--gold2);color:var(--green);font-weight:900;font-size:14px;border-radius:999px;padding:3px 12px;}
+  .seg .sh h3{margin:0;font-size:18px;font-weight:900;}
+  .seg .sb{padding:16px 18px;}
+  .lbl{font-weight:800;font-size:14px;color:var(--green);margin:2px 0 6px;}
+  .lbl.op{color:var(--gold);margin-top:12px;}
+  .script{border-left:4px solid var(--gold2);background:var(--paper);border-radius:0 12px 12px 0;padding:10px 15px;margin-bottom:4px;}
+  .script p{margin:7px 0;font-style:italic;color:#33372f;}
+  /* warm-up day */
+  .day{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:12px;}
+  .day .dh{display:flex;flex-wrap:wrap;align-items:center;gap:9px;background:var(--green);color:#fff;padding:10px 15px;}
+  .day .dh .pill{background:var(--gold2);color:var(--green);font-weight:900;font-size:13px;border-radius:999px;padding:2px 11px;}
+  .day .dh .th{font-weight:800;font-size:15px;}
+  .day .db{padding:14px 15px;}
+  .copybox{background:var(--paper);border:1.5px solid var(--gold2);border-radius:12px;padding:13px 15px;white-space:pre-wrap;font-size:15.5px;line-height:1.8;color:#2c2c2c;}
+  .copy-btn{margin-top:10px;font-family:inherit;font-weight:800;font-size:14.5px;color:#fff;background:var(--green);border:none;border-radius:999px;padding:9px 18px;cursor:pointer;}
+  .copy-btn.done{background:var(--gold);}
+  .ex{margin-top:10px;border-left:4px solid var(--gold2);background:var(--cream);border-radius:0 10px 10px 0;padding:9px 13px;}
+  .ex b{color:var(--gold);font-size:13.5px;} .ex ul{margin:4px 0 0;padding-left:18px;} .ex li{font-size:14px;color:var(--soft);font-style:italic;margin:2px 0;}
+  /* abc mini */
+  .abc{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:6px;}
+  .abc .c{border-radius:14px;padding:14px;text-align:center;border:1px solid var(--line);}
+  .abc .a{background:var(--cream);} .abc .b{background:#FFF3D6;} .abc .c2{background:var(--cream);}
+  .abc .bd{width:48px;height:48px;line-height:48px;border-radius:50%;color:#fff;font-weight:900;font-size:24px;margin:0 auto 8px;}
+  .abc .a .bd{background:var(--green);} .abc .b .bd{background:var(--gold);} .abc .c2 .bd{background:var(--green);}
+  .abc .nm{font-weight:900;color:var(--green);font-size:17px;} .abc .ds{font-size:13px;color:var(--soft);margin-top:4px;}
+  .tip{background:var(--cream);border-left:5px solid var(--gold2);border-radius:0 12px 12px 0;padding:11px 15px;font-weight:700;color:var(--green);margin-top:10px;}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  footer{margin-top:42px;background:var(--green);color:#fff;text-align:center;padding:30px 18px 40px;}
+  footer .cta{color:var(--gold2);font-weight:900;font-size:19px;margin-bottom:6px;} footer a{color:#fff;}
+  footer .fine{color:#BFE3CC;font-size:12.5px;margin-top:10px;}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--green);color:#fff;font-weight:800;font-size:15px;padding:11px 22px;border-radius:999px;box-shadow:0 10px 30px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:all .25s;z-index:90;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  /* gate */
+  .gate{position:fixed;inset:0;z-index:100;background:var(--green);display:flex;align-items:center;justify-content:center;padding:24px;}
+  .gate.hide{display:none;}
+  .gate-box{background:var(--paper);border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,.3);padding:34px 30px;max-width:380px;width:100%;text-align:center;}
+  .gate-box .seed{font-size:42px;} .gate-box h2{color:var(--green);font-size:24px;font-weight:900;margin:8px 0 4px;} .gate-box p{color:var(--soft);font-size:15px;margin:0 0 18px;}
+  .gate-box input{width:100%;font-family:inherit;font-size:22px;text-align:center;letter-spacing:8px;padding:12px;border:2px solid var(--line);border-radius:12px;margin-bottom:6px;color:var(--green);font-weight:800;}
+  .gate-box input:focus{outline:none;border-color:var(--gold2);}
+  .gate-box button{width:100%;font-family:inherit;font-weight:800;font-size:17px;color:#fff;background:var(--green);border:none;border-radius:12px;padding:13px;cursor:pointer;margin-top:8px;}
+  .gate-err{color:var(--red);font-size:14px;font-weight:700;min-height:20px;margin-top:4px;}
+  @media (max-width:640px){.abc,.twocol{grid-template-columns:1fr;} .qnav{top:50px;}}
+  @media print{.topbar,.qnav,.gate,.toast,.copy-btn,.tb-actions{display:none!important;} body{font-size:12pt;} .seg,.card,.day,table{box-shadow:none;break-inside:avoid;}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto;}}
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <div class="gate-box"><div class="seed">🌱</div><h2>教師專區</h2>
+    <p>第三堂《收支有餘》教師主控頁，請輸入課程密碼</p>
+    <input id="pw" inputmode="numeric" maxlength="4" placeholder="••••" autocomplete="off">
+    <div class="gate-err" id="pwErr"></div><button onclick="checkPw()">進入</button></div>
+</div>
+
+<header class="topbar">
+  <div class="brand">馥芸財富學苑<small>女人要有錢 · 財富花園</small></div>
+  <div class="tb-actions"><a class="tb-btn" href="generousGarden.html">課程首頁</a><button class="tb-btn" onclick="window.print()">列印</button></div>
+</header>
+<div class="notice">第三堂【播種】· <b>收支有餘</b>｜教師主控頁（時間表 · 教案逐字稿 · 簡報 · 活動 · 課前陪跑）</div>
+
+<nav class="qnav">
+  <a href="#info">課程資訊</a><a href="#warmup">課前陪跑</a><a href="#schedule">時間表</a>
+  <a href="#prep">準備用品</a><a href="#plan">教案逐字稿</a><a href="#deck">簡報重點</a>
+  <a href="#act">活動與提問</a><a href="#close">收尾</a>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow">第三堂 · 播種</div>
+    <h1>收支有餘 · 把錢留住</h1>
+    <div class="sub">教師主控頁 · 7/1（三）15:00–16:30</div>
+  </section>
+
+  <!-- 課程資訊 -->
+  <section class="sec" id="info">
+    <div class="sec-h"><div><div class="k">INFO</div><h2>課程資訊</h2></div><div class="rule"></div></div>
+    <div class="card">
+      <ul class="clean">
+        <li><b>時間</b>：7/1（週三）15:00–16:30，共 90 分鐘</li>
+        <li><b>對象</b>：福氣協會學員（50–60+ 熟齡女性），分三組</li>
+        <li><b>本堂種子</b>：子女教育・財務自由（為未來而存）</li>
+        <li><b>核心目標</b>：把「有觀念」變成「會做」——用三根基、631、ABC 三帳戶建立存得住的存錢系統</li>
+        <li><b>一句主軸</b>：先付給自己，再付給世界——一桶金不是省出來的，是系統養出來的</li>
+      </ul>
+      <div class="lead-line">語氣：溫暖不焦慮、金額不重要習慣最重要、投資中性教育、收尾只用免費財務小輕診。</div>
+    </div>
+  </section>
+
+  <!-- 課前陪跑 -->
+  <section class="sec" id="warmup">
+    <div class="sec-h"><div><div class="k">PRE-CLASS</div><h2>課前陪跑群組活動（6/26–7/1）</h2></div><div class="rule"></div></div>
+    <div class="card cream"><b class="grn">怎麼帶：</b>每天一則 2 分鐘小任務，先貼「示範回覆」讓長輩照樣造句；老師每天親自回覆 2–3 位、溫暖點名、不催。每人每日參與 +5（併入小組），連續全勤課堂有小獎勵。</div>
+    <div id="days"></div>
+  </section>
+
+  <!-- 時間表 -->
+  <section class="sec" id="schedule">
+    <div class="sec-h"><div><div class="k">SCHEDULE</div><h2>90 分鐘完整時間表</h2></div><div class="rule"></div></div>
+    <table>
+      <tr><th style="width:108px">時間</th><th>段落 · 內容</th><th class="tcenter" style="width:46px">分</th><th class="tcenter" style="width:96px">負責</th></tr>
+      <tr><td>15:00–15:10</td><td>① 開場・自我介紹・陪跑五步驟・回收上週 LINE 任務</td><td class="tcenter gold">10</td><td class="tcenter">琪琪</td></tr>
+      <tr><td>15:10–15:25</td><td>② 回顧第一、二堂（五顆種子・時間軸・財務自由・收支盤點・三根基・72法則・先付給自己）</td><td class="tcenter gold">15</td><td class="tcenter">琪琪</td></tr>
+      <tr><td>15:25–15:35</td><td>③ 有觀念 ≠ 會做 → 三根基一話力（留住／養富／保固）</td><td class="tcenter gold">10</td><td class="tcenter">琪琪</td></tr>
+      <tr><td>15:35–15:50</td><td>④ 收支管理：想要 vs 需要 → <b>631 法則</b></td><td class="tcenter gold">15</td><td class="tcenter">琪琪</td></tr>
+      <tr><td>15:50–16:05</td><td>⑤ ABC 三帳戶：A 生活／B 年度支出（÷12）／C 夢想（自動轉帳）</td><td class="tcenter gold">15</td><td class="tcenter">琪琪</td></tr>
+      <tr><td>16:05–16:20</td><td>⑥ 互動小組賽：收支紅綠燈 ＋ ABC 分帳</td><td class="tcenter gold">15</td><td class="tcenter">KENNY＋助教</td></tr>
+      <tr><td>16:20–16:30</td><td>⑦ 收支健診 → 陪跑教練 → 課後任務 → 三錦囊＋預告</td><td class="tcenter gold">10</td><td class="tcenter">琪琪</td></tr>
+    </table>
+    <div class="lead-line">控速：複習段（②）超時就壓縮；互動賽（⑥）為亮點不可省，必要時減回合。</div>
+  </section>
+
+  <!-- 準備用品 -->
+  <section class="sec" id="prep">
+    <div class="sec-h"><div><div class="k">PREP</div><h2>準備用品 · 角色分工</h2></div><div class="rule"></div></div>
+    <div class="twocol">
+      <div class="card"><b class="grn">道具清單</b>
+        <ul class="clean">
+          <li>收支健診單（大字 A4，每人一張）＋筆</li>
+          <li>ABC 三帳戶說明桌卡（每組一份）</li>
+          <li>收支紅綠燈代幣組（紅想要／綠需要／金先存）</li>
+          <li>小組計分卡（KENNY）＋舉牌／隊牌</li>
+          <li>白板與白板筆、麥克風、計時器</li>
+          <li>簡報、投影設備；課後問卷 QR</li>
+          <li>（線上互動）Wayground 三台裝置：每組一台、先進等候室</li>
+        </ul>
+      </div>
+      <div class="card cream"><b class="grn">角色分工</b>
+        <ul class="clean">
+          <li><b>琪琪老師</b>：主講、節奏控速、健診引導、陪跑與收尾</li>
+          <li><b>KENNY</b>：小組計分、互動賽控場與判定、拍照、防詐提醒</li>
+          <li><b>助教</b>：發回健診單、桌邊協助、AI／Wayground 操作、QR 引導</li>
+          <li><b>Matt／彥儒顧問</b>：後續堂次（資產配置）預告，本堂可不到場</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 教案逐字稿 -->
+  <section class="sec" id="plan">
+    <div class="sec-h"><div><div class="k">LESSON PLAN · SCRIPT</div><h2>逐段教案＋逐字稿</h2></div><div class="rule"></div></div>
+
+    <div class="seg"><div class="sh"><span class="time">15:00–15:10</span><h3>① 開場・自我介紹・陪跑・回收任務</h3></div><div class="sb">
+      <div class="lbl">講師逐字稿（可照念）</div>
+      <div class="script">
+        <p>「大家好，我是陳芸琪，大家也可以叫我琪琪老師。我在宜蘭做財務規劃 18 年，從保險、到收費制財務顧問，連續兩年達成 MDRT。三年前我放下原本的本業，專心陪大家把『人生與錢』整理清楚，也成立了馥芸財富學苑。」</p>
+        <p>「我不是來教你變有錢，是陪你不再為錢焦慮。前兩堂我們翻了土、整了地，今天要開始播種——把錢真正留下來。」</p>
+        <p>「先看看上週的功課：那筆『說不清楚』的支出，有人找到了嗎？（請 1–2 位分享，+5 分）」</p>
+        <p>「我陪大家走的方式是五步：看現況 → 找漏水 → 分對位置 → 建立系統 → 定期回看。今天主要做第三、四步。」</p>
+      </div>
+      <div class="lbl op">操作 · 動作</div>
+      <ul class="clean"><li>自我介紹簡短即可，讓新朋友認識我、重建信任</li><li>各組喊隊呼，KENNY 依先後給 20／15／10 分</li><li>回收上週 LINE 任務，主動分享者上台（每人 +5）</li></ul>
+    </div></div>
+
+    <div class="seg"><div class="sh"><span class="time">15:10–15:25</span><h3>② 回顧第一、二堂</h3></div><div class="sb">
+      <div class="lbl">講師逐字稿（可照念）</div>
+      <div class="script">
+        <p>「【第一堂・翻土】五顆種子：醫療、家庭、子女教育、財務自由、資產傳承；人生時間軸——大半輩子都在花錢，所以要趁有賺先留下；財務自由＝時間自由（理財 ≠ 投資）。」</p>
+        <p>「【第二堂・整地】找到你的錢在哪裡：收支盤點、資產－負債＝淨值、主動 vs 被動收入；理財三根基；72 法則與複利。」</p>
+        <p>「最重要的一句話：先付給自己。薪水一進來，先存，剩下的才花——這就接到今天的收支管理。」</p>
+      </div>
+      <div class="lbl op">操作 · 動作</div>
+      <ul class="clean"><li>分兩段帶：先第一堂、再第二堂，用簡報回顧頁帶過</li><li>速度要快，這段是『喚醒』不是重講</li></ul>
+    </div></div>
+
+    <div class="seg"><div class="sh"><span class="time">15:25–15:35</span><h3>③ 有觀念 ≠ 會做 → 三根基一話力</h3></div><div class="sb">
+      <div class="lbl">講師逐字稿（可照念）</div>
+      <div class="script">
+        <p>「很多人前兩堂都點頭，回家卻沒動——因為『知道』和『做得到』之間，差一個系統。今天就是給大家那個系統。」</p>
+        <p>「理財三根基，我用一句話幫大家記：收支管理是『把錢留住』、資產負債管理是『把錢養富』、風險管理是『把錢保固』。」</p>
+        <p>「三根基要先穩，投資是『再攻』——根基沒打好就投資，像在流沙上蓋房子。今天我們專心練第一根：把錢留住。」</p>
+      </div>
+      <div class="lbl op">操作 · 動作</div>
+      <ul class="clean"><li>簡報呈現三根基一話力對照（留住／養富／保固）</li><li>強調投資＝再攻，不是第四根；第四堂風險、第五堂資產配置</li></ul>
+    </div></div>
+
+    <div class="seg"><div class="sh"><span class="time">15:35–15:50</span><h3>④ 收支管理：想要 vs 需要 → 631 法則</h3></div><div class="sb">
+      <div class="lbl">講師逐字稿（可照念）</div>
+      <div class="script">
+        <p>「把錢留住第一步，是分清『需要』和『想要』。需要是少了會出事，想要是少了會不開心——兩個都可以有，但要先排順序。」</p>
+        <p>「給大家一個好記的分法，<b>631 法則</b>：收入的 <b>6 成生活</b>、<b>3 成存與還</b>、<b>1 成保障與自己</b>。比例可以微調，重點是『每一塊錢都有位置』。」</p>
+        <p>「錢沒有位置，就會自己亂跑；給它位置，它就乖乖待著。」</p>
+      </div>
+      <div class="lbl op">操作 · 動作</div>
+      <ul class="clean"><li>簡報帶想要 vs 需要對照例子（請學員舉自己的例）</li><li>白板寫 6 / 3 / 1，請各組討論自己會怎麼分</li></ul>
+    </div></div>
+
+    <div class="seg"><div class="sh"><span class="time">15:50–16:05</span><h3>⑤ ABC 三帳戶法（核心實作）</h3></div><div class="sb">
+      <div class="lbl">講師逐字稿（可照念）</div>
+      <div class="script">
+        <p>「631 是觀念，ABC 帳戶是把它『做出來』的工具。三個帳戶：A 生活、B 年度支出、C 夢想。」</p>
+        <p>「A 生活帳戶，就是每天會用到的錢——食衣行、日常開銷，薪水進來的主帳戶。」</p>
+        <p>「B 年度支出最容易被忽略：保費、稅金、過年紅包、健檢，這些一年才一次、但金額大。把它們『加總除以 12』，每月先撥一點進 B，到期就不會被一筆大錢嚇到。大錢小存、到期不慌。」</p>
+        <p>「C 夢想帳戶：旅遊、子女教育、退休加碼。發薪日就『自動轉帳』先撥一筆，先付給自己。金額不重要，先開始、再慢慢加。」</p>
+        <p>「做兩件事就會了：一、去銀行多開兩個帳戶當 B、C；二、設定自動轉帳。系統幫你存，你就不用靠意志力。」</p>
+      </div>
+      <div class="abc">
+        <div class="c a"><div class="bd">A</div><div class="nm">生活帳戶</div><div class="ds">每天會用到的錢</div></div>
+        <div class="c b"><div class="bd">B</div><div class="nm">年度支出</div><div class="ds">一年一次的大錢 ÷ 12 每月先撥</div></div>
+        <div class="c c2"><div class="bd">C</div><div class="nm">夢想帳戶</div><div class="ds">自動轉帳・先付給自己</div></div>
+      </div>
+      <div class="tip">A 顧好今天　·　B 大錢小存、到期不慌　·　C 先付給自己、養大夢想<br>
+        <span style="font-weight:500;font-size:14px">算式：B＝一年大筆支出加總 ÷ 12；C＝夢想金額 ÷ 距離目標月數。</span></div>
+    </div></div>
+
+    <div class="seg"><div class="sh"><span class="time">16:20–16:30</span><h3>⑦ 收支健診 → 陪跑 → 課後任務 → 三錦囊</h3></div><div class="sb">
+      <div class="lbl">講師逐字稿（可照念）</div>
+      <div class="script">
+        <p>「發給大家一張收支健診單，三分鐘，勾一勾就好——沒有對錯，只是看看自己現在站在哪裡。看見，就是改變的開始。」</p>
+        <p>「很多人問：這些自己做不就好？可以，但能持續一年的，十個不到一個。陪跑不是幫你賺更快，是讓你『睡得著、走得久』。想有人陪你把系統設起來、定期回看，歡迎做一次免費的財務小輕診。」</p>
+        <p>「這週的花園任務只有一句：『我要為自己（或孩子）開始的第一個自動存錢，是＿＿。』回到 LINE 群告訴我。」</p>
+        <p>「送大家三錦囊：健康、安全、快樂。把錢留住，是為了好好生活。我們下週見！」</p>
+      </div>
+      <div class="lbl op">操作 · 動作</div>
+      <ul class="clean"><li>助教發健診單、桌邊協助；紅黃綠燈呈現，不出現金額評分</li><li>陪跑敘事：能力不是問題 → 持續才是 → 情緒／推銷干擾 → 陪跑價值 → 軟性邀約（不催）</li><li>課後 LINE：任務題＋ABC 設定指示詞＋問卷 QR（領四表與健診報告）</li></ul>
+    </div></div>
+  </section>
+
+  <!-- 簡報重點 -->
+  <section class="sec" id="deck">
+    <div class="sec-h"><div><div class="k">SLIDES</div><h2>簡報重點（37 張流程）</h2></div><div class="rule"></div></div>
+    <div class="card">
+      <ul class="clean">
+        <li><b>開場</b>：封面 → 自我介紹（形象照＋資歷）→ 陪跑五步驟 → 上週任務</li>
+        <li><b>複習</b>：第一堂回顧 → 五顆種子 → 時間軸 → 財務自由＝時間自由 → 第二堂回顧 → 72 法則 → 先付給自己</li>
+        <li><b>橋接</b>：有觀念 ≠ 會做 → 三根基一話力</li>
+        <li><b>主題一</b>：收支管理 → 想要 vs 需要 → <b>631 法則</b></li>
+        <li><b>主題二</b>：ABC 三帳戶 → B/C 兩個算式 → 兩個動作</li>
+        <li><b>互動</b>：收支紅綠燈 → ABC 分帳</li>
+        <li><b>收尾</b>：收支健診 → 陪跑 → 課後任務 → 後兩堂預告 → 三錦囊</li>
+        <li><b>附錄</b>：個案實證（學費故事→方法→成果＋34.6%→走勢→觀念，含「個人實證・非投資建議」）</li>
+      </ul>
+      <div class="lead-line">完整簡報檔（PPTX／PDF）與網頁版另存；本頁為帶課主控。</div>
+    </div>
+  </section>
+
+  <!-- 活動與提問 -->
+  <section class="sec" id="act">
+    <div class="sec-h"><div><div class="k">ACTIVITY</div><h2>活動設計與提問</h2></div><div class="rule"></div></div>
+
+    <div class="card"><b class="grn">互動小組賽（16:05–16:20）</b> — KENNY 控場計分，兩回合，依完成先後 20／15／10。
+      <div class="twocol" style="margin-top:10px">
+        <div class="card cream" style="margin:0"><b class="grn">回合一 · 收支紅綠燈</b>
+          <ul class="clean"><li>每組一袋代幣＝這個月的錢</li><li>把 8–10 張支出卡歸到 <b style="color:var(--red)">紅</b>想要／<b class="grn">綠</b>需要／<b class="gold">金</b>先存</li><li>限時 3 分鐘，完成舉牌，最快且合理者得分</li></ul></div>
+        <div class="card cream" style="margin:0"><b class="grn">回合二 · ABC 分帳</b>
+          <ul class="clean"><li>給情境家庭（月收入＋年度支出與夢想）</li><li>把錢分進 A 生活／B 年度支出／C 夢想</li><li>看 B 有沒有「÷12 先撥」、C 有沒有先付給自己</li></ul></div>
+      </div>
+      <div class="lead-line">收斂金句：今天不是要你變省，是幫你的錢找到家。</div>
+    </div>
+
+    <div class="card"><b class="grn">提問題庫（可口頭問或上 Wayground）</b>
+      <p style="margin:8px 0 4px" class="gold">A. 想要 vs 需要（需要／想要）</p>
+      <table><tr><th>題目</th><th class="tcenter" style="width:90px">正解</th></tr>
+        <tr><td>每天的三餐</td><td class="tcenter grn">需要</td></tr>
+        <tr><td>換一支更新款的手機</td><td class="tcenter gold">想要</td></tr>
+        <tr><td>看醫生、買處方藥</td><td class="tcenter grn">需要</td></tr>
+        <tr><td>再買一個名牌包</td><td class="tcenter gold">想要</td></tr>
+        <tr><td>每月的健保費</td><td class="tcenter grn">需要</td></tr>
+        <tr><td>週週上館子吃大餐</td><td class="tcenter gold">想要</td></tr>
+      </table>
+      <p style="margin:14px 0 4px" class="gold">B. ABC 這筆錢放哪？（A 生活／B 年度支出／C 夢想）</p>
+      <table><tr><th>題目</th><th class="tcenter" style="width:120px">正解</th></tr>
+        <tr><td>今天買菜的錢</td><td class="tcenter grn">A 生活</td></tr>
+        <tr><td>一年一次的汽車保險費</td><td class="tcenter gold">B 年度支出</td></tr>
+        <tr><td>想存錢明年去看櫻花</td><td class="tcenter grn">C 夢想</td></tr>
+        <tr><td>過年要包的紅包</td><td class="tcenter gold">B 年度支出</td></tr>
+        <tr><td>幫孫子存的教育基金</td><td class="tcenter grn">C 夢想</td></tr>
+        <tr><td>每年的房屋稅、地價稅</td><td class="tcenter gold">B 年度支出</td></tr>
+      </table>
+      <p style="margin:14px 0 4px" class="gold">C. 理財小觀念</p>
+      <table><tr><th>題目</th><th class="tcenter" style="width:150px">正解</th></tr>
+        <tr><td>631 法則裡，「存與還」大約占幾成？</td><td class="tcenter grn">3 成</td></tr>
+        <tr><td>「先付給自己」是指薪水先存、剩下才花？</td><td class="tcenter grn">是</td></tr>
+        <tr><td>投資在理財裡的角色？</td><td class="tcenter gold">再攻（非根基）</td></tr>
+        <tr><td>B 年度支出每月該撥多少怎麼算？</td><td class="tcenter gold">一年大筆支出 ÷ 12</td></tr>
+      </table>
+      <div class="lead-line">長輩玩 Wayground 建議：團隊模式一組一台、關掉計時、老師念題、答錯不公開個人。</div>
+    </div>
+  </section>
+
+  <!-- 收尾 -->
+  <section class="sec" id="close">
+    <div class="sec-h"><div><div class="k">CLOSING</div><h2>收尾與課後</h2></div><div class="rule"></div></div>
+    <div class="card green">
+      <div style="font-size:19px;font-weight:900;color:#fff">這週的花園任務</div>
+      <div style="font-size:18px;color:#FFF3D6;margin-top:6px">「我要為自己（或孩子）開始的第一個自動存錢，是＿＿。」</div>
+      <div style="color:#D9E8DE;margin-top:8px">課後 LINE 發放：任務題＋ABC 設定 AI 指示詞＋問卷 QR（領四表與健診報告）。三錦囊：健康・安全・快樂。</div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="cta">免費財務小輕診</div>
+  <div>LINE：<a href="https://lin.ee/6Tm8pI7" target="_blank" rel="noopener">lin.ee/6Tm8pI7</a></div>
+  <div class="fine">馥芸財富學苑 · 財顧芸／琪琪老師　｜　投資為教育說明，非投資建議</div>
+</footer>
+
+<div class="toast" id="toast">已複製，可以貼到 LINE 了 ✓</div>
+
+<script>
+const WARMUP=[
+  {pill:"6/26（五）",th:"宣告 · 召集",body:["🌱 下週三，我們來「播種」囉！","親愛的姊妹們，前兩堂我們翻了土、整了地，","下週三（7/1）第三堂，要開始「播種」——學會把錢留住 💰","","從明天起，我每天會出一個 2 分鐘的小暖身，陪你把心慢慢準備好。","不用花錢、不用算數字，輕鬆參加就好 😊","","👉 現在先回我一個「🌱」或一句「我準備好了」報到吧！","（連續參加的姊妹，課堂有小驚喜 🎁）"],ex:["🌱 我準備好了！","期待下週的課～ 😊"]},
+  {pill:"6/27（六）",th:"Day1 · 最開心的一筆",body:["☀️ 暖身 Day1｜最開心的一筆","這週，你有沒有哪一筆花費，讓你覺得「花得真值得、好開心」？","可能是一頓飯、一束花、給孫子的小禮物⋯⋯","","👉 用一句話分享給大家（不用寫金額喔）","花錢不是壞事，會「花得開心又安心」才是本事 💛","（下週我們會一起聊「想要 vs 需要」）"],ex:["上週買了一束花放餐桌，每天看了都開心 🌸","帶孫子去吃冰，看他笑得好開心，值得！","報名了社區瑜伽課，對自己好一點 😊"]},
+  {pill:"6/28（日）",th:"Day2 · 三個錢罐子",body:["🏺 暖身 Day2｜你的三個錢罐子","如果家裡有三個存錢罐：","一個放「每天要用的」、一個放「一年一次的大筆開銷」、一個放「夢想要存的」——","你會幫它們取什麼名字呢？","","👉 留言分享你的罐子名字 😊","（下週老師會教一個超好用的「ABC 三帳戶」法 ✨）"],ex:["每天用的→『過生活』、一年一次的→『繳費罐』、夢想存的→『圓夢金』","我會叫它們『日常罐、年度罐、旅遊罐』😄"]},
+  {pill:"6/29（一）",th:"Day3 · 一個小夢想（健康日）",body:["🌟 暖身 Day3｜一個小小的夢想","想為自己、或為孩子孫子，存一個什麼樣的小夢想呢？","一趟旅行、一台好一點的家電、孩子的教育金⋯⋯都可以 💭","","👉 寫下你的小夢想，我們一起記住它","🍀 週一健康錦囊：今天也記得多喝水、出門走走～","（有夢想，錢才「存得住」）"],ex:["想存一筆，明年和姊妹去看櫻花 🌸","想幫孫子存一點教育金","想換一台好一點的冰箱"]},
+  {pill:"6/30（二）",th:"Day4 · 課前小盤點",body:["📝 暖身 Day4｜明天上課囉！課前小盤點","做個無痛小盤點——想一想，你最常花錢的地方是哪三類？","（例如：吃飯、買菜、孝親、孫子、衣服、醫療、娛樂⋯⋯）","","👉 回我三個關鍵字就好（不用金額）","帶著這個感覺來，明天我們一起把錢「分對位置」💪","明天（7/1）下午 3:00，和平路 203 號見！🌷"],ex:["買菜、孝親、孫子","吃飯、醫療、衣服","日常採買、外食、娛樂"]},
+  {pill:"7/1（三）早上",th:"上課提醒 · 播種日",body:["🌷 今天下午見！第三堂・播種日","親愛的姊妹們，今天就是我們的第三堂課囉！","⏰ 今天下午 3:00–4:30","📍 蘇澳鎮和平路 203 號（福氣協會）","","這幾天的暖身，謝謝大家的分享 💛","今天我們要把這些『想要、夢想、常花錢的地方』，","變成一套真正把錢留住的方法（還有超好用的 ABC 三帳戶 ✨）","","👉 記得帶一支筆，和你這幾天的好心情來～","還沒參加暖身的姊妹也別擔心，直接來就對了！等你喔 🌱"],ex:[]},
+];
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+const dc=document.getElementById('days');
+WARMUP.forEach((d,i)=>{
+  const ex=d.ex.length?`<div class="ex"><b>💬 示範回覆（先貼一則，讓長輩照樣造句）</b><ul>${d.ex.map(e=>`<li>「${esc(e)}」</li>`).join("")}</ul></div>`:"";
+  const el=document.createElement('div'); el.className='day';
+  el.innerHTML=`<div class="dh"><span class="pill">${esc(d.pill)}</span><span class="th">${esc(d.th)}</span></div>
+    <div class="db"><div class="copybox" id="cb${i}">${esc(d.body.join("\n"))}</div>
+    <button class="copy-btn" data-i="${i}">📋 複製到 LINE</button>${ex}</div>`;
+  dc.appendChild(el);
+});
+const toast=document.getElementById('toast'); let tt;
+function showToast(){toast.classList.add('show'); clearTimeout(tt); tt=setTimeout(()=>toast.classList.remove('show'),1800);}
+dc.addEventListener('click',e=>{const b=e.target.closest('.copy-btn'); if(!b)return;
+  const text=WARMUP[+b.dataset.i].body.join("\n");
+  const done=()=>{b.classList.add('done'); b.textContent='已複製 ✓'; showToast(); setTimeout(()=>{b.classList.remove('done'); b.textContent='📋 複製到 LINE';},1800);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done).catch(()=>fb(text,done));}else{fb(text,done);}
+});
+function fb(t,cb){const ta=document.createElement('textarea'); ta.value=t; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy'); cb();}catch(e){alert('複製失敗，請長按文字手動複製。');} document.body.removeChild(ta);}
+
+const PW="0603"; const gate=document.getElementById('gate'); const pwInput=document.getElementById('pw');
+function sGet(k){try{return sessionStorage.getItem(k)}catch(e){return null}}
+function sSet(k,v){try{sessionStorage.setItem(k,v)}catch(e){}}
+function openSite(){gate.classList.add('hide'); document.body.style.overflow='';}
+function checkPw(){if(pwInput.value.trim()===PW){sSet('fy_s3m_ok','1'); openSite();}else{document.getElementById('pwErr').textContent='密碼不對，請再試一次（4 位數字）'; pwInput.value=''; pwInput.focus();}}
+if(sGet('fy_s3m_ok')==='1'){openSite();}else{document.body.style.overflow='hidden'; setTimeout(()=>pwInput.focus(),200);}
+pwInput.addEventListener('keydown',e=>{if(e.key==='Enter')checkPw();});
+</script>
+</body>
+</html>
