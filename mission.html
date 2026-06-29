@@ -1,0 +1,329 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>神助理 · 活動量待辦</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#fffdf8; --moss:#3f6b4f; --gold:#c79a4a; --rose:#cf7f73; --ocean:#1b4751;
+    --ink:#2b2b28; --muted:#7a7468; --line:#e7e0d2; --card:#fffefb;
+    --serif:"Noto Serif TC",serif; --sans:"Noto Sans TC",sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:
+      radial-gradient(circle at 12% -5%, #f4efe1 0, transparent 42%),
+      var(--paper);
+    color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1060px;margin:0 auto;padding:28px 20px 80px}
+
+  header{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;border-bottom:2px solid var(--moss);padding-bottom:14px;margin-bottom:6px}
+  header h1{font-family:var(--serif);font-weight:900;font-size:clamp(22px,3.4vw,30px);color:var(--moss);margin:0;letter-spacing:.5px}
+  header .sub{font-family:var(--serif);color:var(--gold);font-weight:700;font-size:15px}
+  header .mark{margin-left:auto;font-size:12px;color:var(--muted)}
+
+  .tabs{display:flex;gap:6px;margin:18px 0 22px}
+  .tab{font-family:var(--serif);font-weight:700;font-size:16px;border:1px solid var(--line);
+    background:var(--card);color:var(--muted);padding:9px 18px;border-radius:999px;cursor:pointer;transition:.15s}
+  .tab[aria-selected="true"]{background:var(--moss);color:#fff;border-color:var(--moss)}
+  .tab .dot{display:inline-block;min-width:20px;text-align:center;margin-left:6px;font-size:12px;
+    background:var(--gold);color:#fff;border-radius:999px;padding:0 6px}
+  .tab[aria-selected="true"] .dot{background:#fff;color:var(--moss)}
+
+  .panel{display:none}
+  .panel.on{display:block}
+
+  textarea{width:100%;min-height:180px;resize:vertical;border:1px solid var(--line);border-radius:14px;
+    background:var(--card);padding:16px;font-family:var(--sans);font-size:15px;line-height:1.7;color:var(--ink)}
+  textarea:focus{outline:2px solid var(--moss);outline-offset:1px}
+  .hint{font-size:13px;color:var(--muted);margin:8px 2px 0}
+
+  .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;align-items:center}
+  button.act{font-family:var(--serif);font-weight:700;font-size:15px;border:none;border-radius:999px;cursor:pointer;
+    padding:11px 24px;background:var(--ocean);color:#fff;transition:.15s}
+  button.act:hover{filter:brightness(1.08)}
+  button.act:disabled{opacity:.5;cursor:wait}
+  button.ghost{background:transparent;color:var(--ocean);border:1px solid var(--ocean)}
+  button.gold{background:var(--gold)}
+
+  .spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;
+    display:inline-block;vertical-align:-3px;margin-right:8px;animation:spin .7s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  .note{border-radius:12px;padding:12px 14px;font-size:14px;margin-top:14px}
+  .note.err{background:#fdeee9;border:1px solid var(--rose);color:#9b463b}
+  .note.ok{background:#eef4ee;border:1px solid var(--moss);color:var(--moss)}
+
+  section.block{margin-top:30px}
+  .eyebrow{font-family:var(--serif);font-weight:700;color:var(--moss);font-size:17px;
+    display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .eyebrow::before{content:"";width:22px;height:2px;background:var(--gold);display:inline-block}
+
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:10px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
+  .stat b{font-family:var(--serif);font-size:24px;color:var(--ocean);display:block;line-height:1.1}
+  .stat span{font-size:12px;color:var(--muted)}
+
+  /* table */
+  .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+  table{border-collapse:collapse;width:100%;min-width:760px;font-size:13.5px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#f3efe4;font-family:var(--serif);font-weight:700;color:var(--moss);white-space:nowrap}
+  tr:last-child td{border-bottom:none}
+
+  .chip{display:inline-block;font-size:11.5px;padding:2px 8px;border-radius:999px;margin:1px 3px 1px 0;white-space:nowrap}
+  .c-act{background:#e8f0ea;color:var(--moss)}
+  .c-need{background:#f6efde;color:#9a7322}
+  .c-warn{background:#fbe7e2;color:#9b463b}
+  .heat-熱{color:#c0392b;font-weight:700}
+  .heat-溫{color:var(--gold);font-weight:700}
+  .heat-冷{color:var(--muted)}
+  .sched{font-weight:700}
+
+  /* todo cards */
+  .todo{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--moss);border-radius:12px;
+    padding:14px 16px;margin-bottom:12px}
+  .todo.heat-熱{border-left-color:#c0392b}
+  .todo.heat-溫{border-left-color:var(--gold)}
+  .todo .top{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+  .todo .who{font-family:var(--serif);font-weight:700;font-size:16px;color:var(--ink)}
+  .todo .meta{font-size:12px;color:var(--muted)}
+  .todo .ctrls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center}
+  select,input.edit{font-family:var(--sans);font-size:13px;border:1px solid var(--line);border-radius:8px;
+    padding:6px 8px;background:#fff;color:var(--ink)}
+  input.edit{min-width:200px;flex:1}
+  .mini{font-size:12.5px;border:none;border-radius:8px;padding:6px 12px;cursor:pointer;font-weight:700}
+  .mini.done{background:var(--moss);color:#fff}
+  .mini.arch{background:#ece6d8;color:var(--muted)}
+
+  .empty{text-align:center;color:var(--muted);padding:40px 16px;font-size:14px}
+  .empty b{font-family:var(--serif);color:var(--moss);display:block;font-size:16px;margin-bottom:4px}
+
+  footer{margin-top:48px;border-top:1px solid var(--line);padding-top:14px;font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>神助理 · 活動量待辦</h1>
+    <span class="sub">人生航海圖</span>
+    <span class="mark">貼上隨手記 → 自動歸類 → 追蹤回填</span>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" id="t1" onclick="switchTab(1)">歸納筆記</button>
+    <button class="tab" role="tab" aria-selected="false" id="t2" onclick="switchTab(2)">待辦清單 <span class="dot" id="openCount">0</span></button>
+  </div>
+
+  <!-- TAB 1 -->
+  <div class="panel on" id="p1">
+    <textarea id="raw" placeholder="只貼流水帳就好，例如：&#10;6/20 志偉：對 ABC 帳戶有興趣，覺得孩子需要學習&#10;6/27 于沛霖／Line（配偶過世，想整理財產與婆家繼承）&#10;待追蹤：毓婷 100萬-遠雄"></textarea>
+    <p class="hint">每筆寫「日期＋人名＋一句情況」即可。一次別貼太多筆，太長可能被截斷，分批貼更穩。</p>
+    <div class="row">
+      <button class="act" id="goBtn" onclick="categorize()">歸納</button>
+      <button class="act gold" id="saveBtn" style="display:none" onclick="saveBatch()">儲存本批到待辦</button>
+    </div>
+    <div id="msg"></div>
+    <div id="result"></div>
+  </div>
+
+  <!-- TAB 2 -->
+  <div class="panel" id="p2">
+    <section class="block" style="margin-top:6px">
+      <div class="stats" id="todoStats"></div>
+    </section>
+    <section class="block">
+      <div class="eyebrow">待追蹤（依機會 × 時效排序）</div>
+      <div id="todoList"></div>
+    </section>
+  </div>
+
+  <footer>
+    本工具為 財顧芸 Angie（陳芸琪）／馥芸財富學苑 內部使用，保留所有權利。歸類僅供作業參考，不構成個別投資建議；商品配息與風險以正式公開說明書為準。
+  </footer>
+</div>
+
+<script>
+/* ---------- 儲存層：優先用內建持久儲存，否則退回記憶體 ---------- */
+const mem = {};
+const store = {
+  async set(k,v){ try{ if(window.storage){return await window.storage.set(k,JSON.stringify(v),false);} }catch(e){} mem[k]=v; },
+  async get(k){ try{ if(window.storage){const r=await window.storage.get(k,false); return r?JSON.parse(r.value):null;} }catch(e){} return mem[k]??null; },
+  async del(k){ try{ if(window.storage){return await window.storage.delete(k,false);} }catch(e){} delete mem[k]; },
+  async list(){ try{ if(window.storage){const r=await window.storage.list('todo:',false); return r?r.keys:[];} }catch(e){} return Object.keys(mem).filter(k=>k.startsWith('todo:')); }
+};
+
+/* ---------- 歸類指示詞（只回 JSON，短鍵省 token）---------- */
+const SYS = `你是資深壽險／財顧業務的活動管理助理。把使用者貼的零散筆記，依四大軸線歸納，只輸出 JSON，不要任何說明文字、不要 markdown 圍欄。
+軸線1 活動類型(可多選)：開發/約訪/面談/促成/保服/定聯/增員/行政
+軸線2 行程狀態：已完成/已約定/待安排
+軸線3 訪談內容(可多選，依實際)：保單規劃/保單檢視/理賠/儲蓄/退休/傳承繼承/財商/第二曲線/觀念溝通…
+軸線4 進度：初接觸/經營中/有意願/規劃中/待成交/已成交/觀望/冷卻；機會：熱/溫/冷
+一件事可同時跨軸、同軸多標。涉及喪偶、家庭糾紛、表達受傷或被辜負者，ef=true 並在 en 寫一句溫度提醒。缺關鍵資訊時在 x 用括號標出需補充項。
+輸出格式（短鍵）：
+{"r":[{"p":"人名","d":"日期","a":["活動類型"],"s":"行程狀態","n":["內容"],"st":"進度","o":"熱/溫/冷或空","x":"下一步行動","due":"期限","ef":false,"en":""}],
+"stat":{"開發":0,"約訪":0,"面談":0,"促成":0,"保服":0,"定聯":0,"增員":0,"行政":0},
+"pri":[{"p":"人名","x":"行動","why":"理由","due":"期限"}],
+"hot":[{"p":"人名","angle":"切入點"}],
+"alert":[{"p":"人名","en":"溫度提醒"}]}
+pri 依「機會×時效」排序、最接近成交者優先取3-5筆。stat 採多標加總。`;
+
+let lastBatch = null;
+
+/* ---------- 呼叫 Claude ---------- */
+async function categorize(){
+  const raw = document.getElementById('raw').value.trim();
+  const msg = document.getElementById('msg');
+  const btn = document.getElementById('goBtn');
+  if(!raw){ msg.innerHTML='<div class="note err">先貼上你的筆記再按歸納。</div>'; return; }
+  btn.disabled=true; btn.innerHTML='<span class="spinner"></span>歸納中…';
+  msg.innerHTML=''; document.getElementById('result').innerHTML='';
+  document.getElementById('saveBtn').style.display='none';
+  try{
+    const res = await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        model:"claude-sonnet-4-6", max_tokens:1000,
+        messages:[{role:"user",content:SYS+"\n\n【筆記】\n"+raw}]
+      })
+    });
+    const data = await res.json();
+    let txt = (data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("\n");
+    txt = txt.replace(/```json|```/g,"").trim();
+    const j = JSON.parse(txt);
+    lastBatch = j;
+    renderResult(j);
+    document.getElementById('saveBtn').style.display='inline-block';
+  }catch(e){
+    msg.innerHTML='<div class="note err">沒能順利歸類，多半是筆數太多被截斷。把筆記分成 2–3 批再試一次。</div>';
+  }finally{
+    btn.disabled=false; btn.textContent='歸納';
+  }
+}
+
+/* ---------- 渲染歸類結果 ---------- */
+function chips(arr,cls){ return (arr||[]).map(x=>`<span class="chip ${cls}">${esc(x)}</span>`).join(''); }
+function esc(s){ return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+function renderResult(j){
+  const rows = (j.r||[]).map(x=>`<tr>
+    <td><b>${esc(x.p)}</b>${x.ef?' <span title="情感敏感">⚠</span>':''}</td>
+    <td>${esc(x.d)}</td>
+    <td>${chips(x.a,'c-act')}</td>
+    <td class="sched">${esc(x.s)}</td>
+    <td>${chips(x.n,'c-need')}</td>
+    <td>${esc(x.st)}</td>
+    <td class="heat-${esc(x.o)}">${x.o?({熱:'🔥',溫:'🌤',冷:'❄'}[x.o]||'')+esc(x.o):'—'}</td>
+    <td>${esc(x.x)}${x.due?` <span class="meta">(${esc(x.due)})</span>`:''}</td>
+  </tr>`).join('');
+
+  const statCards = Object.entries(j.stat||{}).map(([k,v])=>`<div class="stat"><b>${v}</b><span>${k}</span></div>`).join('');
+  const pri = (j.pri||[]).map((x,i)=>`<div class="todo"><div class="top"><span class="who">${i+1}. ${esc(x.p)}</span></div>
+      <div style="margin-top:4px">${esc(x.x)}</div>
+      <div class="meta" style="margin-top:4px">${esc(x.why)}${x.due?` · ${esc(x.due)}`:''}</div></div>`).join('');
+  const hot = (j.hot||[]).map(x=>`<div class="todo heat-熱"><span class="who">🔥 ${esc(x.p)}</span><div style="margin-top:4px">${esc(x.angle)}</div></div>`).join('');
+  const alert = (j.alert||[]).map(x=>`<div class="todo" style="border-left-color:var(--rose)"><span class="who">⚠ ${esc(x.p)}</span><div style="margin-top:4px;color:#9b463b">${esc(x.en)}</div></div>`).join('');
+
+  document.getElementById('result').innerHTML = `
+    <section class="block"><div class="eyebrow">活動量統計（多標加總）</div><div class="stats">${statCards}</div></section>
+    <section class="block"><div class="eyebrow">活動紀錄表</div>
+      <div class="tablewrap"><table><thead><tr>
+        <th>對象</th><th>日期</th><th>活動類型</th><th>行程</th><th>內容/需求</th><th>進度</th><th>機會</th><th>下一步</th>
+      </tr></thead><tbody>${rows}</tbody></table></div></section>
+    ${pri?`<section class="block"><div class="eyebrow">本週優先待辦</div>${pri}</section>`:''}
+    ${hot?`<section class="block"><div class="eyebrow">高機會名單</div>${hot}</section>`:''}
+    ${alert?`<section class="block"><div class="eyebrow">情感敏感提醒</div>${alert}</section>`:''}
+  `;
+}
+
+/* ---------- 儲存本批 ---------- */
+async function saveBatch(){
+  if(!lastBatch || !lastBatch.r) return;
+  const batch = 'b'+Date.now();
+  let i=0;
+  for(const x of lastBatch.r){
+    const id = 'todo:'+Date.now()+'_'+(i++);
+    await store.set(id,{...x, id, batch, status:'open', createdAt:Date.now(), completedAt:null});
+  }
+  document.getElementById('msg').innerHTML='<div class="note ok">已存入待辦清單，可到「待辦清單」分頁回填進度。</div>';
+  document.getElementById('saveBtn').style.display='none';
+  await refreshTodos();
+}
+
+/* ---------- 待辦清單 ---------- */
+const STAGES=['初接觸','經營中','有意願','規劃中','待成交','已成交','觀望','冷卻'];
+const HEATW={'熱':0,'溫':1,'冷':2,'':3,undefined:3,null:3};
+
+async function loadAll(){
+  const keys = await store.list();
+  const items = [];
+  for(const k of keys){ const v=await store.get(k); if(v) items.push(v); }
+  return items;
+}
+
+async function refreshTodos(){
+  const all = await loadAll();
+  const open = all.filter(x=>x.status==='open');
+  const now=new Date(), mDone = all.filter(x=>x.status==='done'&&x.completedAt&&sameMonth(x.completedAt,now)).length;
+  const hot = open.filter(x=>x.o==='熱').length;
+  document.getElementById('openCount').textContent=open.length;
+  document.getElementById('todoStats').innerHTML=`
+    <div class="stat"><b>${open.length}</b><span>未完成</span></div>
+    <div class="stat"><b>${hot}</b><span>🔥 熱機會</span></div>
+    <div class="stat"><b>${mDone}</b><span>本月已成交</span></div>`;
+
+  open.sort((a,b)=>(HEATW[a.o]-HEATW[b.o]) || ((a.due||'zz')>(b.due||'zz')?1:-1));
+  const list=document.getElementById('todoList');
+  if(!open.length){ list.innerHTML='<div class="empty"><b>清單是空的</b>到「歸納筆記」貼上隨手記，存檔後就會出現在這裡。</div>'; return; }
+  list.innerHTML = open.map(x=>`
+    <div class="todo heat-${esc(x.o)}">
+      <div class="top">
+        <span class="who">${esc(x.p)}${x.ef?' ⚠':''}</span>
+        <span class="meta">${esc(x.d||'')} · ${chips(x.a,'c-act')}</span>
+      </div>
+      <div class="ctrls">
+        <select onchange="updateField('${x.id}','st',this.value)">
+          ${STAGES.map(s=>`<option ${s===x.st?'selected':''}>${s}</option>`).join('')}
+        </select>
+        <select onchange="updateField('${x.id}','o',this.value)">
+          ${['熱','溫','冷'].map(o=>`<option ${o===x.o?'selected':''}>${o}</option>`).join('')}
+        </select>
+        <input class="edit" value="${esc(x.x)}" onchange="updateField('${x.id}','x',this.value)" placeholder="下一步…">
+        <input class="edit" style="min-width:90px;flex:0" value="${esc(x.due||'')}" onchange="updateField('${x.id}','due',this.value)" placeholder="期限">
+      </div>
+      <div class="ctrls">
+        <button class="mini done" onclick="setStatus('${x.id}','done')">完成 / 成交</button>
+        <button class="mini arch" onclick="setStatus('${x.id}','archived')">封存</button>
+      </div>
+      ${x.ef&&x.en?`<div class="meta" style="color:#9b463b;margin-top:8px">⚠ ${esc(x.en)}</div>`:''}
+    </div>`).join('');
+}
+
+async function updateField(id,field,val){
+  const x=await store.get(id); if(!x) return; x[field]=val; await store.set(id,x);
+  if(field==='o') refreshTodos();
+}
+async function setStatus(id,status){
+  const x=await store.get(id); if(!x) return;
+  x.status=status; if(status==='done') x.completedAt=Date.now();
+  await store.set(id,x); await refreshTodos();
+}
+function sameMonth(ts,d){ const a=new Date(ts); return a.getFullYear()===d.getFullYear()&&a.getMonth()===d.getMonth(); }
+
+/* ---------- 分頁 ---------- */
+function switchTab(n){
+  document.getElementById('p1').classList.toggle('on',n===1);
+  document.getElementById('p2').classList.toggle('on',n===2);
+  document.getElementById('t1').setAttribute('aria-selected',n===1);
+  document.getElementById('t2').setAttribute('aria-selected',n===2);
+  if(n===2) refreshTodos();
+}
+refreshTodos();
+</script>
+</body>
+</html>
