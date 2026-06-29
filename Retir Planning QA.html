@@ -171,7 +171,7 @@
     <div class="hero-card">
       <div class="eyebrow">領 航 財 富 花 園</div>
       <h1>打造你的人生藍圖</h1>
-      <p class="sub">花 3 分鐘，畫出你的退休藍圖並完成 AI 財務健診。送出後系統會把「財務三燈報告」寄到你信箱，顧問也會與你聯繫安排免費諮詢。</p>
+      <p class="sub">花 3 分鐘，畫出你的退休藍圖並完成 AI 財務健診。送出後系統會把「財務三燈報告」寄到你信箱，顧問也會與你聯繫安排預約諮詢。</p>
       <div class="credit">主講｜<b>陳芸琪</b>　馥芸財富管理學苑 ／ MDRT・RFC・RFA・RFP<br>
         <a class="credit-link" href="https://www.allfreedom.info/" target="_blank" rel="noopener">官方網站 · www.allfreedom.info ↗</a></div>
     </div>
@@ -193,7 +193,7 @@
   <section class="step">
     <div class="eyebrow ink">關於你</div>
     <h1>先留下你的聯絡方式</h1>
-    <p class="lead">方便顧問與你約定免費諮詢時間；資料僅作規劃分析之用。</p>
+    <p class="lead">方便顧問與你約定預約諮詢時間；資料僅作規劃分析之用。</p>
     <div class="panel">
       <h3><span class="dot"></span>基本資料</h3>
       <div class="grid2">
@@ -410,7 +410,7 @@ function updateTL(){
 const steps=[...document.querySelectorAll('.step')], total=steps.length; let cur=0;
 document.getElementById('stepTotal').textContent=total;
 const btnNext=document.getElementById('btnNext'), btnBack=document.getElementById('btnBack');
-const btnSubmit=document.createElement('button'); btnSubmit.className='btn btn-gold'; btnSubmit.id='btnSubmit'; btnSubmit.textContent='送出並預約免費諮詢'; btnSubmit.style.display='none';
+const btnSubmit=document.createElement('button'); btnSubmit.className='btn btn-gold'; btnSubmit.id='btnSubmit'; btnSubmit.textContent='送出並預約諮詢'; btnSubmit.style.display='none';
 document.querySelector('.navbar .wrap').appendChild(btnSubmit);
 
 function show(i){
@@ -512,7 +512,7 @@ function showDone(){
      <div style="text-align:center"><div style="font-family:var(--serif);font-size:21px;font-weight:800;color:var(--ink)">已送出，謝謝你！</div>
      <p class="lead" style="margin:8px 0 0">你的<b style="color:var(--ink)">簡易版財務報告書</b>（財務三燈，總分 <b style="color:${band.c}">${hs.total}/10</b>）正在寄往你的信箱，請查收。</p>
      <p class="lead" style="margin:10px 0 0;font-size:15px">此為快速自評的初步參考；若想更完整地檢視收支、保障、投資與退休規劃，歡迎進一步與顧問預約一對一諮詢。</p>
-     <a class="btn btn-gold" style="display:inline-flex;align-items:center;justify-content:center;text-decoration:none;margin-top:16px;padding:13px 24px" href="https://www.allfreedom.info/" target="_blank" rel="noopener">預約免費諮詢 →</a>
+     <a class="btn btn-gold" style="display:inline-flex;align-items:center;justify-content:center;text-decoration:none;margin-top:16px;padding:13px 24px" href="https://www.allfreedom.info/lifecycle-legacy.html#second-half-blueprint" target="_blank" rel="noopener">預約諮詢 →</a>
      </div></div>`;
   document.querySelector('.navbar .wrap').innerHTML =
     `<button class="btn btn-ghost" onclick="location.reload()">再填一份</button><a class="btn btn-primary" style="flex:1;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center" href="https://www.allfreedom.info/" target="_blank" rel="noopener">前往官網</a>`;
