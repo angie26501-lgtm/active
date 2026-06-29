@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>50+ 人生下半場 安排檢視 &amp; 諮詢單</title>
+<title>人生下半場 該安排的事 · 分類檢視</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -58,13 +59,19 @@
   .chip input:checked+span{background:var(--ink);border-color:var(--ink);color:#fff}
   .chip.gold input:checked+span{background:var(--gold);border-color:var(--gold);color:#fff}
   .chip input:focus-visible+span{box-shadow:0 0 0 4px rgba(194,144,43,.45)}
-  .check{display:flex;gap:14px;align-items:flex-start;padding:15px 16px;border:2px solid var(--line);
-    border-radius:var(--r);background:#FCFBF8;margin:11px 0;cursor:pointer;min-height:56px}
-  .check input{width:24px;height:24px;margin-top:2px;accent-color:var(--ink);flex:0 0 auto;cursor:pointer}
-  .check:has(input:checked){border-color:var(--ink);background:#fff}
-  .t .name{font-size:1.1rem;font-weight:500}
-  .t small{display:block;color:var(--muted);font-size:.9rem;margin-top:2px}
-  /* pillar card */
+  /* 分類磁磚 */
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+  @media(max-width:520px){.tiles{grid-template-columns:1fr}}
+  .tile{position:relative}
+  .tile input{position:absolute;inset:0;opacity:0;cursor:pointer;margin:0}
+  .tile .box{height:100%;border:2px solid var(--line);border-radius:var(--r);padding:18px 16px;background:#FCFBF8;cursor:pointer;transition:.12s}
+  .tile .box .tt{font-family:"Noto Serif TC",serif;font-weight:700;color:var(--ink);font-size:1.16rem}
+  .tile .box .ts{color:var(--muted);font-size:.95rem;margin-top:7px;line-height:1.6}
+  .tile input:checked+.box{border-color:var(--gold);background:#FFFCF4;box-shadow:0 0 0 3px rgba(194,144,43,.25)}
+  .tile input:checked+.box .tt::after{content:"  ✓ 已選";color:var(--gold);font-size:.9rem}
+  .tile input:focus-visible+.box{box-shadow:0 0 0 4px rgba(21,49,91,.18)}
+  .selall{margin-top:14px;text-align:right}
+  .linkbtn{background:none;border:none;color:var(--ink);font-weight:700;font-size:.98rem;cursor:pointer;text-decoration:underline}
   .pillar{border:2px solid var(--line);border-radius:var(--r);padding:18px;margin:14px 0;background:#FCFBF8}
   .pillar .pt{font-family:"Noto Serif TC",serif;color:var(--ink);font-size:1.2rem;font-weight:700}
   .pillar .ps{color:var(--muted);font-size:.95rem;margin:6px 0 13px;line-height:1.65}
@@ -82,7 +89,7 @@
   .hidden{display:none!important}
   .goalcard{background:linear-gradient(135deg,var(--ink),#244e82);color:#fff;border-radius:18px;padding:22px;margin-bottom:18px}
   .goalcard .lbl{font-size:.9rem;opacity:.85}
-  .goalcard .big{font-size:1.2rem;font-weight:700;margin-top:6px;line-height:1.6}
+  .goalcard .big{font-size:1.15rem;font-weight:700;margin-top:8px;line-height:1.7}
   .helpbox{background:#FFFCF4;border:2px solid var(--gold);border-radius:var(--r);padding:18px;margin:16px 0}
   .helpbox h3{margin:0 0 10px;color:var(--ink);font-family:"Noto Serif TC",serif;font-size:1.2rem}
   .helpitem{padding:12px 0;border-top:1px solid var(--gold-soft)}
@@ -115,13 +122,13 @@
 <div class="wrap">
   <header>
     <div class="eyebrow">50+ 人生下半場 · 事先規劃，安心前行</div>
-    <h1>人生下半場　安排檢視 &amp; 諮詢單</h1>
-    <p class="sub">趁現在身體還好，花幾分鐘看看自己「該安排的」準備到哪了。大部分用「點選」就好，不太需要打字。不確定的，選「還沒、想了解」就可以。</p>
+    <h1>人生下半場　該安排的事</h1>
+    <p class="sub">先看看下面幾大類，<b>點選您在意或想了解的</b>就好。不用每項都填，選您關心的，我們再幫您一一安排。</p>
   </header>
 
   <div class="progress">
     <div class="bar"><i id="barFill"></i></div>
-    <div class="steplabel"><span id="stepName">您的目標</span><span>第 <b id="stepCur">1</b> / <span id="stepTot">6</span> 步</span></div>
+    <div class="steplabel"><span id="stepName">基本資料</span><span>第 <b id="stepCur">1</b> / <span id="stepTot">5</span> 步</span></div>
   </div>
 
   <div class="tools">
@@ -132,25 +139,40 @@
 
   <form id="form" onsubmit="return false">
 
-  <!-- STEP 1 目標 + 基本 -->
-  <section class="card step" data-name="您的目標">
+  <!-- STEP 1 基本 -->
+  <section class="card step" data-name="基本資料">
     <div class="stepnum">第 1 步</div>
-    <h2>下半場，您最想為自己和家人安排好什麼？</h2>
-    <p class="lead">先說出您的目標，我們會把整份檢視都對準它。可以複選。</p>
-    <div class="field"><div id="goalList"></div></div>
+    <h2>先認識您一下</h2>
+    <p class="lead">只要幾個基本資訊，方便我們後續聯絡。</p>
     <div class="field"><span class="q">怎麼稱呼您？</span><input type="text" name="填表人" placeholder="例：陳先生、林姊"></div>
-    <div class="field"><span class="q">您目前的年齡大約是？</span>
-      <div class="chips" id="ageList"></div></div>
+    <div class="field"><span class="q">您目前的年齡大約是？</span><div class="chips" id="ageList"></div></div>
     <div class="field"><span class="q">方便聯絡您的電話</span><input type="tel" name="電話" placeholder="手機或市話"></div>
-    <div class="field"><span class="q">哪個時段方便接電話？<span style="color:var(--muted);font-weight:400">（可複選）</span></span>
-      <div class="chips" id="timeList"></div></div>
+    <div class="field"><span class="q">哪個時段方便接電話？<span style="color:var(--muted);font-weight:400">（可複選）</span></span><div class="chips" id="timeList"></div></div>
   </section>
 
-  <!-- STEP 2 家庭與想照顧的人 -->
-  <section class="card step hidden" data-name="家庭與想照顧的人">
+  <!-- STEP 2 分類選擇（核心） -->
+  <section class="card step hidden" data-name="您在意的事">
     <div class="stepnum">第 2 步</div>
-    <h2>家裡有哪些人，是您想照顧好的？</h2>
-    <p class="lead">這會影響「遺囑、信託、監護」要怎麼幫您安排。</p>
+    <h2>哪些是您「在意或想了解」的？</h2>
+    <p class="lead">這些是人生下半場最常需要安排的事。<b>點一下卡片就是選取</b>，可以複選，也可以全選。</p>
+    <div class="tiles" id="catTiles"></div>
+    <div class="selall"><button type="button" class="linkbtn" onclick="toggleAll()">全選 / 取消全選</button></div>
+    <div id="catNote"></div>
+  </section>
+
+  <!-- STEP 3 選取項目的狀態 -->
+  <section class="card step hidden" data-name="目前進度">
+    <div class="stepnum">第 3 步</div>
+    <h2>您選的這幾項，準備到哪了？</h2>
+    <p class="lead">每一項點一下目前狀態就好，幫我們知道從哪裡幫您開始。</p>
+    <div id="statusList"></div>
+  </section>
+
+  <!-- STEP 4 背景 -->
+  <section class="card step hidden" data-name="補充背景">
+    <div class="stepnum">第 4 步</div>
+    <h2>再補充一點背景</h2>
+    <p class="lead">這幫我們把建議講得更貼近您的狀況。不確定就選「不確定」。</p>
     <div class="field"><span class="q">您目前的婚姻狀況？</span>
       <div class="chips" data-radio="婚姻">
         <label class="chip"><input type="radio" name="婚姻" value="已婚"><span>已婚</span></label>
@@ -163,59 +185,31 @@
         <label class="chip"><input type="radio" name="子女" value="有"><span>有</span></label>
         <label class="chip"><input type="radio" name="子女" value="沒有"><span>沒有</span></label>
       </div></div>
-    <div class="field hidden" id="childN"><span class="q">幾位子女？</span>
-      <div class="chips" data-radio="子女人數">
-        <label class="chip"><input type="radio" name="子女人數" value="1位"><span>1 位</span></label>
-        <label class="chip"><input type="radio" name="子女人數" value="2位"><span>2 位</span></label>
-        <label class="chip"><input type="radio" name="子女人數" value="3位"><span>3 位</span></label>
-        <label class="chip"><input type="radio" name="子女人數" value="4位以上"><span>4 位以上</span></label>
-      </div></div>
     <div class="field"><span class="q">有沒有「需要您長期照顧」的家人？</span>
-      <span class="qhint">例如未成年子女、身心障礙的孩子或家人、年邁需扶養的長輩。<span class="ex">這種情況特別適合用信託安排。</span></span>
+      <span class="qhint">例如未成年子女、身心障礙家人、需扶養的長輩。</span>
       <div class="chips col" data-radio="特殊照顧">
         <label class="chip gold"><input type="radio" name="特殊照顧" value="有，未成年子女"><span>有，未成年子女</span></label>
         <label class="chip gold"><input type="radio" name="特殊照顧" value="有，身心障礙家人"><span>有，身心障礙的家人</span></label>
         <label class="chip gold"><input type="radio" name="特殊照顧" value="有，需扶養長輩"><span>有，需扶養的長輩</span></label>
         <label class="chip gold"><input type="radio" name="特殊照顧" value="沒有"><span>目前沒有</span></label>
       </div></div>
-  </section>
-
-  <!-- STEP 3 資產輪廓 -->
-  <section class="card step hidden" data-name="資產輪廓">
-    <div class="stepnum">第 3 步</div>
-    <h2>大概有哪些資產？</h2>
-    <p class="lead">不用算很準，<b>選一個大概範圍</b>就好。這幫我們判斷是否需要預留稅源。不知道就選「不確定」。</p>
-    <div id="assetList"></div>
-  </section>
-
-  <!-- STEP 4 五大面向自評 -->
-  <section class="card step hidden" data-name="五大面向">
-    <div class="stepnum">第 4 步</div>
-    <h2>這五件事，您準備到哪了？</h2>
-    <p class="lead">這是人生下半場最該先安排的五件事。每一項點一下目前的狀態就好。</p>
-    <div id="pillarList"></div>
-    <div id="readyNote"></div>
-  </section>
-
-  <!-- STEP 5 優先與擔心 -->
-  <section class="card step hidden" data-name="優先處理">
-    <div class="stepnum">第 5 步</div>
-    <h2>最後幾題</h2>
-    <p class="lead">幫我們知道從哪裡開始最對您的心。</p>
-    <div class="field"><span class="q">這五件事裡，您最想「先處理」哪一項？</span>
-      <div class="chips col" id="priorityList"></div></div>
-    <div class="field"><span class="q">還想多了解哪些？<span style="color:var(--muted);font-weight:400">（可複選）</span></span>
-      <div id="interestList"></div></div>
-    <div class="field"><span class="q">有沒有什麼特別擔心、或想先說的？<span style="color:var(--muted);font-weight:400">（選填）</span></span>
-      <span class="qhint">用您自己的話寫一句就好。</span>
+    <div class="field"><span class="q">資產規模大約落在？<span style="color:var(--muted);font-weight:400">（選一個範圍，幫我們判斷稅務）</span></span>
+      <div class="chips col" data-radio="資產規模">
+        <label class="chip"><input type="radio" name="資產規模" value="2000萬以下"><span>2000 萬以下</span></label>
+        <label class="chip"><input type="radio" name="資產規模" value="2000萬～5000萬"><span>2000 萬 ～ 5000 萬</span></label>
+        <label class="chip"><input type="radio" name="資產規模" value="5000萬～1億"><span>5000 萬 ～ 1 億</span></label>
+        <label class="chip"><input type="radio" name="資產規模" value="1億以上"><span>1 億以上</span></label>
+        <label class="chip"><input type="radio" name="資產規模" value="不確定"><span>不確定</span></label>
+      </div></div>
+    <div class="field"><span class="q">有沒有特別擔心、或想先說的？<span style="color:var(--muted);font-weight:400">（選填）</span></span>
       <input type="text" name="擔心" placeholder="例：怕孩子分產失和、怕自己失能沒人作主"></div>
   </section>
 
-  <!-- STEP 6 完成 -->
+  <!-- STEP 5 完成 -->
   <section class="card step hidden" data-name="完成">
     <div class="stepnum">完成</div>
     <h2>好了，謝謝您！</h2>
-    <p class="lead">以下是您的安排檢視，以及我們可以協助的部分。傳給我們，碰面就能直接幫您規劃。</p>
+    <p class="lead">這是您的安排檢視，以及我們可以協助的部分。傳給我們，碰面就能直接幫您規劃。</p>
     <div id="goalEcho"></div>
     <div id="readySummary"></div>
     <div id="helpBox"></div>
@@ -252,71 +246,65 @@
 /* ↓↓↓ 你們的 LINE@ 官方帳號連結 ↓↓↓ */
 const LINE_OA_URL="https://lin.ee/nO32pxv";
 
-const GOALS=[
-  "萬一無法自理，有信任的人能依我的意願做決定",
-  "萬一生命末期，醫療照我的意願走",
-  "財產照我的心意，傳給我想給的人",
-  "不讓家人為了繳稅手忙腳亂、被迫賣房",
-  "確保我想照顧的人（配偶／孩子／長輩）被照顧到",
-  "趁身體還好，把該安排的一次理清楚"
-];
 const AGES=["50–54 歲","55–59 歲","60–64 歲","65 歲以上"];
 const TIMES=["平日上午","平日下午","平日晚上","週末"];
-const ASSETS=[
-  {n:"不動產",label:"不動產（房子、土地）",bands:["沒有","500萬以下","500～2000萬","2000～5000萬","5000萬～1億","1億以上","不確定"]},
-  {n:"股票基金",label:"股票、基金",bands:["沒有","500萬以下","500～2000萬","2000萬以上","不確定"]},
-  {n:"存款現金",label:"銀行存款、現金",bands:["沒有","500萬以下","500～2000萬","2000萬以上","不確定"]},
-  {n:"保險",label:"保險",bands:["沒有","有","不確定"]},
-  {n:"公司股權",label:"公司股權",bands:["沒有","有","不確定"]},
-];
-const PILLARS=[
-  {n:"意定監護",title:"意定監護",sub:"萬一哪天無法自理，由我「現在就先指定」信任的人替我做決定，而不是等法院安排。",
+const CATS=[
+  {id:"guard",t:"意定監護",situ:"萬一有天無法自理，先指定信任的人替我做決定，而不是等法院安排。",
    help:"說明意定監護契約的辦理流程，協助媒合公證人與律師。"},
-  {n:"預立醫療",title:"預立醫療決定",sub:"生命末期或重病時，要不要急救、插管，照我事先的意願走（病人自主權利法）。",
-   help:"說明預立醫療照護諮商（ACP）與決定書（AD）的流程，協助預約合作醫療機構。"},
-  {n:"預立遺囑",title:"預立遺囑",sub:"財產分配照我的心意，並避免日後家人為了分產而失和。",
+  {id:"med",t:"預立醫療決定",situ:"生命末期或重病時，要不要急救、插管，照我事先的意願走。",
+   help:"說明預立醫療照護諮商（ACP）與決定書（AD）流程，協助預約合作醫療機構。"},
+  {id:"will",t:"預立遺囑",situ:"財產照我的心意分給對的人，避免家人日後為了分產失和。",
    help:"先幫您盤點財產、媒合律師擬立合法遺囑，並提醒「特留分」等重點。"},
-  {n:"預留稅源",title:"預留稅源",sub:"先準備好繳遺產稅的現金，免得家人為了繳稅急著賣房、賣股。",
+  {id:"tax",t:"預留稅源",situ:"先備好繳遺產稅的現金，不必讓家人急著賣房、賣股。",
    help:"幫您試算遺產稅，規劃保險、現金等稅源安排。"},
-  {n:"遺囑信託",title:"遺囑信託",sub:"想長期照顧的對象（年幼子女、身心障礙家人），用信託按計畫照顧，不怕一次給太多。",
+  {id:"trust",t:"遺囑信託",situ:"想長期照顧的人（幼兒、身障家人），用信託按計畫照顧，不怕一次給太多。",
    help:"依您想照顧的對象，協助設計信託架構並媒合信託與專業執行。"},
+  {id:"gift",t:"生前贈與・節稅",situ:"趁生前先規劃，逐年移轉、合法節稅，把稅負降到最低。",
+   help:"試算贈與稅，規劃逐年移轉與保險等節稅工具。"},
 ];
-const PILL_OPTS=["已安排好","做了一部分","還沒，想了解","用不到"];
-const INTERESTS=["生前贈與、節稅","保險金信託","公司接班／股權傳承","長期照顧／保險","友善的安養與居住安排"];
+const STATUS_OPTS=["已安排好","做了一部分","還沒，想了解"];
 
 const el=id=>document.getElementById(id);
 const chipR=(n,v,g)=>`<label class="chip${g?' gold':''}"><input type="radio" name="${n}" value="${v}"><span>${v}</span></label>`;
 const chipC=(n,v)=>`<label class="chip"><input type="checkbox" name="${n}" value="${v}"><span>${v}</span></label>`;
 
-el("goalList").innerHTML=`<div class="chips col">${GOALS.map(g=>chipC("goal",g)).join("")}</div>`;
 el("ageList").innerHTML=AGES.map(a=>chipR("年齡",a)).join("");
 el("timeList").innerHTML=TIMES.map(t=>chipC("聯絡時段",t)).join("");
-el("assetList").innerHTML=ASSETS.map(a=>`<div class="field"><span class="q">${a.label}</span><div class="chips">${a.bands.map(b=>chipR("資產_"+a.n,b)).join("")}</div></div>`).join("");
-el("pillarList").innerHTML=PILLARS.map(p=>`
-  <div class="pillar">
-    <div class="pt">${p.title}</div>
-    <div class="ps">${p.sub}</div>
-    <div class="chips">${PILL_OPTS.map(o=>chipR("面向_"+p.n,o,o!=="用不到")).join("")}</div>
-  </div>`).join("");
-el("priorityList").innerHTML=PILLARS.map(p=>chipR("優先",p.title,true)).join("");
-el("interestList").innerHTML=INTERESTS.map(i=>`<label class="check"><input type="checkbox" name="想了解" value="${i}"><span class="t"><span class="name">${i}</span></span></label>`).join("");
-
-document.addEventListener("change",e=>{
-  if(e.target.name==="子女")el("childN").classList.toggle("hidden",e.target.value!=="有");
-  updateLogic();
-});
+el("catTiles").innerHTML=CATS.map(c=>`
+  <label class="tile"><input type="checkbox" name="cat" value="${c.id}">
+    <div class="box"><div class="tt">${c.t}</div><div class="ts">${c.situ}</div></div>
+  </label>`).join("");
 
 function val(n){const c=document.querySelector(`[name="${n}"]:checked`);if(c)return c.value;const i=document.querySelector(`[name="${n}"]`);return i&&i.type==="text"?i.value:"";}
 function checkedAll(n){return[...document.querySelectorAll(`[name="${n}"]:checked`)].map(e=>e.value);}
+function selectedCats(){return checkedAll("cat");}
 
-function updateLogic(){
-  const rn=el("readyNote");if(!rn)return;
-  const todo=PILLARS.filter(p=>{const v=val("面向_"+p.n);return v==="還沒，想了解"||v==="做了一部分";});
-  const done=PILLARS.filter(p=>val("面向_"+p.n)==="已安排好").length;
-  if(done||todo.length){
-    rn.innerHTML=`<div class="note calm">您已安排好 <b>${done}</b> 項${todo.length?`，還有 <b>${todo.length}</b> 項可以幫您補上`:`，很完整`}。完成後我們會把「可以協助的部分」整理給您。</div>`;
-  }else rn.innerHTML="";
+function toggleAll(){
+  const boxes=[...document.querySelectorAll('input[name="cat"]')];
+  const allOn=boxes.every(b=>b.checked);
+  boxes.forEach(b=>b.checked=!allOn);
+  buildStatusRows();updateCatNote();
 }
+function updateCatNote(){
+  const n=selectedCats().length;
+  el("catNote").innerHTML=n?`<div class="note calm">已選 <b>${n}</b> 項，待會我們會針對這幾項幫您看現況、並整理「可以協助的部分」。</div>`
+    :`<div class="note">先點選您在意的卡片（至少 1 項）。</div>`;
+}
+function buildStatusRows(){
+  const sel=selectedCats();
+  const snap={};
+  document.querySelectorAll('[name^="狀態_"]:checked').forEach(i=>snap[i.name]=i.value);
+  el("statusList").innerHTML=sel.length?sel.map(id=>{
+    const c=CATS.find(x=>x.id===id);
+    return `<div class="pillar"><div class="pt">${c.t}</div><div class="ps">${c.situ}</div>
+      <div class="chips">${STATUS_OPTS.map(o=>chipR("狀態_"+id,o,true)).join("")}</div></div>`;
+  }).join(""):`<div class="note">您還沒選任何項目，請回上一步點選。</div>`;
+  Object.entries(snap).forEach(([nm,v])=>{const r=document.querySelector(`[name="${nm}"][value="${v}"]`);if(r)r.checked=true;});
+}
+
+document.addEventListener("change",e=>{
+  if(e.target.name==="cat"){buildStatusRows();updateCatNote();}
+});
 
 /* 步驟 */
 const steps=[...document.querySelectorAll(".step")],total=steps.length;let cur=0;
@@ -330,56 +318,47 @@ function render(){
   el("nextBtn").textContent=(cur===total-2)?"完成，看我的檢視結果":"下一步";
   window.scrollTo({top:0,behavior:"smooth"});
 }
-function go(d){if(d>0)updateLogic();cur=Math.max(0,Math.min(total-1,cur+d));if(cur===total-1)buildSummary();render();}
+function go(d){
+  if(d>0&&cur===1&&selectedCats().length===0){updateCatNote();return;}
+  if(d>0&&cur===1)buildStatusRows();
+  cur=Math.max(0,Math.min(total-1,cur+d));
+  if(cur===1)updateCatNote();
+  if(cur===total-1)buildSummary();
+  render();
+}
 
 function buildSummary(){
   const g=n=>val(n)||"—";
-  const goals=checkedAll("goal"),interests=checkedAll("想了解");
+  const sel=selectedCats().map(id=>CATS.find(c=>c.id===id));
   const today=new Date().toLocaleDateString("zh-TW");
 
-  el("goalEcho").innerHTML=goals.length?`<div class="goalcard"><div class="lbl">您最想達成的是</div><div class="big">${goals.join("、")}</div><div style="margin-top:10px;opacity:.9;font-size:.95rem">碰面時我們會優先對準這些目標。</div></div>`:"";
+  el("goalEcho").innerHTML=sel.length?`<div class="goalcard"><div class="lbl">您在意、想安排的是</div><div class="big">${sel.map(c=>c.t).join("、")}</div><div style="margin-top:10px;opacity:.9;font-size:.95rem">碰面時我們會優先對準這幾項。</div></div>`:"";
 
-  /* 準備度 pill */
-  let pills=PILLARS.map(p=>{const v=val("面向_"+p.n);const cls=v==="已安排好"?"pill":"pill gold";return v&&v!=="用不到"?`<span class="${cls}">${p.title}：${v}</span>`:"";}).join("");
+  let pills=sel.map(c=>{const v=val("狀態_"+c.id);const cls=v==="已安排好"?"pill":"pill gold";return v?`<span class="${cls}">${c.t}：${v}</span>`:`<span class="pill gold">${c.t}</span>`;}).join("");
   el("readySummary").innerHTML=pills?`<div style="margin-bottom:6px">${pills}</div>`:"";
 
-  /* 我們可以協助的部分 */
-  const helps=PILLARS.filter(p=>{const v=val("面向_"+p.n);return v==="還沒，想了解"||v==="做了一部分";});
-  if(helps.length){
-    el("helpBox").innerHTML=`<div class="helpbox"><h3>我們可以協助您的部分</h3>${helps.map(p=>`<div class="helpitem"><div class="h">${p.title}</div><div class="d">${p.help}</div></div>`).join("")}</div>`;
-  }else el("helpBox").innerHTML="";
+  const helps=sel.filter(c=>val("狀態_"+c.id)!=="已安排好");
+  el("helpBox").innerHTML=helps.length?`<div class="helpbox"><h3>我們可以協助您的部分</h3>${helps.map(c=>`<div class="helpitem"><div class="h">${c.t}</div><div class="d">${c.help}</div></div>`).join("")}</div>`:"";
 
-  const assetTxt=ASSETS.map(a=>`${a.label}：${val("資產_"+a.n)||"—"}`).join("\n");
-  const pillarTxt=PILLARS.map(p=>`${p.title}：${val("面向_"+p.n)||"—"}`).join("\n");
+  const statusTxt=sel.map(c=>`${c.t}：${val("狀態_"+c.id)||"想了解"}`).join("\n")||"—";
 
   const S=
-`【50+ 人生下半場 安排檢視 & 諮詢單｜摘要】 填表日：${today}
-
-■ 想達成的目標
-${goals.length?goals.map(x=>"・"+x).join("\n"):"—"}
+`【人生下半場 該安排的事 · 分類檢視｜摘要】 填表日：${today}
 
 ■ 基本資料
 稱呼：${g("填表人")}　年齡：${g("年齡")}
 電話：${g("電話")}　方便時段：${checkedAll("聯絡時段").join("、")||"—"}
 
-■ 家庭與想照顧的人
-婚姻：${g("婚姻")}　子女：${g("子女")} ${g("子女人數")}
-需長期照顧的家人：${g("特殊照顧")}
+■ 在意 / 想安排的項目
+${sel.length?sel.map(c=>"・"+c.t).join("\n"):"—"}
 
-■ 資產輪廓（概估範圍）
-${assetTxt}
+■ 各項目前狀態
+${statusTxt}
 
-■ 五大面向 目前狀態
-${pillarTxt}
-
-■ 最想先處理
-${g("優先")}
-
-■ 想多了解
-${interests.length?interests.join("、"):"—"}
-
-■ 特別擔心 / 補充
-${g("擔心")}`;
+■ 補充背景
+婚姻：${g("婚姻")}　子女：${g("子女")}
+需長期照顧的家人：${g("特殊照顧")}　資產規模：${g("資產規模")}
+特別擔心 / 補充：${g("擔心")}`;
   el("summaryBox").textContent=S;
 }
 
@@ -396,7 +375,6 @@ function sendToLine(){copySummary(()=>setTimeout(()=>window.open(LINE_OA_URL,"_b
 /* 本機備份：儲存 / 還原 */
 function collectState(){
   const d={fields:{},checks:{}};
-  if(typeof children!=="undefined")d.children=children;
   document.querySelectorAll("input[name]").forEach(i=>{
     if(i.type==="radio"){if(i.checked)d.fields[i.name]=i.value;}
     else if(i.type==="checkbox"){(d.checks[i.name]=d.checks[i.name]||[]);if(i.checked)d.checks[i.name].push(i.value);}
@@ -417,16 +395,20 @@ function restoreBackup(inp){
   r.onload=()=>{try{applyState(JSON.parse(r.result));toastMsg("已還原您上次的填寫");}catch(e){toastMsg("讀不到檔案，請確認是備份檔");}inp.value="";};
   r.readAsText(f);
 }
-function applyState(d){
-  document.querySelectorAll("input[name]").forEach(i=>{if(i.type==="radio"||i.type==="checkbox")i.checked=false;else i.value="";});
+function applyValues(d){
   Object.entries(d.fields||{}).forEach(([n,v])=>{
     const rs=document.querySelectorAll('input[name="'+n+'"][type=radio]');
     if(rs.length)rs.forEach(r=>{if(r.value===v)r.checked=true;});
     else{const t=document.querySelector('input[name="'+n+'"]');if(t)t.value=v;}
   });
   Object.entries(d.checks||{}).forEach(([n,arr])=>{document.querySelectorAll('input[name="'+n+'"][type=checkbox]').forEach(c=>{if(arr.includes(c.value))c.checked=true;});});
-  document.querySelectorAll("input[name]:checked").forEach(i=>i.dispatchEvent(new Event("change",{bubbles:true})));
-  if(typeof updateLogic==="function")updateLogic();
+}
+function applyState(d){
+  document.querySelectorAll("input[name]").forEach(i=>{if(i.type==="radio"||i.type==="checkbox")i.checked=false;else i.value="";});
+  applyValues(d);
+  buildStatusRows();
+  applyValues(d);
+  updateCatNote();
 }
 render();
 </script>
