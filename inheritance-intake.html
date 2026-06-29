@@ -36,6 +36,11 @@
   .steplabel b{color:var(--ink);font-size:1rem}
 
   /* Card */
+  .tools{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end;margin-top:12px}
+  .tool{display:inline-flex;align-items:center;background:#fff;border:1.5px solid var(--line);
+    color:var(--ink);font-size:.92rem;font-weight:600;padding:9px 15px;border-radius:10px;cursor:pointer;min-height:40px}
+  .tool:hover{background:#FBFAF6}
+  .tool input[type=file]{display:none}
   .card{background:var(--card);border:1px solid var(--line);border-radius:18px;
         box-shadow:var(--shadow);padding:28px 22px;margin-top:18px}
   .stepnum{font-family:"Noto Serif TC",serif;color:var(--gold);font-weight:700;font-size:.95rem;letter-spacing:.08em}
@@ -138,7 +143,7 @@
   footer{text-align:center;color:var(--muted);font-size:.9rem;margin-top:28px}
 
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
-  @media print{body{background:#fff}.nav,.progress,.btn-ghost,.sub{display:none}.card{box-shadow:none;border:none}}
+  @media print{body{background:#fff}.nav,.progress,.btn-ghost,.sub,.tools{display:none}.card{box-shadow:none;border:none}}
   @media(max-width:480px){.chips:not(.col) .chip{flex:1 1 100%}}
 </style>
 </head>
@@ -154,6 +159,12 @@
   <div class="progress">
     <div class="bar"><i id="barFill"></i></div>
     <div class="steplabel"><span id="stepName">您的目標</span><span>第 <b id="stepCur">1</b> / <span id="stepTot">8</span> 步</span></div>
+  </div>
+
+  <div class="tools">
+    <span style="margin-right:auto;color:var(--muted);font-size:.85rem;align-self:center">填到一半可先「儲存本機」，下次「還原備份」接著填</span>
+    <button type="button" class="tool" onclick="saveBackup()">💾 儲存本機</button>
+    <label class="tool">↻ 還原備份<input type="file" accept="application/json" onchange="restoreBackup(this)"></label>
   </div>
 
   <form id="form" onsubmit="return false">
@@ -408,8 +419,9 @@
     <button class="btn-line" type="button" onclick="sendToLine()">複製並貼到 LINE@ 官方帳號</button>
     <div class="nav">
       <button class="btn-ghost" type="button" onclick="copySummary()">只複製內容</button>
-      <button class="btn-ghost" type="button" onclick="window.print()">列印 / 存 PDF</button>
+      <button class="btn-ghost" type="button" onclick="window.print()">列印 / 存 PDF（電腦使用）</button>
     </div>
+    <p style="text-align:center;color:var(--muted);font-size:.88rem;margin:10px 0 0">※「列印 / 存 PDF」請用<b>電腦</b>操作；用手機的話，請直接按上方綠色 <b>LINE@</b> 按鈕傳給我們。</p>
     <div class="disclaimer">本問卷僅供資料盤點與初步了解；所列繼承順位、應繼分、稅務與時程為<b>一般性參考，不構成法律意見</b>。是否提告、如何辦理登記等個案問題，仍應由具資格的律師或地政、稅務專業人員依您的實際情況認定。</div>
   </section>
 
@@ -677,17 +689,51 @@ ${pains.length?pains.map(p=>"・"+p).join("\n"):"（未勾選）"}
     }else pn.innerHTML="";
   }
 }
-function copySummary(cb){
+function toastMsg(m){const e=el("toast");e.textContent=m;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),2200);}
+function copySummary(cb,msg){
   const t=el("treeBox").textContent+"\n\n"+el("summaryBox").textContent;
-  const done=()=>{const e=el("toast");e.classList.add("show");setTimeout(()=>e.classList.remove("show"),2200);if(cb)cb();};
+  const done=()=>{toastMsg(msg||"已複製，可直接貼上傳給我們");if(cb)cb();};
   navigator.clipboard?.writeText(t).then(done).catch(()=>{
     const ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();done();
   });
 }
-function sendToLine(){
-  const url=LINE_OA_URL;
-  const e=el("toast");e.textContent="已複製！請在 LINE 對話框長按貼上、送出";
-  copySummary(()=>{ setTimeout(()=>window.open(url,"_blank"),600); });
+function sendToLine(){copySummary(()=>setTimeout(()=>window.open(LINE_OA_URL,"_blank"),600),"已複製！請在 LINE 對話框長按貼上、送出");}
+
+/* 本機備份：儲存 / 還原 */
+function collectState(){
+  const d={fields:{},checks:{}};
+  if(typeof children!=="undefined")d.children=children;
+  document.querySelectorAll("input[name]").forEach(i=>{
+    if(i.type==="radio"){if(i.checked)d.fields[i.name]=i.value;}
+    else if(i.type==="checkbox"){(d.checks[i.name]=d.checks[i.name]||[]);if(i.checked)d.checks[i.name].push(i.value);}
+    else if(i.value)d.fields[i.name]=i.value;
+  });
+  d._saved=new Date().toISOString();return d;
+}
+function saveBackup(){
+  const blob=new Blob([JSON.stringify(collectState())],{type:"application/json"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);
+  a.download="問卷備份_"+new Date().toISOString().slice(0,10)+".json";
+  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+  toastMsg("已存成備份檔到您的裝置");
+}
+function restoreBackup(inp){
+  const f=inp.files&&inp.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{try{applyState(JSON.parse(r.result));toastMsg("已還原您上次的填寫");}catch(e){toastMsg("讀不到檔案，請確認是備份檔");}inp.value="";};
+  r.readAsText(f);
+}
+function applyState(d){
+  document.querySelectorAll("input[name]").forEach(i=>{if(i.type==="radio"||i.type==="checkbox")i.checked=false;else i.value="";});
+  if(d.children&&typeof children!=="undefined"){children.length=0;d.children.forEach(c=>children.push(c));if(typeof renderChildren==="function")renderChildren();}
+  Object.entries(d.fields||{}).forEach(([n,v])=>{
+    const rs=document.querySelectorAll('input[name="'+n+'"][type=radio]');
+    if(rs.length)rs.forEach(r=>{if(r.value===v)r.checked=true;});
+    else{const t=document.querySelector('input[name="'+n+'"]');if(t)t.value=v;}
+  });
+  Object.entries(d.checks||{}).forEach(([n,arr])=>{document.querySelectorAll('input[name="'+n+'"][type=checkbox]').forEach(c=>{if(arr.includes(c.value))c.checked=true;});});
+  document.querySelectorAll("input[name]:checked").forEach(i=>i.dispatchEvent(new Event("change",{bubbles:true})));
+  if(typeof updateLogic==="function")updateLogic();
 }
 render();
 </script>
