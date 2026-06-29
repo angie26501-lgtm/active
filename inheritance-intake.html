@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>繼承事務前置問卷 &amp; 諮詢單</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#15315B; --ink-2:#1E456F; --gold:#C2902B; --gold-soft:#F6EBD2;
+    --paper:#F6F4EE; --card:#FFFFFF; --text:#222A33; --muted:#5E6873;
+    --line:#E3DCCD; --ok:#2F7D4F; --warn:#B4441F;
+    --shadow:0 14px 38px rgba(21,49,91,.12);
+    --r:14px;
+  }
+  *{box-sizing:border-box}
+  html{font-size:18px}                 /* 放大基準字級 */
+  body{margin:0;font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+       background:var(--paper);color:var(--text);line-height:1.8;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:720px;margin:0 auto;padding:24px 18px 90px}
+
+  /* Header */
+  .eyebrow{font-size:.8rem;letter-spacing:.16em;color:var(--gold);font-weight:700}
+  h1{font-family:"Noto Serif TC",serif;font-weight:700;color:var(--ink);
+     font-size:clamp(1.7rem,6vw,2.3rem);margin:.3em 0 .25em;line-height:1.28}
+  .sub{color:var(--muted);font-size:1.02rem;max-width:38ch}
+
+  /* Progress */
+  .progress{margin:22px 0 6px}
+  .bar{height:9px;background:var(--line);border-radius:99px;overflow:hidden}
+  .bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ink),var(--gold));transition:width .35s}
+  .steplabel{display:flex;justify-content:space-between;font-size:.92rem;color:var(--muted);margin-top:9px}
+  .steplabel b{color:var(--ink);font-size:1rem}
+
+  /* Card */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;
+        box-shadow:var(--shadow);padding:28px 22px;margin-top:18px}
+  .stepnum{font-family:"Noto Serif TC",serif;color:var(--gold);font-weight:700;font-size:.95rem;letter-spacing:.08em}
+  .card h2{font-family:"Noto Serif TC",serif;color:var(--ink);font-size:1.5rem;margin:.25em 0 .15em;line-height:1.35}
+  .lead{color:var(--muted);font-size:1rem;margin:0 0 20px}
+
+  /* Field */
+  .field{margin:22px 0}
+  .q{display:block;font-weight:700;color:var(--text);font-size:1.18rem;margin-bottom:6px}
+  .qhint{display:block;color:var(--muted);font-size:.95rem;font-weight:400;margin-bottom:12px;line-height:1.6}
+  .qhint .ex{color:var(--ink)}
+
+  input[type=text],input[type=tel],input[type=date]{
+    width:100%;padding:15px 16px;border:2px solid var(--line);border-radius:var(--r);
+    font-family:inherit;font-size:1.12rem;color:var(--text);background:#FCFBF8}
+  input:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 4px rgba(21,49,91,.14);background:#fff}
+
+  /* big tappable chips */
+  .chips{display:flex;flex-wrap:wrap;gap:11px}
+  .chips.col{flex-direction:column}
+  .chip{position:relative;flex:0 0 auto}
+  .chips.col .chip{flex:1 1 auto}
+  .chip input{position:absolute;inset:0;opacity:0;cursor:pointer;margin:0}
+  .chip span{display:flex;align-items:center;justify-content:center;text-align:center;
+    min-height:54px;padding:12px 20px;border:2px solid var(--line);border-radius:var(--r);
+    background:#FCFBF8;color:var(--text);font-size:1.1rem;font-weight:500;cursor:pointer;
+    transition:.12s;user-select:none}
+  .chips.col .chip span{justify-content:flex-start;text-align:left}
+  .chip input:checked+span{background:var(--ink);border-color:var(--ink);color:#fff}
+  .chip.gold input:checked+span{background:var(--gold);border-color:var(--gold);color:#fff}
+  .chip input:focus-visible+span{box-shadow:0 0 0 4px rgba(194,144,43,.45)}
+  .chip span small{display:block;font-weight:400;font-size:.85rem;opacity:.85;margin-top:2px}
+
+  /* checklist */
+  .check{display:flex;gap:14px;align-items:flex-start;padding:15px 16px;border:2px solid var(--line);
+    border-radius:var(--r);background:#FCFBF8;margin:11px 0;cursor:pointer;min-height:56px}
+  .check input{width:24px;height:24px;margin-top:2px;accent-color:var(--ink);flex:0 0 auto;cursor:pointer}
+  .check input:checked~.t .name{color:var(--ink)}
+  .check:has(input:checked){border-color:var(--ink);background:#fff}
+  .t .name{font-size:1.1rem;font-weight:500}
+  .t small{display:block;color:var(--muted);font-size:.9rem;margin-top:2px}
+
+  /* family member rows */
+  .member{border:2px solid var(--line);border-radius:var(--r);padding:16px;margin:12px 0;background:#FCFBF8}
+  .member .top{display:flex;gap:10px;align-items:center;margin-bottom:12px}
+  .member .top input{flex:1}
+  .rm{border:none;background:#F0E9DC;color:var(--ink);font-weight:700;border-radius:10px;
+      padding:0 14px;height:50px;font-size:1.4rem;cursor:pointer;line-height:1}
+  .rm:hover{background:#E6DCC8}
+  .addbtn{width:100%;border:2px dashed var(--gold);background:#FFFCF4;color:var(--ink);
+    font-size:1.1rem;font-weight:700;padding:16px;border-radius:var(--r);cursor:pointer}
+  .addbtn:hover{background:var(--gold-soft)}
+  .sub-q{margin-top:12px}
+  .sub-q .q{font-size:1.04rem;margin-bottom:8px}
+
+  /* notes */
+  .note{margin-top:16px;padding:16px 18px;border-radius:var(--r);font-size:1rem;line-height:1.7;
+        border-left:5px solid var(--gold);background:var(--gold-soft);color:#5a4413}
+  .note b{color:var(--ink)}
+  .note.urgent{background:#FBEDE7;border-left-color:var(--warn);color:#7a2f15}
+  .note.calm{background:#EAF1EC;border-left-color:var(--ok);color:#21503a}
+  .tender{background:#F2F5F9;border-radius:var(--r);padding:14px 16px;color:var(--ink);
+    font-size:.98rem;margin-bottom:16px;border-left:5px solid var(--ink)}
+
+  /* nav */
+  .nav{display:flex;gap:12px;margin-top:30px}
+  button{font-family:inherit;font-weight:700;border:none;border-radius:var(--r);cursor:pointer;transition:.12s}
+  .btn-next{background:var(--ink);color:#fff;flex:1;font-size:1.18rem;padding:18px}
+  .btn-next:hover{background:var(--ink-2)}
+  .btn-back{background:#fff;color:var(--ink);border:2px solid var(--line);font-size:1.05rem;padding:18px 22px}
+  .btn-back:hover{background:#FBFAF6}
+  .btn-ghost{background:#fff;color:var(--ink);border:2px solid var(--line);font-size:1.05rem;padding:16px;flex:1}
+  .btn-ghost:hover{background:#FBFAF6}
+  .hidden{display:none!important}
+
+  /* summary */
+  .goalcard{background:linear-gradient(135deg,var(--ink),#244e82);color:#fff;border-radius:18px;
+    padding:22px;margin-bottom:18px}
+  .goalcard .lbl{font-size:.9rem;opacity:.85;letter-spacing:.05em}
+  .goalcard .big{font-size:1.25rem;font-weight:700;margin-top:6px;line-height:1.6}
+  .tree{white-space:pre-wrap;font-family:"Noto Sans TC",ui-monospace,monospace;font-size:1.02rem;
+    background:#FCFBF8;border:2px solid var(--line);border-radius:var(--r);padding:18px;line-height:1.95}
+  .summary{white-space:pre-wrap;font-size:.98rem;background:#FCFBF8;border:2px solid var(--line);
+    border-radius:var(--r);padding:18px;line-height:1.95;margin-top:16px}
+  .pill{display:inline-block;background:var(--ink);color:#fff;font-size:.92rem;padding:6px 14px;border-radius:99px;margin:0 7px 7px 0}
+  .pill.gold{background:var(--gold)}
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);
+    background:var(--ink);color:#fff;padding:15px 26px;border-radius:99px;font-size:1.05rem;
+    opacity:0;transition:.3s;pointer-events:none;z-index:60;box-shadow:var(--shadow)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .disclaimer{font-size:.9rem;color:var(--muted);background:#fff;border:1px dashed var(--line);
+    border-radius:var(--r);padding:14px 16px;margin-top:18px;line-height:1.7}
+  .lineguide{background:#EAF6EC;border:2px solid #C8E6CD;border-radius:var(--r);padding:16px 18px;margin-top:18px}
+  .lineguide .lt{font-weight:700;color:#1f6b35;font-size:1.08rem;margin-bottom:8px}
+  .lineguide ol{margin:0;padding-left:1.3em;color:#2b5638;font-size:1rem;line-height:1.85}
+  .lineguide ol b{color:#15311b}
+  .btn-line{width:100%;background:#06C755;color:#fff;font-size:1.18rem;padding:18px;
+    border-radius:var(--r);margin-top:12px;box-shadow:0 6px 18px rgba(6,199,85,.3)}
+  .btn-line:hover{background:#05b14c}
+  footer{text-align:center;color:var(--muted);font-size:.9rem;margin-top:28px}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+  @media print{body{background:#fff}.nav,.progress,.btn-ghost,.sub{display:none}.card{box-shadow:none;border:none}}
+  @media(max-width:480px){.chips:not(.col) .chip{flex:1 1 100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">FAMILY LEGACY · 事前準備</div>
+    <h1>繼承事務前置問卷 &amp; 諮詢單</h1>
+    <p class="sub">在碰面前，花幾分鐘把目前的狀況點一點。大部分用「點選」就好，不太需要打字。不確定的，直接選「不確定」沒關係。</p>
+  </header>
+
+  <div class="progress">
+    <div class="bar"><i id="barFill"></i></div>
+    <div class="steplabel"><span id="stepName">您的目標</span><span>第 <b id="stepCur">1</b> / <span id="stepTot">8</span> 步</span></div>
+  </div>
+
+  <form id="form" onsubmit="return false">
+
+  <!-- STEP 1 目標 + 聯絡 -->
+  <section class="card step" data-name="您的目標">
+    <div class="stepnum">第 1 步</div>
+    <h2>這次，您最想得到什麼？</h2>
+    <p class="lead">先告訴我們您的目標，我們會把整個諮詢都對準它。可以複選。</p>
+    <div class="field">
+      <div id="goalList"></div>
+    </div>
+    <div class="field">
+      <span class="q">怎麼稱呼您？</span>
+      <input type="text" name="填表人" placeholder="例：陳太太、王先生">
+    </div>
+    <div class="field">
+      <span class="q">您和過世的人是什麼關係？</span>
+      <div class="chips" id="relList"></div>
+    </div>
+    <div class="field">
+      <span class="q">方便聯絡您的電話</span>
+      <input type="tel" name="電話" placeholder="手機或市話">
+    </div>
+    <div class="field">
+      <span class="q">哪個時段方便接電話？<span style="color:var(--muted);font-weight:400">（可複選）</span></span>
+      <div class="chips" id="timeList"></div>
+    </div>
+  </section>
+
+  <!-- STEP 2 過世者 -->
+  <section class="card step hidden" data-name="過世者資料">
+    <div class="stepnum">第 2 步</div>
+    <h2>關於過世的家人</h2>
+    <p class="lead">只需要幾個基本資訊，幫我們抓對時間與流程。</p>
+    <div class="field">
+      <span class="q">怎麼稱呼過世的人？<span style="color:var(--muted);font-weight:400">（選填）</span></span>
+      <span class="qhint">不想寫全名沒關係，寫稱謂也可以。</span>
+      <input type="text" name="被繼承人" placeholder="例：先夫、父親、陳○○">
+    </div>
+    <div class="field">
+      <span class="q">過世日期是哪一天？</span>
+      <span class="qhint">這很重要：遺產稅原則上要在<span class="ex">過世後 6 個月內</span>申報，我們會幫您看還剩多少時間。</span>
+      <input type="date" name="過世日">
+    </div>
+    <div class="field">
+      <span class="q">遺產稅申報了嗎？</span>
+      <span class="qhint">先確認這件最關鍵的事——報了就不必擔心時間，還沒報我們會幫您看期限。</span>
+      <div class="chips" data-radio="申報">
+        <label class="chip"><input type="radio" name="申報" value="已申報"><span>已經報了</span></label>
+        <label class="chip"><input type="radio" name="申報" value="準備中"><span>準備中</span></label>
+        <label class="chip"><input type="radio" name="申報" value="還沒"><span>還沒</span></label>
+        <label class="chip"><input type="radio" name="申報" value="不確定"><span>不確定</span></label>
+      </div>
+      <div id="deadlineNote"></div>
+    </div>
+  </section>
+
+  <!-- STEP 3 家庭關係（核心：家族樹 / 繼承順位） -->
+  <section class="card step hidden" data-name="家庭關係">
+    <div class="stepnum">第 3 步</div>
+    <h2>過世的人，家裡還有哪些至親？</h2>
+    <p class="lead">這幾題用來判斷「依法誰有權繼承」。一題一題點就好。</p>
+
+    <div class="field">
+      <span class="q">有沒有配偶（先生／太太）？</span>
+      <div class="chips" id="spouseList"></div>
+    </div>
+
+    <div class="field">
+      <span class="q">有沒有子女？</span>
+      <span class="qhint">養子女、已認領的子女也算喔。</span>
+      <div class="chips" data-radio="子女">
+        <label class="chip"><input type="radio" name="子女" value="有"><span>有</span></label>
+        <label class="chip"><input type="radio" name="子女" value="沒有"><span>沒有</span></label>
+      </div>
+    </div>
+
+    <div class="field hidden" id="childBlock">
+      <span class="q">請一位一位加進來</span>
+      <span class="qhint">每位子女點一下狀況就好。<span class="ex">若有子女比父母早過世、但留下孫子女，請務必標記</span>——孫子女可能可以「代位繼承」。</span>
+      <div id="childContainer"></div>
+      <button type="button" class="addbtn" onclick="addChild()">＋ 新增一位子女</button>
+    </div>
+
+    <div class="field" id="parentBlock">
+      <span class="q">過世者的父母還在世嗎？</span>
+      <span class="qhint">沒有子女時，父母會是繼承人，所以這題很關鍵。</span>
+      <div class="chips" data-radio="父母">
+        <label class="chip"><input type="radio" name="父母" value="都在世"><span>都在世</span></label>
+        <label class="chip"><input type="radio" name="父母" value="一位在世"><span>一位在世</span></label>
+        <label class="chip"><input type="radio" name="父母" value="都過世"><span>都過世</span></label>
+      </div>
+    </div>
+
+    <div class="field" id="sibBlock">
+      <span class="q">過世者有沒有兄弟姊妹？</span>
+      <span class="qhint">沒有子女、父母也都過世時，才會輪到兄弟姊妹。</span>
+      <div class="chips" data-radio="兄弟姊妹">
+        <label class="chip"><input type="radio" name="兄弟姊妹" value="有"><span>有</span></label>
+        <label class="chip"><input type="radio" name="兄弟姊妹" value="沒有"><span>沒有</span></label>
+        <label class="chip"><input type="radio" name="兄弟姊妹" value="不確定"><span>不確定</span></label>
+      </div>
+    </div>
+
+    <div class="field" id="gpBlock">
+      <span class="q">祖父母還在世嗎？</span>
+      <span class="qhint">前面的至親都沒有時，才會輪到祖父母。</span>
+      <div class="chips" data-radio="祖父母">
+        <label class="chip"><input type="radio" name="祖父母" value="有在世"><span>有在世</span></label>
+        <label class="chip"><input type="radio" name="祖父母" value="都過世"><span>都過世</span></label>
+        <label class="chip"><input type="radio" name="祖父母" value="不確定"><span>不確定</span></label>
+      </div>
+    </div>
+
+    <div id="heirNote"></div>
+  </section>
+
+  <!-- STEP 4 遺囑 -->
+  <section class="card step hidden" data-name="遺囑與意向">
+    <div class="stepnum">第 4 步</div>
+    <h2>有沒有留下遺囑？</h2>
+    <p class="lead">有沒有遺囑，會影響財產怎麼分。</p>
+    <div class="field">
+      <span class="q">過世者有留遺囑嗎？</span>
+      <div class="chips" data-radio="遺囑">
+        <label class="chip"><input type="radio" name="遺囑" value="有"><span>有</span></label>
+        <label class="chip"><input type="radio" name="遺囑" value="沒有"><span>沒有</span></label>
+        <label class="chip"><input type="radio" name="遺囑" value="不確定"><span>不確定</span></label>
+      </div>
+    </div>
+    <div class="field hidden" id="willType">
+      <span class="q">是哪一種遺囑？<span style="color:var(--muted);font-weight:400">（不確定可略過）</span></span>
+      <div class="chips" data-radio="遺囑類型">
+        <label class="chip"><input type="radio" name="遺囑類型" value="自己手寫"><span>自己手寫的</span></label>
+        <label class="chip"><input type="radio" name="遺囑類型" value="經過公證"><span>有經過公證</span></label>
+        <label class="chip"><input type="radio" name="遺囑類型" value="請人代筆"><span>請人代筆的</span></label>
+        <label class="chip"><input type="radio" name="遺囑類型" value="不確定"><span>不確定</span></label>
+      </div>
+    </div>
+    <div class="field">
+      <span class="q">有沒有人說要「放棄繼承」？</span>
+      <span class="qhint">就是有人表示不要分、整個讓出來。</span>
+      <div class="chips" data-radio="拋棄">
+        <label class="chip"><input type="radio" name="拋棄" value="有人提過"><span>有人提過</span></label>
+        <label class="chip"><input type="radio" name="拋棄" value="沒有"><span>沒有</span></label>
+        <label class="chip"><input type="radio" name="拋棄" value="不確定"><span>不確定</span></label>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 5 財產（全用區間按鈕） -->
+  <section class="card step hidden" data-name="財產現況">
+    <div class="stepnum">第 5 步</div>
+    <h2>大概有哪些財產？</h2>
+    <p class="lead">不用算到很精準，<b>選一個大概的範圍</b>就好。不知道就選「不確定」。</p>
+    <div id="assetList"></div>
+  </section>
+
+  <!-- STEP 6 生前贈與 -->
+  <section class="card step hidden" data-name="生前贈與">
+    <div class="stepnum">第 6 步</div>
+    <h2>生前有沒有先把財產給人？</h2>
+    <p class="lead">過世前 2 年內的贈與，報稅時可能要一起算，所以特別問一下。</p>
+    <div class="field">
+      <span class="q">過世前 2 年內，有把錢或房子先給家人嗎？</span>
+      <div class="chips" data-radio="生前贈與">
+        <label class="chip"><input type="radio" name="生前贈與" value="有"><span>有</span></label>
+        <label class="chip"><input type="radio" name="生前贈與" value="沒有"><span>沒有</span></label>
+        <label class="chip"><input type="radio" name="生前贈與" value="不確定"><span>不確定</span></label>
+      </div>
+    </div>
+    <div class="field hidden" id="giftWho">
+      <span class="q">給了誰？<span style="color:var(--muted);font-weight:400">（可複選）</span></span>
+      <div id="giftWhoList"></div>
+    </div>
+    <div class="field hidden" id="giftBack">
+      <span class="q">現在有沒有人說那些要「拿回去」？</span>
+      <span class="qhint">合法已過戶的贈與，通常不必拿回；這題幫我們先掌握有沒有爭議。</span>
+      <div class="chips" data-radio="贈與爭議">
+        <label class="chip gold"><input type="radio" name="贈與爭議" value="有"><span>有</span></label>
+        <label class="chip gold"><input type="radio" name="贈與爭議" value="沒有"><span>沒有</span></label>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 7 文件 + 進度 + 痛點 -->
+  <section class="card step hidden" data-name="目前狀況">
+    <div class="stepnum">第 7 步</div>
+    <h2>目前的進度與最頭痛的事</h2>
+    <p class="lead">先勾您「手上已經有」的東西，再讓我們知道您卡在哪。</p>
+
+    <div class="field">
+      <span class="q">這些文件，您手上有哪些？<span style="color:var(--muted);font-weight:400">（有就勾）</span></span>
+      <div id="docList"></div>
+    </div>
+
+    <div class="field">
+      <span class="q">「除戶登記」辦了嗎？</span>
+      <span class="qhint">就是到戶政把過世的人從戶口除名，是後面很多手續的第一步。</span>
+      <div class="chips" data-radio="除戶">
+        <label class="chip"><input type="radio" name="除戶" value="已辦"><span>已經辦了</span></label>
+        <label class="chip"><input type="radio" name="除戶" value="還沒"><span>還沒</span></label>
+        <label class="chip"><input type="radio" name="除戶" value="不確定"><span>不確定</span></label>
+      </div>
+    </div>
+
+    <div class="field">
+      <span class="q">繼承人之間，現在的氣氛如何？</span>
+      <div class="chips col" data-radio="共識">
+        <label class="chip gold"><input type="radio" name="共識" value="大致和諧"><span>大致還算和諧、有共識</span></label>
+        <label class="chip gold"><input type="radio" name="共識" value="有些分歧"><span>有一些意見不合</span></label>
+        <label class="chip gold"><input type="radio" name="共識" value="嚴重爭執"><span>已經有嚴重爭執</span></label>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="tender">下面這些是常見、也讓人很煩的狀況。<b>有遇到就勾</b>，沒有就跳過，您不孤單。</div>
+      <span class="q">目前有沒有遇到這些？<span style="color:var(--muted);font-weight:400">（可複選）</span></span>
+      <div id="painList"></div>
+    </div>
+
+    <div class="field">
+      <span class="q">最後，現在最讓您頭痛、最擔心的是什麼？<span style="color:var(--muted);font-weight:400">（選填）</span></span>
+      <span class="qhint">用您自己的話寫一句就好，這會幫我們最快抓到重點。</span>
+      <input type="text" name="最大痛點" placeholder="例：怕大伯一直鬧、怕房子被分走">
+    </div>
+
+    <div id="painNote"></div>
+  </section>
+
+  <!-- STEP 8 完成 -->
+  <section class="card step hidden" data-name="完成">
+    <div class="stepnum">完成</div>
+    <h2>好了，謝謝您！</h2>
+    <p class="lead">以下是依您填的內容整理出來的重點。按「複製」傳給我們，或「列印」帶來碰面就行。</p>
+    <div id="goalEcho"></div>
+    <div id="heirSummary"></div>
+    <h3 style="color:var(--ink);font-family:'Noto Serif TC',serif;margin:18px 0 8px">您的家族關係圖</h3>
+    <div class="tree" id="treeBox"></div>
+    <h3 style="color:var(--ink);font-family:'Noto Serif TC',serif;margin:22px 0 8px">完整摘要</h3>
+    <div class="summary" id="summaryBox"></div>
+
+    <div class="lineguide">
+      <div class="lt">把這份摘要傳給我們，就完成囉</div>
+      <ol>
+        <li>按下方綠色按鈕，會自動<b>複製</b>您的摘要</li>
+        <li>畫面會跳到我們的 <b>LINE@ 官方帳號</b></li>
+        <li>在對話框<b>長按 → 貼上 → 送出</b>即可</li>
+      </ol>
+    </div>
+    <button class="btn-line" type="button" onclick="sendToLine()">複製並貼到 LINE@ 官方帳號</button>
+    <div class="nav">
+      <button class="btn-ghost" type="button" onclick="copySummary()">只複製內容</button>
+      <button class="btn-ghost" type="button" onclick="window.print()">列印 / 存 PDF</button>
+    </div>
+    <div class="disclaimer">本問卷僅供資料盤點與初步了解；所列繼承順位、應繼分、稅務與時程為<b>一般性參考，不構成法律意見</b>。是否提告、如何辦理登記等個案問題，仍應由具資格的律師或地政、稅務專業人員依您的實際情況認定。</div>
+  </section>
+
+  <div class="nav" id="navBtns">
+    <button class="btn-back hidden" type="button" id="backBtn" onclick="go(-1)">上一步</button>
+    <button class="btn-next" type="button" id="nextBtn" onclick="go(1)">下一步</button>
+  </div>
+
+  </form>
+  <footer>您填寫的內容只用於本次諮詢的事前準備</footer>
+</div>
+<div class="toast" id="toast">已複製，可直接貼上傳給我們</div>
+
+<script>
+/* ============ 設定資料 ============ */
+/* ↓↓↓ 你們的 LINE@ 官方帳號連結 ↓↓↓ */
+const LINE_OA_URL="https://lin.ee/nO32pxv";
+const GOALS=[
+  "把混亂的狀況整個理清楚","確認我『依法』可以拿到什麼",
+  "解決有人不配合、卡住的僵局","算清楚要繳多少稅、錢從哪來",
+  "保護我的權益，不被侵佔","乾脆一次完整規劃、處理到好"
+];
+const RELS=["配偶","子女","父母","兄弟姊妹","其他親屬","代理／受託"];
+const TIMES=["平日上午","平日下午","平日晚上","週末"];
+const SPOUSE=[["有，還在世","spouse-alive"],["有，但已過世",""],["沒有",""]];
+const GIFTWHO=["配偶","子女","其他親屬"];
+const ASSETS=[
+  {n:"不動產",label:"不動產（房子、土地）",hint:"過世者名下的房或地，持有一部分也算。",bands:["沒有","500萬以下","500～2000萬","2000～5000萬","5000萬～1億","1億以上","不確定"]},
+  {n:"股票基金",label:"股票、基金",bands:["沒有","500萬以下","500～2000萬","2000萬以上","不確定"]},
+  {n:"存款現金",label:"銀行存款、現金",bands:["沒有","500萬以下","500～2000萬","2000萬以上","不確定"]},
+  {n:"保險",label:"保險",hint:"過世者是被保險人或要保人的保單。",bands:["沒有","有","不確定"]},
+  {n:"公司股權",label:"公司股權／借名登記",bands:["沒有","有","不確定"]},
+  {n:"海外資產",label:"海外的財產",bands:["沒有","有","不確定"]},
+  {n:"負債",label:"欠款、房貸等負債",bands:["沒有","500萬以下","500～2000萬","2000萬以上","不確定"]},
+];
+const DOCS=[
+  ["財產清冊","向國稅局申請的財產參考清單"],
+  ["除戶謄本","過世者的除戶戶籍謄本"],
+  ["繼承系統表","列出所有繼承人關係的表"],
+  ["不動產謄本","房、地的土地與建物謄本"],
+  ["分割協議書","大家怎麼分的書面，草稿也算"],
+  ["印鑑章與證明","各繼承人的印鑑"],
+  ["身分證件","各繼承人的身分證、戶口名簿"],
+  ["遺囑","如果有立"],
+  ["錄音／簽名文件","協議過程的錄音、訊息、簽名"],
+  ["存摺保單","存摺、對帳單、保單"],
+];
+const PAINS=[
+  "有人把證件、印鑑扣著不給",
+  "有人說要把『生前送的』財產要回去",
+  "大家對怎麼分談不攏",
+  "擔心要繳的稅太多",
+  "可能要賣房子才付得出稅",
+  "根本不知道有哪些財產",
+  "快到申報期限了，很趕",
+  "有外人（沒有繼承權的人）在施壓",
+  "有人意識不太清楚，怕協議沒效",
+];
+
+/* ============ 動態產生選項 ============ */
+const el=id=>document.getElementById(id);
+function chipRadio(name,val,label,gold){
+  return `<label class="chip${gold?' gold':''}"><input type="radio" name="${name}" value="${val}"><span>${label}</span></label>`;
+}
+function chipCheck(name,val,label){
+  return `<label class="chip"><input type="checkbox" name="${name}" value="${val}"><span>${label}</span></label>`;
+}
+el("goalList").innerHTML=`<div class="chips col">${GOALS.map(g=>chipCheck("goal",g,g)).join("")}</div>`;
+el("relList").innerHTML=RELS.map(r=>chipRadio("關係",r,r)).join("");
+el("timeList").innerHTML=TIMES.map(t=>chipCheck("聯絡時段",t,t)).join("");
+el("spouseList").innerHTML=SPOUSE.map(s=>chipRadio("配偶",s[0],s[0])).join("");
+el("giftWhoList").innerHTML=`<div class="chips">${GIFTWHO.map(g=>chipCheck("贈與對象",g,g)).join("")}</div>`;
+el("assetList").innerHTML=ASSETS.map(a=>`
+  <div class="field">
+    <span class="q">${a.label}</span>
+    ${a.hint?`<span class="qhint">${a.hint}</span>`:""}
+    <div class="chips">${a.bands.map(b=>chipRadio("資產_"+a.n,b,b)).join("")}</div>
+  </div>`).join("");
+el("docList").innerHTML=DOCS.map(d=>`<label class="check"><input type="checkbox" name="doc" value="${d[0]}"><span class="t"><span class="name">${d[0]}</span><small>${d[1]}</small></span></label>`).join("");
+el("painList").innerHTML=PAINS.map(p=>`<label class="check"><input type="checkbox" name="pain" value="${p}"><span class="t"><span class="name">${p}</span></span></label>`).join("");
+
+/* ============ 子女（家族樹核心） ============ */
+let children=[];
+function addChild(){children.push({id:"c"+Date.now()+Math.floor(Math.random()*99),name:"",status:"",desc:""});renderChildren();}
+function rmChild(id){children=children.filter(c=>c.id!==id);renderChildren();updateLogic();}
+function setCName(id,v){const c=children.find(x=>x.id===id);if(c)c.name=v;}
+function setCStatus(id,v){const c=children.find(x=>x.id===id);if(c){c.status=v;if(v!=="已過世")c.desc="";}renderChildren();updateLogic();}
+function setCDesc(id,v){const c=children.find(x=>x.id===id);if(c)c.desc=v;renderChildren();updateLogic();}
+function renderChildren(){
+  el("childContainer").innerHTML=children.map((c,i)=>`
+    <div class="member">
+      <div class="top">
+        <input type="text" placeholder="第${i+1}位（例：長子／小華，可不填）" value="${c.name.replace(/"/g,'&quot;')}" oninput="setCName('${c.id}',this.value)">
+        <button type="button" class="rm" title="移除" onclick="rmChild('${c.id}')">×</button>
+      </div>
+      <div class="chips">
+        <label class="chip"><input type="radio" ${c.status==="在世"?"checked":""} onchange="setCStatus('${c.id}','在世')"><span>在世</span></label>
+        <label class="chip"><input type="radio" ${c.status==="已過世"?"checked":""} onchange="setCStatus('${c.id}','已過世')"><span>已過世</span></label>
+      </div>
+      ${c.status==="已過世"?`
+      <div class="sub-q">
+        <span class="q">這位有沒有留下子女（孫輩）？</span>
+        <div class="chips">
+          <label class="chip gold"><input type="radio" ${c.desc==="有"?"checked":""} onchange="setCDesc('${c.id}','有')"><span>有，留有孫輩</span></label>
+          <label class="chip gold"><input type="radio" ${c.desc==="沒有"?"checked":""} onchange="setCDesc('${c.id}','沒有')"><span>沒有</span></label>
+        </div>
+      </div>`:""}
+    </div>`).join("");
+}
+
+/* 子女有無 顯示／隱藏 */
+document.addEventListener("change",e=>{
+  if(e.target.name==="子女"){
+    const has=e.target.value==="有";
+    el("childBlock").classList.toggle("hidden",!has);
+    if(has&&children.length===0)addChild();
+  }
+  if(e.target.name==="遺囑"){el("willType").classList.toggle("hidden",e.target.value!=="有");}
+  if(e.target.name==="生前贈與"){const y=e.target.value==="有";el("giftWho").classList.toggle("hidden",!y);el("giftBack").classList.toggle("hidden",!y);}
+});
+
+/* ============ 即時提示 ============ */
+function val(n){const c=document.querySelector(`[name="${n}"]:checked`);if(c)return c.value;const i=document.querySelector(`[name="${n}"]`);return i&&i.type==="text"?i.value:(i?i.value:"");}
+function checkedAll(n){return[...document.querySelectorAll(`[name="${n}"]:checked`)].map(e=>e.value);}
+
+function childHeirs(){return children.filter(c=>c.status==="在世"||(c.status==="已過世"&&c.desc==="有"));}
+function computeHeirs(){
+  const sp=val("配偶"), hasSpouse=sp.startsWith("有，還在世");
+  const kids=childHeirs();
+  let heirs=[],order="",share="";
+  if(val("子女")==="有"&&kids.length){
+    order="第一順位（直系血親卑親屬）";
+    if(hasSpouse)heirs.push("配偶");
+    heirs.push("子女"+(kids.some(k=>k.status==="已過世")?"（含代位繼承的孫輩）":""));
+    share="配偶與子女『平均分配』；各人特留分為應繼分的 1/2。";
+  }else{
+    const pa=val("父母");
+    if(pa==="都在世"||pa==="一位在世"){order="第二順位（父母）";if(hasSpouse)heirs.push("配偶");heirs.push("父母");share="配偶 1/2、父母 1/2；特留分為應繼分的 1/2。";}
+    else if(pa==="都過世"){
+      const sib=val("兄弟姊妹");
+      if(sib==="有"){order="第三順位（兄弟姊妹）";if(hasSpouse)heirs.push("配偶");heirs.push("兄弟姊妹");share="配偶 1/2、兄弟姊妹 1/2；兄弟姊妹特留分為應繼分的 1/3。";}
+      else if(sib==="沒有"){const gp=val("祖父母");
+        if(gp==="有在世"){order="第四順位（祖父母）";if(hasSpouse)heirs.push("配偶");heirs.push("祖父母");share="配偶 2/3、祖父母 1/3；祖父母特留分為應繼分的 1/3。";}
+        else if(gp==="都過世"){order="僅配偶";if(hasSpouse)heirs.push("配偶（單獨繼承全部）");share="無其他順位繼承人時，配偶取得全部。";}
+        else {order="待確認";}
+      } else {order="待確認";}
+    } else if(pa){order="待確認";}
+  }
+  return {heirs,order,share,hasSpouse};
+}
+
+function updateLogic(){
+  /* 期限（連動申報狀態） */
+  const d=document.querySelector('[name="過世日"]')?.value, dn=el("deadlineNote"), filed=val("申報");
+  if(dn){
+    if(filed==="已申報"){
+      dn.innerHTML=`<div class="note calm">遺產稅<b>已完成申報</b> ✅，這部分不必再擔心時間。後續若有核定、繳稅或登記問題，我們會協助您。</div>`;
+    } else if(d){
+      const dl=new Date(d);dl.setMonth(dl.getMonth()+6);const left=Math.ceil((dl-new Date())/86400000);
+      const tail=filed==="準備中"?"您正在準備，我們可以幫您加快、確認文件齊不齊。":(filed==="還沒"?"目前還沒申報，這會是我們優先幫您處理的事。":"");
+      dn.innerHTML=left<0
+        ?`<div class="note urgent">所填日期距今已超過 6 個月。${filed==="還沒"||filed==="不確定"?"若遺產稅還沒申報，建議碰面時<b>優先處理</b>（可能需確認是否申請延期）。":tail}</div>`
+        :`<div class="note ${left<60?'urgent':''}">距遺產稅申報期限還有約 <b>${left} 天</b>（${dl.getFullYear()}/${dl.getMonth()+1}/${dl.getDate()}）。${tail||(left<60?'時間較緊，我們會幫您加快。':'')}</div>`;
+    } else if(filed){
+      dn.innerHTML=`<div class="note">再填上「過世日期」，我們就能幫您算出申報期限還剩幾天。</div>`;
+    } else dn.innerHTML="";
+  }
+  /* 繼承人推定 */
+  const hn=el("heirNote"); if(hn){const r=computeHeirs();
+    if(r.heirs.length){hn.innerHTML=`<div class="note calm"><b>初步推定的繼承人：</b>${r.heirs.join("、")}（${r.order}）。<br>${r.share}<br><span style="font-size:.9rem">這是依民法的一般推定，僅供參考，實際仍會幫您核對戶籍確認。</span></div>`;}
+    else if(r.order==="待確認"){hn.innerHTML=`<div class="note">再多選幾題，我們就能幫您推定繼承人囉。</div>`;}
+    else hn.innerHTML="";
+  }
+}
+document.addEventListener("change",updateLogic);
+document.addEventListener("input",updateLogic);
+
+/* ============ 步驟控制 ============ */
+const steps=[...document.querySelectorAll(".step")],total=steps.length;let cur=0;
+el("stepTot").textContent=total;
+function render(){
+  steps.forEach((s,i)=>s.classList.toggle("hidden",i!==cur));
+  el("barFill").style.width=(cur/(total-1)*100)+"%";
+  el("stepCur").textContent=cur+1;el("stepName").textContent=steps[cur].dataset.name;
+  el("backBtn").classList.toggle("hidden",cur===0);
+  const last=cur===total-1;el("nextBtn").classList.toggle("hidden",last);
+  el("nextBtn").textContent=(cur===total-2)?"完成，看整理結果":"下一步";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function go(d){if(d>0)updateLogic();cur=Math.max(0,Math.min(total-1,cur+d));if(cur===total-1)buildSummary();render();}
+
+/* ============ 完成頁 ============ */
+function buildSummary(){
+  const g=n=>val(n)||"—";
+  const goals=checkedAll("goal"),docs=checkedAll("doc"),pains=checkedAll("pain"),giftWho=checkedAll("贈與對象");
+  const r=computeHeirs(),today=new Date().toLocaleDateString("zh-TW");
+
+  /* 目標回應 */
+  el("goalEcho").innerHTML=goals.length?`<div class="goalcard"><div class="lbl">您最想達成的是</div><div class="big">${goals.join("、")}</div><div style="margin-top:10px;opacity:.9;font-size:.95rem">碰面的「啟動會談」我們會優先對準這些目標。</div></div>`:"";
+
+  /* 繼承人 pill */
+  el("heirSummary").innerHTML=r.heirs.length?`<div style="margin-bottom:6px">${r.heirs.map(h=>`<span class="pill">${h}</span>`).join("")}<span class="pill gold">推定繼承人</span></div><div class="note calm" style="margin-top:0">${r.share}</div>`:"";
+
+  /* 家族樹 */
+  const sp=val("配偶");
+  let tree=`過世者：${g("被繼承人")}\n`;
+  tree+=`├ 配偶：${sp||"—"}${sp.startsWith("有，還在世")?"  ✅可繼承":""}\n`;
+  if(val("子女")==="有"&&children.length){
+    tree+=`├ 子女：共 ${children.length} 位\n`;
+    children.forEach((c,i)=>{const lastK=i===children.length-1;const br=lastK?"└":"├";
+      let line=`│  ${br} ${c.name||("第"+(i+1)+"位")}：${c.status||"未填"}`;
+      if(c.status==="在世")line+="  ✅可繼承";
+      if(c.status==="已過世")line+=c.desc==="有"?"  → 留有孫輩 ✅可代位繼承":(c.desc==="沒有"?"  → 無子女":"");
+      tree+=line+"\n";});
+  }else if(val("子女")==="沒有"){tree+=`├ 子女：無\n`;}
+  tree+=`├ 父母：${g("父母")}\n├ 兄弟姊妹：${g("兄弟姊妹")}\n└ 祖父母：${g("祖父母")}\n\n推定繼承人：${r.heirs.length?r.heirs.join("、")+"（"+r.order+"）":"待確認"}`;
+  el("treeBox").textContent=tree;
+
+  /* 資產 */
+  let assetTxt=ASSETS.map(a=>`${a.label}：${val("資產_"+a.n)||"—"}`).join("\n");
+
+  const S=
+`【繼承事務前置問卷 & 諮詢單｜摘要】 填表日：${today}
+
+■ 想達成的目標
+${goals.length?goals.map(x=>"・"+x).join("\n"):"—"}
+
+■ 聯絡人
+稱呼：${g("填表人")}／與過世者關係：${g("關係")}
+電話：${g("電話")}／方便時段：${checkedAll("聯絡時段").join("、")||"—"}
+
+■ 過世者
+${g("被繼承人")}　過世日：${g("過世日")}
+
+■ 家族與繼承關係
+配偶：${g("配偶")}
+子女：${val("子女")==="有"?children.map((c,i)=>(c.name||"第"+(i+1)+"位")+"("+(c.status||"?")+(c.status==="已過世"?"，孫輩"+(c.desc||"?"):"")+")").join("、"):val("子女")||"—"}
+父母：${g("父母")}　兄弟姊妹：${g("兄弟姊妹")}　祖父母：${g("祖父母")}
+推定繼承人：${r.heirs.length?r.heirs.join("、")+"（"+r.order+"）":"待確認"}
+${r.share?"應繼分參考："+r.share:""}
+
+■ 遺囑
+有無：${g("遺囑")}　類型：${g("遺囑類型")}　有人放棄繼承：${g("拋棄")}
+
+■ 財產（概估範圍）
+${assetTxt}
+
+■ 生前贈與
+2年內有無：${g("生前贈與")}　對象：${giftWho.length?giftWho.join("、"):"—"}　有人主張要回：${g("贈與爭議")}
+
+■ 手上文件
+${docs.length?docs.join("、"):"（尚未勾選）"}
+
+■ 進度與狀況
+除戶：${g("除戶")}　遺產稅申報：${g("申報")}　繼承人氣氛：${g("共識")}
+遇到的狀況：
+${pains.length?pains.map(p=>"・"+p).join("\n"):"（未勾選）"}
+最頭痛的事：${g("最大痛點")}`;
+  el("summaryBox").textContent=S;
+
+  /* 痛點警示 */
+  const pn=el("painNote");if(pn){
+    if(pains.some(p=>p.includes("扣著")||p.includes("施壓")||p.includes("意識")||p.includes("要回去"))){
+      pn.innerHTML=`<div class="note urgent">您勾選的狀況裡，有比較棘手的部分（例如證件被扣、外人施壓、或意識能力疑慮）。這些通常牽涉法律與證據，<b>建議碰面時優先討論</b>，必要時由我們的合作律師協助處理。</div>`;
+    }else pn.innerHTML="";
+  }
+}
+function copySummary(cb){
+  const t=el("treeBox").textContent+"\n\n"+el("summaryBox").textContent;
+  const done=()=>{const e=el("toast");e.classList.add("show");setTimeout(()=>e.classList.remove("show"),2200);if(cb)cb();};
+  navigator.clipboard?.writeText(t).then(done).catch(()=>{
+    const ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();done();
+  });
+}
+function sendToLine(){
+  const url=LINE_OA_URL;
+  const e=el("toast");e.textContent="已複製！請在 LINE 對話框長按貼上、送出";
+  copySummary(()=>{ setTimeout(()=>window.open(url,"_blank"),600); });
+}
+render();
+</script>
+</body>
+</html>
