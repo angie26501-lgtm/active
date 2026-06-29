@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>50+ 人生下半場 安排檢視 &amp; 諮詢單</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#15315B; --ink-2:#1E456F; --gold:#C2902B; --gold-soft:#F6EBD2;
+    --paper:#F7F2E9; --card:#FFFFFF; --text:#222A33; --muted:#5E6873;
+    --line:#E6DECC; --ok:#2F7D4F; --warn:#B4441F;
+    --shadow:0 14px 38px rgba(21,49,91,.12); --r:14px;
+  }
+  *{box-sizing:border-box}
+  html{font-size:18px}
+  body{margin:0;font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+       background:var(--paper);color:var(--text);line-height:1.8;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:720px;margin:0 auto;padding:24px 18px 90px}
+  .eyebrow{font-size:.8rem;letter-spacing:.16em;color:var(--gold);font-weight:700}
+  h1{font-family:"Noto Serif TC",serif;font-weight:700;color:var(--ink);
+     font-size:clamp(1.6rem,5.6vw,2.2rem);margin:.3em 0 .25em;line-height:1.3}
+  .sub{color:var(--muted);font-size:1.02rem;max-width:40ch}
+  .progress{margin:22px 0 6px}
+  .bar{height:9px;background:var(--line);border-radius:99px;overflow:hidden}
+  .bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ink),var(--gold));transition:width .35s}
+  .steplabel{display:flex;justify-content:space-between;font-size:.92rem;color:var(--muted);margin-top:9px}
+  .steplabel b{color:var(--ink);font-size:1rem}
+  .tools{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end;margin-top:12px}
+  .tool{display:inline-flex;align-items:center;background:#fff;border:1.5px solid var(--line);
+    color:var(--ink);font-size:.92rem;font-weight:600;padding:9px 15px;border-radius:10px;cursor:pointer;min-height:40px}
+  .tool:hover{background:#FBFAF6}
+  .tool input[type=file]{display:none}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;
+        box-shadow:var(--shadow);padding:28px 22px;margin-top:18px}
+  .stepnum{font-family:"Noto Serif TC",serif;color:var(--gold);font-weight:700;font-size:.95rem;letter-spacing:.08em}
+  .card h2{font-family:"Noto Serif TC",serif;color:var(--ink);font-size:1.5rem;margin:.25em 0 .15em;line-height:1.35}
+  .lead{color:var(--muted);font-size:1rem;margin:0 0 20px}
+  .field{margin:22px 0}
+  .q{display:block;font-weight:700;color:var(--text);font-size:1.18rem;margin-bottom:6px}
+  .qhint{display:block;color:var(--muted);font-size:.95rem;font-weight:400;margin-bottom:12px;line-height:1.6}
+  .qhint .ex{color:var(--ink)}
+  input[type=text],input[type=tel]{
+    width:100%;padding:15px 16px;border:2px solid var(--line);border-radius:var(--r);
+    font-family:inherit;font-size:1.12rem;color:var(--text);background:#FCFBF8}
+  input:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 4px rgba(21,49,91,.14);background:#fff}
+  .chips{display:flex;flex-wrap:wrap;gap:11px}
+  .chips.col{flex-direction:column}
+  .chip{position:relative;flex:0 0 auto}
+  .chips.col .chip{flex:1 1 auto}
+  .chip input{position:absolute;inset:0;opacity:0;cursor:pointer;margin:0}
+  .chip span{display:flex;align-items:center;justify-content:center;text-align:center;
+    min-height:54px;padding:12px 20px;border:2px solid var(--line);border-radius:var(--r);
+    background:#FCFBF8;color:var(--text);font-size:1.1rem;font-weight:500;cursor:pointer;transition:.12s;user-select:none}
+  .chips.col .chip span{justify-content:flex-start;text-align:left}
+  .chip input:checked+span{background:var(--ink);border-color:var(--ink);color:#fff}
+  .chip.gold input:checked+span{background:var(--gold);border-color:var(--gold);color:#fff}
+  .chip input:focus-visible+span{box-shadow:0 0 0 4px rgba(194,144,43,.45)}
+  .check{display:flex;gap:14px;align-items:flex-start;padding:15px 16px;border:2px solid var(--line);
+    border-radius:var(--r);background:#FCFBF8;margin:11px 0;cursor:pointer;min-height:56px}
+  .check input{width:24px;height:24px;margin-top:2px;accent-color:var(--ink);flex:0 0 auto;cursor:pointer}
+  .check:has(input:checked){border-color:var(--ink);background:#fff}
+  .t .name{font-size:1.1rem;font-weight:500}
+  .t small{display:block;color:var(--muted);font-size:.9rem;margin-top:2px}
+  /* pillar card */
+  .pillar{border:2px solid var(--line);border-radius:var(--r);padding:18px;margin:14px 0;background:#FCFBF8}
+  .pillar .pt{font-family:"Noto Serif TC",serif;color:var(--ink);font-size:1.2rem;font-weight:700}
+  .pillar .ps{color:var(--muted);font-size:.95rem;margin:6px 0 13px;line-height:1.65}
+  .pillar .chips .chip span{min-height:48px;font-size:1.02rem;padding:10px 14px}
+  .note{margin-top:16px;padding:16px 18px;border-radius:var(--r);font-size:1rem;line-height:1.7;
+        border-left:5px solid var(--gold);background:var(--gold-soft);color:#5a4413}
+  .note b{color:var(--ink)}
+  .note.calm{background:#EAF1EC;border-left-color:var(--ok);color:#21503a}
+  .nav{display:flex;gap:12px;margin-top:30px}
+  button{font-family:inherit;font-weight:700;border:none;border-radius:var(--r);cursor:pointer;transition:.12s}
+  .btn-next{background:var(--ink);color:#fff;flex:1;font-size:1.18rem;padding:18px}
+  .btn-next:hover{background:var(--ink-2)}
+  .btn-back{background:#fff;color:var(--ink);border:2px solid var(--line);font-size:1.05rem;padding:18px 22px}
+  .btn-ghost{background:#fff;color:var(--ink);border:2px solid var(--line);font-size:1.05rem;padding:16px;flex:1}
+  .hidden{display:none!important}
+  .goalcard{background:linear-gradient(135deg,var(--ink),#244e82);color:#fff;border-radius:18px;padding:22px;margin-bottom:18px}
+  .goalcard .lbl{font-size:.9rem;opacity:.85}
+  .goalcard .big{font-size:1.2rem;font-weight:700;margin-top:6px;line-height:1.6}
+  .helpbox{background:#FFFCF4;border:2px solid var(--gold);border-radius:var(--r);padding:18px;margin:16px 0}
+  .helpbox h3{margin:0 0 10px;color:var(--ink);font-family:"Noto Serif TC",serif;font-size:1.2rem}
+  .helpitem{padding:12px 0;border-top:1px solid var(--gold-soft)}
+  .helpitem:first-of-type{border-top:none}
+  .helpitem .h{font-weight:700;color:var(--ink);font-size:1.05rem}
+  .helpitem .d{color:var(--muted);font-size:.96rem;margin-top:3px;line-height:1.6}
+  .summary{white-space:pre-wrap;font-size:.98rem;background:#FCFBF8;border:2px solid var(--line);
+    border-radius:var(--r);padding:18px;line-height:1.95;margin-top:8px}
+  .pill{display:inline-block;background:var(--ink);color:#fff;font-size:.92rem;padding:6px 14px;border-radius:99px;margin:0 7px 7px 0}
+  .pill.gold{background:var(--gold)}
+  .lineguide{background:#EAF6EC;border:2px solid #C8E6CD;border-radius:var(--r);padding:16px 18px;margin-top:18px}
+  .lineguide .lt{font-weight:700;color:#1f6b35;font-size:1.08rem;margin-bottom:8px}
+  .lineguide ol{margin:0;padding-left:1.3em;color:#2b5638;font-size:1rem;line-height:1.85}
+  .lineguide ol b{color:#15311b}
+  .btn-line{width:100%;background:#06C755;color:#fff;font-size:1.18rem;padding:18px;border-radius:var(--r);margin-top:12px;box-shadow:0 6px 18px rgba(6,199,85,.3)}
+  .btn-line:hover{background:#05b14c}
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);
+    background:var(--ink);color:#fff;padding:15px 26px;border-radius:99px;font-size:1.05rem;
+    opacity:0;transition:.3s;pointer-events:none;z-index:60;box-shadow:var(--shadow)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .disclaimer{font-size:.9rem;color:var(--muted);background:#fff;border:1px dashed var(--line);
+    border-radius:var(--r);padding:14px 16px;margin-top:18px;line-height:1.7}
+  footer{text-align:center;color:var(--muted);font-size:.9rem;margin-top:28px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+  @media print{body{background:#fff}.nav,.progress,.btn-ghost,.sub,.tools{display:none}.card{box-shadow:none;border:none}}
+  @media(max-width:480px){.chips:not(.col) .chip{flex:1 1 100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">50+ 人生下半場 · 事先規劃，安心前行</div>
+    <h1>人生下半場　安排檢視 &amp; 諮詢單</h1>
+    <p class="sub">趁現在身體還好，花幾分鐘看看自己「該安排的」準備到哪了。大部分用「點選」就好，不太需要打字。不確定的，選「還沒、想了解」就可以。</p>
+  </header>
+
+  <div class="progress">
+    <div class="bar"><i id="barFill"></i></div>
+    <div class="steplabel"><span id="stepName">您的目標</span><span>第 <b id="stepCur">1</b> / <span id="stepTot">6</span> 步</span></div>
+  </div>
+
+  <div class="tools">
+    <span style="margin-right:auto;color:var(--muted);font-size:.85rem;align-self:center">填到一半可先「儲存本機」，下次「還原備份」接著填</span>
+    <button type="button" class="tool" onclick="saveBackup()">💾 儲存本機</button>
+    <label class="tool">↻ 還原備份<input type="file" accept="application/json" onchange="restoreBackup(this)"></label>
+  </div>
+
+  <form id="form" onsubmit="return false">
+
+  <!-- STEP 1 目標 + 基本 -->
+  <section class="card step" data-name="您的目標">
+    <div class="stepnum">第 1 步</div>
+    <h2>下半場，您最想為自己和家人安排好什麼？</h2>
+    <p class="lead">先說出您的目標，我們會把整份檢視都對準它。可以複選。</p>
+    <div class="field"><div id="goalList"></div></div>
+    <div class="field"><span class="q">怎麼稱呼您？</span><input type="text" name="填表人" placeholder="例：陳先生、林姊"></div>
+    <div class="field"><span class="q">您目前的年齡大約是？</span>
+      <div class="chips" id="ageList"></div></div>
+    <div class="field"><span class="q">方便聯絡您的電話</span><input type="tel" name="電話" placeholder="手機或市話"></div>
+    <div class="field"><span class="q">哪個時段方便接電話？<span style="color:var(--muted);font-weight:400">（可複選）</span></span>
+      <div class="chips" id="timeList"></div></div>
+  </section>
+
+  <!-- STEP 2 家庭與想照顧的人 -->
+  <section class="card step hidden" data-name="家庭與想照顧的人">
+    <div class="stepnum">第 2 步</div>
+    <h2>家裡有哪些人，是您想照顧好的？</h2>
+    <p class="lead">這會影響「遺囑、信託、監護」要怎麼幫您安排。</p>
+    <div class="field"><span class="q">您目前的婚姻狀況？</span>
+      <div class="chips" data-radio="婚姻">
+        <label class="chip"><input type="radio" name="婚姻" value="已婚"><span>已婚</span></label>
+        <label class="chip"><input type="radio" name="婚姻" value="喪偶"><span>喪偶</span></label>
+        <label class="chip"><input type="radio" name="婚姻" value="離婚"><span>離婚</span></label>
+        <label class="chip"><input type="radio" name="婚姻" value="未婚"><span>未婚</span></label>
+      </div></div>
+    <div class="field"><span class="q">有沒有子女？</span>
+      <div class="chips" data-radio="子女">
+        <label class="chip"><input type="radio" name="子女" value="有"><span>有</span></label>
+        <label class="chip"><input type="radio" name="子女" value="沒有"><span>沒有</span></label>
+      </div></div>
+    <div class="field hidden" id="childN"><span class="q">幾位子女？</span>
+      <div class="chips" data-radio="子女人數">
+        <label class="chip"><input type="radio" name="子女人數" value="1位"><span>1 位</span></label>
+        <label class="chip"><input type="radio" name="子女人數" value="2位"><span>2 位</span></label>
+        <label class="chip"><input type="radio" name="子女人數" value="3位"><span>3 位</span></label>
+        <label class="chip"><input type="radio" name="子女人數" value="4位以上"><span>4 位以上</span></label>
+      </div></div>
+    <div class="field"><span class="q">有沒有「需要您長期照顧」的家人？</span>
+      <span class="qhint">例如未成年子女、身心障礙的孩子或家人、年邁需扶養的長輩。<span class="ex">這種情況特別適合用信託安排。</span></span>
+      <div class="chips col" data-radio="特殊照顧">
+        <label class="chip gold"><input type="radio" name="特殊照顧" value="有，未成年子女"><span>有，未成年子女</span></label>
+        <label class="chip gold"><input type="radio" name="特殊照顧" value="有，身心障礙家人"><span>有，身心障礙的家人</span></label>
+        <label class="chip gold"><input type="radio" name="特殊照顧" value="有，需扶養長輩"><span>有，需扶養的長輩</span></label>
+        <label class="chip gold"><input type="radio" name="特殊照顧" value="沒有"><span>目前沒有</span></label>
+      </div></div>
+  </section>
+
+  <!-- STEP 3 資產輪廓 -->
+  <section class="card step hidden" data-name="資產輪廓">
+    <div class="stepnum">第 3 步</div>
+    <h2>大概有哪些資產？</h2>
+    <p class="lead">不用算很準，<b>選一個大概範圍</b>就好。這幫我們判斷是否需要預留稅源。不知道就選「不確定」。</p>
+    <div id="assetList"></div>
+  </section>
+
+  <!-- STEP 4 五大面向自評 -->
+  <section class="card step hidden" data-name="五大面向">
+    <div class="stepnum">第 4 步</div>
+    <h2>這五件事，您準備到哪了？</h2>
+    <p class="lead">這是人生下半場最該先安排的五件事。每一項點一下目前的狀態就好。</p>
+    <div id="pillarList"></div>
+    <div id="readyNote"></div>
+  </section>
+
+  <!-- STEP 5 優先與擔心 -->
+  <section class="card step hidden" data-name="優先處理">
+    <div class="stepnum">第 5 步</div>
+    <h2>最後幾題</h2>
+    <p class="lead">幫我們知道從哪裡開始最對您的心。</p>
+    <div class="field"><span class="q">這五件事裡，您最想「先處理」哪一項？</span>
+      <div class="chips col" id="priorityList"></div></div>
+    <div class="field"><span class="q">還想多了解哪些？<span style="color:var(--muted);font-weight:400">（可複選）</span></span>
+      <div id="interestList"></div></div>
+    <div class="field"><span class="q">有沒有什麼特別擔心、或想先說的？<span style="color:var(--muted);font-weight:400">（選填）</span></span>
+      <span class="qhint">用您自己的話寫一句就好。</span>
+      <input type="text" name="擔心" placeholder="例：怕孩子分產失和、怕自己失能沒人作主"></div>
+  </section>
+
+  <!-- STEP 6 完成 -->
+  <section class="card step hidden" data-name="完成">
+    <div class="stepnum">完成</div>
+    <h2>好了，謝謝您！</h2>
+    <p class="lead">以下是您的安排檢視，以及我們可以協助的部分。傳給我們，碰面就能直接幫您規劃。</p>
+    <div id="goalEcho"></div>
+    <div id="readySummary"></div>
+    <div id="helpBox"></div>
+    <h3 style="color:var(--ink);font-family:'Noto Serif TC',serif;margin:18px 0 6px">完整摘要</h3>
+    <div class="summary" id="summaryBox"></div>
+    <div class="lineguide">
+      <div class="lt">把這份檢視傳給我們，就完成囉</div>
+      <ol>
+        <li>按下方綠色按鈕，會自動<b>複製</b>您的檢視結果</li>
+        <li>畫面會跳到我們的 <b>LINE@ 官方帳號</b></li>
+        <li>在對話框<b>長按 → 貼上 → 送出</b>即可</li>
+      </ol>
+    </div>
+    <button class="btn-line" type="button" onclick="sendToLine()">複製並貼到 LINE@ 官方帳號</button>
+    <div class="nav">
+      <button class="btn-ghost" type="button" onclick="copySummary()">只複製內容</button>
+      <button class="btn-ghost" type="button" onclick="window.print()">列印 / 存 PDF（電腦使用）</button>
+    </div>
+    <p style="text-align:center;color:var(--muted);font-size:.88rem;margin:10px 0 0">※「列印 / 存 PDF」請用<b>電腦</b>操作；用手機的話，請直接按上方綠色 <b>LINE@</b> 按鈕傳給我們。</p>
+    <div class="disclaimer">本檢視僅供初步盤點與了解；意定監護、預立醫療決定、遺囑、信託與稅務之具體辦理，仍須由具資格的律師、公證人、醫療或稅務專業人員依您的個別情況辦理。本問卷內容<b>不構成法律、醫療或稅務意見</b>。</div>
+  </section>
+
+  <div class="nav" id="navBtns">
+    <button class="btn-back hidden" type="button" id="backBtn" onclick="go(-1)">上一步</button>
+    <button class="btn-next" type="button" id="nextBtn" onclick="go(1)">下一步</button>
+  </div>
+  </form>
+  <footer>您填寫的內容只用於本次諮詢的事前準備</footer>
+</div>
+<div class="toast" id="toast">已複製，可直接貼上傳給我們</div>
+
+<script>
+/* ===== 設定 ===== */
+/* ↓↓↓ 你們的 LINE@ 官方帳號連結 ↓↓↓ */
+const LINE_OA_URL="https://lin.ee/nO32pxv";
+
+const GOALS=[
+  "萬一無法自理，有信任的人能依我的意願做決定",
+  "萬一生命末期，醫療照我的意願走",
+  "財產照我的心意，傳給我想給的人",
+  "不讓家人為了繳稅手忙腳亂、被迫賣房",
+  "確保我想照顧的人（配偶／孩子／長輩）被照顧到",
+  "趁身體還好，把該安排的一次理清楚"
+];
+const AGES=["50–54 歲","55–59 歲","60–64 歲","65 歲以上"];
+const TIMES=["平日上午","平日下午","平日晚上","週末"];
+const ASSETS=[
+  {n:"不動產",label:"不動產（房子、土地）",bands:["沒有","500萬以下","500～2000萬","2000～5000萬","5000萬～1億","1億以上","不確定"]},
+  {n:"股票基金",label:"股票、基金",bands:["沒有","500萬以下","500～2000萬","2000萬以上","不確定"]},
+  {n:"存款現金",label:"銀行存款、現金",bands:["沒有","500萬以下","500～2000萬","2000萬以上","不確定"]},
+  {n:"保險",label:"保險",bands:["沒有","有","不確定"]},
+  {n:"公司股權",label:"公司股權",bands:["沒有","有","不確定"]},
+];
+const PILLARS=[
+  {n:"意定監護",title:"意定監護",sub:"萬一哪天無法自理，由我「現在就先指定」信任的人替我做決定，而不是等法院安排。",
+   help:"說明意定監護契約的辦理流程，協助媒合公證人與律師。"},
+  {n:"預立醫療",title:"預立醫療決定",sub:"生命末期或重病時，要不要急救、插管，照我事先的意願走（病人自主權利法）。",
+   help:"說明預立醫療照護諮商（ACP）與決定書（AD）的流程，協助預約合作醫療機構。"},
+  {n:"預立遺囑",title:"預立遺囑",sub:"財產分配照我的心意，並避免日後家人為了分產而失和。",
+   help:"先幫您盤點財產、媒合律師擬立合法遺囑，並提醒「特留分」等重點。"},
+  {n:"預留稅源",title:"預留稅源",sub:"先準備好繳遺產稅的現金，免得家人為了繳稅急著賣房、賣股。",
+   help:"幫您試算遺產稅，規劃保險、現金等稅源安排。"},
+  {n:"遺囑信託",title:"遺囑信託",sub:"想長期照顧的對象（年幼子女、身心障礙家人），用信託按計畫照顧，不怕一次給太多。",
+   help:"依您想照顧的對象，協助設計信託架構並媒合信託與專業執行。"},
+];
+const PILL_OPTS=["已安排好","做了一部分","還沒，想了解","用不到"];
+const INTERESTS=["生前贈與、節稅","保險金信託","公司接班／股權傳承","長期照顧／保險","友善的安養與居住安排"];
+
+const el=id=>document.getElementById(id);
+const chipR=(n,v,g)=>`<label class="chip${g?' gold':''}"><input type="radio" name="${n}" value="${v}"><span>${v}</span></label>`;
+const chipC=(n,v)=>`<label class="chip"><input type="checkbox" name="${n}" value="${v}"><span>${v}</span></label>`;
+
+el("goalList").innerHTML=`<div class="chips col">${GOALS.map(g=>chipC("goal",g)).join("")}</div>`;
+el("ageList").innerHTML=AGES.map(a=>chipR("年齡",a)).join("");
+el("timeList").innerHTML=TIMES.map(t=>chipC("聯絡時段",t)).join("");
+el("assetList").innerHTML=ASSETS.map(a=>`<div class="field"><span class="q">${a.label}</span><div class="chips">${a.bands.map(b=>chipR("資產_"+a.n,b)).join("")}</div></div>`).join("");
+el("pillarList").innerHTML=PILLARS.map(p=>`
+  <div class="pillar">
+    <div class="pt">${p.title}</div>
+    <div class="ps">${p.sub}</div>
+    <div class="chips">${PILL_OPTS.map(o=>chipR("面向_"+p.n,o,o!=="用不到")).join("")}</div>
+  </div>`).join("");
+el("priorityList").innerHTML=PILLARS.map(p=>chipR("優先",p.title,true)).join("");
+el("interestList").innerHTML=INTERESTS.map(i=>`<label class="check"><input type="checkbox" name="想了解" value="${i}"><span class="t"><span class="name">${i}</span></span></label>`).join("");
+
+document.addEventListener("change",e=>{
+  if(e.target.name==="子女")el("childN").classList.toggle("hidden",e.target.value!=="有");
+  updateLogic();
+});
+
+function val(n){const c=document.querySelector(`[name="${n}"]:checked`);if(c)return c.value;const i=document.querySelector(`[name="${n}"]`);return i&&i.type==="text"?i.value:"";}
+function checkedAll(n){return[...document.querySelectorAll(`[name="${n}"]:checked`)].map(e=>e.value);}
+
+function updateLogic(){
+  const rn=el("readyNote");if(!rn)return;
+  const todo=PILLARS.filter(p=>{const v=val("面向_"+p.n);return v==="還沒，想了解"||v==="做了一部分";});
+  const done=PILLARS.filter(p=>val("面向_"+p.n)==="已安排好").length;
+  if(done||todo.length){
+    rn.innerHTML=`<div class="note calm">您已安排好 <b>${done}</b> 項${todo.length?`，還有 <b>${todo.length}</b> 項可以幫您補上`:`，很完整`}。完成後我們會把「可以協助的部分」整理給您。</div>`;
+  }else rn.innerHTML="";
+}
+
+/* 步驟 */
+const steps=[...document.querySelectorAll(".step")],total=steps.length;let cur=0;
+el("stepTot").textContent=total;
+function render(){
+  steps.forEach((s,i)=>s.classList.toggle("hidden",i!==cur));
+  el("barFill").style.width=(cur/(total-1)*100)+"%";
+  el("stepCur").textContent=cur+1;el("stepName").textContent=steps[cur].dataset.name;
+  el("backBtn").classList.toggle("hidden",cur===0);
+  const last=cur===total-1;el("nextBtn").classList.toggle("hidden",last);
+  el("nextBtn").textContent=(cur===total-2)?"完成，看我的檢視結果":"下一步";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function go(d){if(d>0)updateLogic();cur=Math.max(0,Math.min(total-1,cur+d));if(cur===total-1)buildSummary();render();}
+
+function buildSummary(){
+  const g=n=>val(n)||"—";
+  const goals=checkedAll("goal"),interests=checkedAll("想了解");
+  const today=new Date().toLocaleDateString("zh-TW");
+
+  el("goalEcho").innerHTML=goals.length?`<div class="goalcard"><div class="lbl">您最想達成的是</div><div class="big">${goals.join("、")}</div><div style="margin-top:10px;opacity:.9;font-size:.95rem">碰面時我們會優先對準這些目標。</div></div>`:"";
+
+  /* 準備度 pill */
+  let pills=PILLARS.map(p=>{const v=val("面向_"+p.n);const cls=v==="已安排好"?"pill":"pill gold";return v&&v!=="用不到"?`<span class="${cls}">${p.title}：${v}</span>`:"";}).join("");
+  el("readySummary").innerHTML=pills?`<div style="margin-bottom:6px">${pills}</div>`:"";
+
+  /* 我們可以協助的部分 */
+  const helps=PILLARS.filter(p=>{const v=val("面向_"+p.n);return v==="還沒，想了解"||v==="做了一部分";});
+  if(helps.length){
+    el("helpBox").innerHTML=`<div class="helpbox"><h3>我們可以協助您的部分</h3>${helps.map(p=>`<div class="helpitem"><div class="h">${p.title}</div><div class="d">${p.help}</div></div>`).join("")}</div>`;
+  }else el("helpBox").innerHTML="";
+
+  const assetTxt=ASSETS.map(a=>`${a.label}：${val("資產_"+a.n)||"—"}`).join("\n");
+  const pillarTxt=PILLARS.map(p=>`${p.title}：${val("面向_"+p.n)||"—"}`).join("\n");
+
+  const S=
+`【50+ 人生下半場 安排檢視 & 諮詢單｜摘要】 填表日：${today}
+
+■ 想達成的目標
+${goals.length?goals.map(x=>"・"+x).join("\n"):"—"}
+
+■ 基本資料
+稱呼：${g("填表人")}　年齡：${g("年齡")}
+電話：${g("電話")}　方便時段：${checkedAll("聯絡時段").join("、")||"—"}
+
+■ 家庭與想照顧的人
+婚姻：${g("婚姻")}　子女：${g("子女")} ${g("子女人數")}
+需長期照顧的家人：${g("特殊照顧")}
+
+■ 資產輪廓（概估範圍）
+${assetTxt}
+
+■ 五大面向 目前狀態
+${pillarTxt}
+
+■ 最想先處理
+${g("優先")}
+
+■ 想多了解
+${interests.length?interests.join("、"):"—"}
+
+■ 特別擔心 / 補充
+${g("擔心")}`;
+  el("summaryBox").textContent=S;
+}
+
+function toastMsg(m){const e=el("toast");e.textContent=m;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),2200);}
+function copySummary(cb,msg){
+  const t=el("summaryBox").textContent;
+  const done=()=>{toastMsg(msg||"已複製，可直接貼上傳給我們");if(cb)cb();};
+  navigator.clipboard?.writeText(t).then(done).catch(()=>{
+    const ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();done();
+  });
+}
+function sendToLine(){copySummary(()=>setTimeout(()=>window.open(LINE_OA_URL,"_blank"),600),"已複製！請在 LINE 對話框長按貼上、送出");}
+
+/* 本機備份：儲存 / 還原 */
+function collectState(){
+  const d={fields:{},checks:{}};
+  if(typeof children!=="undefined")d.children=children;
+  document.querySelectorAll("input[name]").forEach(i=>{
+    if(i.type==="radio"){if(i.checked)d.fields[i.name]=i.value;}
+    else if(i.type==="checkbox"){(d.checks[i.name]=d.checks[i.name]||[]);if(i.checked)d.checks[i.name].push(i.value);}
+    else if(i.value)d.fields[i.name]=i.value;
+  });
+  d._saved=new Date().toISOString();return d;
+}
+function saveBackup(){
+  const blob=new Blob([JSON.stringify(collectState())],{type:"application/json"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);
+  a.download="50plus備份_"+new Date().toISOString().slice(0,10)+".json";
+  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+  toastMsg("已存成備份檔到您的裝置");
+}
+function restoreBackup(inp){
+  const f=inp.files&&inp.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{try{applyState(JSON.parse(r.result));toastMsg("已還原您上次的填寫");}catch(e){toastMsg("讀不到檔案，請確認是備份檔");}inp.value="";};
+  r.readAsText(f);
+}
+function applyState(d){
+  document.querySelectorAll("input[name]").forEach(i=>{if(i.type==="radio"||i.type==="checkbox")i.checked=false;else i.value="";});
+  Object.entries(d.fields||{}).forEach(([n,v])=>{
+    const rs=document.querySelectorAll('input[name="'+n+'"][type=radio]');
+    if(rs.length)rs.forEach(r=>{if(r.value===v)r.checked=true;});
+    else{const t=document.querySelector('input[name="'+n+'"]');if(t)t.value=v;}
+  });
+  Object.entries(d.checks||{}).forEach(([n,arr])=>{document.querySelectorAll('input[name="'+n+'"][type=checkbox]').forEach(c=>{if(arr.includes(c.value))c.checked=true;});});
+  document.querySelectorAll("input[name]:checked").forEach(i=>i.dispatchEvent(new Event("change",{bubbles:true})));
+  if(typeof updateLogic==="function")updateLogic();
+}
+render();
+</script>
+</body>
+</html>
