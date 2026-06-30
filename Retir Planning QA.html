@@ -123,6 +123,17 @@
   .btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);padding:14px 18px}
   .btn:disabled{opacity:.5;cursor:not-allowed}
 
+  .consent{display:flex;gap:11px;align-items:flex-start;background:rgba(14,42,71,.04);border:1.5px solid var(--line);border-radius:13px;padding:14px 16px;margin-top:16px;cursor:pointer;font-size:14px;color:var(--muted);line-height:1.6;user-select:none;-webkit-tap-highlight-color:transparent}
+  .consent.sel{border-color:var(--gold);background:linear-gradient(0deg,rgba(201,162,75,.06),rgba(201,162,75,.06)),#fff}
+  .consent .cbox{flex:0 0 auto;width:22px;height:22px;border-radius:6px;border:2px solid var(--line);display:grid;place-items:center;margin-top:1px;transition:.15s}
+  .consent .cbox svg{width:13px;height:13px;opacity:0;transform:scale(.4);transition:.15s}
+  .consent.sel .cbox{background:var(--gold);border-color:var(--gold)} .consent.sel .cbox svg{opacity:1;transform:scale(1)}
+  .consent b{color:var(--ink)}
+  .seg.compact{gap:7px} .seg.compact .opt{padding:7px 12px;font-size:15px}
+  .kidshint{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.6}
+  .kidshint b{color:var(--ink)}
+  .kidsprev{font-size:14.5px;color:var(--ink);font-weight:500;margin-top:6px} .kidsprev b{color:var(--gold)}
+
   .privacy{margin-top:22px;background:rgba(14,42,71,.04);border:1px solid var(--line);border-radius:13px;padding:14px 16px;font-size:13.5px;color:var(--muted);line-height:1.7}
   .privacy b{color:var(--ink)}
 
@@ -171,7 +182,7 @@
     <div class="hero-card">
       <div class="eyebrow">領 航 財 富 花 園</div>
       <h1>打造你的人生藍圖</h1>
-      <p class="sub">花 3 分鐘，畫出你的退休藍圖並完成 AI 財務健診。送出後系統會把「財務三燈報告」寄到你信箱，顧問也會與你聯繫安排預約諮詢。</p>
+      <p class="sub">花 3 分鐘，畫出你的退休藍圖並完成 AI 財務健診。送出後即時看到你的「財務三燈」，複製摘要傳到官方 LINE@ 即可索取完整 PDF 報告書，顧問也會與你聯繫安排預約諮詢。</p>
       <div class="credit">主講｜<b>陳芸琪</b>　馥芸財富管理學苑 ／ MDRT・RFC・RFA・RFP<br>
         <a class="credit-link" href="https://www.allfreedom.info/" target="_blank" rel="noopener">官方網站 · www.allfreedom.info ↗</a></div>
     </div>
@@ -202,22 +213,33 @@
       </div>
       <div class="grid2">
         <div class="field"><label>年齡</label><input class="txt" id="p_age" type="number" inputmode="numeric" placeholder="40"></div>
-        <div class="field"><label>職業</label><input class="txt" id="p_job" placeholder="例：工程師"></div>
-      </div>
-      <div class="grid2">
-        <div class="field"><label>居住縣市</label><input class="txt" id="p_city" placeholder="例：台北市"></div>
         <div class="field"><label>婚姻狀況</label><div class="seg" id="p_marry"></div></div>
+      </div>
+      <div class="field"><label>職業（點選即可）</label>
+        <div class="seg" id="p_job_seg"></div>
+        <div id="jobOther" style="display:none;margin-top:9px"><input class="txt" id="p_job" placeholder="請輸入您的職業"></div>
+      </div>
+      <div class="field"><label>居住縣市（點選即可）</label>
+        <div class="seg compact" id="p_city_seg"></div>
       </div>
       <div class="field"><label>子女</label>
         <div class="seg" id="p_kids" style="margin-bottom:10px"></div>
-        <div id="kidsDetail" style="display:none"><input class="txt" id="p_kidsDetail" placeholder="例：兒子 1 人 10 歲、女兒 1 人 8 歲"></div>
+        <div id="kidsDetail" style="display:none">
+          <input class="txt" id="p_kidsDetail" placeholder="例：1/28 2/20">
+          <div class="kidshint" id="kidsHint">輸入規則：<b>1＝兒子、2＝女兒</b>，格式「代號/年齡」，多位用空格分隔。例：<b>1/28 2/20</b> → 兒子 28 歲、女兒 20 歲</div>
+          <div class="kidsprev" id="kidsPrev"></div>
+        </div>
       </div>
       <div class="grid2">
         <div class="field"><label>聯絡電話<span class="req">*</span></label><input class="txt" id="p_phone" inputmode="tel" placeholder="0912-345-678"></div>
         <div class="field"><label>LINE ID</label><input class="txt" id="p_line" placeholder="@your_id"></div>
       </div>
-      <div class="field"><label>Email<span class="req">*</span>（用於寄送簡易版財務報告書）</label><input class="txt" id="p_email" type="email" inputmode="email" placeholder="you@example.com"></div>
+      <div class="field"><label>Email（選填，方便顧問聯繫）</label><input class="txt" id="p_email" type="email" inputmode="email" placeholder="you@example.com"></div>
     </div>
+    <label class="consent" id="consentWrap">
+      <span class="cbox"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 6" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span>我已閱讀並同意上述<b>個人資料使用說明</b>，提供本資料供理財規劃分析、諮詢與相關服務使用。<b style="color:var(--red)">（必填）</b></span>
+    </label>
   </section>
 
   <!-- 2 AI 健診 -->
@@ -276,7 +298,7 @@
     <div class="done-hero">
       <div class="eyebrow ink">即將完成</div>
       <h1 style="margin-top:6px">你的財務三燈與藍圖摘要</h1>
-      <p class="lead">確認無誤就送出，系統會把報告寄到你信箱。</p>
+      <p class="lead">確認無誤就送出，接著複製摘要傳到官方 LINE@ 即可索取 PDF 報告書。</p>
     </div>
     <div class="summary" id="summaryBox"></div>
   </section>
@@ -373,7 +395,7 @@ function toggle(opt){
 }
 function renderSeg(mountId,key,options,onChange){
   const m=document.getElementById(mountId); answers[key]=null;
-  options.forEach(o=>{const el=document.createElement('div');el.className='opt';el.dataset.shape='round';
+  options.forEach(o=>{const el=document.createElement('div');el.className='opt';el.dataset.shape='round';el.dataset.val=o;
     el.innerHTML=`<div class="box">${CHECK}</div><div class="lab">${o}</div>`;
     el.addEventListener('click',()=>{m.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');answers[key]=o;if(onChange)onChange(o);});
     m.appendChild(el);});
@@ -410,7 +432,7 @@ function updateTL(){
 const steps=[...document.querySelectorAll('.step')], total=steps.length; let cur=0;
 document.getElementById('stepTotal').textContent=total;
 const btnNext=document.getElementById('btnNext'), btnBack=document.getElementById('btnBack');
-const btnSubmit=document.createElement('button'); btnSubmit.className='btn btn-gold'; btnSubmit.id='btnSubmit'; btnSubmit.textContent='送出並預約諮詢'; btnSubmit.style.display='none';
+const btnSubmit=document.createElement('button'); btnSubmit.className='btn btn-gold'; btnSubmit.id='btnSubmit'; btnSubmit.textContent='確認'; btnSubmit.style.display='none';
 document.querySelector('.navbar .wrap').appendChild(btnSubmit);
 
 function show(i){
@@ -426,6 +448,7 @@ function show(i){
   } else {
     btnNext.innerHTML = cur===0?'開始填寫 <span class="arr">→</span>' : (cur===total-2?'檢視摘要 <span class="arr">→</span>':'下一步 <span class="arr">→</span>');
   }
+  if(cur===1){const pa=document.getElementById('p_age'),an=document.getElementById('ageNow'); if(pa&&an&&!pa.value){pa.value=an.value||'';}}
   window.scrollTo({top:0,behavior:'smooth'});
   if(last) buildSummary();
 }
@@ -453,7 +476,7 @@ function buildSummary(){
   let lt='';
   if(hs.rows.length){
     let r=''; hs.rows.forEach(x=>{const L=lightOf(x.score); r+=`<div class="lt-row"><span><span class="dotc" style="background:${L.c}"></span>${x.key}</span><b style="color:${L.c}">${L.t}</b></div>`;});
-    lt=`<div class="lights"><div class="eyebrow ink" style="margin-bottom:8px;display:flex;align-items:center">簡易版財務報告書<a class="edit-link" data-step="2" style="margin-left:auto">✎ 修改</a></div><div class="lt-total" style="color:${band.c}">${hs.total}<small>/10</small></div><div class="lt-band" style="background:${band.c}">${band.t}</div><div class="lt-rows">${r}</div><div class="lt-note">※ 此為快速自評的初步參考，多數人落在黃燈是常見缺口；完整報告會寄到你信箱，並可進一步與顧問預約諮詢。</div></div>`;
+    lt=`<div class="lights"><div class="eyebrow ink" style="margin-bottom:8px;display:flex;align-items:center">簡易版財務報告書<a class="edit-link" data-step="2" style="margin-left:auto">✎ 修改</a></div><div class="lt-total" style="color:${band.c}">${hs.total}<small>/10</small></div><div class="lt-band" style="background:${band.c}">${band.t}</div><div class="lt-rows">${r}</div><div class="lt-note">※ 此為快速自評的初步參考，多數人落在黃燈是常見缺口；送出後可複製摘要傳到官方 LINE@ 索取完整 PDF 報告書，並進一步與顧問預約諮詢。</div></div>`;
   }
   let html=lt;
   const tl=answers._tl||{};
@@ -463,7 +486,7 @@ function buildSummary(){
   html+=sec('退休準備',4); RET_B.forEach(q=>html+=row(q.title.replace(/^\d+\.\s*/,'').replace(/？$/,''),fmt(q.id)));
   html+=sec('理財諮詢',5); CONSULT.forEach(q=>html+=row(q.title.replace(/？$/,''),fmt(q.id)));
   html+=sec('聯絡資訊',1);
-  html+=row('姓名',g('p_name'))+row('性別 / 婚姻',[answers.sex,answers.marry].filter(Boolean).join(' / '))+row('年齡 / 職業',[g('p_age'),g('p_job')].filter(Boolean).join(' / '))+row('居住縣市',g('p_city'))+row('子女',[answers.kids,g('p_kidsDetail')].filter(Boolean).join('，'))+row('電話',g('p_phone'))+row('LINE',g('p_line'))+row('Email',g('p_email'));
+  html+=row('姓名',g('p_name'))+row('性別 / 婚姻',[answers.sex,answers.marry].filter(Boolean).join(' / '))+row('年齡 / 職業',[g('p_age'),jobVal()].filter(Boolean).join(' / '))+row('居住縣市',cityVal())+row('子女',[answers.kids,kidsDetailVal()].filter(Boolean).join('，'))+row('電話',g('p_phone'))+row('LINE',g('p_line'))+row('Email',g('p_email'));
   if(answers._ref){const refs=[[g('r1_name'),g('r1_age'),g('r1_job'),g('r1_contact')],[g('r2_name'),g('r2_age'),g('r2_job'),g('r2_contact')]].filter(r=>r.some(Boolean));
     if(refs.length){html+=sec('推薦親友',6); refs.forEach((r,i)=>html+=row('親友 '+(i+1),r.filter(Boolean).join('，')));}}
   document.getElementById('summaryBox').innerHTML=html;
@@ -478,15 +501,16 @@ function addChoice(f,q){
 function submitForm(){
   const g=id=>(document.getElementById(id)?.value||'').trim();
   const name=g('p_name'), phone=g('p_phone'), email=g('p_email');
-  if(!name||!phone||!email){ alert('請填寫「姓名、聯絡電話、Email」，方便寄送報告與聯繫。'); show(1); setTimeout(()=>document.getElementById(!name?'p_name':!phone?'p_phone':'p_email').focus(),300); return; }
+  if(!name||!phone){ alert('請填寫「姓名、聯絡電話」，方便顧問聯繫與準備報告。'); show(1); setTimeout(()=>document.getElementById(!name?'p_name':'p_phone').focus(),300); return; }
   const missing=HC.find(h=>!answers[h.id]);
   if(missing){ alert('AI 財務健診前 5 題為必填，請完成後再送出。'); show(2); return; }
+  if(!answers._consent){ alert('請先勾選個資使用同意，才能送出。'); show(1); setTimeout(()=>{const c=document.getElementById('consentWrap'); if(c) c.scrollIntoView({behavior:'smooth',block:'center'});},300); return; }
 
   const f=document.createElement('form'); f.action=FORM_ACTION; f.method='POST'; f.target='gform_iframe';
   // 基本資料
   addField(f,ENTRY.name,name); addField(f,ENTRY.sex,answers.sex); addField(f,ENTRY.age,g('p_age'));
-  addField(f,ENTRY.job,g('p_job')); addField(f,ENTRY.city,g('p_city')); addField(f,ENTRY.marry,answers.marry);
-  addField(f,ENTRY.kids,answers.kids); addField(f,ENTRY.kidsDetail,g('p_kidsDetail'));
+  addField(f,ENTRY.job,jobVal()); addField(f,ENTRY.city,cityVal()); addField(f,ENTRY.marry,answers.marry);
+  addField(f,ENTRY.kids,answers.kids); addField(f,ENTRY.kidsDetail,kidsDetailVal());
   addField(f,ENTRY.phone,phone); addField(f,ENTRY.line,g('p_line')); addField(f,ENTRY.email,email);
   // 人生跑道
   const tl=answers._tl||{}; addField(f,ENTRY.ageNow,tl.now); addField(f,ENTRY.ageRetire,tl.ret); addField(f,ENTRY.ageLife,tl.life);
@@ -503,6 +527,7 @@ function submitForm(){
   document.body.appendChild(f);
   btnSubmit.disabled=true; btnSubmit.textContent='送出中…';
   try{ f.submit(); }catch(e){}
+  clearState();
   setTimeout(showDone, 1300);
 }
 function showDone(){
@@ -510,13 +535,89 @@ function showDone(){
   document.getElementById('summaryBox').outerHTML =
     `<div class="summary"><div class="done-hero"><div class="ring"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#3a2b07" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
      <div style="text-align:center"><div style="font-family:var(--serif);font-size:21px;font-weight:800;color:var(--ink)">已送出，謝謝你！</div>
-     <p class="lead" style="margin:8px 0 0">你的<b style="color:var(--ink)">簡易版財務報告書</b>（財務三燈，總分 <b style="color:${band.c}">${hs.total}/10</b>）正在寄往你的信箱，請查收。</p>
-     <p class="lead" style="margin:10px 0 0;font-size:15px">此為快速自評的初步參考；若想更完整地檢視收支、保障、投資與退休規劃，歡迎進一步與顧問預約一對一諮詢。</p>
-     <a class="btn btn-gold" style="display:inline-flex;align-items:center;justify-content:center;text-decoration:none;margin-top:16px;padding:13px 24px" href="https://www.allfreedom.info/lifecycle-legacy.html#second-half-blueprint" target="_blank" rel="noopener">預約諮詢 →</a>
+     <p class="lead" style="margin:8px 0 0">你的<b style="color:var(--ink)">財務三燈</b>結果（總分 <b style="color:${band.c}">${hs.total}/10</b>，${band.t}）已整理好。</p>
+     <p class="lead" style="margin:10px 0 0;font-size:15px">請按下方<b style="color:var(--ink)">複製摘要</b>，再傳到官方 <b style="color:var(--ink)">LINE@</b>，即可向顧問索取完整 <b style="color:var(--ink)">PDF 報告書</b>。</p>
+     <button class="btn btn-gold" style="display:block;width:100%;margin-top:16px" onclick="copySummary(this)">複製摘要</button>
+     <a class="btn" style="display:flex;align-items:center;justify-content:center;width:100%;margin-top:10px;text-decoration:none;background:#06C755;color:#fff;box-shadow:0 12px 26px -12px rgba(6,199,85,.7)" href="https://lin.ee/uMYPHQc" target="_blank" rel="noopener">傳送官方 LINE@ 索取報告 →</a>
+     <div style="margin-top:16px;font-size:14.5px;line-height:1.7"><span style="color:var(--muted)">想更看清自己的人生下半場？</span><br><a href="https://www.allfreedom.info/lifecycle-legacy.html#second-half-blueprint" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700;text-decoration:none;border-bottom:1px solid rgba(201,162,75,.45);padding-bottom:1px">再做一次「人生下半場藍圖」檢測 →</a></div>
      </div></div>`;
   document.querySelector('.navbar .wrap').innerHTML =
-    `<button class="btn btn-ghost" onclick="location.reload()">再填一份</button><a class="btn btn-primary" style="flex:1;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center" href="https://www.allfreedom.info/" target="_blank" rel="noopener">前往官網</a>`;
+    `<button class="btn btn-ghost" onclick="clearState();location.reload()">再填一份</button><a class="btn btn-primary" style="flex:1;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center" href="https://www.allfreedom.info/" target="_blank" rel="noopener">前往官網</a>`;
   window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ===== 複製摘要（傳 LINE@ 索取 PDF 報告書用） ===== */
+function buildSummaryText(){
+  const g=id=>(document.getElementById(id)?.value||'').trim();
+  const hs=hcScore(), band=bandOf(hs.total);
+  let t='【馥芸財富管理學苑 · 索取財務三燈 PDF 報告書】\n';
+  t+='姓名：'+(g('p_name')||'—')+'\n';
+  t+='電話：'+(g('p_phone')||'—')+'\n';
+  if(g('p_line')) t+='LINE：'+g('p_line')+'\n';
+  const tl=answers._tl||{};
+  if(tl.rest!=null) t+='退休後年數：'+tl.rest+' 年（'+tl.now+'→'+tl.ret+'→'+tl.life+' 歲）\n';
+  t+='\n財務三燈：'+hs.total+'/10（'+band.t+'）\n';
+  hs.rows.forEach(x=>{ t+='・'+x.key+'：'+lightOf(x.score).t+'（'+x.ans+'）\n'; });
+  const motive=fmt('motive'); if(motive) t+='\n最想先解決：'+motive+'\n';
+  const c1=fmt('c1'); if(c1) t+='關心的財務問題：'+c1+'\n';
+  t+='\n— 我想索取完整 PDF 報告書，謝謝！';
+  return t;
+}
+function fallbackCopy(txt,cb){ const ta=document.createElement('textarea'); ta.value=txt; ta.style.position='fixed'; ta.style.top='-9999px'; ta.style.opacity='0'; document.body.appendChild(ta); ta.focus(); ta.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); if(cb)cb(); }
+function copySummary(btn){
+  const txt=buildSummaryText();
+  const ok=()=>{ btn.textContent='已複製 ✓ 貼到 LINE@ 即可'; setTimeout(()=>{btn.textContent='複製摘要';},2600); };
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(ok).catch(()=>fallbackCopy(txt,ok)); }
+  else fallbackCopy(txt,ok);
+}
+
+/* ===== 職業 / 縣市（點選） ===== */
+const JOBS=['上班族','公教人員','軍警消','自營商／企業主','專業人士','服務業','業務','家管','學生','退休','其他'];
+const CITIES=['台北市','新北市','基隆市','桃園市','新竹市','新竹縣','苗栗縣','台中市','彰化縣','南投縣','雲林縣','嘉義市','嘉義縣','台南市','高雄市','屏東縣','宜蘭縣','花蓮縣','台東縣','澎湖縣','金門縣','連江縣'];
+function jobVal(){ const v=answers.job; if(v==='其他') return (document.getElementById('p_job')?.value||'').trim()||'其他'; return v||''; }
+function cityVal(){ return answers.city||''; }
+
+/* ===== 子女代號（1=兒子 2=女兒） ===== */
+function parseKids(raw){
+  if(!raw) return '';
+  const map={'1':'兒子','2':'女兒'};
+  const out=[]; const re=/([12])\s*[\/／]\s*(\d{1,3})/g; let m;
+  while((m=re.exec(String(raw)))!==null){ out.push(map[m[1]]+' '+m[2]+' 歲'); }
+  return out.length?out.join('、'):'';
+}
+function kidsDetailVal(){ const raw=(document.getElementById('p_kidsDetail')?.value||'').trim(); return parseKids(raw)||raw; }
+function updateKidsPrev(){ const kd=document.getElementById('p_kidsDetail'); const pv=document.getElementById('kidsPrev'); if(!kd||!pv) return; const c=parseKids(kd.value.trim()); pv.textContent=c?('→ '+c):''; }
+
+/* ===== 個資同意 ===== */
+function bindConsent(){ const cw=document.getElementById('consentWrap'); answers._consent=false;
+  cw.addEventListener('click',()=>{ answers._consent=!answers._consent; cw.classList.toggle('sel',answers._consent); }); }
+
+/* ===== 本機記憶（不用重打） ===== */
+const LS_KEY='fuyun_blueprint_v1'; let saveT;
+function queueSave(){ clearTimeout(saveT); saveT=setTimeout(saveState,250); }
+function saveState(){ try{
+  const inputs={}; document.querySelectorAll('input[id]').forEach(el=>{ inputs[el.id]=el.value; });
+  localStorage.setItem(LS_KEY, JSON.stringify({answers, inputs, ts:Date.now()}));
+}catch(e){} }
+function clearState(){ try{ localStorage.removeItem(LS_KEY); }catch(e){} }
+function loadState(){ try{ const r=localStorage.getItem(LS_KEY); return r?JSON.parse(r):null; }catch(e){ return null; } }
+function applyState(){
+  const data=loadState(); if(!data) return;
+  if(data.inputs) Object.entries(data.inputs).forEach(([id,v])=>{ const el=document.getElementById(id); if(el&&v!=null) el.value=v; });
+  if(data.answers) Object.assign(answers, data.answers);
+  ALLQ.forEach(q=>{ let sel=answers[q.id]; if(sel==null) return; const arr=Array.isArray(sel)?sel:[sel];
+    arr.forEach(val=>{ const esc=(window.CSS&&CSS.escape)?CSS.escape(val):val; const o=document.querySelector('.opt[data-q="'+q.id+'"][data-val="'+esc+'"]'); if(o) o.classList.add('sel'); });
+    if(arr.indexOf('其他')>-1){ const oi=document.getElementById('oi_'+q.id); if(oi) oi.classList.add('show'); const inp=document.querySelector('input[data-other="'+q.id+'"]'); if(inp&&answers[q.id+'_other']) inp.value=answers[q.id+'_other']; }
+    if(q.sub){ const on=arr.indexOf(q.sub.trigger)>-1; const sf=document.getElementById('sf_'+q.id); if(sf&&on){ sf.classList.add('show'); const si=document.querySelector('input[data-sub="'+q.id+'"]'); if(si&&answers.loan) si.value=answers.loan; } }
+  });
+  [['p_sex','sex'],['p_marry','marry'],['p_kids','kids'],['p_job_seg','job'],['p_city_seg','city']].forEach(p=>{
+    const v=answers[p[1]]; if(v==null) return; const m=document.getElementById(p[0]); if(!m) return;
+    m.querySelectorAll('.opt').forEach(o=>{ if(o.dataset.val===v) o.classList.add('sel'); });
+  });
+  if(answers.kids==='有'){ const k=document.getElementById('kidsDetail'); if(k) k.style.display='block'; }
+  if(answers.job==='其他'){ const j=document.getElementById('jobOther'); if(j) j.style.display='block'; }
+  if(answers._ref!=null){ const cards=document.querySelectorAll('#refPick .opt'); const idx=answers._ref?0:1; if(cards[idx]) cards[idx].classList.add('sel'); const rf=document.getElementById('refFields'); if(rf) rf.style.display=answers._ref?'block':'none'; }
+  if(answers._consent){ const c=document.getElementById('consentWrap'); if(c) c.classList.add('sel'); }
 }
 
 /* ===== 初始化 ===== */
@@ -527,6 +628,14 @@ renderQ(CONSULT,'block-c',false);
 renderSeg('p_sex','sex',['男','女']);
 renderSeg('p_marry','marry',['單身','已婚']);
 renderSeg('p_kids','kids',['無','有'],v=>{document.getElementById('kidsDetail').style.display=v==='有'?'block':'none';});
+renderSeg('p_job_seg','job',JOBS,v=>{document.getElementById('jobOther').style.display=v==='其他'?'block':'none';});
+renderSeg('p_city_seg','city',CITIES);
+bindConsent();
+applyState();
+updateKidsPrev();
+document.getElementById('p_kidsDetail').addEventListener('input',updateKidsPrev);
+document.addEventListener('input',queueSave);
+document.addEventListener('click',queueSave);
 updateTL(); show(0);
 </script>
 </body>
