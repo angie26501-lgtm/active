@@ -160,6 +160,22 @@
   .done-hero .ring{width:72px;height:72px;border-radius:50%;margin:0 auto 14px;background:linear-gradient(145deg,var(--gold),var(--gold-soft));display:grid;place-items:center;box-shadow:0 16px 30px -14px rgba(201,162,75,.8)}
   .done-hero .ring svg{width:34px;height:34px}
   .hint{font-size:12px;color:var(--muted);text-align:center;margin-top:10px}
+
+  /* 免打字：下拉選單 */
+  select.txt{width:100%;font-family:var(--sans);font-size:17px;color:var(--text);background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:13px 40px 13px 14px;outline:0;transition:border-color .15s;appearance:none;-webkit-appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23C9A24B' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>");background-repeat:no-repeat;background-position:right 14px center;cursor:pointer}
+  select.txt:focus{border-color:var(--gold)}
+  select.txt.placeholder{color:#b7c0c8}
+  select.age-sel{border:0;outline:0;background:transparent;font-family:var(--serif);font-weight:700;font-size:26px;color:var(--ink);text-align:center;text-align-last:center;width:auto;padding:0 4px;appearance:none;-webkit-appearance:none;cursor:pointer}
+  select.age-sel:focus{color:var(--gold)}
+
+  /* 子女結構化選擇 */
+  .kidrow{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:8px 10px;margin-top:8px}
+  .kidrow .kidno{font-family:var(--serif);font-weight:700;color:var(--gold);font-size:14px;padding:0 4px;white-space:nowrap}
+  .kidrow .sexseg{display:flex;gap:6px}
+  .kidrow .sexseg .opt{padding:8px 12px;border-radius:10px}
+  .kidrow .sexseg .opt .lab{font-size:15px}
+  .kidrow select.txt{padding:9px 34px 9px 12px;font-size:15px}
 </style>
 </head>
 <body>
@@ -190,9 +206,9 @@
       <p class="tl-h">先看看你的人生跑道</p>
       <p class="tl-note">輸入年齡，立刻算出退休後需要被支撐的歲月。</p>
       <div class="tl-ages">
-        <div class="age-field"><label>現在的我</label><div class="inwrap"><input id="ageNow" type="number" inputmode="numeric" min="18" max="100" value="40"><span class="unit">歲</span></div></div>
-        <div class="age-field"><label>預計退休</label><div class="inwrap"><input id="ageRetire" type="number" inputmode="numeric" min="40" max="100" value="65"><span class="unit">歲</span></div></div>
-        <div class="age-field"><label>平均壽命</label><div class="inwrap"><input id="ageLife" type="number" inputmode="numeric" min="60" max="110" value="85"><span class="unit">歲</span></div></div>
+        <div class="age-field"><label>現在的我</label><div class="inwrap"><select id="ageNow" class="age-sel"></select><span class="unit">歲</span></div></div>
+        <div class="age-field"><label>預計退休</label><div class="inwrap"><select id="ageRetire" class="age-sel"></select><span class="unit">歲</span></div></div>
+        <div class="age-field"><label>平均壽命</label><div class="inwrap"><select id="ageLife" class="age-sel"></select><span class="unit">歲</span></div></div>
       </div>
       <div class="bar"><div class="work" id="barWork" style="flex-basis:62%"><span>辛勤工作</span></div><div class="rest" id="barRest" style="flex-basis:38%"><span>退休生活</span></div></div>
       <p class="tl-result">退休後，你將有 <b id="restYears">20</b> 年的生活需要準備。</p>
@@ -212,7 +228,7 @@
         <div class="field"><label>性別</label><div class="seg" id="p_sex"></div></div>
       </div>
       <div class="grid2">
-        <div class="field"><label>年齡</label><input class="txt" id="p_age" type="number" inputmode="numeric" placeholder="40"></div>
+        <div class="field"><label>年齡</label><select class="txt" id="p_age"></select></div>
         <div class="field"><label>婚姻狀況</label><div class="seg" id="p_marry"></div></div>
       </div>
       <div class="field"><label>職業（點選即可）</label>
@@ -222,13 +238,9 @@
       <div class="field"><label>居住縣市（點選即可）</label>
         <div class="seg compact" id="p_city_seg"></div>
       </div>
-      <div class="field"><label>子女</label>
-        <div class="seg" id="p_kids" style="margin-bottom:10px"></div>
-        <div id="kidsDetail" style="display:none">
-          <input class="txt" id="p_kidsDetail" placeholder="例：1/28 2/20">
-          <div class="kidshint" id="kidsHint">輸入規則：<b>1＝兒子、2＝女兒</b>，格式「代號/年齡」，多位用空格分隔。例：<b>1/28 2/20</b> → 兒子 28 歲、女兒 20 歲</div>
-          <div class="kidsprev" id="kidsPrev"></div>
-        </div>
+      <div class="field"><label>子女（點選人數即可）</label>
+        <div class="seg" id="p_kids" style="margin-bottom:6px"></div>
+        <div id="kidsDetail" style="display:none"></div>
       </div>
       <div class="grid2">
         <div class="field"><label>聯絡電話<span class="req">*</span></label><input class="txt" id="p_phone" inputmode="tel" placeholder="0912-345-678"></div>
@@ -415,7 +427,13 @@ function updateTL(){
   document.getElementById('restYears').textContent=rest;
   answers._tl={now,ret,life,work,rest};
 }
-['ageNow','ageRetire','ageLife'].forEach(id=>document.getElementById(id).addEventListener('input',updateTL));
+/* 年齡下拉填充（免打字） */
+function fillSelect(el,min,max,def,ph){ if(!el)return; let h=ph?`<option value="">${ph}</option>`:''; for(let a=min;a<=max;a++){h+=`<option value="${a}"${a===def?' selected':''}>${a}</option>`;} el.innerHTML=h; }
+fillSelect(document.getElementById('ageNow'),18,80,40);
+fillSelect(document.getElementById('ageRetire'),45,85,65);
+fillSelect(document.getElementById('ageLife'),65,105,85);
+fillSelect(document.getElementById('p_age'),18,90,null,'請選擇');
+['ageNow','ageRetire','ageLife'].forEach(id=>document.getElementById(id).addEventListener('change',updateTL));
 
 /* ===== 推薦親友 opt-in ===== */
 (function(){
@@ -486,7 +504,7 @@ function buildSummary(){
   html+=sec('退休準備',4); RET_B.forEach(q=>html+=row(q.title.replace(/^\d+\.\s*/,'').replace(/？$/,''),fmt(q.id)));
   html+=sec('理財諮詢',5); CONSULT.forEach(q=>html+=row(q.title.replace(/？$/,''),fmt(q.id)));
   html+=sec('聯絡資訊',1);
-  html+=row('姓名',g('p_name'))+row('性別 / 婚姻',[answers.sex,answers.marry].filter(Boolean).join(' / '))+row('年齡 / 職業',[g('p_age'),jobVal()].filter(Boolean).join(' / '))+row('居住縣市',cityVal())+row('子女',[answers.kids,kidsDetailVal()].filter(Boolean).join('，'))+row('電話',g('p_phone'))+row('LINE',g('p_line'))+row('Email',g('p_email'));
+  html+=row('姓名',g('p_name'))+row('性別 / 婚姻',[answers.sex,answers.marry].filter(Boolean).join(' / '))+row('年齡 / 職業',[g('p_age'),jobVal()].filter(Boolean).join(' / '))+row('居住縣市',cityVal())+row('子女',[kidsVal(),kidsDetailVal()].filter(Boolean).join('，'))+row('電話',g('p_phone'))+row('LINE',g('p_line'))+row('Email',g('p_email'));
   if(answers._ref){const refs=[[g('r1_name'),g('r1_age'),g('r1_job'),g('r1_contact')],[g('r2_name'),g('r2_age'),g('r2_job'),g('r2_contact')]].filter(r=>r.some(Boolean));
     if(refs.length){html+=sec('推薦親友',6); refs.forEach((r,i)=>html+=row('親友 '+(i+1),r.filter(Boolean).join('，')));}}
   document.getElementById('summaryBox').innerHTML=html;
@@ -510,7 +528,7 @@ function submitForm(){
   // 基本資料
   addField(f,ENTRY.name,name); addField(f,ENTRY.sex,answers.sex); addField(f,ENTRY.age,g('p_age'));
   addField(f,ENTRY.job,jobVal()); addField(f,ENTRY.city,cityVal()); addField(f,ENTRY.marry,answers.marry);
-  addField(f,ENTRY.kids,answers.kids); addField(f,ENTRY.kidsDetail,kidsDetailVal());
+  addField(f,ENTRY.kids,kidsVal()); addField(f,ENTRY.kidsDetail,kidsDetailVal());
   addField(f,ENTRY.phone,phone); addField(f,ENTRY.line,g('p_line')); addField(f,ENTRY.email,email);
   // 人生跑道
   const tl=answers._tl||{}; addField(f,ENTRY.ageNow,tl.now); addField(f,ENTRY.ageRetire,tl.ret); addField(f,ENTRY.ageLife,tl.life);
@@ -577,16 +595,48 @@ const CITIES=['台北市','新北市','基隆市','桃園市','新竹市','新�
 function jobVal(){ const v=answers.job; if(v==='其他') return (document.getElementById('p_job')?.value||'').trim()||'其他'; return v||''; }
 function cityVal(){ return answers.city||''; }
 
-/* ===== 子女代號（1=兒子 2=女兒） ===== */
-function parseKids(raw){
-  if(!raw) return '';
-  const map={'1':'兒子','2':'女兒'};
-  const out=[]; const re=/([12])\s*[\/／]\s*(\d{1,3})/g; let m;
-  while((m=re.exec(String(raw)))!==null){ out.push(map[m[1]]+' '+m[2]+' 歲'); }
-  return out.length?out.join('、'):'';
+/* ===== 子女（點選人數 → 每位選性別與年齡，免打字） ===== */
+let KIDS=[];
+function buildKids(){
+  const seg=document.getElementById('p_kids');
+  const counts=['無','1 位','2 位','3 位','4 位以上'];
+  seg.innerHTML='';
+  counts.forEach((c,idx)=>{
+    const el=document.createElement('div'); el.className='opt'; el.dataset.shape='round'; el.dataset.val=c;
+    el.innerHTML=`<div class="box">${CHECK}</div><div class="lab">${c}</div>`;
+    el.addEventListener('click',()=>{ seg.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel')); el.classList.add('sel'); setKidCount(idx); });
+    seg.appendChild(el);
+  });
 }
-function kidsDetailVal(){ const raw=(document.getElementById('p_kidsDetail')?.value||'').trim(); return parseKids(raw)||raw; }
-function updateKidsPrev(){ const kd=document.getElementById('p_kidsDetail'); const pv=document.getElementById('kidsPrev'); if(!kd||!pv) return; const c=parseKids(kd.value.trim()); pv.textContent=c?('→ '+c):''; }
+function setKidCount(n){
+  answers.kidsCount=n;
+  const wrap=document.getElementById('kidsDetail');
+  if(n<=0){ KIDS=[]; wrap.style.display='none'; wrap.innerHTML=''; queueSave(); return; }
+  while(KIDS.length<n) KIDS.push({sex:null,age:''});
+  KIDS=KIDS.slice(0,n);
+  wrap.style.display='block'; renderKidRows(); queueSave();
+}
+function renderKidRows(){
+  const wrap=document.getElementById('kidsDetail'); let h='';
+  KIDS.forEach((k,i)=>{
+    let ageOpts='<option value="">年齡</option>'; for(let a=0;a<=45;a++){ ageOpts+=`<option value="${a}"${String(k.age)===String(a)?' selected':''}>${a} 歲</option>`; }
+    h+=`<div class="kidrow"><span class="kidno">第 ${i+1} 位</span>
+      <div class="sexseg" data-kid="${i}">
+        <div class="opt${k.sex==='兒子'?' sel':''}" data-shape="round" data-sex="兒子"><div class="box">${CHECK}</div><div class="lab">兒子</div></div>
+        <div class="opt${k.sex==='女兒'?' sel':''}" data-shape="round" data-sex="女兒"><div class="box">${CHECK}</div><div class="lab">女兒</div></div>
+      </div>
+      <select class="txt kidage" data-kid="${i}">${ageOpts}</select></div>`;
+  });
+  wrap.innerHTML=h;
+  wrap.querySelectorAll('.sexseg').forEach(seg=>{ const i=+seg.dataset.kid;
+    seg.querySelectorAll('.opt').forEach(o=>o.addEventListener('click',()=>{ seg.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel')); o.classList.add('sel'); KIDS[i].sex=o.dataset.sex; queueSave(); })); });
+  wrap.querySelectorAll('.kidage').forEach(sel=>{ sel.addEventListener('change',()=>{ KIDS[+sel.dataset.kid].age=sel.value; queueSave(); }); });
+}
+function kidsVal(){ return (answers.kidsCount>0)?'有':'無'; }
+function kidsDetailVal(){
+  if(!KIDS.length) return '';
+  return KIDS.filter(k=>k.sex||k.age!=='').map(k=>(`${k.sex||'子女'}${k.age!==''?' '+k.age+' 歲':''}`)).join('、');
+}
 
 /* ===== 個資同意 ===== */
 function bindConsent(){ const cw=document.getElementById('consentWrap'); answers._consent=false;
@@ -596,7 +646,8 @@ function bindConsent(){ const cw=document.getElementById('consentWrap'); answers
 const LS_KEY='fuyun_blueprint_v1'; let saveT;
 function queueSave(){ clearTimeout(saveT); saveT=setTimeout(saveState,250); }
 function saveState(){ try{
-  const inputs={}; document.querySelectorAll('input[id]').forEach(el=>{ inputs[el.id]=el.value; });
+  answers._kids=KIDS;
+  const inputs={}; document.querySelectorAll('input[id],select[id]').forEach(el=>{ inputs[el.id]=el.value; });
   localStorage.setItem(LS_KEY, JSON.stringify({answers, inputs, ts:Date.now()}));
 }catch(e){} }
 function clearState(){ try{ localStorage.removeItem(LS_KEY); }catch(e){} }
@@ -610,11 +661,17 @@ function applyState(){
     if(arr.indexOf('其他')>-1){ const oi=document.getElementById('oi_'+q.id); if(oi) oi.classList.add('show'); const inp=document.querySelector('input[data-other="'+q.id+'"]'); if(inp&&answers[q.id+'_other']) inp.value=answers[q.id+'_other']; }
     if(q.sub){ const on=arr.indexOf(q.sub.trigger)>-1; const sf=document.getElementById('sf_'+q.id); if(sf&&on){ sf.classList.add('show'); const si=document.querySelector('input[data-sub="'+q.id+'"]'); if(si&&answers.loan) si.value=answers.loan; } }
   });
-  [['p_sex','sex'],['p_marry','marry'],['p_kids','kids'],['p_job_seg','job'],['p_city_seg','city']].forEach(p=>{
+  [['p_sex','sex'],['p_marry','marry'],['p_job_seg','job'],['p_city_seg','city']].forEach(p=>{
     const v=answers[p[1]]; if(v==null) return; const m=document.getElementById(p[0]); if(!m) return;
     m.querySelectorAll('.opt').forEach(o=>{ if(o.dataset.val===v) o.classList.add('sel'); });
   });
-  if(answers.kids==='有'){ const k=document.getElementById('kidsDetail'); if(k) k.style.display='block'; }
+  if(Array.isArray(answers._kids)) KIDS=answers._kids.map(k=>({sex:k&&k.sex?k.sex:null,age:(k&&k.age!=null)?k.age:''}));
+  if(answers.kidsCount!=null){
+    const seg=document.getElementById('p_kids'); const cards=seg?seg.querySelectorAll('.opt'):[];
+    if(cards[answers.kidsCount]) cards[answers.kidsCount].classList.add('sel');
+    const wrap=document.getElementById('kidsDetail');
+    if(answers.kidsCount>0){ wrap.style.display='block'; renderKidRows(); } else if(wrap){ wrap.style.display='none'; }
+  }
   if(answers.job==='其他'){ const j=document.getElementById('jobOther'); if(j) j.style.display='block'; }
   if(answers._ref!=null){ const cards=document.querySelectorAll('#refPick .opt'); const idx=answers._ref?0:1; if(cards[idx]) cards[idx].classList.add('sel'); const rf=document.getElementById('refFields'); if(rf) rf.style.display=answers._ref?'block':'none'; }
   if(answers._consent){ const c=document.getElementById('consentWrap'); if(c) c.classList.add('sel'); }
@@ -627,15 +684,14 @@ renderQ(RET_B,'block-b',false);
 renderQ(CONSULT,'block-c',false);
 renderSeg('p_sex','sex',['男','女']);
 renderSeg('p_marry','marry',['單身','已婚']);
-renderSeg('p_kids','kids',['無','有'],v=>{document.getElementById('kidsDetail').style.display=v==='有'?'block':'none';});
+buildKids();
 renderSeg('p_job_seg','job',JOBS,v=>{document.getElementById('jobOther').style.display=v==='其他'?'block':'none';});
 renderSeg('p_city_seg','city',CITIES);
 bindConsent();
 applyState();
-updateKidsPrev();
-document.getElementById('p_kidsDetail').addEventListener('input',updateKidsPrev);
 document.addEventListener('input',queueSave);
 document.addEventListener('click',queueSave);
+document.addEventListener('change',queueSave);
 updateTL(); show(0);
 </script>
 </body>
