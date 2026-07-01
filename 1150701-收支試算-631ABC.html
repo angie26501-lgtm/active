@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>收支有餘 · 試算表｜631 × ABC｜財富花園</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:#1F4A2E;--green-soft:#2E7D4F;--gold:#C9A24B;--gold-deep:#A87E2E;
+    --bronze:#8A5A2B;--rose:#B85E71;--cream:#FAF7EF;--cream2:#F6F1E4;
+    --ink:#2B2419;--ink-soft:#5B5340;--line:#E4DBC5;--card:#FFFFFF;
+    --ok:#2E7D4F;--warn:#C9A24B;--bad:#C0553F;
+    --shadow:0 6px 22px rgba(31,74,46,.08);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--cream);color:var(--ink);
+    font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;font-size:20px;line-height:1.7;}
+  .wrap{max-width:700px;margin:0 auto;padding:0 16px 70px;}
+
+  .top{background:linear-gradient(160deg,#20502F,#1F4A2E 55%,#173A24);color:#fff;
+    padding:26px 18px 30px;text-align:center;position:relative;overflow:hidden;}
+  .top::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:22px;
+    background:radial-gradient(60% 100% at 50% 0,rgba(201,162,75,.35),transparent 70%);}
+  .brand{font-size:15px;letter-spacing:.14em;color:var(--gold);font-weight:700;margin:0 0 8px;}
+  .top h1{font-family:"Noto Serif TC",serif;font-weight:700;font-size:29px;margin:0;line-height:1.35;}
+  .top .sub{margin:10px auto 0;max-width:540px;font-size:16px;color:#E8E2CF;}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);}
+
+  /* step header */
+  .step{display:flex;align-items:center;gap:12px;margin:30px 2px 12px;}
+  .step .n{width:36px;height:36px;border-radius:50%;background:var(--green);color:#fff;
+    font-family:"Noto Serif TC",serif;font-weight:700;font-size:20px;display:grid;place-items:center;flex:none;}
+  .step .n.gold{background:var(--gold);}
+  .step h2{font-family:"Noto Serif TC",serif;font-size:22px;margin:0;color:var(--green);font-weight:700;line-height:1.3;}
+  .step h2 small{display:block;font-size:14px;font-weight:500;color:var(--ink-soft);font-family:"Noto Sans TC",sans-serif;}
+
+  /* income */
+  .income{margin-top:-18px;padding:22px 20px 22px;position:relative;z-index:2;}
+  .in-row{display:flex;align-items:center;gap:10px;background:var(--cream2);border:2px solid var(--line);
+    border-radius:16px;padding:8px 16px;transition:border-color .2s;}
+  .in-row:focus-within{border-color:var(--gold);}
+  .in-row .pre{font-size:20px;color:var(--ink-soft);font-weight:700;white-space:nowrap;}
+  .in-row input{border:0;background:transparent;flex:1;min-width:0;font-family:inherit;
+    font-weight:900;color:var(--green);text-align:right;outline:none;}
+  #income{font-size:32px;}
+  .in-row .unit{font-size:20px;color:var(--ink-soft);font-weight:700;}
+  .lab{font-size:19px;font-weight:700;color:var(--green);margin:0 0 12px;display:flex;align-items:center;gap:8px;}
+  .lab b{background:var(--gold);color:#fff;font-size:14px;border-radius:999px;padding:2px 12px;font-weight:700;}
+  .chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:13px;}
+  .chip{border:1.5px solid var(--line);background:#fff;color:var(--green);border-radius:999px;
+    padding:8px 16px;font-size:17px;font-weight:700;font-family:inherit;cursor:pointer;transition:.15s;}
+  .chip:hover{border-color:var(--gold);} .chip.on{background:var(--green);border-color:var(--green);color:#fff;}
+  .modewrap{display:flex;background:var(--cream2);border:1px solid var(--line);border-radius:14px;padding:5px;margin-top:14px;}
+  .mode{flex:1;border:0;background:transparent;font-family:inherit;font-size:16px;font-weight:700;
+    color:var(--ink-soft);padding:11px 6px;border-radius:10px;cursor:pointer;transition:.18s;line-height:1.3;}
+  .mode small{display:block;font-size:12px;font-weight:500;opacity:.85;}
+  .mode.on{background:#fff;color:var(--green);box-shadow:0 2px 8px rgba(31,74,46,.12);}
+
+  /* 631 建議 strip */
+  .sug{margin-top:16px;background:#FBF7EE;border:1px dashed var(--gold);border-radius:14px;padding:14px 14px 12px;}
+  .sug .t{font-size:14px;color:var(--gold-deep);font-weight:700;margin:0 0 10px;text-align:center;}
+  .sug .row{display:flex;gap:8px;}
+  .sug .cell{flex:1;text-align:center;background:#fff;border-radius:10px;padding:9px 4px;}
+  .sug .cell .k{font-size:13px;color:var(--ink-soft);font-weight:700;}
+  .sug .cell .v{font-size:19px;font-weight:900;color:var(--green);font-variant-numeric:tabular-nums;}
+  .sug .cell.g .v{color:var(--gold-deep);} .sug .cell.b .v{color:var(--bronze);}
+
+  /* input list rows */
+  .rows{padding:8px 16px 12px;}
+  .r{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line);}
+  .r:last-child{border-bottom:0;}
+  .r .ic{font-size:26px;width:34px;text-align:center;flex:none;}
+  .r .nm{flex:1;font-size:18px;font-weight:700;min-width:0;}
+  .r .nm small{display:block;font-size:13px;font-weight:500;color:var(--ink-soft);}
+  .r .field{display:flex;align-items:center;gap:6px;background:var(--cream2);border:2px solid var(--line);
+    border-radius:12px;padding:4px 12px;width:150px;transition:border-color .2s;}
+  .r .field:focus-within{border-color:var(--gold);}
+  .r .field input{border:0;background:transparent;width:100%;font-family:inherit;font-size:21px;
+    font-weight:800;color:var(--green);text-align:right;outline:none;}
+  .r .field .u{font-size:15px;color:var(--ink-soft);font-weight:700;}
+
+  /* subtotal bar */
+  .sub-total{margin:6px 16px 0;padding:14px 18px;border-radius:0 0 20px 20px;
+    background:var(--green);color:#fff;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+  .sub-total.gold{background:var(--gold-deep);}
+  .sub-total .lbl{font-size:16px;font-weight:700;}
+  .sub-total .amt{font-size:24px;font-weight:900;font-variant-numeric:tabular-nums;}
+  .sub-total .amt small{font-size:14px;font-weight:700;opacity:.85;margin-left:3px;}
+  .hint{font-size:14px;color:var(--ink-soft);margin:10px 16px 0;}
+  .apply{margin:0 16px 14px;}
+  .apply button{width:100%;border:1.5px dashed var(--gold);background:#fff;color:var(--gold-deep);
+    font-family:inherit;font-size:16px;font-weight:700;border-radius:12px;padding:12px;cursor:pointer;transition:.15s;}
+  .apply button:hover{background:#FBF7EE;}
+
+  /* B convert */
+  .convert{margin:8px 16px 14px;background:#FBF7EE;border-radius:14px;padding:14px 16px;
+    display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+  .convert .eq{font-size:16px;color:var(--ink-soft);font-weight:700;}
+  .convert .big{font-size:26px;font-weight:900;color:var(--gold-deep);}
+
+  /* goals */
+  .goal{border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin:0 16px 12px;background:#fff;position:relative;}
+  .goal .gname{display:flex;align-items:center;gap:8px;background:var(--cream2);border:2px solid var(--line);
+    border-radius:12px;padding:6px 14px;margin-bottom:10px;}
+  .goal .gname input{border:0;background:transparent;flex:1;font-family:inherit;font-size:19px;font-weight:800;color:var(--rose);outline:none;}
+  .goal .grow{display:flex;gap:10px;flex-wrap:wrap;}
+  .goal .cell{flex:1;min-width:130px;}
+  .goal .cell .k{font-size:14px;color:var(--ink-soft);font-weight:700;margin-bottom:4px;}
+  .goal .field{display:flex;align-items:center;gap:6px;background:var(--cream2);border:2px solid var(--line);border-radius:12px;padding:5px 12px;}
+  .goal .field:focus-within{border-color:var(--rose);}
+  .goal .field input{border:0;background:transparent;width:100%;font-family:inherit;font-size:20px;font-weight:800;color:var(--rose);text-align:right;outline:none;}
+  .goal .field .u{font-size:14px;color:var(--ink-soft);font-weight:700;white-space:nowrap;}
+  .goal .result{margin-top:12px;background:linear-gradient(150deg,#C87E8E,#A85266);color:#fff;
+    border-radius:12px;padding:11px 14px;display:flex;justify-content:space-between;align-items:center;}
+  .goal .result .k{font-size:15px;font-weight:700;} .goal .result .v{font-size:23px;font-weight:900;}
+  .goal .del{position:absolute;top:10px;right:12px;border:0;background:#F3ECE0;color:#A85266;
+    width:30px;height:30px;border-radius:50%;font-size:17px;cursor:pointer;font-weight:900;line-height:1;}
+  .addgoal{margin:0 16px 4px;}
+  .addgoal button{width:100%;border:1.5px dashed var(--rose);background:#fff;color:var(--rose);
+    font-family:inherit;font-size:16px;font-weight:700;border-radius:12px;padding:12px;cursor:pointer;}
+
+  /* 結算 */
+  .settle{margin-top:14px;border:none;overflow:hidden;border-radius:22px;box-shadow:var(--shadow);}
+  .settle .head{background:linear-gradient(160deg,#20502F,#1F4A2E);color:#fff;padding:20px;text-align:center;}
+  .settle .head .rincome{font-size:15px;color:#E8E2CF;}
+  .settle .head .rincome b{font-size:22px;color:#fff;font-weight:900;}
+  .settle .body{background:#fff;padding:6px 20px 4px;}
+  .sline{display:flex;align-items:center;gap:12px;padding:15px 0;border-bottom:1px dashed var(--line);}
+  .sline .flag{width:14px;height:14px;border-radius:50%;flex:none;}
+  .sline .txt{flex:1;} .sline .txt .k{font-size:18px;font-weight:700;}
+  .sline .txt .c{font-size:13px;color:var(--ink-soft);}
+  .sline .amt{font-size:22px;font-weight:900;font-variant-numeric:tabular-nums;text-align:right;}
+  .sline .amt .p{display:block;font-size:13px;font-weight:700;color:var(--ink-soft);}
+  .balance{padding:18px 20px 22px;text-align:center;}
+  .balance .k{font-size:16px;font-weight:700;color:var(--ink-soft);}
+  .balance .v{font-family:"Noto Serif TC",serif;font-size:40px;font-weight:900;margin:2px 0 6px;font-variant-numeric:tabular-nums;line-height:1.1;}
+  .balance .msg{font-size:16px;line-height:1.65;border-radius:14px;padding:14px 16px;}
+  .balance.ok .v{color:var(--ok);} .balance.ok .msg{background:#EAF3EC;color:#1F4A2E;}
+  .balance.warn .v{color:var(--gold-deep);} .balance.warn .msg{background:#FBF3E2;color:#7A5A15;}
+  .balance.bad .v{color:var(--bad);} .balance.bad .msg{background:#FBEDE9;color:#8A3320;}
+
+  /* actions + cta */
+  .actions{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap;}
+  .btn{flex:1;min-width:150px;border:0;font-family:inherit;font-size:18px;font-weight:700;border-radius:14px;
+    padding:16px;cursor:pointer;transition:.18s;text-align:center;text-decoration:none;display:block;}
+  .btn.copy{background:#fff;border:2px solid var(--green);color:var(--green);} .btn.copy:hover{background:var(--green);color:#fff;}
+  .btn.line{background:var(--gold);color:#fff;box-shadow:0 6px 16px rgba(201,162,75,.35);} .btn.line:hover{background:var(--gold-deep);}
+  .cta{margin-top:24px;text-align:center;background:linear-gradient(160deg,#F6F1E4,#FBF7EE);
+    border:1px solid var(--line);border-radius:20px;padding:24px 20px;}
+  .cta h3{font-family:"Noto Serif TC",serif;font-size:20px;color:var(--green);margin:0 0 6px;}
+  .cta p{font-size:15px;color:var(--ink-soft);margin:0 0 16px;}
+  .disc{margin-top:22px;font-size:13px;line-height:1.7;color:#8A8266;text-align:center;}
+  .foot{margin-top:14px;text-align:center;font-size:14px;color:var(--ink-soft);} .foot b{color:var(--green);}
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--green);
+    color:#fff;padding:12px 22px;border-radius:999px;font-size:16px;font-weight:700;opacity:0;pointer-events:none;
+    transition:.3s;box-shadow:0 8px 24px rgba(0,0,0,.2);z-index:50;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  @media(max-width:440px){.top h1{font-size:24px;}#income{font-size:27px;}.r .field{width:128px;}
+    .r .field input{font-size:19px;}.balance .v{font-size:34px;}}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <p class="brand">馥芸財富學苑 ｜ 女人要有錢 · 財富花園 · 第三堂【播種】</p>
+  <h1>收支有餘 · 試算表<br><span style="font-size:19px;color:#E8E2CF;font-family:'Noto Sans TC';font-weight:500;">631 法則 × ABC 三帳戶</span></h1>
+  <p class="sub">先填收入，631 幫你抓好目標；再把 A 每月支出、B 年度支出、C 夢想填進去，馬上看你「收支有餘」嗎。</p>
+</div>
+
+<div class="wrap">
+
+  <!-- 收入 -->
+  <div class="card income">
+    <p class="lab"><b>收入</b>我每個月，大概有多少錢？</p>
+    <div class="in-row"><span class="pre">NT$</span>
+      <input id="income" type="text" inputmode="numeric" placeholder="40,000" autocomplete="off"><span class="unit">元</span></div>
+    <div class="chips" id="chips">
+      <button class="chip" data-v="30000">3 萬</button><button class="chip" data-v="40000">4 萬</button>
+      <button class="chip" data-v="50000">5 萬</button><button class="chip" data-v="60000">6 萬</button>
+      <button class="chip" data-v="80000">8 萬</button></div>
+    <div class="modewrap" id="modes">
+      <button class="mode on" data-m="general">上班族 631<small>生活6 · 存還3 · 保障1</small></button>
+      <button class="mode" data-m="retire">退休 6-2-2<small>生活6 · 醫療預備2 · 心願2</small></button></div>
+    <div class="sug">
+      <p class="t" id="sugTitle">631 建議目標（幫你抓大概）</p>
+      <div class="row">
+        <div class="cell"><div class="k" id="k1">生活 6 成</div><div class="v" id="sug1">—</div></div>
+        <div class="cell g"><div class="k" id="k2">存與還 3 成</div><div class="v" id="sug2">—</div></div>
+        <div class="cell b"><div class="k" id="k3">保障 1 成</div><div class="v" id="sug3">—</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- A 每月支出 -->
+  <div class="step"><span class="n">A</span><h2>每月支出 · 食衣住行育樂<small>顧好今天 —— 每天要用的錢，填在下面</small></h2></div>
+  <div class="card rows" id="aRows"></div>
+  <div class="sub-total"><span class="lbl">A 生活帳戶合計</span><span class="amt"><span id="aTotal">0</span><small>元／月</small></span></div>
+  <div class="apply"><button id="applyA">✨ 沒把握？先套用 631 建議比例看看</button></div>
+
+  <!-- B 年度支出 -->
+  <div class="step"><span class="n gold">B</span><h2 id="bTitle">年度支出 · 大錢小存<small>一年幾次的大錢，加起來 ÷12，每月先撥一點，到期不慌</small></h2></div>
+  <div class="card rows" id="bRows"></div>
+  <div class="sub-total gold"><span class="lbl">一年大支出加總</span><span class="amt"><span id="bYear">0</span><small>元／年</small></span></div>
+  <div class="convert"><span class="eq">÷ 12 個月 ＝ 每月先撥</span><span class="big"><span id="bMonth">0</span> 元</span></div>
+
+  <!-- C 夢想帳戶 -->
+  <div class="step"><span class="n" style="background:var(--rose)">C</span><h2>夢想帳戶 · 先付給自己<small>想完成的夢：填金額與想花幾個月，算出每月要撥多少</small></h2></div>
+  <div id="goals"></div>
+  <div class="addgoal"><button id="addGoal">＋ 再加一個夢想</button></div>
+  <div class="sub-total" style="background:var(--rose);margin-top:12px;border-radius:16px;">
+    <span class="lbl">C 夢想帳戶每月合計</span><span class="amt"><span id="cTotal">0</span><small>元／月</small></span></div>
+
+  <!-- 結算 -->
+  <div class="step"><span class="n">✓</span><h2>收支結算 · 你這個月有餘嗎？<small>收入 −（A ＋ B ＋ C）＝ 每月結餘</small></h2></div>
+  <div class="settle">
+    <div class="head"><div class="rincome">每月收入　<b id="rIncome">— 元</b></div></div>
+    <div class="body">
+      <div class="sline"><span class="flag" id="fLive" style="background:var(--line)"></span>
+        <div class="txt"><div class="k">生活支出（A ＋ B）</div><div class="c" id="cLive">對照建議 6 成</div></div>
+        <div class="amt" id="vLive">0<span class="p" id="pLive">—</span></div></div>
+      <div class="sline"><span class="flag" id="fDream" style="background:var(--line)"></span>
+        <div class="txt"><div class="k">夢想儲蓄（C）</div><div class="c" id="cDream">對照建議 3 成</div></div>
+        <div class="amt" id="vDream">0<span class="p" id="pDream">—</span></div></div>
+    </div>
+    <div class="balance" id="balBox">
+      <div class="k">每月結餘</div>
+      <div class="v" id="balV">— 元</div>
+      <div class="msg" id="balMsg">↑ 先填收入，再填 A／B／C，這裡就會告訴你有沒有「收支有餘」😊</div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn copy" id="copyBtn">📋 複製我的試算</button>
+    <a class="btn line" href="https://lin.ee/6Tm8pI7" target="_blank" rel="noopener">免費財務小輕診 →</a>
+  </div>
+
+  <div class="cta">
+    <h3>算出來只是開始，做了才有改變</h3>
+    <p>想把結餘變大、把夢想提前？我陪你看一次你的專屬配置。</p>
+    <a class="btn line" style="display:inline-block;padding:14px 28px;flex:none;" href="https://lin.ee/6Tm8pI7" target="_blank" rel="noopener">加 LINE · 免費小輕診</a>
+  </div>
+
+  <p class="disc">※ 本表為理財觀念教學與自我盤點使用，數字為概念性試算，非投資、保險、稅務建議。<br>
+    實際規劃請依個人收支、負債與家庭狀況調整。</p>
+  <p class="foot"><b>馥芸財富學苑 Golden Wealth Management</b>　·　財顧芸／琪琪老師　·　A 顧好今天 · B 大錢小存 · C 先付給自己</p>
+</div>
+
+<div class="toast" id="toast">已複製 ✓</div>
+
+<script>
+(function(){
+  const $=s=>document.querySelector(s);
+  const nf=n=>Math.round(n).toLocaleString('en-US');
+  const parseNum=v=>{const n=parseInt((v||'').replace(/[^\d]/g,''),10);return isNaN(n)?0:n;};
+  let mode='general';
+
+  // ---- 資料定義 ----
+  const A_CATS=[
+    {k:'食',ic:'🍚',sub:'三餐、買菜、外食',ratio:.34},
+    {k:'住',ic:'🏠',sub:'房租房貸、水電瓦斯',ratio:.30},
+    {k:'行',ic:'🚌',sub:'交通、油錢、車資',ratio:.12},
+    {k:'育',ic:'📖',sub:'保健、學習、孝親',ratio:.10},
+    {k:'衣',ic:'👕',sub:'衣著、日用品',ratio:.06},
+    {k:'樂',ic:'🎵',sub:'休閒、聚會、興趣',ratio:.08},
+  ];
+  const B_ITEMS=[
+    {k:'保險費',ic:'🛡️',sub:'一年一次的保費'},
+    {k:'稅金',ic:'🧾',sub:'房屋稅、地價稅、所得稅'},
+    {k:'節慶紅包',ic:'🧧',sub:'過年、生日、禮金'},
+    {k:'旅遊',ic:'✈️',sub:'一年幾次的旅行'},
+    {k:'修繕家電',ic:'🔧',sub:'家電、修繕、換新'},
+    {k:'其他',ic:'➕',sub:'其他一年幾次的大錢'},
+  ];
+
+  // ---- 建立輸入列（只建一次，避免打字時失焦）----
+  $('#aRows').innerHTML=A_CATS.map((c,i)=>`
+    <div class="r"><span class="ic">${c.ic}</span>
+      <span class="nm">${c.k}<small>${c.sub}</small></span>
+      <span class="field"><input type="text" inputmode="numeric" data-a="${i}" placeholder="0" autocomplete="off"><span class="u">元</span></span>
+    </div>`).join('');
+  $('#bRows').innerHTML=B_ITEMS.map((c,i)=>`
+    <div class="r"><span class="ic">${c.ic}</span>
+      <span class="nm">${c.k}<small>${c.sub}</small></span>
+      <span class="field"><input type="text" inputmode="numeric" data-b="${i}" placeholder="0" autocomplete="off"><span class="u">元</span></span>
+    </div>`).join('');
+
+  // ---- 夢想（可增減）----
+  const goalsBox=$('#goals'); let goalSeq=0;
+  function addGoal(name='',target='',months=''){
+    goalSeq++; const id=goalSeq;
+    const el=document.createElement('div'); el.className='goal'; el.dataset.g=id;
+    el.innerHTML=`
+      <button class="del" title="刪除" data-del="${id}">×</button>
+      <div class="gname">🌸 <input type="text" data-gn placeholder="想完成的夢（例：和姊妹去看櫻花）" value="${name}" autocomplete="off"></div>
+      <div class="grow">
+        <div class="cell"><div class="k">夢想金額</div>
+          <div class="field"><input type="text" inputmode="numeric" data-gt placeholder="0" value="${target}" autocomplete="off"><span class="u">元</span></div></div>
+        <div class="cell"><div class="k">想花幾個月完成</div>
+          <div class="field"><input type="text" inputmode="numeric" data-gm placeholder="12" value="${months}" autocomplete="off"><span class="u">個月</span></div></div>
+      </div>
+      <div class="result"><span class="k">每月要撥</span><span class="v"><span data-gr>0</span> 元</span></div>`;
+    goalsBox.appendChild(el);
+  }
+  addGoal();
+
+  // ---- 千分位（失焦時）----
+  function fmtBlur(el){const raw=parseNum(el.value);el.value=raw?nf(raw):'';}
+
+  // ---- 建議目標數字 ----
+  function benchmarks(income){
+    if(mode==='general') return {live:income*.6,save:income*.3,prot:income*.1,
+      k:['生活 6 成','存與還 3 成','保障 1 成'],liveP:60,dreamP:30,dreamName:'存與還',protName:'保障'};
+    return {live:income*.6,save:income*.2,prot:income*.2,
+      k:['生活 6 成','心願 2 成','醫療預備 2 成'],liveP:60,dreamP:20,dreamName:'心願',protName:'醫療預備'};
+  }
+
+  function recalc(){
+    const income=parseNum($('#income').value);
+    const bm=benchmarks(income);
+    // 建議
+    $('#sugTitle').textContent = mode==='general'?'631 建議目標（幫你抓大概）':'6-2-2 建議目標（退休版）';
+    $('#k1').textContent=bm.k[0]; $('#k2').textContent=bm.k[1]; $('#k3').textContent=bm.k[2];
+    $('#sug1').textContent=income?nf(bm.live):'—';
+    $('#sug2').textContent=income?nf(bm.save):'—';
+    $('#sug3').textContent=income?nf(bm.prot):'—';
+
+    // A 合計
+    let aTotal=0; document.querySelectorAll('[data-a]').forEach(i=>aTotal+=parseNum(i.value));
+    $('#aTotal').textContent=nf(aTotal);
+
+    // B 合計 ÷12
+    let bYear=0; document.querySelectorAll('[data-b]').forEach(i=>bYear+=parseNum(i.value));
+    const bMonth=bYear/12;
+    $('#bYear').textContent=nf(bYear); $('#bMonth').textContent=nf(bMonth);
+
+    // C 夢想
+    let cTotal=0;
+    document.querySelectorAll('.goal').forEach(g=>{
+      const t=parseNum(g.querySelector('[data-gt]').value);
+      const m=parseNum(g.querySelector('[data-gm]').value);
+      const per=(t>0&&m>0)?t/m:0; cTotal+=per;
+      g.querySelector('[data-gr]').textContent=nf(per);
+    });
+    $('#cTotal').textContent=nf(cTotal);
+
+    // 結算
+    $('#rIncome').textContent = income?nf(income)+' 元':'— 元';
+    const live=aTotal+bMonth, dream=cTotal, bal=income-live-dream;
+    const liveP=income?Math.round(live/income*100):0;
+    const dreamP=income?Math.round(dream/income*100):0;
+
+    $('#vLive').innerHTML = nf(live)+`<span class="p">占 ${liveP}%</span>`;
+    $('#vDream').innerHTML = nf(dream)+`<span class="p">占 ${dreamP}%</span>`;
+    $('#cLive').textContent = '對照建議 '+(bm.liveP/10)+' 成（'+bm.liveP+'%）';
+    $('#cDream').textContent = bm.dreamName+' · 對照建議 '+(bm.dreamP/10)+' 成（'+bm.dreamP+'%）';
+
+    // 燈號
+    const col=(v,good,ok)=>v<=good?'var(--ok)':(v<=ok?'var(--warn)':'var(--bad)');
+    $('#fLive').style.background = income?col(liveP,bm.liveP,bm.liveP+10):'var(--line)';
+    // 夢想：越接近/超過建議越好
+    $('#fDream').style.background = income?(dreamP>=bm.dreamP?'var(--ok)':(dreamP>=bm.dreamP*0.5?'var(--warn)':'var(--bad)')):'var(--line)';
+
+    // 結餘訊息
+    const box=$('#balBox'), v=$('#balV'), msg=$('#balMsg');
+    box.className='balance';
+    if(income<=0){
+      v.textContent='— 元'; v.style.color='';
+      msg.textContent='↑ 先填收入，再填 A／B／C，這裡就會告訴你有沒有「收支有餘」😊';
+      return;
+    }
+    v.textContent=(bal<0?'−':'')+nf(Math.abs(bal))+' 元';
+    const prot=income*(mode==='general'?0.1:0.2);
+    const protName=mode==='general'?'1 成保障':'醫療與預備';
+    if(bal>=prot){
+      box.classList.add('ok');
+      msg.innerHTML='🌱 收支有餘！每月多出 <b>'+nf(bal)+' 元</b>，足夠顧好「'+protName+'」還有剩。剩下的可以加大夢想 C，或開始配置投資，讓錢也幫你工作。';
+    }else if(bal>=0){
+      box.classList.add('warn');
+      msg.innerHTML='👍 有打平、還小有結餘 <b>'+nf(bal)+' 元</b>。下一步：把「'+protName+'」（約 '+nf(prot)+' 元）顧起來，安全網先架好，夢想就更穩。';
+    }else{
+      box.classList.add('bad');
+      msg.innerHTML='⚠️ 這個月超支 <b>'+nf(-bal)+' 元</b>。別擔心，回頭看看「想要」的部分 —— 樂、旅遊、或某個夢想的月數拉長一點，很快就會由紅轉綠。';
+    }
+  }
+
+  // ---- 事件 ----
+  document.addEventListener('input',e=>{
+    if(e.target.matches('#income,[data-a],[data-b],[data-gt],[data-gm],[data-gn]')){
+      if(e.target.id==='income') syncChip();
+      recalc();
+    }
+  });
+  document.addEventListener('blur',e=>{
+    if(e.target.matches('#income,[data-a],[data-b],[data-gt]')) fmtBlur(e.target);
+  },true);
+
+  function syncChip(){const v=parseNum($('#income').value);
+    document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',parseInt(c.dataset.v,10)===v));}
+  document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{
+    $('#income').value=nf(parseInt(c.dataset.v,10));syncChip();recalc();}));
+  document.querySelectorAll('.mode').forEach(m=>m.addEventListener('click',()=>{
+    document.querySelectorAll('.mode').forEach(x=>x.classList.remove('on'));
+    m.classList.add('on');mode=m.dataset.m;recalc();}));
+
+  // 套用 631 建議到 A
+  $('#applyA').addEventListener('click',()=>{
+    const income=parseNum($('#income').value);
+    if(income<=0){toast('請先填收入喔');return;}
+    const live=income*0.6;
+    document.querySelectorAll('[data-a]').forEach(inp=>{
+      const i=+inp.dataset.a; inp.value=nf(Math.round(live*A_CATS[i].ratio));
+    });
+    recalc(); toast('已套用建議，可再自行調整 ✓');
+  });
+
+  // 夢想增減
+  $('#addGoal').addEventListener('click',()=>{addGoal();recalc();});
+  goalsBox.addEventListener('click',e=>{
+    const b=e.target.closest('[data-del]'); if(!b)return;
+    if(document.querySelectorAll('.goal').length<=1){toast('至少保留一個夢想欄位');return;}
+    b.closest('.goal').remove(); recalc();
+  });
+
+  // 複製
+  $('#copyBtn').addEventListener('click',()=>{
+    const income=parseNum($('#income').value);
+    if(income<=0){toast('請先填收入喔');return;}
+    let aTotal=0;const aParts=[];
+    document.querySelectorAll('[data-a]').forEach(i=>{const v=parseNum(i.value);aTotal+=v;
+      if(v>0)aParts.push(A_CATS[+i.dataset.a].k+' '+nf(v));});
+    let bYear=0;document.querySelectorAll('[data-b]').forEach(i=>bYear+=parseNum(i.value));
+    const bMonth=bYear/12;
+    let cTotal=0;const gParts=[];
+    document.querySelectorAll('.goal').forEach(g=>{
+      const nm=g.querySelector('[data-gn]').value||'夢想';
+      const t=parseNum(g.querySelector('[data-gt]').value),m=parseNum(g.querySelector('[data-gm]').value);
+      const per=(t>0&&m>0)?t/m:0;cTotal+=per;
+      if(per>0)gParts.push(nm+'：'+nf(t)+'÷'+m+'月＝每月 '+nf(per));});
+    const live=aTotal+bMonth,bal=income-live-cTotal;
+    let t='【我的收支有餘試算】'+(mode==='retire'?'（退休 6-2-2）':'（631）')+'\n月收入：'+nf(income)+' 元\n';
+    t+='\n◆ A 每月支出：'+nf(aTotal)+' 元\n'+(aParts.length?'　'+aParts.join('、')+'\n':'');
+    t+='\n◆ B 年度支出：'+nf(bYear)+' ÷12 ＝ 每月 '+nf(bMonth)+' 元\n';
+    t+='\n◆ C 夢想帳戶：每月 '+nf(cTotal)+' 元\n'+(gParts.length?'　'+gParts.join('\n　')+'\n':'');
+    t+='\n＝＝＝＝＝\n每月結餘：'+(bal<0?'超支 '+nf(-bal):'有餘 '+nf(bal))+' 元\n';
+    t+='\n— 馥芸財富學苑 · 財富花園\n免費財務小輕診 LINE：https://lin.ee/6Tm8pI7';
+    const done=()=>toast('已複製，可貼到 LINE 分享 ✓');
+    if(navigator.clipboard&&navigator.clipboard.writeText)
+      navigator.clipboard.writeText(t).then(done).catch(()=>fb(t,done));
+    else fb(t,done);
+  });
+  function fb(t,cb){const ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';
+    ta.style.opacity='0';document.body.appendChild(ta);ta.select();
+    try{document.execCommand('copy');cb();}catch(e){}document.body.removeChild(ta);}
+
+  let tt;function toast(m){const el=$('#toast');el.textContent=m;el.classList.add('show');
+    clearTimeout(tt);tt=setTimeout(()=>el.classList.remove('show'),2000);}
+
+  recalc();
+})();
+</script>
+</body>
+</html>
