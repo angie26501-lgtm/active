@@ -317,6 +317,7 @@
 <script>
 /* ===== Google 表單接口（已內建你的表單） ===== */
 const FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSdPdfVn82Gt6akVIKG3WhbzLtEuCAsNCyTxvVPmVLVIbQvCHQ/formResponse";
+const ENTRY_LOAN_ID = 'entry.270316731';
 const ENTRY = {
   name:'entry.1284007032', sex:'entry.456796468', age:'entry.106878770', job:'entry.1957191104',
   city:'entry.1332922348', marry:'entry.1901044214', kids:'entry.1424166338', kidsDetail:'entry.2045838129',
@@ -347,9 +348,8 @@ const RET_B = [
   {id:'q6', entry:'entry.1061703417', multi:true, other:true, cols2:true, tight:true, title:'6. 您認為影響準備退休金的因素有哪些？', tag:'可複選', opts:['少子化','壽命延長','存款利率低','生活費用高','社會福利不足','失業率高','離婚率高','投資風險高','租稅負擔高','醫療費用增加']},
   {id:'q7', entry:'entry.969468836', multi:false, other:true, cols2:true, tight:true, title:'7. 依目前能力，每月可再提撥多少儲蓄或投資？', opts:['5,000 元','1 萬元','2 萬元','3 萬元','5 萬元以上']},
   {id:'q8', entry:'entry.1822076669', multi:true, other:true, cols2:true, tight:true, title:'8. 您希望進一步了解的理財資訊為？', tag:'可複選', opts:['個人投資理財','節稅資訊','退休理財','子女教育金','貸款資訊','債務整合','房貸理財提前清償計劃'],
-    sub:{trigger:'房貸理財提前清償計劃', entry:ENTRY_LOAN(), label:'房貸資訊', ph:'利率% / 餘額萬 / 年期 / 剩餘年期 / 每月繳款'}}
+    sub:{trigger:'房貸理財提前清償計劃', entry:ENTRY_LOAN_ID, label:'房貸資訊', ph:'利率% / 餘額萬 / 年期 / 剩餘年期 / 每月繳款'}}
 ];
-function ENTRY_LOAN(){ return 'entry.270316731'; }
 const CONSULT = [
   {id:'c1', entry:'entry.877907378', multi:true, other:true, cols2:true, title:'您目前關心或擔心的財務問題？', tag:'可複選', opts:['開銷太大無法存錢','不知道是否買對保險，把錢花在刀口上','保費負擔太重怎麼辦','保單很亂，不知如何調整','不知道如何投資或資產配置','不了解該如何投資','擔心退休之後錢夠不夠用','不知能否達成人生各階段財務目標']},
   {id:'c2', entry:'entry.589999216', multi:true, other:true, cols2:true, title:'您想進一步了解、規劃的項目？', tag:'可複選', opts:['合理分配現有收入及支出','保險買對、買夠，把錢花在刀口上','評估購／換屋及貸款能力','安心穩健的投資方式','準備足夠的退休金','準備子女教育基金','做好個人及家庭財務安全規劃','如何一次做好全生涯整合財務規劃']},
@@ -519,7 +519,7 @@ function submitForm(){
   // 退休 + 諮詢
   [...RET_A,...RET_B,...CONSULT].forEach(q=>addChoice(f,q));
   // 房貸補充
-  if(answers.loan) addField(f,ENTRY_LOAN(),answers.loan);
+  if(answers.loan) addField(f,ENTRY_LOAN_ID,answers.loan);
   // 推薦親友
   if(answers._ref){ addField(f,ENTRY.r1n,g('r1_name')); addField(f,ENTRY.r1a,g('r1_age')); addField(f,ENTRY.r1j,g('r1_job')); addField(f,ENTRY.r1c,g('r1_contact'));
     addField(f,ENTRY.r2n,g('r2_name')); addField(f,ENTRY.r2a,g('r2_age')); addField(f,ENTRY.r2j,g('r2_job')); addField(f,ENTRY.r2c,g('r2_contact')); }
