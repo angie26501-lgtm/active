@@ -5,6 +5,16 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>打造你的人生藍圖 ｜ 退休規劃 × AI 財務健診</title>
+<link rel="canonical" href="https://www.allfreedom.info/client-questionnaires/retirement-planning-questionnaire.html">
+<meta name="description" content="花 3 分鐘畫出你的退休藍圖並完成 AI 財務健診，即時看到你的財務三燈，並可索取完整 PDF 報告書。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.allfreedom.info/client-questionnaires/retirement-planning-questionnaire.html">
+<meta property="og:title" content="打造你的人生藍圖｜退休規劃 × AI 財務健診">
+<meta property="og:description" content="花 3 分鐘畫出你的退休藍圖並完成 AI 財務健診，即時看到你的財務三燈。">
+<meta property="og:site_name" content="馥芸財富管理學苑">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="打造你的人生藍圖｜退休規劃 × AI 財務健診">
+<meta name="twitter:description" content="花 3 分鐘畫出你的退休藍圖並完成 AI 財務健診，即時看到你的財務三燈。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -176,9 +186,67 @@
   .kidrow .sexseg .opt{padding:8px 12px;border-radius:10px}
   .kidrow .sexseg .opt .lab{font-size:15px}
   .kidrow select.txt{padding:9px 34px 9px 12px;font-size:15px}
+
+  /* 歡迎 / 介紹 開場頁 */
+  #welcomeScreen{position:fixed;inset:0;z-index:60;overflow-y:auto;-webkit-overflow-scrolling:touch;
+    background:radial-gradient(1200px 600px at 85% -10%,rgba(201,162,75,.16),transparent 60%),linear-gradient(165deg,var(--ink),var(--ink-deep))}
+  #welcomeScreen.hide{display:none}
+  .wel-wrap{max-width:600px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;padding:calc(28px + env(safe-area-inset-top)) 22px calc(32px + env(safe-area-inset-bottom))}
+  .wel-top{display:flex;align-items:center;gap:11px}
+  .wel-top .wel-seal{width:38px;height:38px;border-radius:50%;flex:0 0 auto;background:linear-gradient(145deg,#12365a,#0A2038);color:var(--gold-soft);display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:17px;border:1px solid rgba(201,162,75,.5)}
+  .wel-top b{display:block;font-family:var(--serif);font-size:15px;color:#fff;line-height:1.2}
+  .wel-top span{font-size:12px;color:#9fb2c6}
+  .wel-hero{margin-top:34px}
+  .wel-eyebrow{font-size:13px;letter-spacing:.24em;color:var(--gold-soft);font-weight:700}
+  .wel-title{font-family:var(--serif);font-weight:900;color:#fff;font-size:32px;line-height:1.3;margin:12px 0 14px}
+  .wel-lead{color:#CCD9E6;font-size:16.5px;line-height:1.75;margin:0}
+  .wel-credit{margin-top:14px;font-size:13.5px;color:#B9C7D6}
+  .wel-credit b{color:var(--gold-soft);font-family:var(--serif)}
+  .wel-benefits{display:grid;gap:11px;margin:26px 0 20px}
+  .wel-benefit{display:flex;gap:13px;align-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:15px;padding:14px 16px}
+  .wel-benefit .ic{flex:0 0 auto;width:40px;height:40px;border-radius:11px;background:linear-gradient(145deg,var(--gold),var(--gold-soft));display:grid;place-items:center}
+  .wel-benefit .ic svg{width:21px;height:21px}
+  .wel-benefit b{display:block;color:#fff;font-size:16px;font-weight:700}
+  .wel-benefit p{margin:2px 0 0;color:#B9C7D6;font-size:13.5px;line-height:1.5}
+  .wel-meta{text-align:center;color:#9fb2c6;font-size:13.5px;margin:4px 0 16px}
+  .wel-cta{appearance:none;border:0;cursor:pointer;width:100%;font-family:var(--sans);font-weight:700;font-size:18px;border-radius:14px;padding:17px 20px;color:#3a2b07;background:linear-gradient(135deg,var(--gold),var(--gold-soft));box-shadow:0 14px 30px -12px rgba(201,162,75,.8);transition:transform .05s}
+  .wel-cta:active{transform:translateY(1px)}
+  .wel-fine{color:#8fa3b8;font-size:12px;line-height:1.65;margin:16px 4px 0;text-align:center}
 </style>
 </head>
 <body>
+
+<section id="welcomeScreen">
+  <div class="wel-wrap">
+    <div class="wel-top">
+      <div class="wel-seal">馥</div>
+      <div><b>馥芸財富管理學苑</b><span>allfreedom.info · 領航財富花園</span></div>
+    </div>
+    <div class="wel-hero">
+      <div class="wel-eyebrow">領 航 財 富 花 園</div>
+      <h1 class="wel-title">歡迎，一起<br>打造你的人生藍圖</h1>
+      <p class="wel-lead">只要 3 分鐘，畫出你的退休藍圖、完成 AI 財務健診。這是一份為你量身設計的理財規劃問卷——沒有標準答案，照你真實的想法作答即可。</p>
+      <div class="wel-credit">主講｜<b>陳芸琪</b>　馥芸財富管理學苑 ／ MDRT・RFC・RFA・RFP</div>
+    </div>
+    <div class="wel-benefits">
+      <div class="wel-benefit">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#3a2b07" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg></div>
+        <div><b>即時「財務三燈」</b><p>送出後馬上看到你的財務體質燈號</p></div>
+      </div>
+      <div class="wel-benefit">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#3a2b07" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h5"/></svg></div>
+        <div><b>完整 PDF 報告書</b><p>複製摘要傳到官方 LINE@ 即可索取</p></div>
+      </div>
+      <div class="wel-benefit">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#3a2b07" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M16 8l-2.5 5.5L8 16l2.5-5.5L16 8z"/></svg></div>
+        <div><b>一對一顧問預約</b><p>需要時，顧問與你安排諮詢</p></div>
+      </div>
+    </div>
+    <div class="wel-meta">約 3 分鐘 · 免費 · 資料保密</div>
+    <button class="wel-cta" id="welStart">開始填寫問卷 →</button>
+    <p class="wel-fine">此問卷僅作理財規劃分析之用，不作其他用途。填寫即代表同意本資料供問卷統計、諮詢與相關服務使用，並遵循個資法規範。</p>
+  </div>
+</section>
 
 <header class="topbar">
   <div class="wrap">
@@ -195,13 +263,6 @@
 
   <!-- 0 封面 -->
   <section class="step active">
-    <div class="hero-card">
-      <div class="eyebrow">領 航 財 富 花 園</div>
-      <h1>打造你的人生藍圖</h1>
-      <p class="sub">花 3 分鐘，畫出你的退休藍圖並完成 AI 財務健診。送出後即時看到你的「財務三燈」，複製摘要傳到官方 LINE@ 即可索取完整 PDF 報告書，顧問也會與你聯繫安排預約諮詢。</p>
-      <div class="credit">主講｜<b>陳芸琪</b>　馥芸財富管理學苑 ／ MDRT・RFC・RFA・RFP<br>
-        <a class="credit-link" href="https://www.allfreedom.info/" target="_blank" rel="noopener">官方網站 · www.allfreedom.info ↗</a></div>
-    </div>
     <div class="tl">
       <p class="tl-h">先看看你的人生跑道</p>
       <p class="tl-note">輸入年齡，立刻算出退休後需要被支撐的歲月。</p>
@@ -693,6 +754,8 @@ document.addEventListener('input',queueSave);
 document.addEventListener('click',queueSave);
 document.addEventListener('change',queueSave);
 updateTL(); show(0);
+/* 歡迎頁 → 進入問卷 */
+document.getElementById('welStart').addEventListener('click',()=>{ document.getElementById('welcomeScreen').classList.add('hide'); window.scrollTo({top:0,behavior:'auto'}); });
 </script>
 </body>
 </html>
