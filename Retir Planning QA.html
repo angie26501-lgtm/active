@@ -4,758 +4,83 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>打造你的人生藍圖 ｜ 退休規劃 × AI 財務健診</title>
-<link rel="canonical" href="https://www.allfreedom.info/client-questionnaires/retirement-planning-questionnaire.html">
-<meta name="description" content="花 3 分鐘畫出你的退休藍圖並完成 AI 財務健診，即時看到你的財務三燈，並可索取完整 PDF 報告書。">
+<title>歡迎 ｜ 打造你的人生藍圖 · 退休規劃 × AI 財務健診</title>
+<meta name="description" content="歡迎！只要 3 分鐘，畫出你的退休藍圖並完成 AI 財務健診，即時看到你的財務三燈，並可索取完整 PDF 報告書。">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://www.allfreedom.info/client-questionnaires/retirement-planning-questionnaire.html">
 <meta property="og:title" content="打造你的人生藍圖｜退休規劃 × AI 財務健診">
-<meta property="og:description" content="花 3 分鐘畫出你的退休藍圖並完成 AI 財務健診，即時看到你的財務三燈。">
+<meta property="og:description" content="只要 3 分鐘，畫出你的退休藍圖並完成 AI 財務健診，即時看到你的財務三燈。">
 <meta property="og:site_name" content="馥芸財富管理學苑">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="打造你的人生藍圖｜退休規劃 × AI 財務健診">
-<meta name="twitter:description" content="花 3 分鐘畫出你的退休藍圖並完成 AI 財務健診，即時看到你的財務三燈。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink:#0E2A47;--ink-deep:#0A2038;--gold:#C9A24B;--gold-soft:#E0C173;
-    --paper:#F7F4EC;--paper-2:#FBF9F3;--line:#E4DCC8;--text:#16242F;--muted:#54616C;
-    --green:#2E9E5B;--amber:#E0A100;--red:#D14A3A;
-    --shadow:0 18px 50px -24px rgba(10,32,56,.45);
     --serif:"Noto Serif TC",serif;--sans:"Noto Sans TC",system-ui,sans-serif;
   }
   *{box-sizing:border-box} html,body{margin:0;padding:0}
-  body{font-family:var(--sans);font-size:16.5px;color:var(--text);line-height:1.62;-webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom);
-    background:radial-gradient(1200px 600px at 80% -10%,rgba(201,162,75,.10),transparent 60%),radial-gradient(900px 500px at -10% 110%,rgba(14,42,71,.08),transparent 55%),var(--paper)}
-  .wrap{max-width:680px;margin:0 auto;padding:0 18px}
-
-  .topbar{position:sticky;top:0;z-index:30;background:rgba(247,244,236,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-  .topbar .wrap{display:flex;align-items:center;gap:12px;padding:12px 18px}
-  .brandmark{display:flex;align-items:center;gap:10px;flex:1;min-width:0;text-decoration:none;color:inherit;-webkit-tap-highlight-color:transparent}
-  .brandmark:hover .brandtext b,.brandmark:hover .brandtext span{color:var(--gold)}
-  .seal{width:34px;height:34px;border-radius:50%;flex:0 0 auto;background:linear-gradient(145deg,var(--ink),var(--ink-deep));color:var(--gold-soft);display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:15px;border:1px solid rgba(201,162,75,.5)}
-  .brandtext b{font-family:var(--serif);font-size:15px;color:var(--ink);display:block;line-height:1.2}
-  .brandtext span{font-size:12.5px;color:var(--muted)}
-  .stepcount{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
-  .stepcount b{color:var(--gold);font-size:14px}
-  .progress{height:3px;background:var(--line)}
-  .progress>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold-soft));transition:width .45s cubic-bezier(.2,.7,.2,1)}
-
-  .step{display:none;padding:26px 0 122px;animation:fade .5s ease}
-  .step.active{display:block}
-  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-
-  .eyebrow{font-size:13px;letter-spacing:.22em;color:var(--gold);font-weight:700}
-  .eyebrow.ink{color:var(--ink)}
-  h1{font-family:var(--serif);font-weight:900;color:var(--ink);font-size:33px;line-height:1.28;margin:.35em 0 .25em}
-  .lead{color:var(--muted);font-size:16.5px;margin:0}
-
-  .hero-card{background:linear-gradient(160deg,var(--ink),var(--ink-deep));color:#EAF0F6;border-radius:22px;padding:28px 22px 24px;box-shadow:var(--shadow);position:relative;overflow:hidden;margin-top:16px}
-  .hero-card::after{content:"";position:absolute;right:-40px;top:-40px;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,75,.25),transparent 70%)}
-  .hero-card .eyebrow{color:var(--gold-soft)}
-  .hero-card h1{color:#fff;margin-top:6px}
-  .hero-card .sub{color:#CCD9E6;font-size:16.5px;margin:0}
-  .credit{margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);font-size:14px;color:#C8D4E1}
-  .credit b{color:var(--gold-soft);font-family:var(--serif)}
-  .credit-link{display:inline-block;margin-top:8px;color:var(--gold-soft);font-weight:700;text-decoration:none;border-bottom:1px solid rgba(224,193,115,.45);padding-bottom:1px}
-  .credit-link:hover{color:#fff;border-color:#fff}
-
-  .tl{margin-top:18px;background:var(--paper-2);border:1px solid var(--line);border-radius:18px;padding:18px 16px}
-  .tl-h{font-family:var(--serif);font-weight:700;color:var(--ink);font-size:18px;margin:0 0 2px}
-  .tl-note{font-size:14px;color:var(--muted);margin:0 0 16px}
-  .tl-ages{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
-  .age-field{text-align:center}
-  .age-field label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
-  .age-field .inwrap{display:inline-flex;align-items:baseline;justify-content:center;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:8px 10px;width:100%}
-  .age-field input{width:100%;border:0;outline:0;font-family:var(--serif);font-weight:700;font-size:28px;color:var(--ink);text-align:center;background:transparent;font-variant-numeric:tabular-nums}
-  .age-field input:focus{color:var(--gold)} .age-field .unit{font-size:14px;color:var(--muted);margin-left:2px}
-  .age-field .inwrap:focus-within{border-color:var(--gold)}
-  .bar{height:46px;border-radius:12px;overflow:hidden;display:flex;background:var(--line)}
-  .bar .work{background:linear-gradient(160deg,var(--ink),var(--ink-deep));display:flex;align-items:center;justify-content:center;color:#cfe;font-size:12.5px;min-width:0;transition:flex-basis .5s ease}
-  .bar .rest{background:linear-gradient(160deg,var(--gold),var(--gold-soft));display:flex;align-items:center;justify-content:center;color:#3a2b07;font-size:12.5px;font-weight:700;min-width:0;transition:flex-basis .5s ease}
-  .bar span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 6px}
-  .tl-result{margin-top:14px;text-align:center;font-size:16px}
-  .tl-result b{font-family:var(--serif);color:var(--gold);font-size:30px;font-weight:900;font-variant-numeric:tabular-nums;margin:0 4px;vertical-align:-2px;font-size:34px}
-
-  .q{margin:24px 0 0}
-  .q-head{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px}
-  .q-num{flex:0 0 auto;width:29px;height:29px;border-radius:8px;background:var(--ink);color:var(--gold-soft);font-family:var(--serif);font-weight:700;font-size:13px;display:grid;place-items:center;margin-top:2px;font-size:14.5px}
-  .q-title{font-weight:700;color:var(--ink);font-size:18px;line-height:1.45}
-  .q-title .tag{display:inline-block;font-size:11px;font-weight:500;color:var(--gold);background:rgba(201,162,75,.12);border:1px solid rgba(201,162,75,.3);padding:1px 7px;border-radius:20px;margin-left:6px;vertical-align:2px}
-  .q-title .req{color:var(--red);margin-left:4px}
-  .opts{display:grid;gap:9px}
-  .opts.cols2{grid-template-columns:1fr 1fr}
-  @media(max-width:480px){.opts.cols2{grid-template-columns:1fr}}
-  .opts.cols2.tight{grid-template-columns:1fr 1fr;gap:8px}
-  @media(max-width:360px){.opts.cols2.tight .lab{font-size:15.5px}}
-  .opt{display:flex;align-items:center;gap:11px;background:#fff;border:1.5px solid var(--line);border-radius:13px;padding:12px 14px;cursor:pointer;transition:border-color .15s,background .15s,transform .05s;user-select:none}
-  .opt:hover{border-color:var(--gold-soft)} .opt:active{transform:scale(.99)}
-  .opt .box{flex:0 0 auto;width:20px;height:20px;border-radius:6px;border:2px solid var(--line);display:grid;place-items:center;transition:.15s}
-  .opt[data-shape="round"] .box{border-radius:50%}
-  .opt .box svg{width:12px;height:12px;opacity:0;transform:scale(.4);transition:.15s}
-  .opt .lab{font-size:17px;color:var(--text)}
-  .opt.sel{border-color:var(--gold);background:linear-gradient(0deg,rgba(201,162,75,.07),rgba(201,162,75,.07)),#fff}
-  .opt.sel .box{background:var(--gold);border-color:var(--gold)} .opt.sel .box svg{opacity:1;transform:scale(1)}
-  .opt.sel .lab{color:var(--ink);font-weight:500}
-  .other-in{margin-top:9px;display:none} .other-in.show{display:block;animation:fade .3s ease}
-  .subfields{margin-top:10px;display:none;background:var(--paper-2);border:1px dashed var(--gold-soft);border-radius:13px;padding:14px}
-  .subfields.show{display:block;animation:fade .3s ease}
-
-  .field{margin:0 0 14px}
-  .field>label{display:block;font-size:14.5px;color:var(--ink);font-weight:500;margin-bottom:6px}
-  .field>label .req{color:var(--red);margin-left:3px}
-  input.txt{width:100%;font-family:var(--sans);font-size:17px;color:var(--text);background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:13px 14px;outline:0;transition:border-color .15s}
-  input.txt:focus{border-color:var(--gold)} input.txt::placeholder{color:#b7c0c8}
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
-  @media(max-width:480px){.grid2{grid-template-columns:1fr}}
-  .seg{display:flex;gap:8px;flex-wrap:wrap} .seg .opt{padding:9px 16px}
-  .panel{background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:18px 16px;margin-top:18px}
-  .panel h3{font-family:var(--serif);color:var(--ink);font-size:16px;margin:0 0 12px;display:flex;align-items:center;gap:8px}
-  .panel h3 .dot{width:7px;height:7px;border-radius:50%;background:var(--gold)}
-  .ref-card{border-top:1px dashed var(--line);padding-top:14px;margin-top:6px}
-  .ref-card:first-of-type{border-top:0;padding-top:0;margin-top:0}
-
-  /* opt-in big cards */
-  .pick{display:grid;gap:12px;margin-top:18px}
-  .pick .opt{padding:18px 16px;font-size:16px}
-  .pick .opt .lab{font-size:18px}
-  .pick .opt .sublab{display:block;font-size:14px;color:var(--muted);font-weight:400;margin-top:2px}
-
-  /* navbar */
-  .navbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(247,244,236,.92);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:12px 0 calc(12px + env(safe-area-inset-bottom))}
-  .navbar .wrap{display:flex;gap:12px;align-items:center}
-  .btn{appearance:none;border:0;cursor:pointer;font-family:var(--sans);font-weight:700;font-size:17px;border-radius:13px;padding:15px 20px;transition:transform .05s}
-  .btn:active{transform:translateY(1px)}
-  .btn-primary{flex:1;background:linear-gradient(135deg,var(--ink),var(--ink-deep));color:#fff;box-shadow:0 12px 26px -12px rgba(14,42,71,.7)} .btn-primary .arr{color:var(--gold-soft)}
-  .btn-gold{flex:1;background:linear-gradient(135deg,var(--gold),var(--gold-soft));color:#3a2b07;box-shadow:0 12px 26px -12px rgba(201,162,75,.8)}
-  .btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);padding:14px 18px}
-  .btn:disabled{opacity:.5;cursor:not-allowed}
-
-  .consent{display:flex;gap:11px;align-items:flex-start;background:rgba(14,42,71,.04);border:1.5px solid var(--line);border-radius:13px;padding:14px 16px;margin-top:16px;cursor:pointer;font-size:14px;color:var(--muted);line-height:1.6;user-select:none;-webkit-tap-highlight-color:transparent}
-  .consent.sel{border-color:var(--gold);background:linear-gradient(0deg,rgba(201,162,75,.06),rgba(201,162,75,.06)),#fff}
-  .consent .cbox{flex:0 0 auto;width:22px;height:22px;border-radius:6px;border:2px solid var(--line);display:grid;place-items:center;margin-top:1px;transition:.15s}
-  .consent .cbox svg{width:13px;height:13px;opacity:0;transform:scale(.4);transition:.15s}
-  .consent.sel .cbox{background:var(--gold);border-color:var(--gold)} .consent.sel .cbox svg{opacity:1;transform:scale(1)}
-  .consent b{color:var(--ink)}
-  .seg.compact{gap:7px} .seg.compact .opt{padding:7px 12px;font-size:15px}
-  .kidshint{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.6}
-  .kidshint b{color:var(--ink)}
-  .kidsprev{font-size:14.5px;color:var(--ink);font-weight:500;margin-top:6px} .kidsprev b{color:var(--gold)}
-
-  .privacy{margin-top:22px;background:rgba(14,42,71,.04);border:1px solid var(--line);border-radius:13px;padding:14px 16px;font-size:13.5px;color:var(--muted);line-height:1.7}
-  .privacy b{color:var(--ink)}
-
-  /* summary + lights */
-  .summary{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow)}
-  .sum-row{padding:11px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:120px 1fr;gap:12px;font-size:15.5px}
-  .sum-row:last-child{border-bottom:0}
-  .sum-row .k{color:var(--muted);font-size:14.5px}
-  .sum-row .v.empty{color:#c0c8ce}
-  .sum-sec{font-family:var(--serif);font-weight:700;color:var(--ink);font-size:17px;margin:18px 0 4px;display:flex;align-items:center;gap:8px}
-  .sum-sec .dot{width:6px;height:6px;border-radius:50%;background:var(--gold)}
-  .edit-link{margin-left:auto;font-family:var(--sans);font-weight:600;font-size:13.5px;color:var(--gold);cursor:pointer;border-bottom:1px solid rgba(201,162,75,.45);padding-bottom:1px;-webkit-tap-highlight-color:transparent}
-  .edit-link:hover{color:var(--ink);border-color:var(--ink)}
-  .lights{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:6px;text-align:center}
-  .lt-total{font-family:var(--serif);font-weight:900;font-size:40px;line-height:1.1}
-  .lt-total small{font-size:16px;color:var(--muted)}
-  .lt-band{display:inline-block;color:#fff;font-size:14px;font-weight:700;padding:3px 12px;border-radius:20px;margin-top:4px}
-  .lt-rows{margin-top:12px;display:grid;gap:7px}
-  .lt-row{display:flex;align-items:center;justify-content:space-between;font-size:15px}
-  .lt-row .dotc{width:11px;height:11px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:-1px}
-  .lt-note{font-size:13px;color:#74808b;margin-top:10px;text-align:left}
-
-  .done-hero{text-align:center;padding:8px 0 4px}
-  .done-hero .ring{width:72px;height:72px;border-radius:50%;margin:0 auto 14px;background:linear-gradient(145deg,var(--gold),var(--gold-soft));display:grid;place-items:center;box-shadow:0 16px 30px -14px rgba(201,162,75,.8)}
-  .done-hero .ring svg{width:34px;height:34px}
-  .hint{font-size:12px;color:var(--muted);text-align:center;margin-top:10px}
-
-  /* 免打字：下拉選單 */
-  select.txt{width:100%;font-family:var(--sans);font-size:17px;color:var(--text);background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:13px 40px 13px 14px;outline:0;transition:border-color .15s;appearance:none;-webkit-appearance:none;
-    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23C9A24B' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>");background-repeat:no-repeat;background-position:right 14px center;cursor:pointer}
-  select.txt:focus{border-color:var(--gold)}
-  select.txt.placeholder{color:#b7c0c8}
-  select.age-sel{border:0;outline:0;background:transparent;font-family:var(--serif);font-weight:700;font-size:26px;color:var(--ink);text-align:center;text-align-last:center;width:auto;padding:0 4px;appearance:none;-webkit-appearance:none;cursor:pointer}
-  select.age-sel:focus{color:var(--gold)}
-
-  /* 子女結構化選擇 */
-  .kidrow{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:8px 10px;margin-top:8px}
-  .kidrow .kidno{font-family:var(--serif);font-weight:700;color:var(--gold);font-size:14px;padding:0 4px;white-space:nowrap}
-  .kidrow .sexseg{display:flex;gap:6px}
-  .kidrow .sexseg .opt{padding:8px 12px;border-radius:10px}
-  .kidrow .sexseg .opt .lab{font-size:15px}
-  .kidrow select.txt{padding:9px 34px 9px 12px;font-size:15px}
-
-  /* 歡迎 / 介紹 開場頁 */
-  #welcomeScreen{position:fixed;inset:0;z-index:60;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  body{font-family:var(--sans);min-height:100vh;color:#EAF0F6;-webkit-font-smoothing:antialiased;
     background:radial-gradient(1200px 600px at 85% -10%,rgba(201,162,75,.16),transparent 60%),linear-gradient(165deg,var(--ink),var(--ink-deep))}
-  #welcomeScreen.hide{display:none}
-  .wel-wrap{max-width:600px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;padding:calc(28px + env(safe-area-inset-top)) 22px calc(32px + env(safe-area-inset-bottom))}
-  .wel-top{display:flex;align-items:center;gap:11px}
-  .wel-top .wel-seal{width:38px;height:38px;border-radius:50%;flex:0 0 auto;background:linear-gradient(145deg,#12365a,#0A2038);color:var(--gold-soft);display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:17px;border:1px solid rgba(201,162,75,.5)}
-  .wel-top b{display:block;font-family:var(--serif);font-size:15px;color:#fff;line-height:1.2}
-  .wel-top span{font-size:12px;color:#9fb2c6}
-  .wel-hero{margin-top:34px}
-  .wel-eyebrow{font-size:13px;letter-spacing:.24em;color:var(--gold-soft);font-weight:700}
-  .wel-title{font-family:var(--serif);font-weight:900;color:#fff;font-size:32px;line-height:1.3;margin:12px 0 14px}
-  .wel-lead{color:#CCD9E6;font-size:16.5px;line-height:1.75;margin:0}
-  .wel-credit{margin-top:14px;font-size:13.5px;color:#B9C7D6}
-  .wel-credit b{color:var(--gold-soft);font-family:var(--serif)}
-  .wel-benefits{display:grid;gap:11px;margin:26px 0 20px}
-  .wel-benefit{display:flex;gap:13px;align-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:15px;padding:14px 16px}
-  .wel-benefit .ic{flex:0 0 auto;width:40px;height:40px;border-radius:11px;background:linear-gradient(145deg,var(--gold),var(--gold-soft));display:grid;place-items:center}
-  .wel-benefit .ic svg{width:21px;height:21px}
-  .wel-benefit b{display:block;color:#fff;font-size:16px;font-weight:700}
-  .wel-benefit p{margin:2px 0 0;color:#B9C7D6;font-size:13.5px;line-height:1.5}
-  .wel-meta{text-align:center;color:#9fb2c6;font-size:13.5px;margin:4px 0 16px}
-  .wel-cta{appearance:none;border:0;cursor:pointer;width:100%;font-family:var(--sans);font-weight:700;font-size:18px;border-radius:14px;padding:17px 20px;color:#3a2b07;background:linear-gradient(135deg,var(--gold),var(--gold-soft));box-shadow:0 14px 30px -12px rgba(201,162,75,.8);transition:transform .05s}
-  .wel-cta:active{transform:translateY(1px)}
-  .wel-fine{color:#8fa3b8;font-size:12px;line-height:1.65;margin:16px 4px 0;text-align:center}
+  .wrap{max-width:600px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;padding:calc(30px + env(safe-area-inset-top)) 22px calc(34px + env(safe-area-inset-bottom))}
+  .top{display:flex;align-items:center;gap:11px}
+  .seal{width:38px;height:38px;border-radius:50%;flex:0 0 auto;background:linear-gradient(145deg,#12365a,#0A2038);color:var(--gold-soft);display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:17px;border:1px solid rgba(201,162,75,.5)}
+  .top b{display:block;font-family:var(--serif);font-size:15px;color:#fff;line-height:1.2}
+  .top span{font-size:12px;color:#9fb2c6}
+  .hero{margin-top:36px}
+  .eyebrow{font-size:13px;letter-spacing:.24em;color:var(--gold-soft);font-weight:700}
+  .title{font-family:var(--serif);font-weight:900;color:#fff;font-size:33px;line-height:1.3;margin:12px 0 14px}
+  .lead{color:#CCD9E6;font-size:16.5px;line-height:1.78;margin:0}
+  .credit{margin-top:14px;font-size:13.5px;color:#B9C7D6}
+  .credit b{color:var(--gold-soft);font-family:var(--serif)}
+  .benefits{display:grid;gap:11px;margin:26px 0 20px}
+  .benefit{display:flex;gap:13px;align-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:15px;padding:14px 16px}
+  .benefit .ic{flex:0 0 auto;width:40px;height:40px;border-radius:11px;background:linear-gradient(145deg,var(--gold),var(--gold-soft));display:grid;place-items:center}
+  .benefit .ic svg{width:21px;height:21px}
+  .benefit b{display:block;color:#fff;font-size:16px;font-weight:700}
+  .benefit p{margin:2px 0 0;color:#B9C7D6;font-size:13.5px;line-height:1.5}
+  .meta{text-align:center;color:#9fb2c6;font-size:13.5px;margin:6px 0 16px}
+  .cta{display:flex;align-items:center;justify-content:center;text-decoration:none;width:100%;font-family:var(--sans);font-weight:700;font-size:18px;border-radius:14px;padding:17px 20px;color:#3a2b07;background:linear-gradient(135deg,var(--gold),var(--gold-soft));box-shadow:0 14px 30px -12px rgba(201,162,75,.8);transition:transform .05s;-webkit-tap-highlight-color:transparent}
+  .cta:active{transform:translateY(1px)}
+  .fine{color:#8fa3b8;font-size:12px;line-height:1.65;margin:16px 4px 0;text-align:center}
+  .fine a{color:#B9C7D6}
 </style>
 </head>
 <body>
-
-<section id="welcomeScreen">
-  <div class="wel-wrap">
-    <div class="wel-top">
-      <div class="wel-seal">馥</div>
+  <div class="wrap">
+    <div class="top">
+      <div class="seal">馥</div>
       <div><b>馥芸財富管理學苑</b><span>allfreedom.info · 領航財富花園</span></div>
     </div>
-    <div class="wel-hero">
-      <div class="wel-eyebrow">領 航 財 富 花 園</div>
-      <h1 class="wel-title">歡迎，一起<br>打造你的人生藍圖</h1>
-      <p class="wel-lead">只要 3 分鐘，畫出你的退休藍圖、完成 AI 財務健診。這是一份為你量身設計的理財規劃問卷——沒有標準答案，照你真實的想法作答即可。</p>
-      <div class="wel-credit">主講｜<b>陳芸琪</b>　馥芸財富管理學苑 ／ MDRT・RFC・RFA・RFP</div>
+
+    <div class="hero">
+      <div class="eyebrow">領 航 財 富 花 園</div>
+      <h1 class="title">歡迎，一起<br>打造你的人生藍圖</h1>
+      <p class="lead">只要 3 分鐘，畫出你的退休藍圖、完成 AI 財務健診。這是一份為你量身設計的理財規劃問卷——沒有標準答案，照你真實的想法作答即可。</p>
+      <div class="credit">主講｜<b>陳芸琪</b>　馥芸財富管理學苑 ／ MDRT・RFC・RFA・RFP</div>
     </div>
-    <div class="wel-benefits">
-      <div class="wel-benefit">
+
+    <div class="benefits">
+      <div class="benefit">
         <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#3a2b07" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg></div>
         <div><b>即時「財務三燈」</b><p>送出後馬上看到你的財務體質燈號</p></div>
       </div>
-      <div class="wel-benefit">
+      <div class="benefit">
         <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#3a2b07" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h5"/></svg></div>
         <div><b>完整 PDF 報告書</b><p>複製摘要傳到官方 LINE@ 即可索取</p></div>
       </div>
-      <div class="wel-benefit">
+      <div class="benefit">
         <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#3a2b07" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M16 8l-2.5 5.5L8 16l2.5-5.5L16 8z"/></svg></div>
         <div><b>一對一顧問預約</b><p>需要時，顧問與你安排諮詢</p></div>
       </div>
     </div>
-    <div class="wel-meta">約 3 分鐘 · 免費 · 資料保密</div>
-    <button class="wel-cta" id="welStart">開始填寫問卷 →</button>
-    <p class="wel-fine">此問卷僅作理財規劃分析之用，不作其他用途。填寫即代表同意本資料供問卷統計、諮詢與相關服務使用，並遵循個資法規範。</p>
+
+    <div class="meta">約 3 分鐘 · 免費 · 資料保密</div>
+
+    <a class="cta" href="https://www.allfreedom.info/client-questionnaires/retirement-planning-questionnaire.html">開始填寫問卷 →</a>
+
+    <p class="fine">此問卷僅作理財規劃分析之用，不作其他用途。填寫即代表同意本資料供問卷統計、諮詢與相關服務使用，並遵循個資法規範。<br>
+      <a href="https://www.allfreedom.info/" target="_blank" rel="noopener">官方網站 · www.allfreedom.info</a></p>
   </div>
-</section>
-
-<header class="topbar">
-  <div class="wrap">
-    <a class="brandmark" href="https://www.allfreedom.info/" target="_blank" rel="noopener">
-      <div class="seal">馥</div>
-      <div class="brandtext"><b>馥芸財富管理學苑</b><span>allfreedom.info · 領航財富花園</span></div>
-    </a>
-    <div class="stepcount"><b id="stepNow">1</b>／<span id="stepTotal">8</span></div>
-  </div>
-  <div class="progress"><i id="bar"></i></div>
-</header>
-
-<main class="wrap">
-
-  <!-- 0 封面 -->
-  <section class="step active">
-    <div class="tl">
-      <p class="tl-h">先看看你的人生跑道</p>
-      <p class="tl-note">輸入年齡，立刻算出退休後需要被支撐的歲月。</p>
-      <div class="tl-ages">
-        <div class="age-field"><label>現在的我</label><div class="inwrap"><select id="ageNow" class="age-sel"></select><span class="unit">歲</span></div></div>
-        <div class="age-field"><label>預計退休</label><div class="inwrap"><select id="ageRetire" class="age-sel"></select><span class="unit">歲</span></div></div>
-        <div class="age-field"><label>平均壽命</label><div class="inwrap"><select id="ageLife" class="age-sel"></select><span class="unit">歲</span></div></div>
-      </div>
-      <div class="bar"><div class="work" id="barWork" style="flex-basis:62%"><span>辛勤工作</span></div><div class="rest" id="barRest" style="flex-basis:38%"><span>退休生活</span></div></div>
-      <p class="tl-result">退休後，你將有 <b id="restYears">20</b> 年的生活需要準備。</p>
-    </div>
-    <div class="privacy"><b>隱私聲明</b>：此問卷僅作理財規劃分析之用，不作其他用途，請您放心。填寫即代表同意本資料供問卷統計、諮詢與相關服務使用，並遵循個資法規範。</div>
-  </section>
-
-  <!-- 1 基本資料 -->
-  <section class="step">
-    <div class="eyebrow ink">關於你</div>
-    <h1>先留下你的聯絡方式</h1>
-    <p class="lead">方便顧問與你約定預約諮詢時間；資料僅作規劃分析之用。</p>
-    <div class="panel">
-      <h3><span class="dot"></span>基本資料</h3>
-      <div class="grid2">
-        <div class="field"><label>姓名<span class="req">*</span></label><input class="txt" id="p_name" placeholder="王小明"></div>
-        <div class="field"><label>性別</label><div class="seg" id="p_sex"></div></div>
-      </div>
-      <div class="grid2">
-        <div class="field"><label>年齡</label><select class="txt" id="p_age"></select></div>
-        <div class="field"><label>婚姻狀況</label><div class="seg" id="p_marry"></div></div>
-      </div>
-      <div class="field"><label>職業（點選即可）</label>
-        <div class="seg" id="p_job_seg"></div>
-        <div id="jobOther" style="display:none;margin-top:9px"><input class="txt" id="p_job" placeholder="請輸入您的職業"></div>
-      </div>
-      <div class="field"><label>居住縣市（點選即可）</label>
-        <div class="seg compact" id="p_city_seg"></div>
-      </div>
-      <div class="field"><label>子女（點選人數即可）</label>
-        <div class="seg" id="p_kids" style="margin-bottom:6px"></div>
-        <div id="kidsDetail" style="display:none"></div>
-      </div>
-      <div class="grid2">
-        <div class="field"><label>聯絡電話<span class="req">*</span></label><input class="txt" id="p_phone" inputmode="tel" placeholder="0912-345-678"></div>
-        <div class="field"><label>LINE ID</label><input class="txt" id="p_line" placeholder="@your_id"></div>
-      </div>
-      <div class="field"><label>Email（選填，方便顧問聯繫）</label><input class="txt" id="p_email" type="email" inputmode="email" placeholder="you@example.com"></div>
-    </div>
-    <label class="consent" id="consentWrap">
-      <span class="cbox"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 6" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      <span>我已閱讀並同意上述<b>個人資料使用說明</b>，提供本資料供理財規劃分析、諮詢與相關服務使用。<b style="color:var(--red)">（必填）</b></span>
-    </label>
-  </section>
-
-  <!-- 2 AI 健診 -->
-  <section class="step">
-    <div class="eyebrow ink">AI 財務健診</div>
-    <h1>六題快速自評</h1>
-    <p class="lead">送出後會即時看到你的「財務三燈」。前五題為必填。</p>
-    <div id="block-hc"></div>
-  </section>
-
-  <!-- 3 退休規劃 -->
-  <section class="step">
-    <div class="eyebrow ink">PART 1 · 退休規劃</div>
-    <h1>你的理財與退休想像</h1>
-    <p class="lead">沒有標準答案，照你真實的想法勾選即可。</p>
-    <div id="block-a"></div>
-  </section>
-
-  <!-- 4 退休準備 -->
-  <section class="step">
-    <div class="eyebrow ink">PART 1 · 退休準備</div>
-    <h1>準備能力與資訊需求</h1>
-    <p class="lead">了解你目前的準備能力，與最想補強的部分。</p>
-    <div id="block-b"></div>
-  </section>
-
-  <!-- 5 理財諮詢 -->
-  <section class="step">
-    <div class="eyebrow ink">PART 2 · 理財規劃諮詢</div>
-    <h1>你的財務關注與期待</h1>
-    <p class="lead">為了讓下次諮詢更貼近你的需要，請分享你的想法。</p>
-    <div id="block-c"></div>
-  </section>
-
-  <!-- 6 推薦親友 opt-in -->
-  <section class="step">
-    <div class="eyebrow ink">最後一步</div>
-    <h1>要不要順手推薦親友？</h1>
-    <p class="lead">完全自由，由你決定。願意的話，我們也能協助他們做好風險保障與退休準備。</p>
-    <div class="pick" id="refPick"></div>
-    <div id="refFields" class="panel" style="display:none">
-      <h3><span class="dot"></span>推薦親友（選填）</h3>
-      <div class="ref-card">
-        <div class="grid2"><div class="field"><label>姓名</label><input class="txt" id="r1_name" placeholder="親友姓名"></div><div class="field"><label>年齡</label><input class="txt" id="r1_age" inputmode="numeric" placeholder="年齡"></div></div>
-        <div class="grid2"><div class="field"><label>職業</label><input class="txt" id="r1_job" placeholder="職業"></div><div class="field"><label>LINE / 手機</label><input class="txt" id="r1_contact" placeholder="LINE ID 或手機"></div></div>
-      </div>
-      <div class="ref-card">
-        <div class="grid2"><div class="field"><label>姓名</label><input class="txt" id="r2_name" placeholder="親友姓名"></div><div class="field"><label>年齡</label><input class="txt" id="r2_age" inputmode="numeric" placeholder="年齡"></div></div>
-        <div class="grid2"><div class="field"><label>職業</label><input class="txt" id="r2_job" placeholder="職業"></div><div class="field"><label>LINE / 手機</label><input class="txt" id="r2_contact" placeholder="LINE ID 或手機"></div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 7 摘要 -->
-  <section class="step">
-    <div class="done-hero">
-      <div class="eyebrow ink">即將完成</div>
-      <h1 style="margin-top:6px">你的財務三燈與藍圖摘要</h1>
-      <p class="lead">確認無誤就送出，接著複製摘要傳到官方 LINE@ 即可索取 PDF 報告書。</p>
-    </div>
-    <div class="summary" id="summaryBox"></div>
-  </section>
-
-</main>
-
-<nav class="navbar">
-  <div class="wrap">
-    <button class="btn btn-ghost" id="btnBack" style="display:none">上一步</button>
-    <button class="btn btn-primary" id="btnNext">開始填寫 <span class="arr">→</span></button>
-  </div>
-</nav>
-
-<iframe name="gform_iframe" id="gform_iframe" style="display:none" tabindex="-1"></iframe>
-
-<script>
-/* ===== Google 表單接口（已內建你的表單） ===== */
-const FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSdPdfVn82Gt6akVIKG3WhbzLtEuCAsNCyTxvVPmVLVIbQvCHQ/formResponse";
-const ENTRY_LOAN_ID = 'entry.270316731';
-const ENTRY = {
-  name:'entry.1284007032', sex:'entry.456796468', age:'entry.106878770', job:'entry.1957191104',
-  city:'entry.1332922348', marry:'entry.1901044214', kids:'entry.1424166338', kidsDetail:'entry.2045838129',
-  phone:'entry.1092732496', line:'entry.201248889', email:'entry.437864291',
-  ageNow:'entry.889201411', ageRetire:'entry.1365530539', ageLife:'entry.1881729439',
-  r1n:'entry.403925102', r1a:'entry.848536826', r1j:'entry.1429741701', r1c:'entry.1771316465',
-  r2n:'entry.723070971', r2a:'entry.1406700069', r2j:'entry.1871407386', r2c:'entry.81105579'
-};
-
-/* ===== 題目（文字與選項完全對應 Google 表單） ===== */
-const HC = [
-  {id:'hc1', key:'儲蓄率', entry:'entry.1585669779', title:'每月大約能存下收入的幾成？', opts:['不到 10%','10–20%','20–30%','超過 30%'], score:[0,1,2,2]},
-  {id:'hc2', key:'緊急金', entry:'entry.2113162482', title:'目前的存款，大約能支撐幾個月的生活？', opts:['不到 3 個月','3–6 個月','6 個月以上'], score:[0,1,2]},
-  {id:'hc3', key:'保障',   entry:'entry.421792281', title:'你清楚自己的保障（保險）夠不夠？', opts:['完全不清楚','大概知道','有定期檢視'], score:[0,1,2]},
-  {id:'hc4', key:'投資',   entry:'entry.421166495', title:'你的投資方式比較像？', opts:['沒在投資','追高殺低','定期定額但沒配置','有配置策略'], score:[0,0,1,2]},
-  {id:'hc5', key:'目標',   entry:'entry.1145375051', title:'是否算過退休／目標需要存多少？', opts:['沒算過','大概估過','有明確數字'], score:[0,1,2]}
-];
-const MOTIVE = {id:'motive', entry:'entry.864105862', multi:false, other:true, title:'你最想先解決哪一塊？', opts:['收支與儲蓄','保險保障','投資配置','退休準備','子女教育金','債務／房貸']};
-
-const RET_A = [
-  {id:'q1', entry:'entry.722723303', multi:true, other:true, title:'1. 您喜歡什麼樣的理財方式幫自己累積財富？', tag:'可複選', opts:['銀行存款','保險理財','股票','基金','外幣投資','房地產','標會']},
-  {id:'q2', entry:'entry.875500624', multi:false, other:true, title:'2. 您認為最有保障的退休生活費來源是？', opts:['政府老年年金','公司的退休金','子女奉養金','自己規劃退休金']},
-  {id:'q3', entry:'entry.1258106203', multi:true, other:true, title:'3. 您退休後最想做哪些事？', tag:'可複選', opts:['環遊世界','含飴弄孫','學習新知','公益活動','發展事業第二春','協助子女成家立業']},
-  {id:'q4', entry:'entry.1752292224', multi:false, other:true, title:'4. 您希望退休後每個月的生活費是多少？', opts:['2 萬元','3 萬元','4 萬元','5 萬元','10 萬元']}
-];
-const RET_B = [
-  {id:'q5', entry:'entry.2058542346', multi:false, other:true, cols2:true, tight:true, title:'5. 據調查，您認為退休金應該準備多少才夠用？', opts:['500 萬元','800 萬元','1000 萬元','1200 萬元','2000 萬元以上']},
-  {id:'q6', entry:'entry.1061703417', multi:true, other:true, cols2:true, tight:true, title:'6. 您認為影響準備退休金的因素有哪些？', tag:'可複選', opts:['少子化','壽命延長','存款利率低','生活費用高','社會福利不足','失業率高','離婚率高','投資風險高','租稅負擔高','醫療費用增加']},
-  {id:'q7', entry:'entry.969468836', multi:false, other:true, cols2:true, tight:true, title:'7. 依目前能力，每月可再提撥多少儲蓄或投資？', opts:['5,000 元','1 萬元','2 萬元','3 萬元','5 萬元以上']},
-  {id:'q8', entry:'entry.1822076669', multi:true, other:true, cols2:true, tight:true, title:'8. 您希望進一步了解的理財資訊為？', tag:'可複選', opts:['個人投資理財','節稅資訊','退休理財','子女教育金','貸款資訊','債務整合','房貸理財提前清償計劃'],
-    sub:{trigger:'房貸理財提前清償計劃', entry:ENTRY_LOAN_ID, label:'房貸資訊', ph:'利率% / 餘額萬 / 年期 / 剩餘年期 / 每月繳款'}}
-];
-const CONSULT = [
-  {id:'c1', entry:'entry.877907378', multi:true, other:true, cols2:true, title:'您目前關心或擔心的財務問題？', tag:'可複選', opts:['開銷太大無法存錢','不知道是否買對保險，把錢花在刀口上','保費負擔太重怎麼辦','保單很亂，不知如何調整','不知道如何投資或資產配置','不了解該如何投資','擔心退休之後錢夠不夠用','不知能否達成人生各階段財務目標']},
-  {id:'c2', entry:'entry.589999216', multi:true, other:true, cols2:true, title:'您想進一步了解、規劃的項目？', tag:'可複選', opts:['合理分配現有收入及支出','保險買對、買夠，把錢花在刀口上','評估購／換屋及貸款能力','安心穩健的投資方式','準備足夠的退休金','準備子女教育基金','做好個人及家庭財務安全規劃','如何一次做好全生涯整合財務規劃']},
-  {id:'c3', entry:'entry.1864746750', multi:true, other:true, title:'對於理財規劃諮詢面談，您的期待？', tag:'可複選', opts:['迫不及待！可以直接預約','想了解理財規劃能帶來什麼幫助或價值','想了解理財規劃的整體服務流程','希望幫我釐清價值觀、確認目標','加速財富累積，如期完成夢想清單','希望不只是商品行銷，對未來財務真的有幫助','需求很簡單，只想了解商品']}
-];
-const ALLQ = [...HC.map(h=>({...h,multi:false,other:false})), MOTIVE, ...RET_A, ...RET_B, ...CONSULT];
-
-const answers = {};
-const CHECK = '<svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 6" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-
-/* ===== 渲染 ===== */
-function renderQ(list, mountId, numbered){
-  const mount = document.getElementById(mountId);
-  list.forEach((q,i)=>{
-    answers[q.id]= q.multi? [] : null; answers[q.id+'_other']='';
-    let opts = q.opts.map(o=>optHTML(q,o)).join('');
-    if(q.other) opts += optHTML(q,'其他',true);
-    const other = q.other? `<div class="other-in" id="oi_${q.id}"><input class="txt" placeholder="其他，請說明…" data-other="${q.id}"></div>`:'';
-    const sub = q.sub? `<div class="subfields" id="sf_${q.id}"><div class="field" style="margin:0"><label style="font-size:14px">${q.sub.label}</label><input class="txt" data-sub="${q.id}" placeholder="${q.sub.ph}"></div></div>`:'';
-    const reqMark = (q.req? '<span class="req">*</span>':'');
-    const num = numbered? `<div class="q-num">${i+1}</div>`:'';
-    const w=document.createElement('div'); w.className='q';
-    w.innerHTML=`<div class="q-head">${num}<div class="q-title">${q.title}${reqMark}${q.tag?`<span class="tag">${q.tag}</span>`:''}</div></div>
-      <div class="opts ${q.cols2?'cols2':''} ${q.tight?'tight':''}">${opts}</div>${other}${sub}`;
-    mount.appendChild(w);
-  });
-  mount.addEventListener('click',e=>{const o=e.target.closest('.opt'); if(o) toggle(o);});
-  mount.addEventListener('input',e=>{const t=e.target;
-    if(t.dataset.other!==undefined) answers[t.dataset.other+'_other']=t.value;
-    if(t.dataset.sub!==undefined) answers['loan']=t.value;});
-}
-function optHTML(q,label,isOther){
-  const shape=q.multi?'square':'round';
-  return `<div class="opt" data-shape="${shape}" data-q="${q.id}" data-val="${label}" data-other="${isOther?1:0}"><div class="box">${CHECK}</div><div class="lab">${label}</div></div>`;
-}
-function toggle(opt){
-  const qid=opt.dataset.q, val=opt.dataset.val, isOther=opt.dataset.other==='1';
-  const q=ALLQ.find(x=>x.id===qid); if(!q) return;
-  if(q.multi){const a=answers[qid];const i=a.indexOf(val); if(i>-1){a.splice(i,1);opt.classList.remove('sel');}else{a.push(val);opt.classList.add('sel');}}
-  else{document.querySelectorAll('.opt[data-q="'+qid+'"]').forEach(o=>o.classList.remove('sel'));opt.classList.add('sel');answers[qid]=val;}
-  if(isOther){const oi=document.getElementById('oi_'+qid); if(oi) oi.classList.toggle('show',opt.classList.contains('sel'));}
-  if(q.sub){const on=q.multi?answers[qid].includes(q.sub.trigger):answers[qid]===q.sub.trigger; const sf=document.getElementById('sf_'+qid); if(sf) sf.classList.toggle('show',on);}
-}
-function renderSeg(mountId,key,options,onChange){
-  const m=document.getElementById(mountId); answers[key]=null;
-  options.forEach(o=>{const el=document.createElement('div');el.className='opt';el.dataset.shape='round';el.dataset.val=o;
-    el.innerHTML=`<div class="box">${CHECK}</div><div class="lab">${o}</div>`;
-    el.addEventListener('click',()=>{m.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');answers[key]=o;if(onChange)onChange(o);});
-    m.appendChild(el);});
-}
-
-/* HC 必填標記 */
-HC.forEach(h=>h.req=true);
-
-/* ===== 時間軸 ===== */
-function updateTL(){
-  let now=+document.getElementById('ageNow').value||0, ret=+document.getElementById('ageRetire').value||0, life=+document.getElementById('ageLife').value||0;
-  if(ret<now)ret=now; if(life<ret)life=ret;
-  const work=Math.max(ret-now,0), rest=Math.max(life-ret,0), total=work+rest||1;
-  let w=Math.max(work/total*100,12), r=Math.max(rest/total*100,12); const s=w+r;
-  document.getElementById('barWork').style.flexBasis=(w/s*100)+'%';
-  document.getElementById('barRest').style.flexBasis=(r/s*100)+'%';
-  document.getElementById('restYears').textContent=rest;
-  answers._tl={now,ret,life,work,rest};
-}
-/* 年齡下拉填充（免打字） */
-function fillSelect(el,min,max,def,ph){ if(!el)return; let h=ph?`<option value="">${ph}</option>`:''; for(let a=min;a<=max;a++){h+=`<option value="${a}"${a===def?' selected':''}>${a}</option>`;} el.innerHTML=h; }
-fillSelect(document.getElementById('ageNow'),18,80,40);
-fillSelect(document.getElementById('ageRetire'),45,85,65);
-fillSelect(document.getElementById('ageLife'),65,105,85);
-fillSelect(document.getElementById('p_age'),18,90,null,'請選擇');
-['ageNow','ageRetire','ageLife'].forEach(id=>document.getElementById(id).addEventListener('change',updateTL));
-
-/* ===== 推薦親友 opt-in ===== */
-(function(){
-  const pick=document.getElementById('refPick'); answers._ref=null;
-  const cards=[['好，我順手推薦','幫關心的親友也預約一次健診'],['這次先不用','直接送出，略過這一段']];
-  cards.forEach((c,idx)=>{const el=document.createElement('div');el.className='opt';el.dataset.shape='round';
-    el.innerHTML=`<div class="box">${CHECK}</div><div class="lab">${c[0]}<span class="sublab">${c[1]}</span></div>`;
-    el.addEventListener('click',()=>{pick.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');
-      answers._ref=(idx===0); document.getElementById('refFields').style.display=idx===0?'block':'none';});
-    pick.appendChild(el);});
-})();
-
-/* ===== 步驟 ===== */
-const steps=[...document.querySelectorAll('.step')], total=steps.length; let cur=0;
-document.getElementById('stepTotal').textContent=total;
-const btnNext=document.getElementById('btnNext'), btnBack=document.getElementById('btnBack');
-const btnSubmit=document.createElement('button'); btnSubmit.className='btn btn-gold'; btnSubmit.id='btnSubmit'; btnSubmit.textContent='確認'; btnSubmit.style.display='none';
-document.querySelector('.navbar .wrap').appendChild(btnSubmit);
-
-function show(i){
-  steps[cur].classList.remove('active'); cur=i; steps[cur].classList.add('active');
-  document.getElementById('stepNow').textContent=cur+1;
-  document.getElementById('bar').style.width=((cur+1)/total*100)+'%';
-  btnBack.style.display=cur===0?'none':'inline-block';
-  const last=cur===total-1;
-  if(last) editing=false;
-  btnNext.style.display=last?'none':'inline-block'; btnSubmit.style.display=last?'inline-block':'none';
-  if(editing && !last){
-    btnNext.innerHTML='完成修改 · 回摘要 ↩';
-  } else {
-    btnNext.innerHTML = cur===0?'開始填寫 <span class="arr">→</span>' : (cur===total-2?'檢視摘要 <span class="arr">→</span>':'下一步 <span class="arr">→</span>');
-  }
-  if(cur===1){const pa=document.getElementById('p_age'),an=document.getElementById('ageNow'); if(pa&&an&&!pa.value){pa.value=an.value||'';}}
-  window.scrollTo({top:0,behavior:'smooth'});
-  if(last) buildSummary();
-}
-let editing=false;
-btnNext.addEventListener('click',()=>{ if(editing){ editing=false; show(total-1); return; } if(cur<total-1) show(cur+1); });
-btnBack.addEventListener('click',()=>show(cur-1));
-btnSubmit.addEventListener('click',submitForm);
-document.getElementById('summaryBox').addEventListener('click',e=>{const a=e.target.closest('.edit-link'); if(a){ editing=true; show(+a.dataset.step); }});
-
-/* ===== 健診計分 ===== */
-function hcScore(){
-  let total=0; const rows=[];
-  HC.forEach(h=>{const a=answers[h.id]; if(a==null) return; const idx=h.opts.indexOf(a); const sc=idx>-1?h.score[idx]:0; total+=sc; rows.push({key:h.key,score:sc,ans:a});});
-  return {total,rows};
-}
-function lightOf(s){return s>=2?{c:'var(--green)',t:'綠燈'}:s===1?{c:'var(--amber)',t:'黃燈'}:{c:'var(--red)',t:'紅燈'};}
-function bandOf(t){return t>=8?{c:'var(--green)',t:'整體綠燈 · 體質良好'}:t>=4?{c:'var(--amber)',t:'整體黃燈 · 有缺口待補'}:{c:'var(--red)',t:'整體紅燈 · 建議優先處理'};}
-
-/* ===== 摘要 ===== */
-function fmt(qid){const q=ALLQ.find(x=>x.id===qid); let v=answers[qid]; v=Array.isArray(v)?v.slice():(v?[v]:[]); v=v.filter(x=>x!=='其他'); if(answers[qid+'_other'])v.push('其他：'+answers[qid+'_other']); return v.length?v.join('、'):null;}
-function row(k,v){return `<div class="sum-row"><div class="k">${k}</div><div class="v ${v?'':'empty'}">${v||'—'}</div></div>`;}
-function buildSummary(){
-  const g=id=>(document.getElementById(id)?.value||'').trim();
-  const hs=hcScore(), band=bandOf(hs.total);
-  let lt='';
-  if(hs.rows.length){
-    let r=''; hs.rows.forEach(x=>{const L=lightOf(x.score); r+=`<div class="lt-row"><span><span class="dotc" style="background:${L.c}"></span>${x.key}</span><b style="color:${L.c}">${L.t}</b></div>`;});
-    lt=`<div class="lights"><div class="eyebrow ink" style="margin-bottom:8px;display:flex;align-items:center">簡易版財務報告書<a class="edit-link" data-step="2" style="margin-left:auto">✎ 修改</a></div><div class="lt-total" style="color:${band.c}">${hs.total}<small>/10</small></div><div class="lt-band" style="background:${band.c}">${band.t}</div><div class="lt-rows">${r}</div><div class="lt-note">※ 此為快速自評的初步參考，多數人落在黃燈是常見缺口；送出後可複製摘要傳到官方 LINE@ 索取完整 PDF 報告書，並進一步與顧問預約諮詢。</div></div>`;
-  }
-  let html=lt;
-  const tl=answers._tl||{};
-  const sec=(title,step)=>`<div class="sum-sec"><span class="dot"></span>${title}<a class="edit-link" data-step="${step}">✎ 修改</a></div>`;
-  html+=sec('人生跑道',0)+row('退休後年數', tl.rest!=null?`${tl.rest} 年（${tl.now}→${tl.ret}→${tl.life} 歲）`:null);
-  html+=sec('退休規劃',3); RET_A.forEach(q=>html+=row(q.title.replace(/^\d+\.\s*/,'').replace(/？$/,''),fmt(q.id)));
-  html+=sec('退休準備',4); RET_B.forEach(q=>html+=row(q.title.replace(/^\d+\.\s*/,'').replace(/？$/,''),fmt(q.id)));
-  html+=sec('理財諮詢',5); CONSULT.forEach(q=>html+=row(q.title.replace(/？$/,''),fmt(q.id)));
-  html+=sec('聯絡資訊',1);
-  html+=row('姓名',g('p_name'))+row('性別 / 婚姻',[answers.sex,answers.marry].filter(Boolean).join(' / '))+row('年齡 / 職業',[g('p_age'),jobVal()].filter(Boolean).join(' / '))+row('居住縣市',cityVal())+row('子女',[kidsVal(),kidsDetailVal()].filter(Boolean).join('，'))+row('電話',g('p_phone'))+row('LINE',g('p_line'))+row('Email',g('p_email'));
-  if(answers._ref){const refs=[[g('r1_name'),g('r1_age'),g('r1_job'),g('r1_contact')],[g('r2_name'),g('r2_age'),g('r2_job'),g('r2_contact')]].filter(r=>r.some(Boolean));
-    if(refs.length){html+=sec('推薦親友',6); refs.forEach((r,i)=>html+=row('親友 '+(i+1),r.filter(Boolean).join('，')));}}
-  document.getElementById('summaryBox').innerHTML=html;
-}
-
-/* ===== 送出（POST 到 Google 表單，免後端） ===== */
-function addField(f,name,val){ if(name==null||val==null||val==='')return; const i=document.createElement('input'); i.type='hidden'; i.name=name; i.value=val; f.appendChild(i); }
-function addChoice(f,q){
-  let sel=answers[q.id]; sel=Array.isArray(sel)?sel:(sel?[sel]:[]);
-  sel.forEach(v=>{ if(v==='其他'){ addField(f,q.entry,'__other_option__'); addField(f,q.entry+'.other_option_response',answers[q.id+'_other']||''); } else addField(f,q.entry,v); });
-}
-function submitForm(){
-  const g=id=>(document.getElementById(id)?.value||'').trim();
-  const name=g('p_name'), phone=g('p_phone'), email=g('p_email');
-  if(!name||!phone){ alert('請填寫「姓名、聯絡電話」，方便顧問聯繫與準備報告。'); show(1); setTimeout(()=>document.getElementById(!name?'p_name':'p_phone').focus(),300); return; }
-  const missing=HC.find(h=>!answers[h.id]);
-  if(missing){ alert('AI 財務健診前 5 題為必填，請完成後再送出。'); show(2); return; }
-  if(!answers._consent){ alert('請先勾選個資使用同意，才能送出。'); show(1); setTimeout(()=>{const c=document.getElementById('consentWrap'); if(c) c.scrollIntoView({behavior:'smooth',block:'center'});},300); return; }
-
-  const f=document.createElement('form'); f.action=FORM_ACTION; f.method='POST'; f.target='gform_iframe';
-  // 基本資料
-  addField(f,ENTRY.name,name); addField(f,ENTRY.sex,answers.sex); addField(f,ENTRY.age,g('p_age'));
-  addField(f,ENTRY.job,jobVal()); addField(f,ENTRY.city,cityVal()); addField(f,ENTRY.marry,answers.marry);
-  addField(f,ENTRY.kids,kidsVal()); addField(f,ENTRY.kidsDetail,kidsDetailVal());
-  addField(f,ENTRY.phone,phone); addField(f,ENTRY.line,g('p_line')); addField(f,ENTRY.email,email);
-  // 人生跑道
-  const tl=answers._tl||{}; addField(f,ENTRY.ageNow,tl.now); addField(f,ENTRY.ageRetire,tl.ret); addField(f,ENTRY.ageLife,tl.life);
-  // 健診 + 動機
-  HC.forEach(h=>addField(f,h.entry,answers[h.id])); addChoice(f,MOTIVE);
-  // 退休 + 諮詢
-  [...RET_A,...RET_B,...CONSULT].forEach(q=>addChoice(f,q));
-  // 房貸補充
-  if(answers.loan) addField(f,ENTRY_LOAN_ID,answers.loan);
-  // 推薦親友
-  if(answers._ref){ addField(f,ENTRY.r1n,g('r1_name')); addField(f,ENTRY.r1a,g('r1_age')); addField(f,ENTRY.r1j,g('r1_job')); addField(f,ENTRY.r1c,g('r1_contact'));
-    addField(f,ENTRY.r2n,g('r2_name')); addField(f,ENTRY.r2a,g('r2_age')); addField(f,ENTRY.r2j,g('r2_job')); addField(f,ENTRY.r2c,g('r2_contact')); }
-
-  document.body.appendChild(f);
-  btnSubmit.disabled=true; btnSubmit.textContent='送出中…';
-  try{ f.submit(); }catch(e){}
-  clearState();
-  setTimeout(showDone, 1300);
-}
-function showDone(){
-  const hs=hcScore(), band=bandOf(hs.total);
-  document.getElementById('summaryBox').outerHTML =
-    `<div class="summary"><div class="done-hero"><div class="ring"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#3a2b07" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
-     <div style="text-align:center"><div style="font-family:var(--serif);font-size:21px;font-weight:800;color:var(--ink)">已送出，謝謝你！</div>
-     <p class="lead" style="margin:8px 0 0">你的<b style="color:var(--ink)">財務三燈</b>結果（總分 <b style="color:${band.c}">${hs.total}/10</b>，${band.t}）已整理好。</p>
-     <p class="lead" style="margin:10px 0 0;font-size:15px">請按下方<b style="color:var(--ink)">複製摘要</b>，再傳到官方 <b style="color:var(--ink)">LINE@</b>，即可向顧問索取完整 <b style="color:var(--ink)">PDF 報告書</b>。</p>
-     <button class="btn btn-gold" style="display:block;width:100%;margin-top:16px" onclick="copySummary(this)">複製摘要</button>
-     <a class="btn" style="display:flex;align-items:center;justify-content:center;width:100%;margin-top:10px;text-decoration:none;background:#06C755;color:#fff;box-shadow:0 12px 26px -12px rgba(6,199,85,.7)" href="https://lin.ee/uMYPHQc" target="_blank" rel="noopener">傳送官方 LINE@ 索取報告 →</a>
-     <div style="margin-top:16px;font-size:14.5px;line-height:1.7"><span style="color:var(--muted)">想更看清自己的人生下半場？</span><br><a href="https://www.allfreedom.info/lifecycle-legacy.html#second-half-blueprint" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700;text-decoration:none;border-bottom:1px solid rgba(201,162,75,.45);padding-bottom:1px">再做一次「人生下半場藍圖」檢測 →</a></div>
-     </div></div>`;
-  document.querySelector('.navbar .wrap').innerHTML =
-    `<button class="btn btn-ghost" onclick="clearState();location.reload()">再填一份</button><a class="btn btn-primary" style="flex:1;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center" href="https://www.allfreedom.info/" target="_blank" rel="noopener">前往官網</a>`;
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-/* ===== 複製摘要（傳 LINE@ 索取 PDF 報告書用） ===== */
-function buildSummaryText(){
-  const g=id=>(document.getElementById(id)?.value||'').trim();
-  const hs=hcScore(), band=bandOf(hs.total);
-  let t='【馥芸財富管理學苑 · 索取財務三燈 PDF 報告書】\n';
-  t+='姓名：'+(g('p_name')||'—')+'\n';
-  t+='電話：'+(g('p_phone')||'—')+'\n';
-  if(g('p_line')) t+='LINE：'+g('p_line')+'\n';
-  const tl=answers._tl||{};
-  if(tl.rest!=null) t+='退休後年數：'+tl.rest+' 年（'+tl.now+'→'+tl.ret+'→'+tl.life+' 歲）\n';
-  t+='\n財務三燈：'+hs.total+'/10（'+band.t+'）\n';
-  hs.rows.forEach(x=>{ t+='・'+x.key+'：'+lightOf(x.score).t+'（'+x.ans+'）\n'; });
-  const motive=fmt('motive'); if(motive) t+='\n最想先解決：'+motive+'\n';
-  const c1=fmt('c1'); if(c1) t+='關心的財務問題：'+c1+'\n';
-  t+='\n— 我想索取完整 PDF 報告書，謝謝！';
-  return t;
-}
-function fallbackCopy(txt,cb){ const ta=document.createElement('textarea'); ta.value=txt; ta.style.position='fixed'; ta.style.top='-9999px'; ta.style.opacity='0'; document.body.appendChild(ta); ta.focus(); ta.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); if(cb)cb(); }
-function copySummary(btn){
-  const txt=buildSummaryText();
-  const ok=()=>{ btn.textContent='已複製 ✓ 貼到 LINE@ 即可'; setTimeout(()=>{btn.textContent='複製摘要';},2600); };
-  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(ok).catch(()=>fallbackCopy(txt,ok)); }
-  else fallbackCopy(txt,ok);
-}
-
-/* ===== 職業 / 縣市（點選） ===== */
-const JOBS=['上班族','公教人員','軍警消','自營商／企業主','專業人士','服務業','業務','家管','學生','退休','其他'];
-const CITIES=['台北市','新北市','基隆市','桃園市','新竹市','新竹縣','苗栗縣','台中市','彰化縣','南投縣','雲林縣','嘉義市','嘉義縣','台南市','高雄市','屏東縣','宜蘭縣','花蓮縣','台東縣','澎湖縣','金門縣','連江縣'];
-function jobVal(){ const v=answers.job; if(v==='其他') return (document.getElementById('p_job')?.value||'').trim()||'其他'; return v||''; }
-function cityVal(){ return answers.city||''; }
-
-/* ===== 子女（點選人數 → 每位選性別與年齡，免打字） ===== */
-let KIDS=[];
-function buildKids(){
-  const seg=document.getElementById('p_kids');
-  const counts=['無','1 位','2 位','3 位','4 位以上'];
-  seg.innerHTML='';
-  counts.forEach((c,idx)=>{
-    const el=document.createElement('div'); el.className='opt'; el.dataset.shape='round'; el.dataset.val=c;
-    el.innerHTML=`<div class="box">${CHECK}</div><div class="lab">${c}</div>`;
-    el.addEventListener('click',()=>{ seg.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel')); el.classList.add('sel'); setKidCount(idx); });
-    seg.appendChild(el);
-  });
-}
-function setKidCount(n){
-  answers.kidsCount=n;
-  const wrap=document.getElementById('kidsDetail');
-  if(n<=0){ KIDS=[]; wrap.style.display='none'; wrap.innerHTML=''; queueSave(); return; }
-  while(KIDS.length<n) KIDS.push({sex:null,age:''});
-  KIDS=KIDS.slice(0,n);
-  wrap.style.display='block'; renderKidRows(); queueSave();
-}
-function renderKidRows(){
-  const wrap=document.getElementById('kidsDetail'); let h='';
-  KIDS.forEach((k,i)=>{
-    let ageOpts='<option value="">年齡</option>'; for(let a=0;a<=45;a++){ ageOpts+=`<option value="${a}"${String(k.age)===String(a)?' selected':''}>${a} 歲</option>`; }
-    h+=`<div class="kidrow"><span class="kidno">第 ${i+1} 位</span>
-      <div class="sexseg" data-kid="${i}">
-        <div class="opt${k.sex==='兒子'?' sel':''}" data-shape="round" data-sex="兒子"><div class="box">${CHECK}</div><div class="lab">兒子</div></div>
-        <div class="opt${k.sex==='女兒'?' sel':''}" data-shape="round" data-sex="女兒"><div class="box">${CHECK}</div><div class="lab">女兒</div></div>
-      </div>
-      <select class="txt kidage" data-kid="${i}">${ageOpts}</select></div>`;
-  });
-  wrap.innerHTML=h;
-  wrap.querySelectorAll('.sexseg').forEach(seg=>{ const i=+seg.dataset.kid;
-    seg.querySelectorAll('.opt').forEach(o=>o.addEventListener('click',()=>{ seg.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel')); o.classList.add('sel'); KIDS[i].sex=o.dataset.sex; queueSave(); })); });
-  wrap.querySelectorAll('.kidage').forEach(sel=>{ sel.addEventListener('change',()=>{ KIDS[+sel.dataset.kid].age=sel.value; queueSave(); }); });
-}
-function kidsVal(){ return (answers.kidsCount>0)?'有':'無'; }
-function kidsDetailVal(){
-  if(!KIDS.length) return '';
-  return KIDS.filter(k=>k.sex||k.age!=='').map(k=>(`${k.sex||'子女'}${k.age!==''?' '+k.age+' 歲':''}`)).join('、');
-}
-
-/* ===== 個資同意 ===== */
-function bindConsent(){ const cw=document.getElementById('consentWrap'); answers._consent=false;
-  cw.addEventListener('click',()=>{ answers._consent=!answers._consent; cw.classList.toggle('sel',answers._consent); }); }
-
-/* ===== 本機記憶（不用重打） ===== */
-const LS_KEY='fuyun_blueprint_v1'; let saveT;
-function queueSave(){ clearTimeout(saveT); saveT=setTimeout(saveState,250); }
-function saveState(){ try{
-  answers._kids=KIDS;
-  const inputs={}; document.querySelectorAll('input[id],select[id]').forEach(el=>{ inputs[el.id]=el.value; });
-  localStorage.setItem(LS_KEY, JSON.stringify({answers, inputs, ts:Date.now()}));
-}catch(e){} }
-function clearState(){ try{ localStorage.removeItem(LS_KEY); }catch(e){} }
-function loadState(){ try{ const r=localStorage.getItem(LS_KEY); return r?JSON.parse(r):null; }catch(e){ return null; } }
-function applyState(){
-  const data=loadState(); if(!data) return;
-  if(data.inputs) Object.entries(data.inputs).forEach(([id,v])=>{ const el=document.getElementById(id); if(el&&v!=null) el.value=v; });
-  if(data.answers) Object.assign(answers, data.answers);
-  ALLQ.forEach(q=>{ let sel=answers[q.id]; if(sel==null) return; const arr=Array.isArray(sel)?sel:[sel];
-    arr.forEach(val=>{ const esc=(window.CSS&&CSS.escape)?CSS.escape(val):val; const o=document.querySelector('.opt[data-q="'+q.id+'"][data-val="'+esc+'"]'); if(o) o.classList.add('sel'); });
-    if(arr.indexOf('其他')>-1){ const oi=document.getElementById('oi_'+q.id); if(oi) oi.classList.add('show'); const inp=document.querySelector('input[data-other="'+q.id+'"]'); if(inp&&answers[q.id+'_other']) inp.value=answers[q.id+'_other']; }
-    if(q.sub){ const on=arr.indexOf(q.sub.trigger)>-1; const sf=document.getElementById('sf_'+q.id); if(sf&&on){ sf.classList.add('show'); const si=document.querySelector('input[data-sub="'+q.id+'"]'); if(si&&answers.loan) si.value=answers.loan; } }
-  });
-  [['p_sex','sex'],['p_marry','marry'],['p_job_seg','job'],['p_city_seg','city']].forEach(p=>{
-    const v=answers[p[1]]; if(v==null) return; const m=document.getElementById(p[0]); if(!m) return;
-    m.querySelectorAll('.opt').forEach(o=>{ if(o.dataset.val===v) o.classList.add('sel'); });
-  });
-  if(Array.isArray(answers._kids)) KIDS=answers._kids.map(k=>({sex:k&&k.sex?k.sex:null,age:(k&&k.age!=null)?k.age:''}));
-  if(answers.kidsCount!=null){
-    const seg=document.getElementById('p_kids'); const cards=seg?seg.querySelectorAll('.opt'):[];
-    if(cards[answers.kidsCount]) cards[answers.kidsCount].classList.add('sel');
-    const wrap=document.getElementById('kidsDetail');
-    if(answers.kidsCount>0){ wrap.style.display='block'; renderKidRows(); } else if(wrap){ wrap.style.display='none'; }
-  }
-  if(answers.job==='其他'){ const j=document.getElementById('jobOther'); if(j) j.style.display='block'; }
-  if(answers._ref!=null){ const cards=document.querySelectorAll('#refPick .opt'); const idx=answers._ref?0:1; if(cards[idx]) cards[idx].classList.add('sel'); const rf=document.getElementById('refFields'); if(rf) rf.style.display=answers._ref?'block':'none'; }
-  if(answers._consent){ const c=document.getElementById('consentWrap'); if(c) c.classList.add('sel'); }
-}
-
-/* ===== 初始化 ===== */
-renderQ(HC.concat([MOTIVE]),'block-hc',true);
-renderQ(RET_A,'block-a',false);
-renderQ(RET_B,'block-b',false);
-renderQ(CONSULT,'block-c',false);
-renderSeg('p_sex','sex',['男','女']);
-renderSeg('p_marry','marry',['單身','已婚']);
-buildKids();
-renderSeg('p_job_seg','job',JOBS,v=>{document.getElementById('jobOther').style.display=v==='其他'?'block':'none';});
-renderSeg('p_city_seg','city',CITIES);
-bindConsent();
-applyState();
-document.addEventListener('input',queueSave);
-document.addEventListener('click',queueSave);
-document.addEventListener('change',queueSave);
-updateTL(); show(0);
-/* 歡迎頁 → 進入問卷 */
-document.getElementById('welStart').addEventListener('click',()=>{ document.getElementById('welcomeScreen').classList.add('hide'); window.scrollTo({top:0,behavior:'auto'}); });
-</script>
 </body>
 </html>
