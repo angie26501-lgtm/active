@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>財富花園 · 報到</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{--green:#1F4A2E;--green2:#2C6E45;--gold:#9A7621;--gold2:#C9A24B;--cream:#F6F1E4;--paper:#FBF8F0;--ink:#2B2B2B;--soft:#5A5A5A;--line:#E3DAC4;}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{font-family:"Noto Sans TC",system-ui,sans-serif;background:linear-gradient(170deg,#EAF3EC,#F6F1E4);color:var(--ink);min-height:100vh;font-size:22px;line-height:1.6;}
+  .top{background:var(--green);color:#fff;text-align:center;padding:16px;font-weight:900;font-size:22px;letter-spacing:1px;}
+  .wrap{max-width:520px;margin:0 auto;padding:26px 20px 60px;text-align:center;}
+  .screen{display:none;}
+  .screen.on{display:block;animation:fade .4s;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+  h1{color:var(--green);font-size:30px;font-weight:900;margin:14px 0 6px;}
+  .say{color:var(--soft);font-size:20px;margin-bottom:22px;}
+  input{width:100%;font-family:inherit;font-size:28px;font-weight:700;text-align:center;color:var(--green);
+    padding:18px;border:3px solid var(--line);border-radius:18px;background:#fff;}
+  input:focus{outline:none;border-color:var(--gold2);}
+  .small{font-size:18px;color:var(--soft);margin:14px 0 6px;}
+  input.sm{font-size:22px;padding:12px;}
+  .btn{width:100%;font-family:inherit;font-weight:900;font-size:26px;color:#fff;background:var(--green);
+    border:none;border-radius:20px;padding:22px;margin-top:20px;cursor:pointer;box-shadow:0 8px 20px rgba(31,74,46,.25);}
+  .btn:active{transform:translateY(2px);}
+  .seeds{display:flex;flex-direction:column;gap:16px;margin-top:10px;}
+  .seed{background:#fff;border:3px solid var(--gold2);border-radius:22px;padding:26px;font-size:26px;font-weight:900;
+    color:var(--green);cursor:pointer;box-shadow:0 6px 16px rgba(154,118,33,.15);display:flex;align-items:center;justify-content:center;gap:12px;}
+  .seed:active{transform:scale(.97);background:var(--cream);}
+  .seed .ic{font-size:38px;}
+  .bloom{font-size:96px;margin:10px 0;animation:pop .7s;}
+  @keyframes pop{0%{transform:scale(.2);opacity:0;}60%{transform:scale(1.25);}100%{transform:scale(1);opacity:1;}}
+  .points{display:inline-block;background:var(--gold);color:#fff;font-weight:900;font-size:26px;padding:10px 26px;border-radius:999px;margin:10px 0;}
+  .fortune{background:#fff;border-left:6px solid var(--gold2);border-radius:0 16px 16px 0;padding:18px 20px;font-size:22px;color:var(--green);font-weight:700;margin:18px 0;text-align:left;}
+  .note{color:var(--soft);font-size:18px;margin-top:16px;}
+  .err{color:#B5462F;font-size:19px;margin-top:14px;min-height:24px;}
+  .flowers{font-size:30px;letter-spacing:6px;margin-top:8px;}
+</style>
+</head>
+<body>
+<div class="top">🌷 女人要有錢 · 財富花園</div>
+<div class="wrap">
+
+  <!-- 第1步：名字 -->
+  <div class="screen on" id="s1">
+    <h1>歡迎來到財富花園</h1>
+    <div class="say">請輸入你的名字，開始報到 🌱</div>
+    <input id="name" placeholder="你的名字" maxlength="16" autocomplete="off" inputmode="text">
+    <div class="small">（同名的話，可留電話後三碼，非必填）</div>
+    <input class="sm" id="ph" placeholder="電話後三碼（可不填）" maxlength="3" inputmode="numeric">
+    <button class="btn" onclick="go2()">進入花園 🌷</button>
+    <div class="err" id="e1"></div>
+  </div>
+
+  <!-- 第2步：選種子 -->
+  <div class="screen" id="s2">
+    <h1>挑一顆種子種下</h1>
+    <div class="say">點一下你喜歡的種子 👇</div>
+    <div class="seeds">
+      <div class="seed" onclick="plant()"><span class="ic">🌰</span>金色種子</div>
+      <div class="seed" onclick="plant()"><span class="ic">🌱</span>翠綠種子</div>
+      <div class="seed" onclick="plant()"><span class="ic">🌸</span>幸福種子</div>
+    </div>
+    <div class="err" id="e2"></div>
+  </div>
+
+  <!-- 第3步：開花 -->
+  <div class="screen" id="s3">
+    <div class="bloom" id="bloom">🌷</div>
+    <h1 id="hi">歡迎你！</h1>
+    <div class="points" id="pts">報到成功 +5 分</div>
+    <div class="flowers">🌸 🌼 🌷 🌻 🌺</div>
+    <div class="fortune" id="fortune"></div>
+    <div class="note">記得每週三來上課，讓你的種子長成大樹 🌳<br>你已經在花園裡有名字囉！</div>
+  </div>
+
+</div>
+
+<script>
+var API='api.php'; // 部署在 garden/ 下，相對路徑
+var FORTUNES=[
+  "有錢，是為了有選擇、好好生活。",
+  "先收好、再守好，剩下的才拿去養大。",
+  "最好的時機是十年前，其次就是現在。",
+  "顧好自己，才顧得了所愛的人。",
+  "錢會長大，只要你願意現在開始。",
+  "你不是沒有錢，是它還在睡覺——今天叫醒它。"
+];
+function $(id){return document.getElementById(id);}
+function show(id){['s1','s2','s3'].forEach(function(x){$(x).classList.remove('on');});$(id).classList.add('on');window.scrollTo(0,0);}
+
+function go2(){
+  var n=$('name').value.trim();
+  if(!n){$('e1').textContent='請先輸入你的名字 🙂';$('name').focus();return;}
+  $('e1').textContent='';
+  show('s2');
+}
+
+var sending=false;
+function plant(){
+  if(sending)return; sending=true;
+  var name=$('name').value.trim();
+  var ph=$('ph').value.trim();
+  $('e2').textContent='種下中… 🌱';
+  fetch(API+'?action=checkin',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({name:name, day:'報到'+(ph?('-'+ph):'')})})
+   .then(function(r){return r.json();})
+   .then(function(d){
+      sending=false;
+      $('hi').textContent='歡迎 '+name+'！';
+      $('bloom').textContent=['🌷','🌻','🌸','🌼','🌺'][Math.floor(Math.random()*5)];
+      $('fortune').textContent='「'+FORTUNES[Math.floor(Math.random()*FORTUNES.length)]+'」';
+      if(d && d.ok){ $('pts').textContent = d.dup ? ('你已經報到過囉，目前 '+d.total+' 分 😊') : '報到成功 +5 分 🎉'; }
+      else { $('pts').textContent='報到完成 🌸'; }
+      show('s3');
+   })
+   .catch(function(){
+      sending=false;
+      // 連不到後端也讓長輩有完成感，但提示
+      $('hi').textContent='歡迎 '+name+'！';
+      $('bloom').textContent='🌷';
+      $('fortune').textContent='「'+FORTUNES[0]+'」';
+      $('pts').textContent='已種下 🌱';
+      $('e2').textContent='';
+      show('s3');
+      $('fortune').insertAdjacentHTML('afterend','<div class="err">（提醒：目前連不到系統，請確認用課程網址開啟，或稍後再報到一次）</div>');
+   });
+}
+// Enter 進下一步
+$('name').addEventListener('keydown',function(e){if(e.key==='Enter')go2();});
+</script>
+</body>
+</html>
