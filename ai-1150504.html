@@ -335,6 +335,59 @@
       color: var(--medium-gray);
       font-size: 16px;
     }
+    /* ===== 區塊收合／展開 ===== */
+    .section-header {
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+      padding-right: 48px;
+      padding-left: 48px;
+    }
+    .section-toggle {
+      position: absolute;
+      right: 2px;
+      top: 2px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(95, 127, 104, 0.12);
+      color: var(--deep-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      font-weight: 900;
+      line-height: 1;
+      cursor: pointer;
+      transition: transform .3s ease, background .2s ease;
+    }
+    .section-header:hover .section-toggle {
+      background: rgba(95, 127, 104, 0.22);
+    }
+    .section.collapsed .section-toggle {
+      transform: rotate(-90deg);
+    }
+    .section.collapsed > *:not(.section-header) {
+      display: none !important;
+    }
+    .section.collapsed {
+      padding-bottom: 24px;
+    }
+    .section.collapsed .section-header {
+      margin-bottom: 0;
+    }
+    @media (max-width: 620px) {
+      .section-header {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+      .section-toggle {
+        width: 34px;
+        height: 34px;
+        font-size: 15px;
+      }
+    }
     .course-grid,
     .link-grid {
       display: grid;
@@ -472,6 +525,151 @@
       box-shadow: 0 12px 24px rgba(63, 95, 77, 0.18);
       letter-spacing: .02em;
       font-size: 13px;
+    }
+    /* ===== 365 專屬福利橫幅 ===== */
+    .benefit-banner {
+      margin-bottom: 30px;
+      border-radius: 30px;
+      padding: 32px 34px;
+      background: linear-gradient(135deg, rgba(63, 95, 77, 0.97), rgba(39, 66, 52, 0.97));
+      color: #fff;
+      box-shadow: 0 20px 44px rgba(39, 66, 52, 0.24);
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.35fr 0.65fr;
+      gap: 26px;
+      align-items: center;
+    }
+    .benefit-banner::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      top: -80px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(200, 166, 106, 0.18);
+    }
+    .benefit-banner > * { position: relative; z-index: 1; }
+    .benefit-badge {
+      display: inline-block;
+      padding: 7px 16px;
+      margin-bottom: 14px;
+      border-radius: 999px;
+      background: var(--milk-tea-gold);
+      color: var(--forest);
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+    }
+    .benefit-banner h2 {
+      font-size: clamp(23px, 3.4vw, 31px);
+      line-height: 1.35;
+      margin-bottom: 12px;
+    }
+    .benefit-banner h2 span { color: var(--soft-gold); }
+    .benefit-banner p {
+      color: rgba(255, 255, 255, 0.84);
+      font-size: 15.5px;
+      margin-bottom: 20px;
+    }
+    .benefit-cta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .benefit-cta a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 24px 14px;
+      border-radius: 14px;
+      font-weight: 900;
+      font-size: 15px;
+      letter-spacing: 0.04em;
+      transition: 0.25s ease;
+    }
+    .benefit-cta .cta-gold {
+      background: linear-gradient(135deg, #a78243, var(--milk-tea-gold));
+      color: #fff;
+      box-shadow: 0 9px 0 rgba(167, 130, 67, .22), 0 16px 26px rgba(200, 166, 106, 0.24);
+    }
+    .benefit-cta .cta-line {
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+      border: 1px solid rgba(234, 216, 173, 0.5);
+    }
+    .benefit-cta a:hover { transform: translateY(-2px); }
+    .benefit-list {
+      display: grid;
+      gap: 10px;
+      padding: 20px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(234, 216, 173, 0.28);
+    }
+    .benefit-list div {
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    /* ===== 線上課回放 ===== */
+    .online-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .online-card {
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.97), rgba(237, 242, 236, 0.84));
+      border-radius: 22px;
+      padding: 24px 22px;
+      box-shadow: var(--card-shadow);
+      border: 1px solid rgba(95, 127, 104, 0.14);
+      transition: 0.28s ease;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 216px;
+    }
+    .online-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 5px;
+      background: linear-gradient(90deg, var(--herbal-green), var(--milk-tea-gold));
+    }
+    .online-card:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 22px 46px rgba(63, 95, 77, 0.2);
+    }
+    .online-date {
+      display: inline-block;
+      padding: 5px 13px;
+      border-radius: 999px;
+      background: rgba(200, 166, 106, 0.18);
+      color: var(--deep-green);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+    }
+    .online-card h3 {
+      font-size: 18px;
+      line-height: 1.5;
+      color: var(--deep-green);
+      margin-bottom: 9px;
+    }
+    .online-card p {
+      color: var(--medium-gray);
+      font-size: 14px;
+      margin-bottom: 18px;
     }
     /* ===== 課程梯次分組 ===== */
     .course-subhead {
@@ -1005,12 +1203,14 @@
     @media (max-width: 920px) {
       .hero,
       .portfolio-feature,
-      .replay-feature {
+      .replay-feature,
+      .benefit-banner {
         grid-template-columns: 1fr;
       }
       .course-grid,
       .link-grid,
-      .student-grid {
+      .student-grid,
+      .online-grid {
         grid-template-columns: repeat(2, 1fr);
       }
       .stats-box {
@@ -1048,8 +1248,13 @@
       .link-grid,
       .student-grid,
       .tool-grid,
+      .online-grid,
       .stats-box {
         grid-template-columns: 1fr;
+      }
+      .benefit-banner {
+        padding: 26px 20px;
+        border-radius: 24px;
       }
       .course-card,
       .link-card,
@@ -1109,7 +1314,9 @@
             協助學員課後複習、彼此觀摩，也讓每一份完成的作品都能被看見、被記錄、被延伸應用。
           </p>
           <nav class="quick-nav" aria-label="快速導覽">
+            <a class="pill-link" href="#benefit">365 福利</a>
             <a class="pill-link" href="#courseVideos">課程回放</a>
+            <a class="pill-link" href="#onlineCourses">線上課回放</a>
             <a class="pill-link" href="#studentPortfolio">學員作品</a>
             <a class="pill-link" href="#aiTools">AI 工具箱</a>
             <a class="pill-link" href="#followLinks">延伸連結</a>
@@ -1132,6 +1339,27 @@
           </a>
         </aside>
       </section>
+      <section class="benefit-banner" id="benefit">
+        <div>
+          <span class="benefit-badge">🎁 365 陪跑學員專屬</span>
+          <h2>本頁所有資源，都是<span>「365 陪跑」學員</span>的專屬福利</h2>
+          <p>
+            凡透過財顧芸推薦加入「365 陪跑」的學員，即可享有本頁全部課程回放、AI 工具箱與學習資源，
+            終身複習、持續進化，讓 AI 真正成為你的專業放大器。
+          </p>
+          <div class="benefit-cta">
+            <a class="cta-gold" href="https://reurl.cc/18zQyY" target="_blank" rel="noopener noreferrer">我要加入 365 陪跑</a>
+            <a class="cta-line" href="https://lin.ee/6hkkECK" target="_blank" rel="noopener noreferrer">LINE@ 諮詢財顧芸</a>
+          </div>
+        </div>
+        <div class="benefit-list">
+          <div>🎬 各梯次課程回放</div>
+          <div>💻 歷次線上課回放</div>
+          <div>🧰 專屬 AI 工具箱</div>
+          <div>🖼️ 學員作品觀摩</div>
+          <div>♾️ 終身複習學習</div>
+        </div>
+      </section>
       <section id="courseVideos" class="section">
         <div class="section-header">
           <span>Course Replay</span>
@@ -1139,7 +1367,130 @@
           <p>整合各梯次課程回放，讓學員可以依日期快速回到課程影片進行複習。</p>
         </div>
 
-        <!-- 梯次 1：2026.05.04 公勝包班 -->
+        <!-- 2026.06.15 中山包班 競品分析（最新） -->
+        <div class="course-group">
+          <div class="course-subhead">📅 2026.06.15 中山包班｜AI 競品分析</div>
+          <div class="course-grid">
+            <article class="course-card">
+              <div>
+                <div class="course-number">01</div>
+                <h3>20260615 中山包班 第一段</h3>
+                <div class="tag normal">聲音正常</div>
+                <p>競品分析主題第一段，帶你了解如何用 AI 找出競爭對手與市場格局。</p>
+              </div>
+              <a
+                class="watch-button"
+                href="https://youtu.be/ZXLd9De3P2s"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                觀看第一段
+              </a>
+            </article>
+            <article class="course-card">
+              <div>
+                <div class="course-number">02</div>
+                <h3>20260615 中山包班 第二段</h3>
+                <div class="tag normal">聲音正常</div>
+                <p>第二段延續競品分析流程，示範用 AI 蒐集與比較關鍵資訊。</p>
+              </div>
+              <a
+                class="watch-button gold"
+                href="https://youtu.be/SBhTVfHcXx0"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                觀看第二段
+              </a>
+            </article>
+            <article class="course-card">
+              <div>
+                <div class="course-number">03</div>
+                <h3>20260615 中山包班 第三段</h3>
+                <div class="tag normal">聲音正常</div>
+                <p>第三段完成差異化觀察與行動策略，讓競品分析真正可落地。</p>
+              </div>
+              <a
+                class="watch-button"
+                href="https://youtu.be/sQMq-oAxzqI"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                觀看第三段
+              </a>
+            </article>
+          </div>
+          <div class="prompt-card">
+            <div class="prompt-head">
+              <h3>🔍 競品分析指示詞 × NotebookLM 學習筆記</h3>
+              <div class="prompt-tools">
+                <button type="button" class="copy-button" id="copyPromptButton" data-label="複製指示詞">複製指示詞</button>
+                <a class="prompt-link" href="https://notebooklm.google.com/" target="_blank" rel="noopener noreferrer">開啟 NotebookLM</a>
+              </div>
+            </div>
+            <p class="prompt-desc">
+              搭配本段回放使用：把下方指示詞貼到 AI（Gemini / ChatGPT / Claude）中，
+              並將回放整理成 NotebookLM 學習筆記，就能一步步完成自己的競品分析。
+            </p>
+            <pre class="prompt-text" id="promptText">你是一位「競品分析策略顧問」。
+以下是我的基本資料：
+【我做什麼行業】：XXX
+【公司叫什麼】（如果有）：XXX
+【我在這個產業中的角色】：XXX
+【主要商品或服務】：XXX
+【我想為客戶解決的問題】：XXX
+【現在面臨什麼困難】：XXX
+請至少完成以下任務：
+任務 1：適合的定位
+任務 2：5~8個同行分析（包含：定位、客群、產品、通路、為何值得分析）
+任務 3：差異化觀察
+任務 4：短/長期目標
+任務 5：其他
+內容請表達清楚、可落地、內容真實性，不要抽象。</pre>
+          </div>
+        </div>
+
+        <!-- 2026.06.05 即夢AI創作課 -->
+        <div class="course-group">
+          <div class="course-subhead">📅 2026.06.05 即夢 AI 創作課</div>
+          <div class="replay-single">
+            <div class="rs-icon">🎨</div>
+            <div class="rs-body">
+              <h3>即夢 AI 創作課 回放</h3>
+              <p>學習用即夢 AI 進行圖像與內容創作，快速把靈感變成作品。</p>
+            </div>
+            <a
+              class="watch-button gold"
+              href="https://youtu.be/3y8jPU_2jZI"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              觀看回放
+            </a>
+          </div>
+        </div>
+
+        <!-- 2026.05.05 龍蝦 & Claude Code -->
+        <div class="course-group">
+          <div class="course-subhead">📅 2026.05.05 龍蝦 &amp; Claude Code</div>
+          <div class="replay-single">
+            <div class="rs-icon">🦞</div>
+            <div class="rs-body">
+              <h3>龍蝦 &amp; Claude Code 課程回放</h3>
+              <p>帶你認識 Claude Code 的實務應用與操作流程，適合課後完整複習。</p>
+            </div>
+            <a
+              class="watch-button gold"
+              href="https://youtu.be/oZYF16EAzqM"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              觀看回放
+            </a>
+          </div>
+        </div>
+
+        <!-- 2026.05.04 公勝包班（最舊） -->
         <div class="course-group">
           <div class="course-subhead">📅 2026.05.04 公勝包班（浩茂AI科技）</div>
           <div class="replay-feature">
@@ -1231,128 +1582,62 @@
             </article>
           </div>
         </div>
-
-        <!-- 梯次 2：2026.05.05 龍蝦 & Claude Code -->
-        <div class="course-group">
-          <div class="course-subhead">📅 2026.05.05 龍蝦 &amp; Claude Code</div>
-          <div class="replay-single">
-            <div class="rs-icon">🦞</div>
-            <div class="rs-body">
-              <h3>龍蝦 &amp; Claude Code 課程回放</h3>
-              <p>帶你認識 Claude Code 的實務應用與操作流程，適合課後完整複習。</p>
-            </div>
-            <a
-              class="watch-button gold"
-              href="https://youtu.be/oZYF16EAzqM"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              觀看回放
-            </a>
-          </div>
+      </section>
+      <section id="onlineCourses" class="section">
+        <div class="section-header">
+          <span>Online Replay</span>
+          <h2>線上課程回放｜歷次主題複習</h2>
+          <p>歷次線上課程完整回放，依日期由新到舊整理，隨時複習不漏接。</p>
         </div>
-
-        <!-- 梯次 3：2026.06.05 即夢AI創作課 -->
-        <div class="course-group">
-          <div class="course-subhead">📅 2026.06.05 即夢 AI 創作課</div>
-          <div class="replay-single">
-            <div class="rs-icon">🎨</div>
-            <div class="rs-body">
-              <h3>即夢 AI 創作課 回放</h3>
-              <p>學習用即夢 AI 進行圖像與內容創作，快速把靈感變成作品。</p>
+        <div class="online-grid">
+          <article class="online-card">
+            <div>
+              <div class="online-date">2026.04.05</div>
+              <h3>不能不知的 Line@ 深度應用實戰</h3>
+              <p>深入 Line@ 進階操作，把官方帳號變成經營與行銷的利器。</p>
             </div>
-            <a
-              class="watch-button gold"
-              href="https://youtu.be/3y8jPU_2jZI"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              觀看回放
-            </a>
-          </div>
-        </div>
-
-        <!-- 梯次 4：2026.06.15 中山包班 競品分析 -->
-        <div class="course-group">
-          <div class="course-subhead">📅 2026.06.15 中山包班｜AI 競品分析</div>
-          <div class="course-grid">
-            <article class="course-card">
-              <div>
-                <div class="course-number">01</div>
-                <h3>20260615 中山包班 第一段</h3>
-                <div class="tag normal">聲音正常</div>
-                <p>競品分析主題第一段，帶你了解如何用 AI 找出競爭對手與市場格局。</p>
-              </div>
-              <a
-                class="watch-button"
-                href="https://youtu.be/ZXLd9De3P2s"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                觀看第一段
-              </a>
-            </article>
-            <article class="course-card">
-              <div>
-                <div class="course-number">02</div>
-                <h3>20260615 中山包班 第二段</h3>
-                <div class="tag normal">聲音正常</div>
-                <p>第二段延續競品分析流程，示範用 AI 蒐集與比較關鍵資訊。</p>
-              </div>
-              <a
-                class="watch-button gold"
-                href="https://youtu.be/SBhTVfHcXx0"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                觀看第二段
-              </a>
-            </article>
-            <article class="course-card">
-              <div>
-                <div class="course-number">03</div>
-                <h3>20260615 中山包班 第三段</h3>
-                <div class="tag normal">聲音正常</div>
-                <p>第三段完成差異化觀察與行動策略，讓競品分析真正可落地。</p>
-              </div>
-              <a
-                class="watch-button"
-                href="https://youtu.be/sQMq-oAxzqI"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                觀看第三段
-              </a>
-            </article>
-          </div>
-          <div class="prompt-card">
-            <div class="prompt-head">
-              <h3>🔍 競品分析指示詞 × NotebookLM 學習筆記</h3>
-              <div class="prompt-tools">
-                <button type="button" class="copy-button" id="copyPromptButton" data-label="複製指示詞">複製指示詞</button>
-                <a class="prompt-link" href="https://notebooklm.google.com/" target="_blank" rel="noopener noreferrer">開啟 NotebookLM</a>
-              </div>
+            <a class="watch-button" href="https://youtu.be/U7_3VIGB2Lo" target="_blank" rel="noopener noreferrer">觀看回放</a>
+          </article>
+          <article class="online-card">
+            <div>
+              <div class="online-date">2026.04.02</div>
+              <h3>Flow + 剪映</h3>
+              <p>結合 Flow 與剪映，快速產出吸睛的影音內容。</p>
             </div>
-            <p class="prompt-desc">
-              搭配本段回放使用：把下方指示詞貼到 AI（Gemini / ChatGPT / Claude）中，
-              並將回放整理成 NotebookLM 學習筆記，就能一步步完成自己的競品分析。
-            </p>
-            <pre class="prompt-text" id="promptText">你是一位「競品分析策略顧問」。
-以下是我的基本資料：
-【我做什麼行業】：XXX
-【公司叫什麼】（如果有）：XXX
-【我在這個產業中的角色】：XXX
-【主要商品或服務】：XXX
-【我想為客戶解決的問題】：XXX
-【現在面臨什麼困難】：XXX
-請至少完成以下任務：
-任務 1：適合的定位
-任務 2：5~8個同行分析（包含：定位、客群、產品、通路、為何值得分析）
-任務 3：差異化觀察
-任務 4：短/長期目標
-任務 5：其他
-內容請表達清楚、可落地、內容真實性，不要抽象。</pre>
-          </div>
+            <a class="watch-button gold" href="https://youtu.be/VkXeQ17xNWI" target="_blank" rel="noopener noreferrer">觀看回放</a>
+          </article>
+          <article class="online-card">
+            <div>
+              <div class="online-date">2026.03.20</div>
+              <h3>OpenClaw 養龍蝦實作案例分享</h3>
+              <p>透過實作案例，帶你了解 OpenClaw 的應用與操作。</p>
+            </div>
+            <a class="watch-button" href="https://youtu.be/CtjphafI7wU" target="_blank" rel="noopener noreferrer">觀看回放</a>
+          </article>
+          <article class="online-card">
+            <div>
+              <div class="online-date">2026.02.05</div>
+              <h3>NotebookLM 最強 AI 筆記神器</h3>
+              <p>用 NotebookLM 把資料變成專屬知識庫，筆記與研究更有效率。</p>
+            </div>
+            <a class="watch-button gold" href="https://youtu.be/ovbTlJM8PUc" target="_blank" rel="noopener noreferrer">觀看回放</a>
+          </article>
+          <article class="online-card">
+            <div>
+              <div class="online-date">2026.01.05</div>
+              <h3>Gemini 工具與 AI 溝通心法</h3>
+              <p>掌握 Gemini 操作與提問心法，讓 AI 更聽懂你的需求。</p>
+            </div>
+            <a class="watch-button" href="https://youtu.be/JNXwXJKYGpA" target="_blank" rel="noopener noreferrer">觀看回放</a>
+          </article>
+          <article class="online-card">
+            <div>
+              <div class="online-date">2025.10.05</div>
+              <h3>Line@ 介面介紹</h3>
+              <p>從介面開始認識 Line@，新手也能快速上手。</p>
+            </div>
+            <a class="watch-button gold" href="https://youtu.be/lEKYrHVdHn0" target="_blank" rel="noopener noreferrer">觀看回放</a>
+          </article>
         </div>
       </section>
       <section id="studentPortfolio" class="section">
@@ -1891,6 +2176,32 @@
         boardMessage.value = "";
         renderMessages();
       }
+
+      /* ===== 區塊收合／展開 ===== */
+      Array.from(document.querySelectorAll(".section")).forEach(function (sec) {
+        const header = sec.querySelector(".section-header");
+        if (!header) return;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "section-toggle";
+        btn.setAttribute("aria-label", "收合或展開這個區塊");
+        btn.textContent = "▾";
+        header.appendChild(btn);
+        const key = "fuyun_collapse_" + (sec.id || "");
+        try {
+          if (sec.id && localStorage.getItem(key) === "1") {
+            sec.classList.add("collapsed");
+          }
+        } catch (e) {}
+        header.addEventListener("click", function () {
+          sec.classList.toggle("collapsed");
+          try {
+            if (sec.id) {
+              localStorage.setItem(key, sec.classList.contains("collapsed") ? "1" : "0");
+            }
+          } catch (e) {}
+        });
+      });
 
       loginButton.addEventListener("click", checkPassword);
       logoutButton.addEventListener("click", logout);
