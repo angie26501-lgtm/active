@@ -1,10 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>馥芸財富學苑｜財顧芸｜AI學習成果入口</title>
-
   <style>
     :root {
       --herbal-green: #5f7f68;
@@ -24,17 +24,14 @@
       --card-shadow: 0 14px 35px rgba(63, 95, 77, 0.13);
       --button-shadow: 0 10px 0 rgba(39, 66, 52, .18), 0 18px 26px rgba(63, 95, 77, 0.18);
     }
-
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-
     html {
       scroll-behavior: smooth;
     }
-
     body {
       min-height: 100vh;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC",
@@ -47,10 +44,8 @@
         linear-gradient(135deg, var(--cream), var(--light-green-gray));
       line-height: 1.7;
     }
-
     a { text-decoration: none; }
-    button, input { font-family: inherit; }
-
+    button, input, textarea { font-family: inherit; }
     .page {
       min-height: 100vh;
       display: flex;
@@ -58,9 +53,7 @@
       justify-content: center;
       padding: 28px;
     }
-
     .login-page { display: flex; }
-
     .login-card {
       width: 100%;
       max-width: 480px;
@@ -74,7 +67,6 @@
       position: relative;
       overflow: hidden;
     }
-
     .login-card::before {
       content: "";
       position: absolute;
@@ -86,7 +78,6 @@
       background: linear-gradient(90deg, var(--herbal-green), var(--milk-tea-gold));
       border-radius: 0 0 999px 999px;
     }
-
     .login-card::after {
       content: "";
       position: absolute;
@@ -98,12 +89,10 @@
       background: rgba(200, 166, 106, 0.14);
       z-index: 0;
     }
-
     .login-card > * {
       position: relative;
       z-index: 1;
     }
-
     .brand-mark {
       width: 82px;
       height: 82px;
@@ -118,7 +107,6 @@
       font-weight: 900;
       box-shadow: 0 12px 28px rgba(63, 95, 77, 0.24);
     }
-
     .login-card h1 {
       font-size: 30px;
       line-height: 1.35;
@@ -126,27 +114,23 @@
       color: var(--deep-green);
       margin-bottom: 8px;
     }
-
     .login-card h2 {
       font-size: 20px;
       font-weight: 800;
       color: var(--deep-gray);
       margin-bottom: 12px;
     }
-
     .login-card p {
       font-size: 15px;
       color: var(--medium-gray);
       margin-bottom: 28px;
     }
-
     .password-box {
       display: flex;
       flex-direction: column;
       gap: 14px;
       margin-top: 8px;
     }
-
     .password-box input {
       width: 100%;
       padding: 15px 18px;
@@ -158,12 +142,10 @@
       color: var(--deep-gray);
       transition: 0.25s ease;
     }
-
     .password-box input:focus {
       border-color: var(--herbal-green);
       box-shadow: 0 0 0 4px rgba(95, 127, 104, 0.12);
     }
-
     .login-button {
       border: none;
       cursor: pointer;
@@ -177,12 +159,10 @@
       transition: 0.25s ease;
       box-shadow: var(--button-shadow);
     }
-
     .login-button:hover {
       transform: translateY(-2px);
       box-shadow: 0 12px 0 rgba(39, 66, 52, .17), 0 22px 32px rgba(63, 95, 77, 0.25);
     }
-
     .error-message {
       min-height: 24px;
       color: #b64545;
@@ -190,25 +170,21 @@
       margin-top: 12px;
       font-weight: 800;
     }
-
     .secure-note {
       margin-top: 22px;
       font-size: 13px;
       color: var(--medium-gray);
     }
-
     .main-page {
       display: none;
       min-height: 100vh;
       padding: 48px 22px 34px;
     }
-
     .main-container {
       width: 100%;
       max-width: 1180px;
       margin: 0 auto;
     }
-
     .hero {
       display: grid;
       grid-template-columns: 1.2fr .8fr;
@@ -224,7 +200,6 @@
       position: relative;
       overflow: hidden;
     }
-
     .hero::after {
       content: "";
       position: absolute;
@@ -235,12 +210,10 @@
       border-radius: 50%;
       background: rgba(200, 166, 106, 0.16);
     }
-
     .hero-copy, .hero-panel {
       position: relative;
       z-index: 1;
     }
-
     .hero-badge {
       display: inline-block;
       padding: 7px 16px;
@@ -252,7 +225,6 @@
       font-weight: 900;
       letter-spacing: 0.08em;
     }
-
     .hero h1 {
       font-size: clamp(32px, 5vw, 50px);
       line-height: 1.22;
@@ -260,26 +232,22 @@
       letter-spacing: 0.04em;
       margin-bottom: 12px;
     }
-
     .hero .subtitle {
       font-size: 20px;
       color: var(--deep-gray);
       font-weight: 800;
       margin-bottom: 10px;
     }
-
     .hero .course-title {
       font-size: 18px;
       color: var(--medium-gray);
       margin-bottom: 14px;
     }
-
     .hero .hero-desc {
       max-width: 720px;
       color: var(--medium-gray);
       font-size: 15px;
     }
-
     .hero-panel {
       border-radius: 28px;
       padding: 24px;
@@ -292,7 +260,6 @@
       justify-content: space-between;
       min-height: 250px;
     }
-
     .hero-panel .mini-title {
       font-size: 14px;
       letter-spacing: .12em;
@@ -300,26 +267,22 @@
       font-weight: 900;
       margin-bottom: 10px;
     }
-
     .hero-panel h2 {
       font-size: 26px;
       line-height: 1.35;
       margin-bottom: 10px;
     }
-
     .hero-panel p {
       color: rgba(255,255,255,.78);
       font-size: 15px;
       margin-bottom: 20px;
     }
-
     .quick-nav {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
       margin-top: 22px;
     }
-
     .pill-link {
       display: inline-flex;
       align-items: center;
@@ -334,12 +297,10 @@
       transition: .24s ease;
       box-shadow: 0 8px 18px rgba(63, 95, 77, 0.11);
     }
-
     .pill-link:hover {
       transform: translateY(-2px);
       background: #fff;
     }
-
     .section {
       margin: 0 0 34px;
       padding: 34px 26px;
@@ -349,12 +310,10 @@
       border: 1px solid rgba(200, 166, 106, 0.22);
       box-shadow: var(--shadow);
     }
-
     .section-header {
       text-align: center;
       margin-bottom: 26px;
     }
-
     .section-header span {
       display: inline-block;
       padding: 6px 14px;
@@ -366,26 +325,22 @@
       letter-spacing: 0.08em;
       margin-bottom: 12px;
     }
-
     .section-header h2 {
       font-size: clamp(24px, 4vw, 34px);
       color: var(--deep-green);
       letter-spacing: 0.04em;
       margin-bottom: 8px;
     }
-
     .section-header p {
       color: var(--medium-gray);
       font-size: 16px;
     }
-
     .course-grid,
     .link-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 22px;
     }
-
     .course-card,
     .link-card,
     .student-card {
@@ -402,11 +357,9 @@
       flex-direction: column;
       justify-content: space-between;
     }
-
     .course-card {
       min-height: 318px;
     }
-
     .course-card::before,
     .link-card::before,
     .student-card::before {
@@ -418,14 +371,12 @@
       height: 5px;
       background: linear-gradient(90deg, var(--herbal-green), var(--milk-tea-gold));
     }
-
     .course-card:hover,
     .link-card:hover,
     .student-card:hover {
       transform: translateY(-7px);
       box-shadow: 0 22px 46px rgba(63, 95, 77, 0.2);
     }
-
     .course-number,
     .student-number {
       width: 46px;
@@ -439,7 +390,6 @@
       font-weight: 900;
       margin-bottom: 16px;
     }
-
     .course-card h3,
     .link-card h3,
     .student-card h3 {
@@ -448,7 +398,6 @@
       color: var(--deep-green);
       margin-bottom: 10px;
     }
-
     .tag {
       display: inline-block;
       padding: 6px 12px;
@@ -457,19 +406,16 @@
       font-weight: 900;
       margin-bottom: 14px;
     }
-
     .tag.warning {
       background: var(--warning-bg);
       border: 1px solid var(--warning-border);
       color: var(--warning-text);
     }
-
     .tag.normal {
       background: rgba(95, 127, 104, 0.12);
       border: 1px solid rgba(95, 127, 104, 0.18);
       color: var(--deep-green);
     }
-
     .course-card p,
     .link-card p,
     .student-card p {
@@ -477,7 +423,6 @@
       font-size: 15px;
       margin-bottom: 20px;
     }
-
     .warning-note {
       padding: 12px 13px;
       border-radius: 16px;
@@ -486,7 +431,6 @@
       color: var(--warning-text);
       font-weight: 700;
     }
-
     .watch-button {
       display: inline-flex;
       align-items: center;
@@ -503,21 +447,17 @@
       transition: 0.25s ease;
       text-align: center;
     }
-
     .watch-button.gold {
       background: linear-gradient(135deg, #a78243, var(--milk-tea-gold));
       box-shadow: 0 9px 0 rgba(167, 130, 67, .18), 0 16px 26px rgba(200, 166, 106, 0.22);
     }
-
     .watch-button:hover {
       transform: translateY(-2px);
       filter: brightness(1.03);
     }
-
     .link-card {
       min-height: 254px;
     }
-
     .link-icon {
       width: 56px;
       height: 56px;
@@ -533,7 +473,232 @@
       letter-spacing: .02em;
       font-size: 13px;
     }
-
+    /* ===== 課程梯次分組 ===== */
+    .course-subhead {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 8px 0 20px;
+      padding: 13px 20px;
+      border-radius: 16px;
+      background: rgba(95, 127, 104, 0.1);
+      border-left: 5px solid var(--milk-tea-gold);
+      color: var(--deep-green);
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 0.03em;
+    }
+    .course-group + .course-group {
+      margin-top: 34px;
+    }
+    /* ===== 重點錄影卡（1150504） ===== */
+    .replay-feature {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 22px;
+      align-items: stretch;
+      margin-bottom: 8px;
+    }
+    .replay-feature .feature-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .replay-feature .feature-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .replay-feature .feature-label .new-dot {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--milk-tea-gold);
+      color: var(--forest);
+      font-size: 12px;
+      letter-spacing: .06em;
+    }
+    .password-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      align-self: flex-start;
+      padding: 10px 18px;
+      margin-bottom: 20px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(234, 216, 173, 0.5);
+      color: #fff;
+      font-weight: 900;
+      letter-spacing: .04em;
+    }
+    .password-badge b {
+      color: var(--soft-gold);
+      font-size: 19px;
+      letter-spacing: .1em;
+    }
+    .replay-notes {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      justify-content: center;
+    }
+    .replay-notes .warning-note,
+    .replay-notes .normal-note {
+      padding: 17px 18px;
+      border-radius: 18px;
+      font-size: 15px;
+      line-height: 1.72;
+    }
+    .normal-note {
+      background: rgba(95, 127, 104, 0.1);
+      border: 1px solid rgba(95, 127, 104, 0.22);
+      color: var(--deep-green);
+      font-weight: 700;
+    }
+    /* ===== 單支影片橫幅卡 ===== */
+    .replay-single {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 22px 24px;
+      border-radius: 24px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.97), rgba(237, 242, 236, 0.84));
+      border: 1px solid rgba(95, 127, 104, 0.14);
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+      transition: 0.28s ease;
+    }
+    .replay-single::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 5px; height: 100%;
+      background: linear-gradient(180deg, var(--herbal-green), var(--milk-tea-gold));
+    }
+    .replay-single:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 22px 46px rgba(63, 95, 77, 0.18);
+    }
+    .rs-icon {
+      width: 54px; height: 54px;
+      flex: 0 0 auto;
+      border-radius: 17px;
+      background: rgba(200, 166, 106, 0.18);
+      color: var(--deep-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 900;
+    }
+    .rs-body { flex: 1; }
+    .rs-body h3 {
+      font-size: 19px;
+      color: var(--deep-green);
+      margin-bottom: 4px;
+    }
+    .rs-body p {
+      color: var(--medium-gray);
+      font-size: 14px;
+    }
+    .replay-single .watch-button {
+      width: auto;
+      flex: 0 0 auto;
+      white-space: nowrap;
+      padding: 12px 28px 13px;
+    }
+    /* ===== 指示詞卡 ===== */
+    .prompt-card {
+      margin-top: 22px;
+      border-radius: 26px;
+      padding: 28px 26px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.97), rgba(237, 242, 236, 0.84));
+      border: 1px solid rgba(95, 127, 104, 0.16);
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .prompt-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 5px;
+      background: linear-gradient(90deg, var(--herbal-green), var(--milk-tea-gold));
+    }
+    .prompt-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    .prompt-head h3 {
+      font-size: 21px;
+      color: var(--deep-green);
+    }
+    .prompt-desc {
+      color: var(--medium-gray);
+      font-size: 15px;
+      margin-bottom: 18px;
+    }
+    .prompt-tools {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .copy-button,
+    .prompt-link {
+      padding: 11px 18px;
+      border-radius: 13px;
+      font-weight: 900;
+      font-size: 14px;
+      letter-spacing: .03em;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.25s ease;
+    }
+    .copy-button {
+      border: none;
+      color: #fff;
+      background: linear-gradient(135deg, var(--forest), var(--herbal-green));
+      box-shadow: 0 8px 18px rgba(63, 95, 77, 0.2);
+    }
+    .copy-button:hover { transform: translateY(-2px); }
+    .prompt-link {
+      background: rgba(200, 166, 106, 0.18);
+      color: var(--deep-green);
+      border: 1px solid rgba(200, 166, 106, 0.45);
+    }
+    .prompt-link:hover { transform: translateY(-2px); background: rgba(200, 166, 106, 0.28); }
+    .prompt-text {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      font-size: 14.5px;
+      line-height: 1.9;
+      color: var(--deep-gray);
+      background: rgba(63, 95, 77, 0.05);
+      border: 1px dashed rgba(95, 127, 104, 0.35);
+      border-radius: 16px;
+      padding: 20px;
+      overflow-x: auto;
+    }
+    /* ===== AI 工具箱 ===== */
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+    .link-card.tool-card { min-height: 218px; }
+    /* ===== 學員作品 ===== */
     .portfolio-feature {
       display: grid;
       grid-template-columns: .9fr 1.1fr;
@@ -541,7 +706,6 @@
       align-items: stretch;
       margin-bottom: 24px;
     }
-
     .feature-card {
       border-radius: 28px;
       padding: 28px;
@@ -552,7 +716,6 @@
       position: relative;
       overflow: hidden;
     }
-
     .feature-card::after {
       content: "";
       position: absolute;
@@ -563,12 +726,10 @@
       bottom: -90px;
       background: rgba(200,166,106,.18);
     }
-
     .feature-card > * {
       position: relative;
       z-index: 1;
     }
-
     .feature-card .feature-label {
       color: var(--soft-gold);
       font-weight: 900;
@@ -576,24 +737,20 @@
       letter-spacing: .12em;
       margin-bottom: 12px;
     }
-
     .feature-card h3 {
       font-size: 30px;
       line-height: 1.3;
       margin-bottom: 12px;
     }
-
     .feature-card p {
       color: rgba(255,255,255,.78);
       margin-bottom: 22px;
     }
-
     .stats-box {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 14px;
     }
-
     .stat {
       border-radius: 22px;
       background: rgba(255,255,255,.78);
@@ -602,14 +759,12 @@
       box-shadow: var(--card-shadow);
       text-align: center;
     }
-
     .stat b {
       display: block;
       font-size: 34px;
       color: var(--deep-green);
       line-height: 1.1;
     }
-
     .stat span {
       display: block;
       color: var(--medium-gray);
@@ -617,7 +772,6 @@
       font-size: 14px;
       margin-top: 8px;
     }
-
     .student-toolbar {
       display: flex;
       align-items: center;
@@ -629,7 +783,6 @@
       background: rgba(255,255,255,.62);
       border: 1px solid rgba(95,127,104,.12);
     }
-
     .student-toolbar input {
       width: min(420px, 100%);
       padding: 13px 16px;
@@ -640,47 +793,39 @@
       color: var(--deep-gray);
       font-size: 15px;
     }
-
     .student-toolbar input:focus {
       border-color: var(--herbal-green);
       box-shadow: 0 0 0 4px rgba(95,127,104,.12);
     }
-
     .toolbar-note {
       color: var(--medium-gray);
       font-size: 14px;
       font-weight: 800;
       white-space: nowrap;
     }
-
     .student-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 18px;
     }
-
     .student-card {
       min-height: 204px;
       padding: 23px 19px;
     }
-
     .student-card h3 {
       font-size: 20px;
       margin-bottom: 6px;
     }
-
     .student-card p {
       font-size: 14px;
       margin-bottom: 18px;
     }
-
     .student-meta {
       display: flex;
       align-items: center;
       gap: 10px;
       margin-bottom: 13px;
     }
-
     .student-number {
       width: 40px;
       height: 40px;
@@ -688,24 +833,139 @@
       margin-bottom: 0;
       flex: 0 0 auto;
     }
-
     .student-label {
       font-size: 12px;
       color: var(--medium-gray);
       font-weight: 900;
       letter-spacing: .08em;
     }
-
     .student-card .watch-button {
       padding: 11px 13px 12px;
       font-size: 14px;
     }
-
+    /* ===== 留言板 ===== */
+    .board-note {
+      padding: 15px 18px;
+      border-radius: 16px;
+      background: var(--warning-bg);
+      border: 1px solid rgba(224, 184, 106, 0.6);
+      color: var(--warning-text);
+      font-weight: 700;
+      font-size: 14.5px;
+      margin-bottom: 20px;
+    }
+    .board-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 22px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(95, 127, 104, 0.14);
+      box-shadow: var(--card-shadow);
+      margin-bottom: 24px;
+    }
+    .board-form input,
+    .board-form textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(95, 127, 104, 0.24);
+      background: #fff;
+      color: var(--deep-gray);
+      font-size: 15px;
+      outline: none;
+      transition: 0.2s ease;
+      resize: vertical;
+    }
+    .board-form input:focus,
+    .board-form textarea:focus {
+      border-color: var(--herbal-green);
+      box-shadow: 0 0 0 4px rgba(95, 127, 104, 0.12);
+    }
+    .board-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .board-actions .watch-button {
+      width: auto;
+      flex: 1 1 200px;
+      padding: 13px 20px 14px;
+    }
+    .board-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .board-empty {
+      text-align: center;
+      color: var(--medium-gray);
+      font-weight: 800;
+      padding: 28px 12px;
+      border: 1px dashed rgba(95, 127, 104, 0.3);
+      border-radius: 18px;
+    }
+    .board-item {
+      padding: 18px 20px;
+      border-radius: 18px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.97), rgba(237, 242, 236, 0.82));
+      border: 1px solid rgba(95, 127, 104, 0.14);
+      box-shadow: 0 8px 20px rgba(63, 95, 77, 0.08);
+      position: relative;
+    }
+    .board-item-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .board-avatar {
+      width: 36px; height: 36px;
+      border-radius: 12px;
+      flex: 0 0 auto;
+      background: linear-gradient(145deg, var(--forest), var(--herbal-green));
+      color: var(--soft-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+    }
+    .board-item-head b {
+      color: var(--deep-green);
+      font-size: 16px;
+    }
+    .board-item-head .board-time {
+      color: var(--medium-gray);
+      font-size: 13px;
+      font-weight: 700;
+      margin-left: auto;
+    }
+    .board-item p {
+      color: var(--deep-gray);
+      font-size: 15px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin-left: 46px;
+    }
+    .board-delete {
+      position: absolute;
+      right: 14px;
+      bottom: 12px;
+      border: none;
+      background: transparent;
+      color: var(--medium-gray);
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      opacity: .7;
+    }
+    .board-delete:hover { color: #b64545; opacity: 1; }
     .logout-area {
       text-align: center;
       margin: 12px 0 30px;
     }
-
     .logout-button {
       border: 1px solid rgba(95, 127, 104, 0.28);
       background: rgba(255, 255, 255, 0.66);
@@ -717,92 +977,80 @@
       transition: 0.25s ease;
       font-weight: 800;
     }
-
     .logout-button:hover {
       background: rgba(95, 127, 104, 0.1);
       transform: translateY(-1px);
     }
-
     footer {
       text-align: center;
       color: var(--medium-gray);
       font-size: 14px;
       padding: 12px 8px 0;
     }
-
     footer strong {
       color: var(--deep-green);
       font-weight: 900;
     }
-
     .hide {
       display: none !important;
     }
-
     @media (max-width: 1080px) {
       .student-grid {
         grid-template-columns: repeat(3, 1fr);
       }
+      .tool-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
-
     @media (max-width: 920px) {
       .hero,
-      .portfolio-feature {
+      .portfolio-feature,
+      .replay-feature {
         grid-template-columns: 1fr;
       }
-
       .course-grid,
       .link-grid,
       .student-grid {
         grid-template-columns: repeat(2, 1fr);
       }
-
       .stats-box {
         grid-template-columns: repeat(3, 1fr);
       }
     }
-
     @media (max-width: 620px) {
       .page {
         padding: 20px;
       }
-
       .login-card {
         padding: 36px 24px;
         border-radius: 26px;
       }
-
       .login-card h1 {
         font-size: 26px;
       }
-
       .login-card h2 {
         font-size: 18px;
       }
-
       .main-page {
         padding: 30px 16px 24px;
       }
-
       .hero,
       .section {
         padding: 26px 18px;
         border-radius: 26px;
       }
-
       .hero-panel,
       .feature-card {
         border-radius: 24px;
         padding: 24px 20px;
       }
-
       .course-grid,
       .link-grid,
       .student-grid,
+      .tool-grid,
       .stats-box {
         grid-template-columns: 1fr;
       }
-
       .course-card,
       .link-card,
       .student-card {
@@ -810,29 +1058,31 @@
         padding: 23px 18px;
         border-radius: 22px;
       }
-
+      .replay-single {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+      }
+      .replay-single .watch-button { width: 100%; }
       .student-toolbar {
         align-items: stretch;
         flex-direction: column;
       }
-
       .toolbar-note {
         white-space: normal;
         text-align: center;
       }
+      .board-item p { margin-left: 0; }
     }
   </style>
 </head>
-
 <body>
   <section id="loginPage" class="page login-page">
     <div class="login-card">
       <div class="brand-mark">芸</div>
-
       <h1>馥芸財富學苑</h1>
       <h2>財顧芸｜AI學習成果入口</h2>
       <p>公勝包班｜浩茂AI科技｜學員作品展示牆</p>
-
       <div class="password-box">
         <input
           type="password"
@@ -842,12 +1092,10 @@
         />
         <button type="button" class="login-button" id="loginButton">進入學習成果入口</button>
       </div>
-
       <div id="errorMessage" class="error-message"></div>
       <div class="secure-note">本頁內容僅供課程學員學習使用</div>
     </div>
   </section>
-
   <main id="mainPage" class="main-page">
     <div class="main-container">
       <section class="hero">
@@ -855,19 +1103,18 @@
           <div class="hero-badge">AI Learning Portfolio</div>
           <h1>馥芸財富學苑｜財顧芸</h1>
           <div class="subtitle">公勝包班（浩茂AI科技）</div>
-          <div class="course-title">NotebookLM × Gemini × Gamma｜AI 學習成果入口</div>
+          <div class="course-title">NotebookLM × Gemini × Gamma × Claude｜AI 學習成果入口</div>
           <p class="hero-desc">
-            本頁整合課程複習影片、延伸連結與學員作品集，協助學員課後複習、彼此觀摩，
-            也讓每一份完成的作品都能被看見、被記錄、被延伸應用。
+            本頁整合各梯次課程回放、AI 工具箱、學員作品集與延伸連結，
+            協助學員課後複習、彼此觀摩，也讓每一份完成的作品都能被看見、被記錄、被延伸應用。
           </p>
-
           <nav class="quick-nav" aria-label="快速導覽">
-            <a class="pill-link" href="#courseVideos">課程影片</a>
+            <a class="pill-link" href="#courseVideos">課程回放</a>
             <a class="pill-link" href="#studentPortfolio">學員作品</a>
+            <a class="pill-link" href="#aiTools">AI 工具箱</a>
             <a class="pill-link" href="#followLinks">延伸連結</a>
           </nav>
         </div>
-
         <aside class="hero-panel">
           <div>
             <div class="mini-title">PORTFOLIO WALL</div>
@@ -885,84 +1132,235 @@
           </a>
         </aside>
       </section>
-
       <section id="courseVideos" class="section">
         <div class="section-header">
           <span>Course Replay</span>
-          <h2>課程影片｜課後複習</h2>
-          <p>保留原課程入口，讓學員可以快速回到三段課程影片進行複習。</p>
+          <h2>課程回放｜課後複習</h2>
+          <p>整合各梯次課程回放，讓學員可以依日期快速回到課程影片進行複習。</p>
         </div>
 
-        <div class="course-grid">
-          <article class="course-card">
-            <div>
-              <div class="course-number">01</div>
-              <h3>20260504 Gemini LLM Gamma 1</h3>
-              <div class="tag warning">⚠️ 本段影片無聲音</div>
-              <p class="warning-note">
-                第一段影片因當時錄製設定未完成，所以影片沒有聲音。建議先作為畫面流程參考；第二段與第三段影片聲音正常。
-              </p>
+        <!-- 梯次 1：2026.05.04 公勝包班 -->
+        <div class="course-group">
+          <div class="course-subhead">📅 2026.05.04 公勝包班（浩茂AI科技）</div>
+          <div class="replay-feature">
+            <article class="feature-card">
+              <div>
+                <div class="feature-label"><span class="new-dot">實體</span> 實體課程紀錄</div>
+                <h3>1150504 包班線上錄影</h3>
+                <p>
+                  因應本次實體課程官方未提供錄影，特別感謝彥儒顧問協助拍攝實體課程紀錄，
+                  讓學員能夠課後複習使用。
+                </p>
+              </div>
+              <div>
+                <div class="password-badge">🔑 觀看密碼：<b>84200994</b></div>
+                <a
+                  class="watch-button gold"
+                  href="https://reurl.cc/3kmDWj"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  前往課程錄影
+                </a>
+              </div>
+            </article>
+            <div class="replay-notes">
+              <div class="warning-note">
+                ⚠️ 影片說明：第一段因設備設定關係沒有聲音；第二段、第三段聲音正常，可正常觀看學習。
+              </div>
+              <div class="normal-note">
+                📌 溫馨提醒：本錄影為協助學員複習使用，非正式官方錄影。若後續我們有參加實體課程，會再視情況協助錄影留存。
+              </div>
             </div>
+          </div>
+          <div class="course-subhead" style="margin-top:22px;">🎬 20260504 Gemini × LLM × Gamma 線上三段</div>
+          <div class="course-grid">
+            <article class="course-card">
+              <div>
+                <div class="course-number">01</div>
+                <h3>20260504 Gemini LLM Gamma 1</h3>
+                <div class="tag warning">⚠️ 本段影片無聲音</div>
+                <p class="warning-note">
+                  第一段影片因當時錄製設定未完成，所以影片沒有聲音。建議先作為畫面流程參考；第二段與第三段影片聲音正常。
+                </p>
+              </div>
+              <a
+                class="watch-button"
+                href="https://youtu.be/ahACQV7iBsg"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                觀看課程 1
+              </a>
+            </article>
+            <article class="course-card">
+              <div>
+                <div class="course-number">02</div>
+                <h3>20260504 Gemini LLM Gamma 2</h3>
+                <div class="tag normal">聲音正常</div>
+                <p>
+                  第二段影片聲音正常，適合接續第一段內容進行完整學習與複習。
+                </p>
+              </div>
+              <a
+                class="watch-button gold"
+                href="https://youtu.be/0QnElmUiUME"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                觀看課程 2
+              </a>
+            </article>
+            <article class="course-card">
+              <div>
+                <div class="course-number">03</div>
+                <h3>20260504 Gemini LLM Gamma 3</h3>
+                <div class="tag normal">聲音正常</div>
+                <p>
+                  第三段影片聲音正常，協助學員完成 NotebookLM、Gemini 與 Gamma 的整合應用複習。
+                </p>
+              </div>
+              <a
+                class="watch-button"
+                href="https://youtu.be/qXH-yqnPdkcbu"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                觀看課程 3
+              </a>
+            </article>
+          </div>
+        </div>
 
-            <a
-              class="watch-button"
-              href="https://youtu.be/ahACQV7iBsg"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              觀看課程 1
-            </a>
-          </article>
-
-          <article class="course-card">
-            <div>
-              <div class="course-number">02</div>
-              <h3>20260504 Gemini LLM Gamma 2</h3>
-              <div class="tag normal">聲音正常</div>
-              <p>
-                第二段影片聲音正常，適合接續第一段內容進行完整學習與複習。
-              </p>
+        <!-- 梯次 2：2026.05.05 龍蝦 & Claude Code -->
+        <div class="course-group">
+          <div class="course-subhead">📅 2026.05.05 龍蝦 &amp; Claude Code</div>
+          <div class="replay-single">
+            <div class="rs-icon">🦞</div>
+            <div class="rs-body">
+              <h3>龍蝦 &amp; Claude Code 課程回放</h3>
+              <p>帶你認識 Claude Code 的實務應用與操作流程，適合課後完整複習。</p>
             </div>
-
             <a
               class="watch-button gold"
-              href="https://youtu.be/0QnElmUiUME"
+              href="https://youtu.be/oZYF16EAzqM"
               target="_blank"
               rel="noopener noreferrer"
             >
-              觀看課程 2
+              觀看回放
             </a>
-          </article>
+          </div>
+        </div>
 
-          <article class="course-card">
-            <div>
-              <div class="course-number">03</div>
-              <h3>20260504 Gemini LLM Gamma 3</h3>
-              <div class="tag normal">聲音正常</div>
-              <p>
-                第三段影片聲音正常，協助學員完成 NotebookLM、Gemini 與 Gamma 的整合應用複習。
-              </p>
+        <!-- 梯次 3：2026.06.05 即夢AI創作課 -->
+        <div class="course-group">
+          <div class="course-subhead">📅 2026.06.05 即夢 AI 創作課</div>
+          <div class="replay-single">
+            <div class="rs-icon">🎨</div>
+            <div class="rs-body">
+              <h3>即夢 AI 創作課 回放</h3>
+              <p>學習用即夢 AI 進行圖像與內容創作，快速把靈感變成作品。</p>
             </div>
-
             <a
-              class="watch-button"
-              href="https://youtu.be/qXH-yqnPdkcbu"
+              class="watch-button gold"
+              href="https://youtu.be/3y8jPU_2jZI"
               target="_blank"
               rel="noopener noreferrer"
             >
-              觀看課程 3
+              觀看回放
             </a>
-          </article>
+          </div>
+        </div>
+
+        <!-- 梯次 4：2026.06.15 中山包班 競品分析 -->
+        <div class="course-group">
+          <div class="course-subhead">📅 2026.06.15 中山包班｜AI 競品分析</div>
+          <div class="course-grid">
+            <article class="course-card">
+              <div>
+                <div class="course-number">01</div>
+                <h3>20260615 中山包班 第一段</h3>
+                <div class="tag normal">聲音正常</div>
+                <p>競品分析主題第一段，帶你了解如何用 AI 找出競爭對手與市場格局。</p>
+              </div>
+              <a
+                class="watch-button"
+                href="https://youtu.be/ZXLd9De3P2s"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                觀看第一段
+              </a>
+            </article>
+            <article class="course-card">
+              <div>
+                <div class="course-number">02</div>
+                <h3>20260615 中山包班 第二段</h3>
+                <div class="tag normal">聲音正常</div>
+                <p>第二段延續競品分析流程，示範用 AI 蒐集與比較關鍵資訊。</p>
+              </div>
+              <a
+                class="watch-button gold"
+                href="https://youtu.be/SBhTVfHcXx0"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                觀看第二段
+              </a>
+            </article>
+            <article class="course-card">
+              <div>
+                <div class="course-number">03</div>
+                <h3>20260615 中山包班 第三段</h3>
+                <div class="tag normal">聲音正常</div>
+                <p>第三段完成差異化觀察與行動策略，讓競品分析真正可落地。</p>
+              </div>
+              <a
+                class="watch-button"
+                href="https://youtu.be/sQMq-oAxzqI"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                觀看第三段
+              </a>
+            </article>
+          </div>
+          <div class="prompt-card">
+            <div class="prompt-head">
+              <h3>🔍 競品分析指示詞 × NotebookLM 學習筆記</h3>
+              <div class="prompt-tools">
+                <button type="button" class="copy-button" id="copyPromptButton" data-label="複製指示詞">複製指示詞</button>
+                <a class="prompt-link" href="https://notebooklm.google.com/" target="_blank" rel="noopener noreferrer">開啟 NotebookLM</a>
+              </div>
+            </div>
+            <p class="prompt-desc">
+              搭配本段回放使用：把下方指示詞貼到 AI（Gemini / ChatGPT / Claude）中，
+              並將回放整理成 NotebookLM 學習筆記，就能一步步完成自己的競品分析。
+            </p>
+            <pre class="prompt-text" id="promptText">你是一位「競品分析策略顧問」。
+以下是我的基本資料：
+【我做什麼行業】：XXX
+【公司叫什麼】（如果有）：XXX
+【我在這個產業中的角色】：XXX
+【主要商品或服務】：XXX
+【我想為客戶解決的問題】：XXX
+【現在面臨什麼困難】：XXX
+請至少完成以下任務：
+任務 1：適合的定位
+任務 2：5~8個同行分析（包含：定位、客群、產品、通路、為何值得分析）
+任務 3：差異化觀察
+任務 4：短/長期目標
+任務 5：其他
+內容請表達清楚、可落地、內容真實性，不要抽象。</pre>
+          </div>
         </div>
       </section>
-
       <section id="studentPortfolio" class="section">
         <div class="section-header">
           <span>Student Showcase</span>
           <h2>學員作品集｜AI 專業品牌成果展</h2>
           <p>集中展示學員 Gamma 網頁作品，方便觀摩、回訪與後續優化。</p>
         </div>
-
         <div class="portfolio-feature">
           <article class="feature-card">
             <div class="feature-label">PADLET COLLECTION</div>
@@ -979,7 +1377,6 @@
               前往 Padlet 作品集
             </a>
           </article>
-
           <div class="stats-box">
             <div class="stat">
               <b>22</b>
@@ -995,12 +1392,10 @@
             </div>
           </div>
         </div>
-
         <div class="student-toolbar">
           <input id="studentSearch" type="search" placeholder="搜尋學員姓名，例如：桂琴、欣婷、財顧芸" />
           <div class="toolbar-note">點擊卡片即可開啟作品網頁</div>
         </div>
-
         <div class="student-grid" id="studentGrid">
           <article class="student-card" data-name="媛馨">
             <div>
@@ -1010,7 +1405,6 @@
             </div>
             <a class="watch-button" href="https://hilarious-rabbit-yq9km7c.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
           </article>
-
           <article class="student-card" data-name="加真">
             <div>
               <div class="student-meta"><div class="student-number">02</div><div class="student-label">STUDENT WORK</div></div>
@@ -1019,7 +1413,6 @@
             </div>
             <a class="watch-button gold" href="https://bruised-fish-uq25yt8.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
           </article>
-
           <article class="student-card" data-name="玲妤">
             <div>
               <div class="student-meta"><div class="student-number">03</div><div class="student-label">STUDENT WORK</div></div>
@@ -1028,7 +1421,6 @@
             </div>
             <a class="watch-button" href="https://lingyu-finance-fwmhayc.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
           </article>
-
           <article class="student-card" data-name="冠蓉">
             <div>
               <div class="student-meta"><div class="student-number">04</div><div class="student-label">STUDENT WORK</div></div>
@@ -1037,7 +1429,6 @@
             </div>
             <a class="watch-button gold" href="https://huang-guanrong-cfp-7rjdbmu.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
           </article>
-
           <article class="student-card" data-name="淑貞">
             <div>
               <div class="student-meta"><div class="student-number">05</div><div class="student-label">STUDENT WORK</div></div>
@@ -1046,7 +1437,6 @@
             </div>
             <a class="watch-button" href="https://jane-finance-jmqjkn8.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
           </article>
-
           <article class="student-card" data-name="秀惠">
             <div>
               <div class="student-meta"><div class="student-number">06</div><div class="student-label">STUDENT WORK</div></div>
@@ -1055,7 +1445,6 @@
             </div>
             <a class="watch-button gold" href="https://xiuhui-finance-9vbayr8.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
           </article>
-
           <article class="student-card" data-name="佩珠">
             <div>
               <div class="student-meta"><div class="student-number">07</div><div class="student-label">STUDENT WORK</div></div>
@@ -1064,7 +1453,6 @@
             </div>
             <a class="watch-button" href="https://pei-chu-hong-finance-pokvmtd.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
           </article>
-
           <article class="student-card" data-name="玉敏">
             <div>
               <div class="student-meta"><div class="student-number">08</div><div class="student-label">STUDENT WORK</div></div>
@@ -1073,7 +1461,6 @@
             </div>
             <a class="watch-button gold" href="https://alice-finance-structure-rooz9ri.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
           </article>
-
           <article class="student-card" data-name="筱雯">
             <div>
               <div class="student-meta"><div class="student-number">09</div><div class="student-label">STUDENT WORK</div></div>
@@ -1082,7 +1469,6 @@
             </div>
             <a class="watch-button" href="https://lin-xiaowen-finance-tnht91i.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
           </article>
-
           <article class="student-card" data-name="桂琴">
             <div>
               <div class="student-meta"><div class="student-number">10</div><div class="student-label">STUDENT WORK</div></div>
@@ -1091,7 +1477,6 @@
             </div>
             <a class="watch-button gold" href="https://guiqin-chuancheng-n0il9h1.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
           </article>
-
           <article class="student-card" data-name="欣婷">
             <div>
               <div class="student-meta"><div class="student-number">11</div><div class="student-label">STUDENT WORK</div></div>
@@ -1100,7 +1485,6 @@
             </div>
             <a class="watch-button" href="https://puzzled-cow-zb23brm.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
           </article>
-
           <article class="student-card" data-name="麗婷">
             <div>
               <div class="student-meta"><div class="student-number">12</div><div class="student-label">STUDENT WORK</div></div>
@@ -1109,7 +1493,6 @@
             </div>
             <a class="watch-button gold" href="https://manbu-caidao-tjadtsn.gamma.site" target="_blank" rel="noopener noreferrer">開啟作品</a>
           </article>
-
           <article class="student-card" data-name="安芯">
             <div>
               <div class="student-meta"><div class="student-number">13</div><div class="student-label">STUDENT WORK</div></div>
@@ -1118,7 +1501,6 @@
             </div>
             <a class="watch-button" href="https://sophie-lin-wealth-fwt5ofx.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
           </article>
-
           <article class="student-card" data-name="陳盈慧 盈慧">
             <div>
               <div class="student-meta"><div class="student-number">14</div><div class="student-label">STUDENT WORK</div></div>
@@ -1127,7 +1509,6 @@
             </div>
             <a class="watch-button gold" href="https://yinghui-finance-3lgmg6u.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
           </article>
-
           <article class="student-card" data-name="財顧芸 陳芸琪 芸琪">
             <div>
               <div class="student-meta"><div class="student-number">15</div><div class="student-label">STUDENT WORK</div></div>
@@ -1136,7 +1517,6 @@
             </div>
             <a class="watch-button" href="https://polite-cetacean-b4m8g82.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
           </article>
-
           <article class="student-card" data-name="敏玉">
             <div>
               <div class="student-meta"><div class="student-number">16</div><div class="student-label">STUDENT WORK</div></div>
@@ -1145,7 +1525,6 @@
             </div>
             <a class="watch-button gold" href="https://fang-min-yu-finance-elnn3hz.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
           </article>
-
           <article class="student-card" data-name="桂琴">
             <div>
               <div class="student-meta"><div class="student-number">17</div><div class="student-label">STUDENT WORK</div></div>
@@ -1154,7 +1533,6 @@
             </div>
             <a class="watch-button" href="https://guiqin-wealth-25x3a00.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
           </article>
-
           <article class="student-card" data-name="秀綾">
             <div>
               <div class="student-meta"><div class="student-number">18</div><div class="student-label">STUDENT WORK</div></div>
@@ -1163,7 +1541,6 @@
             </div>
             <a class="watch-button gold" href="https://zhangxiuling-assets-cduzlxo.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
           </article>
-
           <article class="student-card" data-name="黃雅玲 雅玲">
             <div>
               <div class="student-meta"><div class="student-number">19</div><div class="student-label">STUDENT WORK</div></div>
@@ -1172,7 +1549,6 @@
             </div>
             <a class="watch-button" href="https://tinas-finance-design-4lev820.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
           </article>
-
           <article class="student-card" data-name="楊仁杰 仁杰">
             <div>
               <div class="student-meta"><div class="student-number">20</div><div class="student-label">STUDENT WORK</div></div>
@@ -1181,7 +1557,6 @@
             </div>
             <a class="watch-button gold" href="https://gamma.app/docs/-0v5t9z54ni64y69" target="_blank" rel="noopener noreferrer">開啟作品</a>
           </article>
-
           <article class="student-card" data-name="姚曉萍 曉萍">
             <div>
               <div class="student-meta"><div class="student-number">21</div><div class="student-label">STUDENT WORK</div></div>
@@ -1190,7 +1565,6 @@
             </div>
             <a class="watch-button" href="https://joy-finance-runner-h4dvcaj.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
           </article>
-
           <article class="student-card" data-name="何婕如 婕如">
             <div>
               <div class="student-meta"><div class="student-number">22</div><div class="student-label">STUDENT WORK</div></div>
@@ -1201,14 +1575,91 @@
           </article>
         </div>
       </section>
-
+      <section id="aiTools" class="section">
+        <div class="section-header">
+          <span>AI Toolbox</span>
+          <h2>AI 工具箱｜浩茂會員專屬資源</h2>
+          <p>整合浩茂會員專屬訂製的 AI 工具與實用資源，讓學習成果直接應用在日常工作。</p>
+        </div>
+        <div class="replay-feature">
+          <article class="feature-card">
+            <div>
+              <div class="feature-label"><span class="new-dot" style="background:var(--milk-tea-gold);color:var(--forest);padding:3px 10px;border-radius:999px;font-size:12px;">回放</span> 會員專屬</div>
+              <h3>2026.06.17 浩茂會員專屬訂製 AI 工具</h3>
+              <p>
+                完整介紹浩茂為會員量身打造的 AI 工具，帶你了解如何實際運用下方各項資源。
+              </p>
+            </div>
+            <a
+              class="watch-button gold"
+              href="https://youtu.be/ZDhbd0QZx0Y"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              觀看工具介紹回放
+            </a>
+          </article>
+          <div class="replay-notes">
+            <div class="normal-note">
+              🧰 下方四項工具皆為浩茂會員可使用的實用資源，建議先看回放了解操作方式，再逐一體驗。
+            </div>
+          </div>
+        </div>
+        <div class="tool-grid">
+          <article class="link-card tool-card">
+            <div>
+              <div class="link-icon">晨報</div>
+              <h3>C寶晨報</h3>
+              <p>每日 AI 新聞與趨勢重點，快速掌握產業動態。</p>
+            </div>
+            <a class="watch-button" href="https://cbob-ai-news.zeabur.app" target="_blank" rel="noopener noreferrer">開啟 C寶晨報</a>
+          </article>
+          <article class="link-card tool-card">
+            <div>
+              <div class="link-icon">收錢</div>
+              <h3>下筆收錢</h3>
+              <p>協助你把文案變成成交，快速產出打動人心的銷售內容。</p>
+            </div>
+            <a class="watch-button gold" href="https://money-come-ai.zeabur.app/index.html?openExternalBrowser=1" target="_blank" rel="noopener noreferrer">開啟下筆收錢</a>
+          </article>
+          <article class="link-card tool-card">
+            <div>
+              <div class="link-icon">CRM</div>
+              <h3>隨身 CRM</h3>
+              <p>名片與客戶管理隨身帶著走，人脈與商機一手掌握。</p>
+            </div>
+            <a class="watch-button" href="https://business-card-crm.pub.atoms.world/?openExternalBrowser=1" target="_blank" rel="noopener noreferrer">開啟隨身 CRM</a>
+          </article>
+          <article class="link-card tool-card">
+            <div>
+              <div class="link-icon">海報</div>
+              <h3>一鍵海報</h3>
+              <p>輸入內容即可快速生成專業海報，行銷素材一鍵搞定。</p>
+            </div>
+            <a class="watch-button gold" href="https://aihb.zeabur.app/?openExternalBrowser=1" target="_blank" rel="noopener noreferrer">開啟一鍵海報</a>
+          </article>
+        </div>
+      </section>
       <section id="followLinks" class="section">
         <div class="section-header">
           <span>Follow & Learn</span>
           <h2>延伸連結｜持續學習與追蹤</h2>
           <p>歡迎加入馥芸財富學苑，一起持續學習 AI、財務規劃與幸福財商。</p>
         </div>
-
+        <article class="feature-card" style="margin-bottom:24px;">
+          <div class="feature-label">OFFICIAL SITE</div>
+          <h3>馥芸財富學苑 官方網站</h3>
+          <p>認識馥芸財富學苑的完整課程、服務與財務自由學習資源。</p>
+          <a
+            class="watch-button gold"
+            href="https://www.allfreedom.info/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style="width:auto;padding:13px 30px 14px;"
+          >
+            前往官方網站
+          </a>
+        </article>
         <div class="link-grid">
           <article class="link-card">
             <div>
@@ -1216,7 +1667,6 @@
               <h3>馥芸財富學苑 LINE@ 官方群組</h3>
               <p>加入官方群組，接收最新課程資訊、學習提醒與活動通知。</p>
             </div>
-
             <a
               class="watch-button"
               href="https://lin.ee/6hkkECK"
@@ -1226,14 +1676,12 @@
               加入 LINE@ 官方群組
             </a>
           </article>
-
           <article class="link-card">
             <div>
               <div class="link-icon">芸</div>
               <h3>財顧芸專屬連結</h3>
               <p>認識財顧芸的服務、課程資源與財務規劃相關內容。</p>
             </div>
-
             <a
               class="watch-button gold"
               href="https://reurl.cc/18zQyY"
@@ -1243,14 +1691,12 @@
               前往財顧芸
             </a>
           </article>
-
           <article class="link-card">
             <div>
               <div class="link-icon">FB</div>
               <h3>財顧芸 FB 粉專</h3>
               <p>追蹤更多財務規劃、AI學習、家族傳承與生活分享。</p>
             </div>
-
             <a
               class="watch-button"
               href="https://www.facebook.com/IFA.Fans/"
@@ -1262,23 +1708,21 @@
           </article>
         </div>
       </section>
-
+      <!-- 學員提問留言板：依需求暫時停用，晚點再啟用（程式碼保留於下方 script） -->
       <div class="logout-area">
         <button type="button" class="logout-button" id="logoutButton">登出學習成果入口</button>
       </div>
-
       <footer>
         <strong>© 馥芸財富學苑｜財顧芸</strong><br />
         AI學習成果入口｜僅供課程學員學習使用
       </footer>
     </div>
   </main>
-
   <script>
     (function () {
       const correctPassword = "84200994";
       const loginStorageKey = "fuyun_ai_course_login_20260504";
-
+      const boardStorageKey = "fuyun_board_messages_v1";
       const loginPage = document.getElementById("loginPage");
       const mainPage = document.getElementById("mainPage");
       const passwordInput = document.getElementById("passwordInput");
@@ -1292,15 +1736,12 @@
         loginPage.style.display = "none";
         mainPage.style.display = "block";
       }
-
       function showLoginPage() {
         loginPage.style.display = "flex";
         mainPage.style.display = "none";
       }
-
       function checkPassword() {
         const inputPassword = passwordInput.value.trim();
-
         if (inputPassword === correctPassword) {
           localStorage.setItem(loginStorageKey, "true");
           errorMessage.textContent = "";
@@ -1312,17 +1753,14 @@
           passwordInput.focus();
         }
       }
-
       function logout() {
         localStorage.removeItem(loginStorageKey);
         showLoginPage();
         passwordInput.focus();
       }
-
       function filterStudents() {
         const keyword = studentSearch.value.trim().toLowerCase();
-
-        studentCards.forEach(function(card) {
+        studentCards.forEach(function (card) {
           const name = (card.getAttribute("data-name") || "").toLowerCase();
           const text = card.textContent.toLowerCase();
           const isMatched = !keyword || name.includes(keyword) || text.includes(keyword);
@@ -1330,10 +1768,135 @@
         });
       }
 
+      /* ===== 複製指示詞 ===== */
+      const copyPromptButton = document.getElementById("copyPromptButton");
+      const promptText = document.getElementById("promptText");
+      function copyPrompt() {
+        if (!promptText || !copyPromptButton) return;
+        const text = promptText.textContent;
+        const label = copyPromptButton.getAttribute("data-label") || "複製指示詞";
+        const done = function () {
+          copyPromptButton.textContent = "✓ 已複製";
+          setTimeout(function () { copyPromptButton.textContent = label; }, 1800);
+        };
+        const fallback = function () {
+          const ta = document.createElement("textarea");
+          ta.value = text;
+          ta.style.position = "fixed";
+          ta.style.opacity = "0";
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand("copy"); done(); } catch (e) {}
+          document.body.removeChild(ta);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done).catch(fallback);
+        } else {
+          fallback();
+        }
+      }
+
+      /* ===== 留言板 ===== */
+      const boardForm = document.getElementById("boardForm");
+      const boardName = document.getElementById("boardName");
+      const boardMessage = document.getElementById("boardMessage");
+      const boardList = document.getElementById("boardList");
+
+      function loadMessages() {
+        try {
+          const raw = localStorage.getItem(boardStorageKey);
+          const data = raw ? JSON.parse(raw) : [];
+          return Array.isArray(data) ? data : [];
+        } catch (e) {
+          return [];
+        }
+      }
+      function saveMessages(list) {
+        try { localStorage.setItem(boardStorageKey, JSON.stringify(list)); } catch (e) {}
+      }
+      function formatTime(ts) {
+        const d = new Date(ts);
+        if (isNaN(d.getTime())) return "";
+        const pad = function (n) { return n < 10 ? "0" + n : "" + n; };
+        return d.getFullYear() + "/" + pad(d.getMonth() + 1) + "/" + pad(d.getDate()) +
+          " " + pad(d.getHours()) + ":" + pad(d.getMinutes());
+      }
+      function renderMessages() {
+        const list = loadMessages();
+        boardList.innerHTML = "";
+        if (!list.length) {
+          const empty = document.createElement("div");
+          empty.className = "board-empty";
+          empty.textContent = "目前還沒有留言，成為第一個提問的人吧！";
+          boardList.appendChild(empty);
+          return;
+        }
+        list.slice().reverse().forEach(function (item) {
+          const wrap = document.createElement("div");
+          wrap.className = "board-item";
+
+          const head = document.createElement("div");
+          head.className = "board-item-head";
+
+          const avatar = document.createElement("div");
+          avatar.className = "board-avatar";
+          avatar.textContent = (item.name || "訪").slice(0, 1);
+
+          const nameEl = document.createElement("b");
+          nameEl.textContent = item.name || "匿名學員";
+
+          const timeEl = document.createElement("span");
+          timeEl.className = "board-time";
+          timeEl.textContent = formatTime(item.time);
+
+          head.appendChild(avatar);
+          head.appendChild(nameEl);
+          head.appendChild(timeEl);
+
+          const msg = document.createElement("p");
+          msg.textContent = item.message || "";
+
+          const del = document.createElement("button");
+          del.className = "board-delete";
+          del.type = "button";
+          del.textContent = "刪除";
+          del.addEventListener("click", function () {
+            const current = loadMessages().filter(function (m) { return m.id !== item.id; });
+            saveMessages(current);
+            renderMessages();
+          });
+
+          wrap.appendChild(head);
+          wrap.appendChild(msg);
+          wrap.appendChild(del);
+          boardList.appendChild(wrap);
+        });
+      }
+      function addMessage(e) {
+        if (e) e.preventDefault();
+        const name = (boardName.value || "").trim();
+        const message = (boardMessage.value || "").trim();
+        if (!message) {
+          boardMessage.focus();
+          return;
+        }
+        const list = loadMessages();
+        list.push({
+          id: "m" + new Date().getTime() + "_" + Math.floor(Math.random() * 1000),
+          name: name || "匿名學員",
+          message: message,
+          time: new Date().getTime()
+        });
+        saveMessages(list);
+        boardMessage.value = "";
+        renderMessages();
+      }
+
       loginButton.addEventListener("click", checkPassword);
       logoutButton.addEventListener("click", logout);
       studentSearch.addEventListener("input", filterStudents);
-
+      if (copyPromptButton) copyPromptButton.addEventListener("click", copyPrompt);
+      if (boardForm) boardForm.addEventListener("submit", addMessage);
       passwordInput.addEventListener("keydown", function (event) {
         if (event.key === "Enter") {
           checkPassword();
@@ -1341,8 +1904,8 @@
       });
 
       window.addEventListener("load", function () {
+        if (boardList) renderMessages();
         const isLoggedIn = localStorage.getItem(loginStorageKey);
-
         if (isLoggedIn === "true") {
           showMainPage();
         } else {
