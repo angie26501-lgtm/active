@@ -889,6 +889,53 @@
       padding: 20px;
       overflow-x: auto;
     }
+    .prompt-card + .prompt-card { margin-top: 20px; }
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px;
+      border-radius: 999px;
+      background: var(--forest);
+      color: var(--soft-gold);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      margin-bottom: 10px;
+    }
+    .ref-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+      padding: 15px 18px;
+      border-radius: 18px;
+      background: rgba(95, 127, 104, 0.1);
+      border: 1px solid rgba(95, 127, 104, 0.16);
+    }
+    .ref-bar .ref-label {
+      font-weight: 900;
+      color: var(--deep-green);
+      font-size: 14px;
+    }
+    .ref-bar a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid rgba(200, 166, 106, 0.42);
+      color: var(--deep-green);
+      font-weight: 800;
+      font-size: 13.5px;
+      transition: 0.2s ease;
+    }
+    .ref-bar a:hover {
+      transform: translateY(-2px);
+      background: rgba(200, 166, 106, 0.14);
+    }
     /* ===== AI 工具箱 ===== */
     .tool-grid {
       display: grid;
@@ -1925,6 +1972,212 @@
           </article>
         </div>
       </section>
+      <section id="promptLibrary" class="section">
+        <div class="section-header">
+          <span>Prompt Library</span>
+          <h2>指示詞補充｜LINE 官方帳號建置教學步驟</h2>
+          <p>講師於課程群組分享的指示詞（教學學習進度記錄），依步驟複製即可套用到你的 AI 工具中。</p>
+        </div>
+        <div class="ref-bar">
+          <span class="ref-label">參考資源：</span>
+          <a href="https://manager.line.biz/" target="_blank" rel="noopener noreferrer">🔧 LINE 後台</a>
+          <a href="https://www.canva.com/" target="_blank" rel="noopener noreferrer">🎨 Canva</a>
+          <a href="https://line.me/ti/p/3qbC0yrXTx" target="_blank" rel="noopener noreferrer">➕ 加入好友範例</a>
+          <a href="#onlineCourses">▶️ 輔助複習：2025.10.05 Line@ 介面介紹</a>
+        </div>
+
+        <div class="prompt-card">
+          <div class="prompt-head">
+            <div>
+              <div class="step-badge">STEP 1 · 品牌設定</div>
+              <div class="online-date" style="margin-bottom:8px;">2026.07.16</div>
+              <h3>🟢 LINE 官方帳號品牌顧問設定</h3>
+            </div>
+            <div class="prompt-tools">
+              <button type="button" class="copy-button" data-label="複製指示詞">複製指示詞</button>
+              <a class="prompt-link" href="https://manager.line.biz/" target="_blank" rel="noopener noreferrer">開啟 LINE 後台</a>
+            </div>
+          </div>
+          <p class="prompt-desc">
+            把下方指示詞貼到 AI（Gemini / ChatGPT / Claude），依提示替換成你自己的品牌資料，
+            即可快速產出品牌名稱、狀態消息與設定文案。（範例為講師示範版本，可自行調整）
+          </p>
+          <pre class="prompt-text">你是LINE官方帳號品牌顧問，請根據以下資料，幫我完成LINE官方帳號設定。
+品牌名稱：浩茂智能管家
+行業／服務：協助學員使用AI工具幫助學員在自己本業降本增效、企業培訓AI
+主要客戶：AI小白、公司企業
+品牌特色：手把手式教學，包班教學
+聯絡方式：Line ID : maggies93328/電話
+服務時間：早上9:00~晚上9:00
+請幫我產出：
+1. 品牌名稱給我五個選擇。品牌介紹，30字內
+2. 狀態消息5句，每句簡短有力
+3. 聯絡方式的正式寫法
+4. 服務時間的正式寫法
+5. 最後整理成可直接貼進LINE後台的版本
+資料不足時，請問我最多3個問題。
+請使用台灣繁體中文。</pre>
+        </div>
+
+        <div class="prompt-card">
+          <div class="prompt-head">
+            <div>
+              <div class="step-badge">STEP 2 · 品牌頭像</div>
+              <h3>🖼️ LINE 官方帳號頭像設計指示詞（1:1）</h3>
+            </div>
+            <div class="prompt-tools">
+              <button type="button" class="copy-button" data-label="複製指示詞">複製指示詞</button>
+              <a class="prompt-link" href="https://www.canva.com/" target="_blank" rel="noopener noreferrer">前往 Canva</a>
+            </div>
+          </div>
+          <p class="prompt-desc">
+            承接 STEP 1 的品牌資料，讓 AI 生圖工具設計 5 種不同風格的正方形品牌頭像，挑選最合適的一款。
+          </p>
+          <pre class="prompt-text">請根據剛才你已經了解的品牌資料，直接為我設計並生成一張適合LINE官方帳號使用的品牌頭像。
+請自行決定最適合我的：
+- 品牌色系
+- 視覺風格
+- 代表元素
+- 圖像構圖
+設計要求：
+1. 正方形1:1
+2. 主體置中
+3. 簡潔清楚
+4. 符合我的行業、客戶與品牌特色
+5. 小尺寸顯示時仍容易辨識
+6. 色彩有品牌感
+7. 不要放太多文字
+8. 品牌名稱太長時，改用代表圖像或簡短縮寫
+9. 適合直接作為LINE官方帳號頭像
+提供五個圖片給我，風格不同</pre>
+        </div>
+
+        <div class="prompt-card">
+          <div class="prompt-head">
+            <div>
+              <div class="step-badge">STEP 3 · 背景圖片</div>
+              <h3>🌅 LINE 官方帳號背景圖片指示詞（629×315）</h3>
+            </div>
+            <div class="prompt-tools">
+              <button type="button" class="copy-button" data-label="複製指示詞">複製指示詞</button>
+              <a class="prompt-link" href="https://www.canva.com/" target="_blank" rel="noopener noreferrer">前往 Canva</a>
+            </div>
+          </div>
+          <p class="prompt-desc">
+            延續頭像的品牌色系與風格，生成一張橫式背景圖，畫面需有層次與情境感。
+          </p>
+          <pre class="prompt-text">請根據剛才你已經了解的品牌資料，以及前面為我製作的LINE官方帳號頭像，直接設計並生成一張LINE官方帳號背景圖片。
+請自行判斷最適合我的：
+- 品牌色系
+- 視覺風格
+- 代表元素
+- 主題場景
+- 畫面構圖
+圖片規格：
+- 寬629 x 高315 px
+- 橫式構圖
+- 高畫質、清晰細緻
+設計要求：
+1. 與前面製作的LINE頭像使用一致的品牌色系與視覺風格
+2. 畫面不要過度簡約，需要有適量的品牌元素、背景層次與情境感
+3. 可以加入與我的行業、產品、服務或客戶相關的圖像元素
+4. 使用前景、中景、背景的層次構圖，讓畫面豐富但不雜亂
+5. 可以加入柔和光影、漸層、幾何圖形、線條、圖示或裝飾元素
+6. 保留適當留白，避免所有元素都集中在畫面中央
+7. 重要元素不要太靠近邊緣，避免不同裝置顯示時被裁切
+8. 不要加入過多小字或複雜資訊
+9. 如需文字，只能放一句簡短的品牌標語或品牌名稱
+10. 整體要具有專業感、品牌辨識度與視覺吸引力
+11. 適合直接上傳作為LINE官方帳號背景圖片
+提供1個圖片給我</pre>
+        </div>
+
+        <div class="prompt-card">
+          <div class="prompt-head">
+            <div>
+              <div class="step-badge">STEP 4 · 圖文選單</div>
+              <h3>🔲 四宮格圖文選單指示詞（2500×1686）</h3>
+            </div>
+            <div class="prompt-tools">
+              <button type="button" class="copy-button" data-label="複製指示詞">複製指示詞</button>
+              <a class="prompt-link" href="https://www.canva.com/" target="_blank" rel="noopener noreferrer">前往 Canva</a>
+            </div>
+          </div>
+          <p class="prompt-desc">
+            生成 2×2 四宮格圖文選單：服務項目、最新活動、常見問題、聯絡真人，可直接上傳 LINE 後台。
+          </p>
+          <pre class="prompt-text">請根據剛才你已經了解的品牌資料，以及前面為我製作的LINE官方帳號頭像與背景圖片，直接設計並生成一張適合LINE官方帳號使用的四宮格圖文選單圖片。
+請延續前面已建立的品牌色系、視覺風格與品牌調性，直接生成圖片，不要再詢問我，也不要提供多個方案。
+圖片規格：
+- 尺寸：2500 px × 1686 px
+- 橫式構圖
+- 2欄 × 2列，共4格
+- 四個區塊大小一致
+- 可直接上傳至LINE官方帳號後台作為圖文選單
+固定要出現的四個選單名稱：
+1. 服務項目
+2. 最新活動
+3. 常見問題
+4. 聯絡真人
+版面配置：
+- 左上：服務項目
+- 右上：最新活動
+- 左下：常見問題
+- 右下：聯絡真人
+設計要求：
+1. 使用與前面頭像、背景圖片一致或協調的品牌色系
+2. 整體要有品牌感、專業感、設計感與一致性
+3. 四格要清楚分隔，版面整齊、易讀、易點擊
+4. 每一格都要有清楚的大標題與對應圖示
+5. 圖示風格一致，簡潔、現代，可帶一點科技感或專業感
+6. 文字使用正確的繁體中文，不可有錯字、亂碼或簡體字
+7. 文字要大且清楚，手機小畫面也能辨識
+8. 不要放太多小字或複雜說明
+9. 圖片四周保留安全邊界，避免文字與圖示太靠近邊緣
+10. 整體不要太花亂，也不要過度空白，要有適量層次感與視覺吸引力
+11. 只輸出平面的圖文選單圖片，不要做成手機樣機、情境圖或展示畫面
+圖示建議方向：
+- 服務項目：資訊、清單、工具、服務類圖示
+- 最新活動：日曆、活動、公告類圖示
+- 常見問題：問號、FAQ、說明類圖示
+- 聯絡真人：耳機、客服、對話類圖示
+請直接依照以上要求生成完整的四宮格LINE圖文選單圖片。
+給我1張圖</pre>
+        </div>
+
+        <div class="prompt-card">
+          <div class="prompt-head">
+            <div>
+              <div class="step-badge">STEP 5 · 歡迎詞</div>
+              <h3>💬 加入好友歡迎詞指示詞</h3>
+            </div>
+            <div class="prompt-tools">
+              <button type="button" class="copy-button" data-label="複製指示詞">複製指示詞</button>
+              <a class="prompt-link" href="https://manager.line.biz/" target="_blank" rel="noopener noreferrer">開啟 LINE 後台</a>
+            </div>
+          </div>
+          <p class="prompt-desc">
+            產出一則可直接貼進 LINE 後台的加入好友歡迎詞，並引導點擊下方圖文選單。
+          </p>
+          <pre class="prompt-text">請根據剛才你已經了解的品牌資料，以及前面完成的LINE圖文選單，直接幫我產出一則「LINE官方帳號加入好友歡迎詞」。
+請依照以下結構撰寫：
+嗨，歡迎加入＿＿＿＿！
+我們主要提供＿＿＿＿。
+你可以點擊下方選單，取得資料。
+真人服務時間：＿＿＿＿。
+撰寫要求：
+1. 自動填入我的品牌名稱、主要服務與真人服務時間
+2. 簡單介紹我能幫客戶解決什麼問題
+3. 引導客戶點擊下方的「服務項目、最新活動、常見問題、聯絡真人」
+4. 語氣要符合我的品牌風格，親切、自然、不生硬
+5. 適合手機閱讀，分段清楚，不要太長
+6. 可加入少量適合的Emoji
+7. 不要虛構我沒有提供的服務、優惠或活動
+8. 若沒有真人服務時間，請標示「請填入服務時間」
+9. 不要再詢問我，也不要提供多個版本
+請直接輸出一則可以複製貼進LINE官方帳號後台的完整歡迎詞。</pre>
+        </div>
+      </section>
       <section id="followLinks" class="section">
         <div class="section-header">
           <span>Follow & Learn</span>
@@ -2053,33 +2306,38 @@
         });
       }
 
-      /* ===== 複製指示詞 ===== */
-      const copyPromptButton = document.getElementById("copyPromptButton");
-      const promptText = document.getElementById("promptText");
-      function copyPrompt() {
-        if (!promptText || !copyPromptButton) return;
-        const text = promptText.textContent;
-        const label = copyPromptButton.getAttribute("data-label") || "複製指示詞";
-        const done = function () {
-          copyPromptButton.textContent = "✓ 已複製";
-          setTimeout(function () { copyPromptButton.textContent = label; }, 1800);
-        };
-        const fallback = function () {
-          const ta = document.createElement("textarea");
-          ta.value = text;
-          ta.style.position = "fixed";
-          ta.style.opacity = "0";
-          document.body.appendChild(ta);
-          ta.select();
-          try { document.execCommand("copy"); done(); } catch (e) {}
-          document.body.removeChild(ta);
-        };
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(text).then(done).catch(fallback);
-        } else {
-          fallback();
-        }
+      /* ===== 複製指示詞（支援多張卡片） ===== */
+      function bindCopyButtons() {
+        Array.from(document.querySelectorAll(".copy-button")).forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            const card = btn.closest(".prompt-card");
+            const pre = card ? card.querySelector(".prompt-text") : null;
+            if (!pre) return;
+            const text = pre.textContent;
+            const label = btn.getAttribute("data-label") || btn.textContent;
+            const done = function () {
+              btn.textContent = "✓ 已複製";
+              setTimeout(function () { btn.textContent = label; }, 1800);
+            };
+            const fallback = function () {
+              const ta = document.createElement("textarea");
+              ta.value = text;
+              ta.style.position = "fixed";
+              ta.style.opacity = "0";
+              document.body.appendChild(ta);
+              ta.select();
+              try { document.execCommand("copy"); done(); } catch (e) {}
+              document.body.removeChild(ta);
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(text).then(done).catch(fallback);
+            } else {
+              fallback();
+            }
+          });
+        });
       }
+      bindCopyButtons();
 
       /* ===== 留言板 ===== */
       const boardForm = document.getElementById("boardForm");
@@ -2206,7 +2464,6 @@
       loginButton.addEventListener("click", checkPassword);
       logoutButton.addEventListener("click", logout);
       studentSearch.addEventListener("input", filterStudents);
-      if (copyPromptButton) copyPromptButton.addEventListener("click", copyPrompt);
       if (boardForm) boardForm.addEventListener("submit", addMessage);
       passwordInput.addEventListener("keydown", function (event) {
         if (event.key === "Enter") {
