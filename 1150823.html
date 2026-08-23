@@ -1,0 +1,589 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0E1116">
+<title>習講教案｜隱形的翅膀與鋼鐵腿</title>
+<style>
+:root{
+  --bg:#0E1116;
+  --surface:#161A21;
+  --surface-2:#1D2229;
+  --line:#2A313B;
+  --text:#FFFDF7;
+  --muted:#A8B2C0;
+  --sand:#FFC24A;      /* 沙坑 / 跑道 */
+  --sound:#3DFFAE;     /* 聲音引導 */
+  --mark:#FFD829;      /* 重點標記 */
+  --pit:#3A2E1B;
+  --r:14px;
+  --fs:1;
+  --sans:"PingFang TC","Microsoft JhengHei","Noto Sans CJK TC","Noto Sans TC","Heiti TC",sans-serif;
+  --serif:"Songti TC","Noto Serif CJK TC","Noto Serif TC","PMingLiU",serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:var(--sans);
+  font-size:17px;line-height:1.7;
+  -webkit-text-size-adjust:100%;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+
+/* ---------- top bar ---------- */
+.bar{
+  position:sticky;top:0;z-index:40;
+  background:rgba(14,17,22,.94);
+  backdrop-filter:saturate(140%) blur(12px);
+  border-bottom:1px solid var(--line);
+  padding:10px 16px calc(10px) 16px;
+  padding-top:calc(10px + env(safe-area-inset-top));
+}
+.bar-row{display:flex;align-items:center;gap:12px;max-width:820px;margin:0 auto}
+.clock{
+  font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  font-size:30px;font-weight:600;letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;min-width:104px;
+}
+.clock.warn{color:var(--mark)}
+.clock.over{color:#FF7A6B}
+.now{flex:1;min-width:0}
+.now-lab{font-size:13px;letter-spacing:.1em;color:var(--sand);font-weight:600}
+.now-sec{font-size:17px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff}
+.btn{
+  appearance:none;border:1px solid var(--line);background:var(--surface-2);
+  color:var(--text);font-family:inherit;font-size:14px;font-weight:600;
+  padding:9px 14px;border-radius:999px;cursor:pointer;white-space:nowrap;
+  transition:background .15s,border-color .15s;
+}
+.btn:hover{background:#252B34}
+.btn:focus-visible{outline:2px solid var(--sound);outline-offset:2px}
+.btn.go{background:var(--sound);color:#08120D;border-color:var(--sound)}
+.btn.sm{padding:7px 11px;font-size:13px;font-weight:500;color:var(--muted)}
+
+/* runway progress */
+.runway{
+  position:relative;height:10px;margin:10px auto 0;max-width:820px;
+  background:var(--pit);border-radius:99px;overflow:hidden;
+}
+.runway .fill{position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(90deg,var(--sand),var(--mark));transition:width .5s linear}
+.ticks{position:relative;max-width:820px;margin:0 auto;height:9px}
+.tick{position:absolute;top:0;width:2px;height:6px;background:var(--sand);opacity:.55}
+
+/* ---------- tabs ---------- */
+.tabs{display:flex;gap:6px;max-width:820px;margin:12px auto 0;padding:0 16px}
+.tab{
+  flex:1;text-align:center;padding:9px 4px;border-radius:10px;
+  font-size:14px;font-weight:600;color:var(--muted);
+  background:transparent;border:1px solid transparent;cursor:pointer;font-family:inherit;
+}
+.tab[aria-selected="true"]{background:var(--surface);border-color:var(--line);color:var(--text)}
+.tab:focus-visible{outline:2px solid var(--sound);outline-offset:2px}
+
+main{max-width:820px;margin:0 auto;padding:18px 16px 120px}
+
+/* ---------- hero ---------- */
+.hero{padding:26px 0 10px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.eyebrow{font-size:11px;letter-spacing:.22em;color:var(--sand);text-transform:uppercase;margin-bottom:12px}
+h1{
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(30px,8vw,46px);line-height:1.22;margin:0 0 10px;
+  letter-spacing:.01em;
+}
+h1 .thin{display:block;color:var(--muted);font-size:.52em;font-weight:400;letter-spacing:.06em;margin-top:12px;font-family:var(--sans)}
+.meta{color:var(--muted);font-size:13.5px;line-height:1.9;margin-top:14px}
+
+/* ---------- section ---------- */
+.sec{
+  border-top:1px solid var(--line);
+  padding:22px 0 8px;position:relative;
+  scroll-margin-top:132px;
+}
+.sec.active .sec-head{color:var(--text)}
+.sec.active::before{
+  content:"";position:absolute;left:-16px;top:22px;bottom:14px;width:6px;
+  background:var(--sound);border-radius:3px;
+}
+.sec.past{opacity:.3}
+.sec-head{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-bottom:4px;color:var(--muted)}
+.t-range{
+  font-family:ui-monospace,Menlo,Consolas,monospace;font-size:calc(16px * var(--fs));
+  color:var(--sand);font-variant-numeric:tabular-nums;letter-spacing:.02em;font-weight:600;
+}
+.slide{
+  font-size:calc(13px * var(--fs));font-weight:800;letter-spacing:.08em;
+  border:1.5px solid var(--sand);border-radius:6px;padding:2px 9px;color:var(--sand);
+}
+.sec h2{font-family:var(--serif);font-size:calc(28px * var(--fs));font-weight:700;margin:4px 0 14px;color:#fff;line-height:1.35}
+
+/* spoken line */
+.say{
+  border-left:5px solid var(--sand);
+  padding:3px 0 3px 17px;margin:20px 0;
+  font-size:calc(24px * var(--fs));line-height:1.8;letter-spacing:.015em;
+  font-weight:500;color:#fff;
+}
+/* stage direction */
+.do{
+  display:flex;gap:10px;margin:16px 0 16px 2px;
+  font-size:calc(18px * var(--fs));line-height:1.65;color:var(--sound);
+  font-weight:600;
+}
+.do::before{content:"▸";flex:none}
+.do.key{
+  color:#1A1200;background:var(--mark);
+  padding:11px 14px;border-radius:10px;font-weight:700;
+}
+.do.key::before{content:"★"}
+.pause{
+  display:inline-flex;align-items:center;gap:8px;
+  margin:16px 0;padding:9px 16px;border-radius:99px;
+  background:rgba(255,216,41,.14);border:1.5px solid var(--mark);
+  font-size:calc(16px * var(--fs));color:var(--mark);font-weight:700;
+}
+.opt{
+  margin:14px 0;padding:13px 15px;border-radius:var(--r);
+  background:var(--surface);border:1px dashed var(--line);
+}
+.opt .lab{font-size:11px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
+.opt .say{margin:6px 0 0;border-color:var(--muted)}
+
+/* ---------- panels ---------- */
+.panel{display:none}
+.panel.on{display:block}
+.card{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r);padding:18px 18px 14px;margin:16px 0;
+}
+.card h3{font-family:var(--serif);font-size:19px;margin:0 0 4px;font-weight:700}
+.card .sub{font-size:13px;color:var(--muted);margin:0 0 12px}
+.card ul{margin:0;padding-left:19px}
+.card li{margin:7px 0;font-size:15.5px;line-height:1.72}
+.card li::marker{color:var(--sand)}
+.quote{
+  font-family:var(--serif);font-size:18px;line-height:1.8;
+  color:var(--sand);border-top:1px solid var(--line);margin-top:14px;padding-top:13px;
+}
+.note{font-size:13.5px;color:var(--muted);line-height:1.8}
+
+/* checklist */
+.check{list-style:none;margin:0;padding:0}
+.check li{margin:0;border-bottom:1px solid var(--line)}
+.check li:last-child{border-bottom:0}
+.check label{display:flex;gap:12px;align-items:flex-start;padding:13px 2px;cursor:pointer;font-size:16px;line-height:1.6}
+.check input{
+  appearance:none;flex:none;width:21px;height:21px;margin-top:3px;
+  border:1.5px solid var(--muted);border-radius:6px;background:transparent;cursor:pointer;
+  display:grid;place-content:center;transition:.15s;
+}
+.check input:checked{background:var(--sound);border-color:var(--sound)}
+.check input:checked::after{content:"";width:11px;height:6px;border:2px solid #08120D;border-top:0;border-right:0;transform:rotate(-45deg) translateY(-1px)}
+.check input:focus-visible{outline:2px solid var(--sound);outline-offset:2px}
+.check input:checked + span{color:var(--muted);text-decoration:line-through}
+
+.cut{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+.cut b{font-size:14px;font-weight:600}
+.chip{
+  font-size:13px;padding:5px 11px;border-radius:99px;
+  background:var(--surface-2);border:1px solid var(--line);color:var(--muted);
+}
+.chip.core{border-color:var(--sand);color:var(--sand)}
+
+footer{border-top:1px solid var(--line);margin-top:34px;padding-top:16px;color:var(--muted);font-size:12.5px;line-height:1.8}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+@media print{
+  :root{--bg:#fff;--surface:#fff;--surface-2:#fff;--text:#000;--muted:#555;--line:#bbb;--sand:#8a6d1f;--sound:#1c6b4a;--mark:#8a6d1f}
+  .bar,.tabs,.runway,.ticks,footer .noprint{display:none!important}
+  .panel{display:block!important}
+  body{font-size:11pt}
+  .sec{page-break-inside:avoid}
+  .say{font-size:12pt}
+}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="bar-row">
+    <div class="clock" id="clock">00:00</div>
+    <div class="now">
+      <div class="now-lab" id="nowLab">尚未開始</div>
+      <div class="now-sec" id="nowSec">按開始計時</div>
+    </div>
+    <button class="btn go" id="toggle">開始</button>
+    <button class="btn sm" id="size" title="切換字級">字級 標準</button>
+    <button class="btn sm" id="reset">重來</button>
+  </div>
+  <div class="runway"><div class="fill" id="fill"></div></div>
+  <div class="ticks" id="ticks"></div>
+</div>
+
+<div class="tabs" role="tablist">
+  <button class="tab" role="tab" aria-selected="true" data-p="script">逐字稿</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="facts">人物事實卡</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="prep">出發前</button>
+</div>
+
+<main>
+
+<!-- ============ SCRIPT ============ -->
+<section class="panel on" id="script">
+  <div class="hero">
+    <div class="eyebrow">超人再起 · 校園 SEL · 國小勇氣版</div>
+    <h1>隱形的翅膀<br>與鋼鐵腿
+      <span class="thin">20 分鐘習講逐字稿</span>
+    </h1>
+    <div class="meta">
+      教案 014｜跳遠英雄 楊川輝 × 鐵人爺爺 阮錦源<br>
+      8/23（日）14:30–16:30 分組習講 · 桃園和平路 130 號 4 樓 401 教室
+    </div>
+    <div class="cut">
+      <b>時間不夠時依序砍：</b>
+      <span class="chip">影片 P3</span>
+      <span class="chip">阮錦源 P7</span>
+      <span class="chip">一公分 P11</span>
+      <span class="chip core">P6 · P8 · P10 · P12 是骨幹</span>
+    </div>
+  </div>
+  <div id="secs"></div>
+  <footer>
+    直線框內是照唸的話，綠色是動作提示，黃色星號是最容易被扣分的地方。<br>
+    <span class="noprint">計時器只在這個分頁裡跑，關掉頁面就歸零。可直接列印。</span>
+  </footer>
+</section>
+
+<!-- ============ FACTS ============ -->
+<section class="panel" id="facts">
+  <div class="hero">
+    <div class="eyebrow">備詢用</div>
+    <h1>人物事實卡<span class="thin">學生追問、評審提問時翻這裡</span></h1>
+  </div>
+
+  <div class="card">
+    <h3>楊川輝　跳遠英雄</h3>
+    <p class="sub">視障跳遠與田徑選手</p>
+    <ul>
+      <li>出生時視力正常；因先天性血管瘤造成右耳失聰。</li>
+      <li>幼稚園畢業前後突然失明，遍尋醫院查不出原因，最後診斷為急性視神經萎縮，雙眼全盲。</li>
+      <li>國中開始練田徑，高中才接觸跳遠。</li>
+      <li>全盲組（T11）比賽須配戴全黑眼罩，靠場邊指導者發出的聲音辨識方位後起跳。</li>
+      <li>亞洲 T11 男子跳遠紀錄保持者；2014 仁川亞帕運 100 公尺金牌；曾參加里約、東京帕運。</li>
+      <li>百米項目由陪跑員以繩索與選手手掌相繫，兩人同步奔跑。</li>
+      <li>主業為視障按摩工作室，已是兩個孩子的父親。</li>
+    </ul>
+    <p class="quote">「每一跳都是用生命去跳。我看不見世界，但透過跳遠，我要讓臺灣被世界看見。」</p>
+  </div>
+
+  <div class="card">
+    <h3>阮錦源　鐵人爺爺</h3>
+    <p class="sub">獨腳鐵人三項金牌得主</p>
+    <ul>
+      <li>因車禍截肢，失去左小腿。</li>
+      <li>挑戰鐵人三項（游泳、單車、路跑），為獨腳鐵人三項金牌得主。</li>
+      <li>連續 18 年參加鐵人比賽。</li>
+      <li>動機：想成為別人的光。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>《超人再起》七位主角</h3>
+    <p class="sub">本場只講兩位，其餘備詢</p>
+    <ul>
+      <li><b>楊恩典</b>——天生沒有雙手，育幼院長大，以雙腳作畫成為口足畫家。</li>
+      <li><b>楊玉欣</b>——19 歲確診罕見疾病後漸漸失能，推動《病人自主權利法》。</li>
+      <li><b>趙文正</b>——拾荒維生 40 多年，簡樸度日卻長年捐款認養近百位孩子。</li>
+      <li><b>余泰運</b>——2014 高雄氣爆第一線搶救遭重度灼傷，康復後重返消防崗位。</li>
+      <li><b>楊川輝</b>——視障跳遠與田徑選手，打破亞洲紀錄。</li>
+      <li><b>阮錦源</b>——車禍截肢，獨腳鐵人三項金牌得主。</li>
+      <li><b>周軒瑋</b>——雙眼全盲卻有絕對音感，以鋼琴與薩克斯風演奏。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>導演　曲全立</h3>
+    <p class="note">35 歲時腦瘤復發、面臨生死交關，手術後留下半聾半盲的後遺症。這段經歷讓他決定把每一天當最後一天過，用影像走進人心。映演期間發起公益待用票計畫，盼募集 8 萬張陪伴票，邀請偏鄉學童與弱勢族群進戲院。</p>
+  </div>
+</section>
+
+<!-- ============ PREP ============ -->
+<section class="panel" id="prep">
+  <div class="hero">
+    <div class="eyebrow">出發前</div>
+    <h1>上台前清單<span class="thin">勾完就可以出門</span></h1>
+  </div>
+
+  <div class="card">
+    <h3>要帶的、要設的</h3>
+    <ul class="check" id="chk"></ul>
+  </div>
+
+  <div class="card">
+    <h3>三個最容易被扣分的地方</h3>
+    <ul>
+      <li><b>問完問題自己馬上接答案。</b>留白比內容重要，尤其是 P7 那一題。</li>
+      <li><b>趕投影片。</b>寧可少講一位英雄，也不要每頁都只停三秒。</li>
+      <li><b>站在講桌後面不動。</b>這份教案是體驗式的，人要走下去。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>當天流程</h3>
+    <ul>
+      <li>09:50 前報到，10:00 開始，16:30 結束。現場繳 200 元。</li>
+      <li>10:00–10:45 意樂提升、入校流程說明</li>
+      <li>10:45–11:50 拆彈疑難雜症 ← 認真記筆記，下午用得到</li>
+      <li>12:10–13:30 午休 ← 用這段回頭調整你的習講設計</li>
+      <li>13:30–14:30 習講規則說明與分組討論</li>
+      <li>14:30–16:30 分組習講，每人 20 分鐘</li>
+    </ul>
+    <p class="note" style="margin-top:12px">習講規則下午才說明，所以內容準備到 15–16 分鐘就好，留伸縮空間。排滿 20 分鐘再被砍，現場會很狼狽。</p>
+  </div>
+</section>
+
+</main>
+
+<script>
+const SECS = [
+  {s:0,e:90,slide:"P4",title:"閉上眼的冒險",lines:[
+    {t:"do",x:"走到台前中央，不要站在講桌後面。先不放投影片，或停在 P4 左半邊那張黑森林圖。"},
+    {t:"say",x:"各位小朋友，我們先來玩一個遊戲。全部站起來。"},
+    {t:"do",x:"等全班站好，掃視一圈。"},
+    {t:"say",x:"現在，把眼睛閉起來。真的閉起來喔，不可以偷看。閉好了嗎？"},
+    {t:"say",x:"好，現在，往前面跨一大步。"},
+    {t:"pause",x:"停三秒，讓他們真的跨"},
+    {t:"say",x:"好，眼睛張開，坐下。我問一個問題：剛剛，有沒有人心裡覺得怪怪的、有一點點不敢跨出去？"},
+    {t:"do",x:"舉手的孩子，點兩三個，笑著說「很好，你很誠實」。這裡不要說教。"},
+    {t:"say",x:"害怕是很正常的。閉著眼睛往前走，本來就會怕。但是今天，老師要介紹兩位超人給你們認識——他們把害怕，變成了翅膀。"}
+  ]},
+  {s:90,e:180,slide:"P3",title:"影片（只播 90 秒）",lines:[
+    {t:"do",x:"播《小太陽》MV。播放前先講下面這句，讓他們帶著問題看。"},
+    {t:"say",x:"看的時候，注意一件事：這個孩子的表情。"},
+    {t:"do",x:"90 秒到，按停。不要播完，不要問「好不好看」。"},
+    {t:"say",x:"好，我們來認識他們。"}
+  ]},
+  {s:180,e:240,slide:"P5",title:"兩張英雄卡",lines:[
+    {t:"do",x:"像介紹遊戲角色一樣，語速快，有精神。"},
+    {t:"say",x:"第一位，跳遠英雄，楊川輝哥哥。他的限制是——看不見，而且右邊的耳朵聽不到。但他的超能力是，用「聽」的起跳。他是亞洲跳遠紀錄的保持人。"},
+    {t:"say",x:"第二位，鐵人爺爺，阮錦源爺爺。他的限制是——因為車禍，少了左邊的小腿。但他的超能力是，游泳、單車、跑步，樣樣來，還拿到金牌。"},
+    {t:"say",x:"你們覺得，看不見的人要怎麼跳遠？"},
+    {t:"do",x:"接兩三個回答，不評價對錯，然後接下一段。"}
+  ]},
+  {s:240,e:420,slide:"P6",title:"楊川輝（主故事）",lines:[
+    {t:"do",x:"全場情緒最重的一段。語速放慢，音量放低一點，讓他們安靜下來。"},
+    {t:"say",x:"先講一件事。楊哥哥小時候，其實是看得見的。"},
+    {t:"pause",x:"停一秒，這句話要讓它落地"},
+    {t:"say",x:"他跟你們一樣，會跑會跳，看得到天空、看得到爸爸媽媽的臉。可是幼稚園快畢業的時候，有一天晚上睡覺——隔天早上醒來，就什麼都看不見了。"},
+    {t:"say",x:"爸爸媽媽帶他跑遍了醫院，醫生也找不出原因。從那天開始，他的世界就是黑的。"},
+    {t:"pause",x:"停兩秒，不要急著往下"},
+    {t:"say",x:"那，一個看不見的人，要怎麼跳遠呢？"},
+    {t:"do",x:"等回答。有人會說「用聽的」，就接下去。"},
+    {t:"say",x:"對。比賽的時候，他要戴上全黑的眼罩，場邊有人幫他發出聲音，他就朝著那個聲音，全力衝刺，然後跳。"},
+    {t:"key",x:"回扣開場：「還記得我們剛剛閉著眼睛跨一步嗎？楊哥哥是閉著眼睛，用跑的。」"},
+    {t:"say",x:"可是想想看，如果他聽錯了，方向偏掉了，沒有跳進沙坑，會怎麼樣？"},
+    {t:"do",x:"停頓兩秒，讓他們自己想像。不要細講受傷有多嚴重，會嚇到孩子。"},
+    {t:"say",x:"他會摔在硬硬的地上，受很重的傷。所以他不是亂跳的。他自己說過一句話——每一跳，都是用生命去跳。"},
+    {t:"say",x:"因為每一跳，都是他的責任。"},
+    {t:"do",x:"指向投影片右下角的對話框，一起唸。"},
+    {t:"say",x:"當你夠專注，黑暗就無法阻止你起飛。"}
+  ]},
+  {s:420,e:570,slide:"P7",title:"阮錦源",lines:[
+    {t:"say",x:"再來看阮爺爺。爺爺已經是阿公的年紀了，可是他比很多手腳健全的人還要忙。他連續十八年，參加鐵人比賽。"},
+    {t:"say",x:"十八年。你們現在幾歲？"},
+    {t:"do",x:"等他們喊「十歲」「十一歲」。"},
+    {t:"say",x:"比你們活到現在還久。那我問你們——他少了一條腿，為什麼還要挑戰這麼難的運動？"},
+    {t:"key",x:"問完，默數五秒。不要自己接答案。這是本場最重要的留白。"},
+    {t:"do",x:"聽三個孩子的回答，每個都回應一句「嗯，有可能」「這個想法很好」。"},
+    {t:"say",x:"爺爺自己說的答案是——因為他想成為別人的光。他知道有人在看他，所以他要一直跑下去。"},
+    {t:"say",x:"你的勇敢，也可以讓別人感動喔。"},
+    {t:"opt",lab:"時間有餘再加（約 20 秒）",x:"補充一件事。楊哥哥跑一百公尺的時候，旁邊有一位陪跑員，兩個人的手，用一條繩子綁在一起。他們要一起跑，才跑得快。所以你看——勇敢的人身邊，通常還有另一個人。"}
+  ]},
+  {s:570,e:630,slide:"P8",title:"秘密武器",lines:[
+    {t:"do",x:"語氣轉揭曉，稍微加重。"},
+    {t:"say",x:"這兩個人，一個看不見，一個少一條腿。但是他們都做到了。他們身上，有一個共同的秘密武器——"},
+    {t:"pause",x:"停一秒，切到寶箱那張投影片"},
+    {t:"say",x:"兩位英雄告訴我們一個秘密：限制我們能力的，從來都不是身體……而是我們的「想法」。"}
+  ]},
+  {s:630,e:720,slide:"P9",title:"尋找你的大魔王",lines:[
+    {t:"do",x:"轉身面向全班，看一圈，語氣變輕鬆。"},
+    {t:"say",x:"好，現在換你們上場了。"},
+    {t:"say",x:"英雄不是不害怕，而是帶著害怕往前衝。所以老師想問你們——你心裡那個覺得「好難、好想放棄」的事情，是什麼呢？"},
+    {t:"key",x:"先自己示範一個，孩子才敢講。例如：「老師的大魔王是不敢跟不熟的人講話。」"},
+    {t:"do",x:"點兩三位分享。有人說不出來也沒關係，笑著說「沒關係，等一下寫下來就好」。"}
+  ]},
+  {s:720,e:930,slide:"P10",title:"我的挑戰里程碑（全場產出）",lines:[
+    {t:"key",x:"這一段時間最長，也最不能砍。學生寫完的小卡就是這堂課的成果。"},
+    {t:"do",x:"發小卡。"},
+    {t:"say",x:"每個人拿一張小卡，上面有三格，我們一起填。"},
+    {t:"say",x:"第一格，我的大魔王。就是剛剛你想到那件好難的事。比如說：不敢上台說話。"},
+    {t:"say",x:"第二格，我的動力。如果你成功了，你會變多帥？會發生什麼好事？"},
+    {t:"say",x:"第三格，我的一小步。今天回家，你可以先做什麼？只要一小步就好。"},
+    {t:"pause",x:"給約 2 分鐘安靜書寫"},
+    {t:"do",x:"走下台巡一圈，蹲下來看一兩個孩子寫什麼。"},
+    {t:"do",x:"請 2–3 位念自己的三格。念完帶頭鼓掌。"}
+  ]},
+  {s:930,e:1020,slide:"P11",title:"一公分",lines:[
+    {t:"do",x:"這段是接住那些覺得「我做不到」的孩子。語氣要溫柔。"},
+    {t:"say",x:"可是老師知道，一定有人心裡在想：我做不到啦。"},
+    {t:"say",x:"沒關係。我們不需要像楊哥哥一樣，一次跳六公尺遠。我們只需要比昨天的自己，多走——一公分，就好。"},
+    {t:"say",x:"所以下次你覺得好難的時候，可以在心裡說一句話："},
+    {t:"do",x:"指投影片，帶全班一起唸。"},
+    {t:"say",x:"這就是我變強的機會！"}
+  ]},
+  {s:1020,e:1110,slide:"P12",title:"英雄修煉口訣",lines:[
+    {t:"do",x:"站直，音量拉大，帶動作。全班複誦兩次，第二次要更大聲。"},
+    {t:"say",x:"最後，我們一起學一個口訣。老師唸一句，你們跟一句。"},
+    {t:"say",x:"看不見，我用「聽」的！"},
+    {t:"say",x:"跑不動，我用「練」的！"},
+    {t:"say",x:"大魔王，我不「怕」你！"},
+    {t:"do",x:"第二次：「太小聲了！再一次，讓外面的人都聽得到！」"}
+  ]},
+  {s:1110,e:1200,slide:"P13",title:"收束",lines:[
+    {t:"do",x:"音量收下來，慢。這是最後的餘韻。"},
+    {t:"say",x:"好，最後一件事。請你們對著窗戶外面的天空，大聲說一句話——"},
+    {t:"say",x:"我會加油！"},
+    {t:"do",x:"和他們一起喊。喊完停兩秒。"},
+    {t:"say",x:"帶走你的里程碑小卡，今天回家，就開始你的第一小步。"},
+    {t:"say",x:"記住：英雄不是不害怕。英雄，是帶著害怕，還是往前走。"},
+    {t:"say",x:"出發吧！"}
+  ]}
+];
+
+const CHECK = [
+  "里程碑小卡印好、數量夠（多帶 5 張）",
+  "影片檔或連結先開好，音量先試過",
+  "手機計時器設在 15 分鐘（提醒自己進入收束）",
+  "P7 問完要默數五秒——寫在手上",
+  "開場 P4 一定要請全班站起來，不要用講的",
+  "現金 200 元",
+  "09:50 前報到（宜蘭出發抓 2 小時，07:30 前出門）"
+];
+
+const TOTAL = 1200;
+const fmt = s => String(Math.floor(Math.abs(s)/60)).padStart(2,"0")+":"+String(Math.abs(s)%60).padStart(2,"0");
+
+// build sections
+const wrap = document.getElementById("secs");
+SECS.forEach((sec,i)=>{
+  const el = document.createElement("section");
+  el.className = "sec"; el.id = "s"+i;
+  let h = `<div class="sec-head">
+      <span class="t-range">${fmt(sec.s)}–${fmt(sec.e)}</span>
+      <span class="slide">${sec.slide}</span>
+    </div><h2>${sec.title}</h2>`;
+  sec.lines.forEach(l=>{
+    if(l.t==="say")   h += `<p class="say">「${l.x}」</p>`;
+    else if(l.t==="do")  h += `<p class="do">${l.x}</p>`;
+    else if(l.t==="key") h += `<p class="do key">${l.x}</p>`;
+    else if(l.t==="pause") h += `<p class="pause">⏱ ${l.x}</p>`;
+    else if(l.t==="opt") h += `<div class="opt"><div class="lab">${l.lab}</div><p class="say">「${l.x}」</p></div>`;
+  });
+  el.innerHTML = h;
+  wrap.appendChild(el);
+});
+
+// ticks
+const ticks = document.getElementById("ticks");
+SECS.slice(1).forEach(s=>{
+  const d = document.createElement("i");
+  d.className="tick"; d.style.left = (s.s/TOTAL*100)+"%";
+  ticks.appendChild(d);
+});
+
+// checklist
+const chk = document.getElementById("chk");
+CHECK.forEach((c,i)=>{
+  const li=document.createElement("li");
+  li.innerHTML = `<label><input type="checkbox"><span>${c}</span></label>`;
+  chk.appendChild(li);
+});
+
+// tabs
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected",x===t));
+    document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("on",p.id===t.dataset.p));
+    window.scrollTo({top:0});
+  });
+});
+
+// timer
+let t=0, running=false, iv=null, lock=null;
+const clock=document.getElementById("clock"), fill=document.getElementById("fill"),
+      nowLab=document.getElementById("nowLab"), nowSec=document.getElementById("nowSec"),
+      toggle=document.getElementById("toggle");
+
+function paint(){
+  clock.textContent = (t>TOTAL?"+":"")+fmt(t>TOTAL?t-TOTAL:t);
+  clock.className = "clock" + (t>TOTAL?" over":(t>=900?" warn":""));
+  fill.style.width = Math.min(100,t/TOTAL*100)+"%";
+
+  let cur=-1;
+  SECS.forEach((s,i)=>{ if(t>=s.s && t<s.e) cur=i; });
+  if(t>=TOTAL) cur=SECS.length-1;
+
+  SECS.forEach((s,i)=>{
+    const el=document.getElementById("s"+i);
+    el.classList.toggle("active", i===cur && running);
+    el.classList.toggle("past", running && i<cur);
+  });
+
+  if(cur>=0 && running){
+    const s=SECS[cur];
+    nowLab.textContent = s.slide + " · 剩 " + fmt(Math.max(0,s.e-t));
+    nowSec.textContent = s.title;
+  }
+}
+
+function tick(){ t++; paint();
+  const c = SECS.findIndex(s=>s.s===t);
+  if(c>0 && follow) document.getElementById("s"+c).scrollIntoView({behavior:"smooth",block:"start"});
+}
+let follow=true;
+
+toggle.addEventListener("click",async ()=>{
+  running=!running;
+  toggle.textContent = running?"暫停":"繼續";
+  toggle.classList.toggle("go",!running);
+  if(running){
+    iv=setInterval(tick,1000);
+    try{ lock = await navigator.wakeLock.request("screen"); }catch(e){}
+  }else{
+    clearInterval(iv);
+    try{ lock && lock.release(); lock=null; }catch(e){}
+  }
+  paint();
+});
+
+const SIZES=[["標準",1],["大",1.18],["特大",1.38]];
+let si=0;
+const sizeBtn=document.getElementById("size");
+sizeBtn.addEventListener("click",()=>{
+  si=(si+1)%SIZES.length;
+  document.documentElement.style.setProperty("--fs",SIZES[si][1]);
+  sizeBtn.textContent="字級 "+SIZES[si][0];
+});
+
+document.getElementById("reset").addEventListener("click",()=>{
+  t=0; running=false; clearInterval(iv);
+  toggle.textContent="開始"; toggle.classList.add("go");
+  nowLab.textContent="尚未開始"; nowSec.textContent="按開始計時";
+  try{ lock && lock.release(); lock=null; }catch(e){}
+  paint();
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+
+document.addEventListener("visibilitychange",async ()=>{
+  if(document.visibilityState==="visible" && running && !lock){
+    try{ lock = await navigator.wakeLock.request("screen"); }catch(e){}
+  }
+});
+
+paint();
+</script>
+</body>
+</html>
