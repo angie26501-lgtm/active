@@ -526,30 +526,6 @@
       letter-spacing: .02em;
       font-size: 13px;
     }
-    /* ===== 右上角更新日期 ===== */
-    .update-stamp {
-      display: flex;
-      justify-content: flex-end;
-      margin-bottom: 14px;
-    }
-    .update-stamp span {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 8px 16px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.78);
-      border: 1px solid rgba(200, 166, 106, 0.42);
-      color: var(--deep-green);
-      font-size: 13.5px;
-      font-weight: 800;
-      letter-spacing: 0.03em;
-      box-shadow: 0 8px 18px rgba(63, 95, 77, 0.1);
-    }
-    @media (max-width: 620px) {
-      .update-stamp { justify-content: center; }
-      .update-stamp span { font-size: 12.5px; padding: 7px 14px; }
-    }
     /* ===== 365 專屬福利橫幅 ===== */
     .benefit-banner {
       margin-bottom: 30px;
@@ -1181,71 +1157,6 @@
       transform: translateY(-2px);
       background: rgba(200, 166, 106, 0.14);
     }
-    /* ===== 教學筆記卡 ===== */
-    .note-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
-      margin-bottom: 6px;
-    }
-    .note-card {
-      position: relative;
-      overflow: hidden;
-      border-radius: 22px;
-      padding: 24px 22px;
-      background:
-        linear-gradient(145deg, rgba(255, 255, 255, 0.97), rgba(237, 242, 236, 0.84));
-      border: 1px solid rgba(95, 127, 104, 0.14);
-      box-shadow: var(--card-shadow);
-      transition: 0.28s ease;
-    }
-    .note-card::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 5px;
-      background: linear-gradient(90deg, var(--herbal-green), var(--milk-tea-gold));
-    }
-    .note-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 22px 46px rgba(63, 95, 77, 0.18);
-    }
-    .note-card h3 {
-      font-size: 18px;
-      color: var(--deep-green);
-      line-height: 1.5;
-      margin-bottom: 12px;
-    }
-    .note-card ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: grid;
-      gap: 9px;
-    }
-    .note-card li {
-      display: flex;
-      gap: 9px;
-      align-items: flex-start;
-      color: var(--deep-gray);
-      font-size: 14.5px;
-      line-height: 1.72;
-    }
-    .note-card li::before {
-      content: "▹";
-      color: var(--milk-tea-gold);
-      font-weight: 900;
-      flex: 0 0 auto;
-    }
-    .note-card li b { color: var(--deep-green); }
-    .note-card p {
-      color: var(--medium-gray);
-      font-size: 14.5px;
-      line-height: 1.75;
-    }
-    @media (max-width: 920px) {
-      .note-grid { grid-template-columns: 1fr; }
-    }
     /* ===== AI 工具箱 ===== */
     .tool-grid {
       display: grid;
@@ -1661,8 +1572,6 @@
   </section>
   <main id="mainPage" class="main-page">
     <div class="main-container">
-      <!-- 更新日期：改這一行的文字即可 -->
-      <div class="update-stamp"><span>🗓️ 最後更新：2026.08.24</span></div>
       <section class="hero">
         <div class="hero-copy">
           <div class="hero-badge">AI Learning Portfolio</div>
@@ -1675,11 +1584,12 @@
           </p>
           <nav class="quick-nav" aria-label="快速導覽">
             <a class="pill-link" href="#benefit">365 福利</a>
+            <a class="pill-link" href="#events">最新活動</a>
             <a class="pill-link" href="#courseVideos">課程回放</a>
-            <a class="pill-link" href="#gasNotes">教學筆記</a>
             <a class="pill-link" href="#onlineCourses">線上課回放</a>
             <a class="pill-link" href="#studentPortfolio">學員作品</a>
             <a class="pill-link" href="#aiTools">AI 工具箱</a>
+            <a class="pill-link" href="#promptLibrary">指示詞</a>
             <a class="pill-link" href="#followLinks">延伸連結</a>
           </nav>
         </div>
@@ -1734,6 +1644,80 @@
         </p>
         <div class="share-sign">— 芸琪</div>
       </div>
+      <section id="events" class="section">
+        <div class="section-header">
+          <span>Latest Event</span>
+          <h2>最新活動｜近期課程報名</h2>
+          <p>掌握最新一場 AI 學習活動，名額有限，歡迎把握機會報名。</p>
+        </div>
+        <div class="event-card">
+          <div class="event-main">
+            <div class="event-tag">✅ 已額滿 · 8/25（二）14:00–16:00</div>
+            <h3>0825 AI ✕ 財顧芸｜AI 共學體驗班<br>手把手用「一張圖」做出一頁式影片與 15 秒個人短片</h3>
+            <div class="event-meta">
+              <span>📅 2026.08.25（二）</span>
+              <span>🕑 14:00–16:00</span>
+              <span>📍 西門頂尖會所</span>
+              <span>🎤 講師：Angie 財顧芸</span>
+            </div>
+            <div class="warning-note" style="margin-bottom:18px;">
+              ✅ 本場名額已額滿，感謝大家支持。已報名的夥伴請先準備一張自己的人像照片（第一個作品就會用到），
+              並確認出席回覆「A」，現場即可直接動手實作。<br />
+              想參加下一場的，歡迎私訊芸琪，開課會優先通知你。
+            </div>
+            <ul class="event-points">
+              <li>學會製作「一頁式影片」，用一張圖手把手做成 15 秒個人影片。</li>
+              <li>加碼教學：可愛的「萌寵動畫」，讓你的作品更吸睛。</li>
+              <li>現場實務交流分享，彼此觀摩、互相學習。</li>
+              <li>如有時間，還會加碼分享最近開發的「理賠研討模版」。</li>
+              <li>想了解的內容或其他需求都可以事先「許願」，屆時一起分享。</li>
+              <li>幫你減少人生試錯成本，把 AI 真正用在自己身上。</li>
+            </ul>
+            <a class="watch-button gold" href="https://lin.ee/6hkkECK" target="_blank" rel="noopener noreferrer">私訊芸琪，候補下一場</a>
+          </div>
+          <aside class="event-side">
+            <h4>參加資格與費用</h4>
+            <div class="event-fee">
+              <div>✅ 今年「365 推薦人」或「945 AI 推薦人」<b>芸琪</b>的學員：首發陪跑體驗，只要 <b>200 元</b></div>
+              <div>💵 一般報名體驗費：<b>500 元</b></div>
+            </div>
+            <div class="event-note">
+              📍 地點：西門頂尖會所<br />
+              📝 報名方式：填寫報名表單並私訊芸琪、截圖「945 會員卡」<br />
+              ✅ 出席請回覆「A」
+            </div>
+          </aside>
+        </div>
+        <div class="event-signups">
+          <div class="signup-title">🧰 行前準備｜請先登入好帳號</div>
+          <div class="ref-bar">
+            <span class="ref-label">🎨 生圖首選</span>
+            <a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a>
+            <a href="https://gemini.google.com/app?hl=zh-TW" target="_blank" rel="noopener noreferrer">Google Gemini</a>
+          </div>
+          <div class="ref-bar" style="margin-bottom:0;">
+            <span class="ref-label">🎬 影片首選</span>
+            <a href="https://grok.com/" target="_blank" rel="noopener noreferrer">Grok 網頁版</a>
+            <a href="https://apps.apple.com/tw/app/dola-smart-ai-assistant/id6451431247" target="_blank" rel="noopener noreferrer">Dola · iOS</a>
+            <a href="https://play.google.com/store/apps/details?id=com.larus.wolf&amp;hl=zh_TW" target="_blank" rel="noopener noreferrer">Dola · Android</a>
+            <a href="https://www.dola.com/chat/" target="_blank" rel="noopener noreferrer">Dola · 網頁版</a>
+            <a href="https://app.notion.com/p/2-35ed6400015d810b9a48dd3ceea38674?source=copy_link" target="_blank" rel="noopener noreferrer">千問使用說明</a>
+          </div>
+          <div class="event-note" style="color:var(--medium-gray);margin-top:14px;font-size:14px;">
+            💡 手機與電腦都可以，建議上課前先安裝並「登入好帳號」，現場才不會卡在註冊流程。
+          </div>
+        </div>
+        <div class="event-signups">
+          <div class="signup-title">📋 報名接龍｜已額滿（出席請回覆「A」）</div>
+          <ol class="signup-list">
+            <li>芸琪</li>
+            <li>曉萍</li>
+            <li>秀惠</li>
+            <li>桂琴</li>
+            <li>子淳</li>
+          </ol>
+        </div>
+      </section>
       <section id="courseVideos" class="section">
         <div class="section-header">
           <span>Course Replay</span>
@@ -1741,7 +1725,204 @@
           <p>整合各梯次課程回放，讓學員可以依日期快速回到課程影片進行複習。</p>
         </div>
 
-        <!-- 2026.06.15 中山包班 競品分析（最新） -->
+        <!-- 2026.08.25 西門專班 一頁式影片（最新．回放整理中） -->
+        <div class="course-group">
+          <div class="course-subhead">📅 2026.08.25 AI 共學體驗班｜一頁式影片 × 15 秒短片</div>
+          <div class="replay-single">
+            <div class="rs-icon">🎬</div>
+            <div class="rs-body">
+              <h3>課程回放整理中</h3>
+              <p>課後會補上錄影連結與當天使用的指示詞，請稍待。</p>
+            </div>
+            <span class="watch-button" style="opacity:.55;cursor:default;">敬請期待</span>
+          </div>
+        </div>
+          <div class="prompt-card">
+            <div class="prompt-head">
+              <div>
+                <div class="step-badge">STEP 1 · 專業形象圖</div>
+                <h3>🖼️ 9:16 個人品牌形象背景圖｜公版指示詞</h3>
+              </div>
+              <div class="prompt-tools">
+                <button type="button" class="copy-button" data-label="複製指示詞">複製指示詞</button>
+                <a class="prompt-link" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">開啟 ChatGPT</a>
+                <a class="prompt-link" href="https://gemini.google.com/app?hl=zh-TW" target="_blank" rel="noopener noreferrer">開啟 Gemini</a>
+              </div>
+            </div>
+            <p class="prompt-desc">
+              第一個作品：先生成自己的專業形象圖。上傳一張本人照片，把下方指示詞複製到 ChatGPT 或 Gemini，
+              只要替換【方括號】內的內容就能套用，右／左側會留下大片留白，方便之後放姓名、職稱與品牌標語。
+            </p>
+            <pre class="prompt-text">請以上傳的【人物照片】作為唯一臉部與人物參考，保留本人原有五官、臉型、眼神、膚色、髮型、年齡感與自然氣質，確保臉部辨識度高，不得換臉或生成其他人物。
+適度美肌，輕微淡化細紋與黑眼圈，但保留真實皮膚紋理，不要過度磨皮、過度美化或生成網紅臉。
+
+一、個人品牌定位
+製作一張 9:16 直式、高質感個人品牌形象背景圖。
+品牌定位：
+・【品牌角色，例如：幸福財務領航員】
+・【專業身分，例如：財務顧問】
+・【服務定位，例如：熟齡女性生活顧問】
+・【品牌氣質，例如：溫暖、專業、知性、親切】
+
+二、人物構圖
+人物安排在畫面【右側／左側】約三分之一處，採【半身／七分身／全身】的【坐姿／站姿】。
+人物身體微微朝向鏡頭，姿態自然從容，雙手【優雅交疊／輕靠展示台／自然放置】。
+人物神情溫暖、自信、親切，帶有自然微笑，呈現專業但沒有距離感的【職業身分】形象。
+畫面另一側保留約 55% 至 60% 的大片乾淨留白，方便後續加入：
+・【姓名｜品牌名稱】
+・【個人定位／品牌稱號】
+・【專業證照／資歷】
+・【職稱】
+・【品牌標語】
+・【聯絡方式或 QR Code】
+留白區不得出現人物、家具、文字或明顯裝飾，保持明亮、乾淨、易於排版。
+
+三、服裝造型
+人物穿著剪裁俐落的【服裝顏色】專業【西裝外套／套裝／洋裝】，內搭【內搭顏色與款式】，下身搭配【褲裝／裙裝及顏色】。
+服裝風格高級、簡潔、合身，具有個人品牌質感，不要制服感、廉價感或傳統宣傳照感。
+配戴【金色／銀色／珍珠】小型耳環，可搭配細緻項鍊。妝容乾淨自然、知性優雅，保留人物真實年齡與自然氣質。
+
+四、品牌背景
+背景主色使用：
+・【主色，例如：精品米白】
+・【輔色，例如：象牙白】
+・【品牌色，例如：奶茶金】
+・【點綴色，例如：淡金色】
+採用柔和漸層光影，呈現高端品牌形象與溫暖質感。
+在畫面【右上方／左上方】加入大型、半透明、低對比的【品牌象徵圖案，例如：羅盤、樹木、書本、羽毛、光環或建築線條】。
+象徵【品牌意義，例如：人生方向、財務導航、成長、選擇權與陪伴】。
+品牌象徵圖案可以局部延伸至畫面邊緣，但不得遮住人物臉部，也不得出現文字、英文字母或錯誤符號。
+背景可加入少量【弧線／航行軌跡／星點／柔光／幾何線條】，營造【品牌核心意象】，所有元素維持低對比、半透明與精緻質感。
+
+五、裝飾元素
+畫面四周加入極細的【淡金色／品牌色】圓角邊框。
+底部可搭配：柔和流動的【金色絲帶線條】、【奶油色布料波紋】、【細緻品牌色曲線】。
+畫面【左下角／右下角】加入少量【淡金植物葉片／抽象線條／品牌相關元素】。
+所有裝飾必須低調、精緻、簡約，不得搶過人物，也不得侵占主要留白排版區。
+
+六、整體視覺風格
+高端精品感、溫暖專業、知性優雅、目標客群友善、個人品牌形象、柔光棚拍、自然膚色、寫實攝影、細膩光影、乾淨構圖、商業形象照、雜誌封面質感。
+避免傳統產業宣傳單、廉價廣告模板、過度華麗或制式證件照的感覺。
+
+七、攝影設定
+85mm 人像鏡頭效果、柔和棚燈、自然輪廓光、細膩景深、人物清晰、背景柔和、高清寫實、自然人體比例、雙手完整、手指正確、服裝紋理清楚、商業攝影品質。
+
+八、重要限制
+・圖片中不得生成中文、英文、數字、品牌名稱、假文字、浮水印、Logo 或 QR Code。
+・【左側／右側】必須保留 55% 至 60% 的大片乾淨留白。
+・人物必須位於指定側邊，不可置中。
+・必須保留本人原臉、髮型、年齡感與辨識度。
+・不得過度瘦臉、尖下巴、大眼、濃妝、塑膠肌或改變人物年齡。
+・不得換臉或生成陌生網紅臉。
+・不得多手、多指、少指、手指變形或身體比例異常。
+・不得過度金碧輝煌、宮廷化或堆疊過多裝飾。
+・品牌象徵圖案不得遮住人物臉部。
+・留白區不得放置沙發、櫃子、盆栽、桌椅或複雜背景。
+・不得生成傳統保險、房仲、直銷或制式企業宣傳海報風格。
+
+九、輸出規格
+・畫面比例：9:16 直式
+・建議尺寸：1080 × 1920 px
+・輸出品質：高清、照片級寫實、自然光影
+・適用平台：【LINE／Facebook／Instagram 限時動態／個人品牌介紹／講座宣傳】</pre>
+            <div class="normal-note" style="margin-top:16px;padding:17px 19px;border-radius:18px;line-height:1.95;">
+              📋 <b>套版欄位快速表</b>（替換這幾欄就完成）：人物身分／品牌稱號／專業定位／服務對象／人物位置（左或右）／景別姿勢／服裝設定／品牌主色／品牌輔色／象徵圖案／核心寓意／留白位置／適用平台。
+              <br />此公版可套用在財務顧問、講師、教練、芳療師、保險顧問、不動產顧問等個人品牌。
+            </div>
+          </div>
+          <div class="prompt-card">
+            <div class="prompt-head">
+              <div>
+                <div class="step-badge">STEP 1 · 範例版</div>
+                <h3>✅ 老師示範｜財顧芸版（已填好欄位，可直接改成自己的）</h3>
+              </div>
+              <div class="prompt-tools">
+                <button type="button" class="copy-button" data-label="複製範例版">複製範例版</button>
+              </div>
+            </div>
+            <p class="prompt-desc">
+              把上面公版的每個【方括號】換成實際內容後，就會長這樣。用法：上傳一張自己的人像照，
+              貼上這段指示詞，再把品牌角色、服裝顏色、象徵圖案改成你自己的設定即可。
+            </p>
+            <pre class="prompt-text">請以上傳的【人物照片】作為唯一臉部與人物參考，保留本人原有五官、臉型、眼神、膚色、髮型、年齡感與自然氣質，確保臉部辨識度高，不得換臉或生成其他人物。
+適度美肌，輕微淡化細紋與黑眼圈，但保留真實皮膚紋理，不要過度磨皮、過度美化或生成網紅臉。
+
+一、個人品牌定位
+製作一張 9:16 直式、高質感個人品牌形象背景圖。
+品牌定位：
+・品牌角色：幸福財務領航員
+・專業身分：財務顧問、AI 應用講師
+・服務定位：熟齡族群與家庭的財務規劃與家族傳承顧問
+・品牌氣質：溫暖、專業、知性、親切
+
+二、人物構圖
+人物安排在畫面右側約三分之一處，採七分身坐姿。
+人物身體微微朝向鏡頭，姿態自然從容，一手輕靠白色展示台，另一手自然放置。
+人物神情溫暖、自信、親切，帶有自然微笑，呈現專業但沒有距離感的財務顧問形象。
+畫面左側保留約 55% 至 60% 的大片乾淨留白，方便後續加入：
+・姓名與品牌名稱：財顧芸｜馥芸財富學苑
+・個人定位：幸福財務領航員
+・專業資歷
+・職稱
+・品牌標語
+・聯絡方式或 QR Code
+留白區不得出現人物、家具、文字或明顯裝飾，保持明亮、乾淨、易於排版。
+
+三、服裝造型
+人物穿著剪裁俐落的米白色專業西裝外套，內搭象牙白細針織上衣，下身搭配米白色直筒褲。
+服裝風格高級、簡潔、合身，具有個人品牌質感，不要制服感、廉價感或傳統宣傳照感。
+配戴金色小型圈式耳環，可搭配細緻項鍊。妝容乾淨自然、知性優雅，保留人物真實年齡與自然氣質。
+
+四、品牌背景
+背景主色使用：
+・主色：精品米白
+・輔色：象牙白
+・品牌色：奶茶金
+・點綴色：暖杏金
+採用柔和漸層光影，呈現高端品牌形象與溫暖質感。
+在畫面右上方加入大型、半透明、低對比的羅盤圖案。
+象徵人生方向、財務導航、選擇權與長期陪伴。
+品牌象徵圖案可以局部延伸至畫面邊緣，但不得遮住人物臉部，也不得出現文字、英文字母或錯誤符號。
+背景可加入少量柔和弧線與細緻光暈，營造「為人生財務指引方向」的核心意象，所有元素維持低對比、半透明與精緻質感。
+
+五、裝飾元素
+畫面四周加入極細的淡金色圓角邊框。
+底部可搭配柔和流動的奶茶金絲帶線條與奶油色布料波紋。
+畫面右下角加入少量淡金植物葉片。
+所有裝飾必須低調、精緻、簡約，不得搶過人物，也不得侵占左側主要留白排版區。
+
+六、整體視覺風格
+高端精品感、溫暖專業、知性優雅、目標客群友善、個人品牌形象、柔光棚拍、自然膚色、寫實攝影、細膩光影、乾淨構圖、商業形象照、雜誌封面質感。
+避免傳統產業宣傳單、廉價廣告模板、過度華麗或制式證件照的感覺。
+
+七、攝影設定
+85mm 人像鏡頭效果、柔和棚燈、自然輪廓光、細膩景深、人物清晰、背景柔和、高清寫實、自然人體比例、雙手完整、手指正確、服裝紋理清楚、商業攝影品質。
+
+八、重要限制
+・圖片中不得生成中文、英文、數字、品牌名稱、假文字、浮水印、Logo 或 QR Code。
+・左側必須保留 55% 至 60% 的大片乾淨留白。
+・人物必須位於畫面右側，不可置中。
+・必須保留本人原臉、髮型、年齡感與辨識度。
+・不得過度瘦臉、尖下巴、大眼、濃妝、塑膠肌或改變人物年齡。
+・不得換臉或生成陌生網紅臉。
+・不得多手、多指、少指、手指變形或身體比例異常。
+・不得過度金碧輝煌、宮廷化或堆疊過多裝飾。
+・羅盤圖案不得遮住人物臉部。
+・留白區不得放置沙發、櫃子、盆栽、桌椅或複雜背景。
+・不得生成傳統保險、房仲、直銷或制式企業宣傳海報風格。
+
+九、輸出規格
+・畫面比例：9:16 直式
+・建議尺寸：1080 × 1920 px
+・輸出品質：高清、照片級寫實、自然光影
+・適用平台：LINE、Facebook、Instagram 限時動態、個人品牌介紹、講座宣傳</pre>
+            <div class="normal-note" style="margin-top:16px;padding:17px 19px;border-radius:18px;line-height:1.95;">
+              🔎 <b>這個範例改了哪幾欄</b>：品牌角色「幸福財務領航員」／服務定位「熟齡族群與家族傳承」／人物在<b>右側</b>、留白在<b>左側</b>／七分身坐姿、手靠白色展示台／米白西裝＋象牙白針織＋金色圈耳環／背景精品米白 × 奶茶金 × 暖杏金／象徵圖案<b>羅盤</b>（人生方向與財務導航）。
+              <br />換成你自己的版本時，最關鍵的三欄是：<b>品牌角色</b>、<b>象徵圖案</b>、<b>留白位置</b>。
+            </div>
+          </div>
+
+        <!-- 2026.06.15 中山包班 競品分析 -->
         <div class="course-group">
           <div class="course-subhead">📅 2026.06.15 中山包班｜AI 競品分析</div>
           <div class="course-grid">
@@ -1955,186 +2136,6 @@
               </a>
             </article>
           </div>
-        </div>
-      </section>
-      <section id="gasNotes" class="section">
-        <div class="section-header">
-          <span>Class Notes</span>
-          <h2>教學筆記｜AI 表單自動追蹤（Google GAS）</h2>
-          <p>2026.08.20 公勝保經包班課程重點整理，沒到現場也能照著做出同一套自動追蹤流程。</p>
-        </div>
-
-        <div class="replay-feature">
-          <article class="feature-card">
-            <div>
-              <div class="feature-label"><span class="new-dot">筆記</span> 2026.08.20（四）13:00–17:30</div>
-              <h3>如何用 AI 表單自動追蹤，讓名單轉化更高效？</h3>
-              <p>
-                主題是用 AI 產出 Google Apps Script（GAS）程式碼，把「建立表單 → 收集名單 →
-                立即確認信 → 定時追蹤信」串成一條自動化流程，省下大量人工跟催的時間。
-              </p>
-            </div>
-            <div>
-              <a class="watch-button gold" href="https://script.google.com/home/?hl=zh-tw" target="_blank" rel="noopener noreferrer">開啟 Google Apps Script</a>
-            </div>
-          </article>
-          <div class="replay-notes">
-            <div class="normal-note">
-              📝 本頁筆記為芸琪依課程群組分享內容整理（當天未到現場），流程與指示詞可直接照做；
-              實際操作細節仍以課堂講義為準。
-            </div>
-            <div class="warning-note">
-              📄 想拿當日 PPT 講義：在課程群組寫下上課心得分享，再截圖私訊 Adam 老師即可索取。
-            </div>
-          </div>
-        </div>
-
-        <div class="course-subhead" style="margin-top:26px;">🧭 實作流程｜四個步驟跑完一輪</div>
-        <div class="note-grid">
-          <article class="note-card">
-            <h3>① 用 AI 產出表單與程式碼</h3>
-            <ul>
-              <li>先把「我是誰、表單用途、要不要同步試算表」講清楚，再請 AI 輸出 GAS 完整代碼。</li>
-              <li>課堂示範主題為<b>「潛在客戶需求蒐集」</b>表單，並同步建立回覆試算表。</li>
-              <li>指示詞越具體，回傳的代碼越能直接複製使用。</li>
-            </ul>
-          </article>
-          <article class="note-card">
-            <h3>② 貼進 Apps Script 並執行</h3>
-            <ul>
-              <li>進入 <b>script.google.com</b> → 新增專案，把代碼整段貼上並存檔。</li>
-              <li>第一次執行會跳出授權：選自己的 Google 帳號 →「進階」→ 前往專案 → 允許。</li>
-              <li>執行後回到雲端硬碟，就會看到自動生成的表單與試算表。</li>
-            </ul>
-          </article>
-          <article class="note-card">
-            <h3>③ 加上「填寫完畢確認信」</h3>
-            <ul>
-              <li>把<b>試算表網址</b>貼給 AI，請它加上「當表單收到新回覆時執行」的觸發功能。</li>
-              <li>主旨與內文可以請 AI 幫你想，再依自己的語氣微調。</li>
-              <li>觸發條件在 Apps Script 左側「觸發條件（時鐘圖示）」確認有沒有建立成功。</li>
-            </ul>
-          </article>
-          <article class="note-card">
-            <h3>④ 設定 3／5／7 分鐘追蹤信</h3>
-            <ul>
-              <li>在原有功能上「加上去」，不要重寫，請 AI 輸出<b>全新完整可複製代碼</b>。</li>
-              <li>課堂示範是從填寫完成起算第 3、5、7 分鐘各寄一封追蹤信（測試用）。</li>
-              <li>實際上線時把分鐘改成天數，就變成第 3、5、7 天的關懷信序列。</li>
-            </ul>
-          </article>
-        </div>
-
-        <div class="course-subhead" style="margin-top:26px;">💬 課堂指示詞｜三段照順序貼</div>
-
-        <div class="prompt-card">
-          <div class="prompt-head">
-            <div>
-              <div class="step-badge">STEP 1 · 建立表單</div>
-              <h3>🗂️ 潛在客戶需求蒐集表單 + 同步試算表</h3>
-            </div>
-            <div class="prompt-tools">
-              <button type="button" class="copy-button" data-label="複製指示詞">複製指示詞</button>
-              <a class="prompt-link" href="https://script.google.com/home/?hl=zh-tw" target="_blank" rel="noopener noreferrer">開啟 Apps Script</a>
-            </div>
-          </div>
-          <p class="prompt-desc">
-            第一段先讓 AI 幫你把表單和回覆試算表一次建好。行業與表單用途請換成自己的。
-          </p>
-          <pre class="prompt-text">我的身份是保險業務，我要製作一個表單
-表單用途是【潛在客戶需求蒐集】
-建立同步回覆試算表
-請輸出可用在Google GAS的完整代碼</pre>
-        </div>
-
-        <div class="prompt-card">
-          <div class="prompt-head">
-            <div>
-              <div class="step-badge">STEP 2 · 確認信</div>
-              <h3>📧 收到回覆自動寄出「填寫完畢確認信」</h3>
-            </div>
-            <div class="prompt-tools">
-              <button type="button" class="copy-button" data-label="複製指示詞">複製指示詞</button>
-              <a class="prompt-link" href="https://script.google.com/home/?hl=zh-tw" target="_blank" rel="noopener noreferrer">開啟 Apps Script</a>
-            </div>
-          </div>
-          <p class="prompt-desc">
-            把 STEP 1 產生的試算表網址貼進【】中，主旨與內文可以直接請 AI 代擬。
-          </p>
-          <pre class="prompt-text">試算表網址如下【貼上網址】
-當表單收到新回覆時執行
-主旨與內文【填寫完畢確認信】
-主旨與內文幫我想內容
-請輸出可用在Google GAS的全新完整代碼</pre>
-        </div>
-
-        <div class="prompt-card">
-          <div class="prompt-head">
-            <div>
-              <div class="step-badge">STEP 3 · 自動追蹤</div>
-              <h3>⏱️ 第 3、5、7 分鐘自動發送追蹤信</h3>
-            </div>
-            <div class="prompt-tools">
-              <button type="button" class="copy-button" data-label="複製指示詞">複製指示詞</button>
-              <a class="prompt-link" href="https://script.google.com/home/?hl=zh-tw" target="_blank" rel="noopener noreferrer">開啟 Apps Script</a>
-            </div>
-          </div>
-          <p class="prompt-desc">
-            測試階段先用「分鐘」比較快看到結果；確認流程沒問題後，再把分鐘改成天數正式上線。
-          </p>
-          <pre class="prompt-text">在原有功能中加入，從完成資料填寫起計時第 3、5、7 分鐘自動發送追蹤信。
-試算表網址：【貼上網址】。
-第 3 分鐘信件主旨：【請填寫】，內容：【請填寫】；
-第 5 分鐘信件主旨：【請填寫】，內容：【請填寫】；
-第 7 分鐘信件主旨：【請填寫】，內容：【請填寫】。
-請輸出可用在Google GAS的全新完整可複製代碼。</pre>
-        </div>
-
-        <div class="course-subhead" style="margin-top:26px;">🛠️ 除錯心法與注意事項</div>
-        <div class="note-grid">
-          <article class="note-card">
-            <h3>🐞 遇到錯誤怎麼問 AI</h3>
-            <ul>
-              <li>把<b>完整錯誤訊息</b>整段複製貼回 AI，不要只說「跑不動」。</li>
-              <li>補充三件事：我想做什麼、我做了哪一步、畫面出現什麼。</li>
-              <li>請 AI 每次都輸出<b>全新完整代碼</b>，避免自己東拼西湊貼錯位置。</li>
-              <li>老師強調的重點是「除錯邏輯」——學會自己找問題，回家才做得出來。</li>
-            </ul>
-          </article>
-          <article class="note-card">
-            <h3>⚠️ 最容易卡關的地方</h3>
-            <ul>
-              <li>試算表<b>欄位名稱要跟表單題目完全一致</b>，錯一個字就抓不到 Email。</li>
-              <li>忘了建立「觸發條件」，程式碼是對的但信不會自己寄出。</li>
-              <li>Gmail 每日寄信有配額上限（一般帳號約 100 封／天），大量名單要分批。</li>
-              <li>先用自己的信箱測一輪，確認收得到再對外發布表單。</li>
-            </ul>
-          </article>
-        </div>
-
-        <div class="note-grid" style="margin-top:18px;">
-          <article class="note-card">
-            <h3>💡 學員回饋整理｜大家覺得最有價值的部分</h3>
-            <ul>
-              <li>不只是「做表單」，而是把建立、追蹤、自動回覆與後續信件<b>串成一整套流程</b>。</li>
-              <li>與客戶的聯繫不是單點，透過工具可以打出「連環拳」，建立長期信任。</li>
-              <li>上機實作最有收穫，操作會留下軌跡，印象最深；<b>把成功的 SOP 記錄下來</b>，下次更快。</li>
-              <li>可延伸結合原本經營的 LINE 官方帳號與私域名單，發揮更大效益。</li>
-            </ul>
-          </article>
-          <article class="note-card">
-            <h3>🚀 補課後可以馬上做的三件事</h3>
-            <ul>
-              <li>照 STEP 1～3 跑一次，做出屬於自己的「潛在客戶需求蒐集」表單。</li>
-              <li>把 3／5／7 分鐘改成 3／5／7 天，寫成自己的關懷信序列。</li>
-              <li>到浩茂會員平台看看還有哪些工具可以搭配使用。</li>
-            </ul>
-            <div class="ref-bar" style="margin-top:16px;margin-bottom:0;">
-              <span class="ref-label">延伸資源</span>
-              <a href="https://haomao-ai-member-platform.zeabur.app/login" target="_blank" rel="noopener noreferrer">浩茂會員平台</a>
-              <a href="https://cbob-ai-news.zeabur.app" target="_blank" rel="noopener noreferrer">C寶晨報</a>
-            </div>
-          </article>
         </div>
       </section>
       <section id="onlineCourses" class="section">
