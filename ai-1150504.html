@@ -617,6 +617,227 @@
       align-items: center;
       gap: 8px;
     }
+    /* ===== 芸琪想跟你說（分享心意） ===== */
+    .share-note {
+      margin-bottom: 30px;
+      border-radius: 26px;
+      padding: 28px 30px;
+      background: linear-gradient(145deg, #fffdf8, #fff5e4);
+      border: 1px solid rgba(200, 166, 106, 0.35);
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .share-note::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 5px;
+      background: linear-gradient(90deg, var(--milk-tea-gold), var(--herbal-green));
+    }
+    .share-note::after {
+      content: "";
+      position: absolute;
+      right: -50px; bottom: -60px;
+      width: 150px; height: 150px;
+      border-radius: 50%;
+      background: rgba(200, 166, 106, 0.12);
+    }
+    .share-note > * { position: relative; z-index: 1; }
+    .share-label {
+      display: inline-block;
+      padding: 6px 15px;
+      margin-bottom: 14px;
+      border-radius: 999px;
+      background: rgba(200, 166, 106, 0.2);
+      color: var(--warning-text);
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+    }
+    .share-note p {
+      color: var(--deep-gray);
+      font-size: 15.5px;
+      line-height: 1.95;
+      margin-bottom: 12px;
+    }
+    .share-sign {
+      text-align: right;
+      color: var(--deep-green);
+      font-weight: 900;
+      font-size: 15px;
+      margin-top: 6px;
+    }
+    /* ===== 最新活動 ===== */
+    .event-card {
+      display: grid;
+      grid-template-columns: 1.4fr 0.6fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+    .event-main {
+      border-radius: 26px;
+      padding: 30px 28px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.97), rgba(237, 242, 236, 0.84));
+      border: 1px solid rgba(95, 127, 104, 0.16);
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .event-main::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 5px;
+      background: linear-gradient(90deg, var(--milk-tea-gold), var(--herbal-green));
+    }
+    .event-tag {
+      display: inline-block;
+      padding: 6px 15px;
+      border-radius: 999px;
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      color: var(--warning-text);
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing: 0.03em;
+      margin-bottom: 14px;
+    }
+    .event-main h3 {
+      font-size: clamp(21px, 3vw, 27px);
+      color: var(--deep-green);
+      line-height: 1.42;
+      margin-bottom: 16px;
+    }
+    .event-meta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .event-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 16px;
+      border-radius: 14px;
+      background: rgba(95, 127, 104, 0.12);
+      color: var(--deep-green);
+      font-weight: 900;
+      font-size: 15px;
+    }
+    .event-points {
+      list-style: none;
+      margin: 0 0 22px;
+      padding: 0;
+      display: grid;
+      gap: 11px;
+    }
+    .event-points li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: var(--deep-gray);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .event-points li::before {
+      content: "✦";
+      color: var(--milk-tea-gold);
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+    .event-main .watch-button {
+      width: auto;
+      padding: 14px 32px 15px;
+    }
+    .event-side {
+      border-radius: 26px;
+      padding: 26px 24px;
+      background:
+        linear-gradient(145deg, rgba(63, 95, 77, 0.96), rgba(39, 66, 52, 0.96));
+      color: #fff;
+      box-shadow: 0 18px 38px rgba(39, 66, 52, 0.22);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .event-side h4 {
+      color: var(--soft-gold);
+      font-size: 16px;
+      letter-spacing: 0.04em;
+    }
+    .event-fee {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .event-fee div {
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(234, 216, 173, 0.28);
+      font-size: 14.5px;
+      line-height: 1.65;
+      font-weight: 700;
+    }
+    .event-fee b { color: var(--soft-gold); }
+    .event-note {
+      font-size: 13.5px;
+      color: rgba(255, 255, 255, 0.82);
+      line-height: 1.8;
+    }
+    .event-signups {
+      margin-top: 22px;
+      padding: 22px 24px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.66);
+      border: 1px solid rgba(95, 127, 104, 0.16);
+      box-shadow: var(--card-shadow);
+    }
+    .signup-title {
+      font-weight: 900;
+      color: var(--deep-green);
+      margin-bottom: 14px;
+      font-size: 16px;
+    }
+    .signup-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      counter-reset: s;
+    }
+    .signup-list li {
+      counter-increment: s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px 9px 9px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid rgba(200, 166, 106, 0.4);
+      color: var(--deep-green);
+      font-weight: 800;
+      font-size: 15px;
+    }
+    .signup-list li::before {
+      content: counter(s);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--forest);
+      color: var(--soft-gold);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
     /* ===== 線上課回放 ===== */
     .online-grid {
       display: grid;
@@ -936,6 +1157,71 @@
       transform: translateY(-2px);
       background: rgba(200, 166, 106, 0.14);
     }
+    /* ===== 教學筆記卡 ===== */
+    .note-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-bottom: 6px;
+    }
+    .note-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 22px;
+      padding: 24px 22px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.97), rgba(237, 242, 236, 0.84));
+      border: 1px solid rgba(95, 127, 104, 0.14);
+      box-shadow: var(--card-shadow);
+      transition: 0.28s ease;
+    }
+    .note-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 5px;
+      background: linear-gradient(90deg, var(--herbal-green), var(--milk-tea-gold));
+    }
+    .note-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 22px 46px rgba(63, 95, 77, 0.18);
+    }
+    .note-card h3 {
+      font-size: 18px;
+      color: var(--deep-green);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+    .note-card ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 9px;
+    }
+    .note-card li {
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+      color: var(--deep-gray);
+      font-size: 14.5px;
+      line-height: 1.72;
+    }
+    .note-card li::before {
+      content: "▹";
+      color: var(--milk-tea-gold);
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+    .note-card li b { color: var(--deep-green); }
+    .note-card p {
+      color: var(--medium-gray);
+      font-size: 14.5px;
+      line-height: 1.75;
+    }
+    @media (max-width: 920px) {
+      .note-grid { grid-template-columns: 1fr; }
+    }
     /* ===== AI 工具箱 ===== */
     .tool-grid {
       display: grid;
@@ -1251,7 +1537,8 @@
       .hero,
       .portfolio-feature,
       .replay-feature,
-      .benefit-banner {
+      .benefit-banner,
+      .event-card {
         grid-template-columns: 1fr;
       }
       .course-grid,
@@ -1363,6 +1650,7 @@
           <nav class="quick-nav" aria-label="快速導覽">
             <a class="pill-link" href="#benefit">365 福利</a>
             <a class="pill-link" href="#courseVideos">課程回放</a>
+            <a class="pill-link" href="#gasNotes">教學筆記</a>
             <a class="pill-link" href="#onlineCourses">線上課回放</a>
             <a class="pill-link" href="#studentPortfolio">學員作品</a>
             <a class="pill-link" href="#aiTools">AI 工具箱</a>
@@ -1406,6 +1694,20 @@
           <div>🖼️ 學員作品觀摩</div>
         </div>
       </section>
+      <div class="share-note">
+        <span class="share-label">💛 芸琪想跟你說</span>
+        <p>
+          說真的，我自己也是一路自費在學 AI，投入的金額其實不少（笑）。
+          而讓我很感謝的是——因為有分享、有推薦，這些課程給了回饋和福利，
+          讓我能折抵學費、甚至免費上課，對現在的我來說，真的不無小補。
+        </p>
+        <p>
+          也因為這樣，我更願意把真正好用、真正幫得上忙的資源分享給你：
+          一邊陪你一起成長，一邊也讓我能持續學習，再把更多有用的東西帶回來給大家。
+          如果這些內容有幫到你，也歡迎你分享出去，讓好資源被更多人看見。💛
+        </p>
+        <div class="share-sign">— 芸琪</div>
+      </div>
       <section id="courseVideos" class="section">
         <div class="section-header">
           <span>Course Replay</span>
@@ -1627,6 +1929,186 @@
               </a>
             </article>
           </div>
+        </div>
+      </section>
+      <section id="gasNotes" class="section">
+        <div class="section-header">
+          <span>Class Notes</span>
+          <h2>教學筆記｜AI 表單自動追蹤（Google GAS）</h2>
+          <p>2026.08.20 公勝保經包班課程重點整理，沒到現場也能照著做出同一套自動追蹤流程。</p>
+        </div>
+
+        <div class="replay-feature">
+          <article class="feature-card">
+            <div>
+              <div class="feature-label"><span class="new-dot">筆記</span> 2026.08.20（四）13:00–17:30</div>
+              <h3>如何用 AI 表單自動追蹤，讓名單轉化更高效？</h3>
+              <p>
+                主題是用 AI 產出 Google Apps Script（GAS）程式碼，把「建立表單 → 收集名單 →
+                立即確認信 → 定時追蹤信」串成一條自動化流程，省下大量人工跟催的時間。
+              </p>
+            </div>
+            <div>
+              <a class="watch-button gold" href="https://script.google.com/home/?hl=zh-tw" target="_blank" rel="noopener noreferrer">開啟 Google Apps Script</a>
+            </div>
+          </article>
+          <div class="replay-notes">
+            <div class="normal-note">
+              📝 本頁筆記為芸琪依課程群組分享內容整理（當天未到現場），流程與指示詞可直接照做；
+              實際操作細節仍以課堂講義為準。
+            </div>
+            <div class="warning-note">
+              📄 想拿當日 PPT 講義：在課程群組寫下上課心得分享，再截圖私訊 Adam 老師即可索取。
+            </div>
+          </div>
+        </div>
+
+        <div class="course-subhead" style="margin-top:26px;">🧭 實作流程｜四個步驟跑完一輪</div>
+        <div class="note-grid">
+          <article class="note-card">
+            <h3>① 用 AI 產出表單與程式碼</h3>
+            <ul>
+              <li>先把「我是誰、表單用途、要不要同步試算表」講清楚，再請 AI 輸出 GAS 完整代碼。</li>
+              <li>課堂示範主題為<b>「潛在客戶需求蒐集」</b>表單，並同步建立回覆試算表。</li>
+              <li>指示詞越具體，回傳的代碼越能直接複製使用。</li>
+            </ul>
+          </article>
+          <article class="note-card">
+            <h3>② 貼進 Apps Script 並執行</h3>
+            <ul>
+              <li>進入 <b>script.google.com</b> → 新增專案，把代碼整段貼上並存檔。</li>
+              <li>第一次執行會跳出授權：選自己的 Google 帳號 →「進階」→ 前往專案 → 允許。</li>
+              <li>執行後回到雲端硬碟，就會看到自動生成的表單與試算表。</li>
+            </ul>
+          </article>
+          <article class="note-card">
+            <h3>③ 加上「填寫完畢確認信」</h3>
+            <ul>
+              <li>把<b>試算表網址</b>貼給 AI，請它加上「當表單收到新回覆時執行」的觸發功能。</li>
+              <li>主旨與內文可以請 AI 幫你想，再依自己的語氣微調。</li>
+              <li>觸發條件在 Apps Script 左側「觸發條件（時鐘圖示）」確認有沒有建立成功。</li>
+            </ul>
+          </article>
+          <article class="note-card">
+            <h3>④ 設定 3／5／7 分鐘追蹤信</h3>
+            <ul>
+              <li>在原有功能上「加上去」，不要重寫，請 AI 輸出<b>全新完整可複製代碼</b>。</li>
+              <li>課堂示範是從填寫完成起算第 3、5、7 分鐘各寄一封追蹤信（測試用）。</li>
+              <li>實際上線時把分鐘改成天數，就變成第 3、5、7 天的關懷信序列。</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="course-subhead" style="margin-top:26px;">💬 課堂指示詞｜三段照順序貼</div>
+
+        <div class="prompt-card">
+          <div class="prompt-head">
+            <div>
+              <div class="step-badge">STEP 1 · 建立表單</div>
+              <h3>🗂️ 潛在客戶需求蒐集表單 + 同步試算表</h3>
+            </div>
+            <div class="prompt-tools">
+              <button type="button" class="copy-button" data-label="複製指示詞">複製指示詞</button>
+              <a class="prompt-link" href="https://script.google.com/home/?hl=zh-tw" target="_blank" rel="noopener noreferrer">開啟 Apps Script</a>
+            </div>
+          </div>
+          <p class="prompt-desc">
+            第一段先讓 AI 幫你把表單和回覆試算表一次建好。行業與表單用途請換成自己的。
+          </p>
+          <pre class="prompt-text">我的身份是保險業務，我要製作一個表單
+表單用途是【潛在客戶需求蒐集】
+建立同步回覆試算表
+請輸出可用在Google GAS的完整代碼</pre>
+        </div>
+
+        <div class="prompt-card">
+          <div class="prompt-head">
+            <div>
+              <div class="step-badge">STEP 2 · 確認信</div>
+              <h3>📧 收到回覆自動寄出「填寫完畢確認信」</h3>
+            </div>
+            <div class="prompt-tools">
+              <button type="button" class="copy-button" data-label="複製指示詞">複製指示詞</button>
+              <a class="prompt-link" href="https://script.google.com/home/?hl=zh-tw" target="_blank" rel="noopener noreferrer">開啟 Apps Script</a>
+            </div>
+          </div>
+          <p class="prompt-desc">
+            把 STEP 1 產生的試算表網址貼進【】中，主旨與內文可以直接請 AI 代擬。
+          </p>
+          <pre class="prompt-text">試算表網址如下【貼上網址】
+當表單收到新回覆時執行
+主旨與內文【填寫完畢確認信】
+主旨與內文幫我想內容
+請輸出可用在Google GAS的全新完整代碼</pre>
+        </div>
+
+        <div class="prompt-card">
+          <div class="prompt-head">
+            <div>
+              <div class="step-badge">STEP 3 · 自動追蹤</div>
+              <h3>⏱️ 第 3、5、7 分鐘自動發送追蹤信</h3>
+            </div>
+            <div class="prompt-tools">
+              <button type="button" class="copy-button" data-label="複製指示詞">複製指示詞</button>
+              <a class="prompt-link" href="https://script.google.com/home/?hl=zh-tw" target="_blank" rel="noopener noreferrer">開啟 Apps Script</a>
+            </div>
+          </div>
+          <p class="prompt-desc">
+            測試階段先用「分鐘」比較快看到結果；確認流程沒問題後，再把分鐘改成天數正式上線。
+          </p>
+          <pre class="prompt-text">在原有功能中加入，從完成資料填寫起計時第 3、5、7 分鐘自動發送追蹤信。
+試算表網址：【貼上網址】。
+第 3 分鐘信件主旨：【請填寫】，內容：【請填寫】；
+第 5 分鐘信件主旨：【請填寫】，內容：【請填寫】；
+第 7 分鐘信件主旨：【請填寫】，內容：【請填寫】。
+請輸出可用在Google GAS的全新完整可複製代碼。</pre>
+        </div>
+
+        <div class="course-subhead" style="margin-top:26px;">🛠️ 除錯心法與注意事項</div>
+        <div class="note-grid">
+          <article class="note-card">
+            <h3>🐞 遇到錯誤怎麼問 AI</h3>
+            <ul>
+              <li>把<b>完整錯誤訊息</b>整段複製貼回 AI，不要只說「跑不動」。</li>
+              <li>補充三件事：我想做什麼、我做了哪一步、畫面出現什麼。</li>
+              <li>請 AI 每次都輸出<b>全新完整代碼</b>，避免自己東拼西湊貼錯位置。</li>
+              <li>老師強調的重點是「除錯邏輯」——學會自己找問題，回家才做得出來。</li>
+            </ul>
+          </article>
+          <article class="note-card">
+            <h3>⚠️ 最容易卡關的地方</h3>
+            <ul>
+              <li>試算表<b>欄位名稱要跟表單題目完全一致</b>，錯一個字就抓不到 Email。</li>
+              <li>忘了建立「觸發條件」，程式碼是對的但信不會自己寄出。</li>
+              <li>Gmail 每日寄信有配額上限（一般帳號約 100 封／天），大量名單要分批。</li>
+              <li>先用自己的信箱測一輪，確認收得到再對外發布表單。</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="note-grid" style="margin-top:18px;">
+          <article class="note-card">
+            <h3>💡 學員回饋整理｜大家覺得最有價值的部分</h3>
+            <ul>
+              <li>不只是「做表單」，而是把建立、追蹤、自動回覆與後續信件<b>串成一整套流程</b>。</li>
+              <li>與客戶的聯繫不是單點，透過工具可以打出「連環拳」，建立長期信任。</li>
+              <li>上機實作最有收穫，操作會留下軌跡，印象最深；<b>把成功的 SOP 記錄下來</b>，下次更快。</li>
+              <li>可延伸結合原本經營的 LINE 官方帳號與私域名單，發揮更大效益。</li>
+            </ul>
+          </article>
+          <article class="note-card">
+            <h3>🚀 補課後可以馬上做的三件事</h3>
+            <ul>
+              <li>照 STEP 1～3 跑一次，做出屬於自己的「潛在客戶需求蒐集」表單。</li>
+              <li>把 3／5／7 分鐘改成 3／5／7 天，寫成自己的關懷信序列。</li>
+              <li>到浩茂會員平台看看還有哪些工具可以搭配使用。</li>
+            </ul>
+            <div class="ref-bar" style="margin-top:16px;margin-bottom:0;">
+              <span class="ref-label">延伸資源</span>
+              <a href="https://haomao-ai-member-platform.zeabur.app/login" target="_blank" rel="noopener noreferrer">浩茂會員平台</a>
+              <a href="https://cbob-ai-news.zeabur.app" target="_blank" rel="noopener noreferrer">C寶晨報</a>
+            </div>
+          </article>
         </div>
       </section>
       <section id="onlineCourses" class="section">
