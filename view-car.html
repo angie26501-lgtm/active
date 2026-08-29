@@ -1,0 +1,1132 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>車禍出險檢核表．保戶版</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --asphalt:#1B2733;
+  --asphalt-2:#26363F;
+  --paper:#EEF1F0;
+  --card:#FFFFFF;
+  --signal:#F5A623;
+  --signal-soft:#FDF3E0;
+  --signal-ink:#7A4E00;
+  --safe:#17795E;
+  --safe-soft:#E6F2EE;
+  --alert:#B23A2F;
+  --alert-soft:#FBEDEB;
+  --line:#D5DCDB;
+  --muted:#6B7B85;
+  --shadow:0 1px 2px rgba(27,39,51,.06), 0 8px 24px rgba(27,39,51,.06);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--asphalt);
+  font-family:"Noto Sans TC",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+  font-size:16px;
+  line-height:1.65;
+}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px 96px}
+
+/* ---------- header ---------- */
+header{
+  background:var(--asphalt);
+  color:#fff;
+  padding:26px 0 22px;
+  margin-bottom:22px;
+  position:relative;
+  overflow:hidden;
+}
+header::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:6px;
+  background:repeating-linear-gradient(90deg,var(--signal) 0 26px,transparent 26px 46px);
+  opacity:.9;
+}
+.head-grid{display:flex;gap:18px;align-items:center;max-width:760px;margin:0 auto;padding:0 18px}
+.eyebrow{
+  font-family:"Barlow Condensed",sans-serif;
+  font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  font-size:13px;color:var(--signal);margin:0 0 2px;
+}
+.vtag{
+  display:inline-block;font-family:"Noto Sans TC",sans-serif;
+  font-size:11px;font-weight:700;letter-spacing:.08em;
+  padding:2px 8px;border-radius:4px;margin-left:8px;vertical-align:2px;
+}
+.vtag.cust{background:rgba(245,166,35,.18);color:var(--signal)}
+.vtag.agent{background:rgba(255,255,255,.16);color:#DCE6EB}
+h1{font-size:26px;font-weight:900;margin:0;letter-spacing:.02em}
+.sub{margin:6px 0 0;font-size:13.5px;color:#A9B8C1;line-height:1.5}
+
+/* triangle gauge */
+.gauge{flex:0 0 84px;width:84px;text-align:center}
+.gauge svg{display:block;width:84px;height:74px}
+.gauge-num{
+  font-family:"Barlow Condensed",sans-serif;font-weight:700;
+  font-size:15px;color:#fff;letter-spacing:.05em;margin-top:2px
+}
+
+/* ---------- emergency ---------- */
+.sos{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px}
+.sos a{
+  display:block;text-align:center;text-decoration:none;
+  background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:13px 6px 11px;box-shadow:var(--shadow);color:var(--asphalt);
+  transition:transform .12s ease, border-color .12s ease;
+}
+.sos a:hover{transform:translateY(-2px);border-color:var(--signal)}
+.sos .n{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:27px;line-height:1;letter-spacing:.02em}
+.sos .l{font-size:12px;color:var(--muted);margin-top:4px}
+.sos a.ins .n{font-size:19px;padding-top:5px}
+
+/* ---------- panels ---------- */
+.panel{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:18px 18px 6px;margin-bottom:16px;box-shadow:var(--shadow);
+}
+.panel.flat{padding-bottom:18px}
+.panel-head{display:flex;align-items:baseline;gap:10px;margin-bottom:2px}
+.tag{
+  font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:12px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--signal-ink);
+  background:var(--signal-soft);border-radius:4px;padding:2px 7px;white-space:nowrap;
+}
+h2{font-size:17.5px;font-weight:700;margin:0}
+.note{font-size:13.5px;color:var(--muted);margin:6px 0 12px}
+
+/* ---------- checklist ---------- */
+ul.check{list-style:none;margin:0;padding:0}
+ul.check li{border-top:1px solid var(--line)}
+ul.check li:first-child{border-top:0}
+label.item{
+  display:flex;gap:12px;align-items:flex-start;
+  padding:11px 2px;cursor:pointer;
+}
+label.item input{position:absolute;opacity:0;width:0;height:0}
+.box{
+  flex:0 0 21px;width:21px;height:21px;margin-top:2px;
+  border:2px solid #B9C4C3;border-radius:6px;background:#fff;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .14s ease;
+}
+.box svg{width:12px;height:12px;opacity:0;transform:scale(.6);transition:all .14s ease}
+label.item input:checked ~ .box{background:var(--safe);border-color:var(--safe)}
+label.item input:checked ~ .box svg{opacity:1;transform:scale(1)}
+label.item input:focus-visible ~ .box{outline:3px solid var(--signal);outline-offset:2px}
+.txt{flex:1;font-size:15px;line-height:1.55;transition:color .14s ease}
+.txt b{font-weight:700}
+.txt small{display:block;font-size:12.5px;color:var(--muted);margin-top:2px;line-height:1.5}
+label.item input:checked ~ .txt{color:#9AA7AD;text-decoration:line-through;text-decoration-color:#C6D0D0}
+label.item input:checked ~ .txt small{text-decoration:none;color:#B4BFC4}
+
+/* ---------- deadlines ---------- */
+.datebar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+.datebar label{font-size:14px;font-weight:500}
+input[type=date],input.f,select.f{
+  font-family:inherit;font-size:15px;color:var(--asphalt);
+  border:1px solid var(--line);border-radius:9px;padding:8px 11px;background:#fff;
+}
+input[type=date]:focus,input.f:focus,select.f:focus{outline:2px solid var(--signal);outline-offset:1px;border-color:var(--signal)}
+.dl{list-style:none;margin:0;padding:0}
+.dl li{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 0;border-top:1px solid var(--line);
+}
+.dl li:first-child{border-top:0}
+.dl .day{
+  font-family:"Barlow Condensed",sans-serif;font-weight:700;
+  flex:0 0 54px;text-align:right;font-size:24px;line-height:1;color:var(--asphalt);
+}
+.dl .day span{display:block;font-size:11px;letter-spacing:.1em;color:var(--muted);font-weight:600}
+.dl .what{flex:1;font-size:14.5px}
+.dl .what small{display:block;font-size:12.5px;color:var(--muted)}
+.dl .when{
+  font-family:"Barlow Condensed",sans-serif;font-size:15px;font-weight:600;
+  text-align:right;white-space:nowrap;color:var(--muted);
+}
+.dl .when b{display:block;font-size:12px;font-weight:600;letter-spacing:.03em}
+.dl li.soon .when{color:var(--alert)}
+.dl li.past .when{color:#AAB6BB}
+.dl li.past .day{color:#C3CCCF}
+
+/* ---------- rules ---------- */
+.rules{background:var(--alert-soft);border:1px solid #EDCFCB}
+.rules .tag{background:#F4D9D6;color:var(--alert)}
+.rule{display:flex;gap:12px;padding:11px 0;border-top:1px solid #EFD9D6}
+.rule:first-of-type{border-top:0}
+.rule .no{
+  font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:19px;
+  color:var(--alert);flex:0 0 auto;line-height:1.5;
+}
+.rule p{margin:0;font-size:14.5px}
+.rule p b{display:block;font-weight:700;margin-bottom:1px}
+.rule p small{color:#8A6560;font-size:13px;line-height:1.5}
+
+/* ---------- collapsible sections ---------- */
+details.sec{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  margin-bottom:11px;box-shadow:var(--shadow);overflow:hidden;
+}
+details.sec>summary{
+  list-style:none;cursor:pointer;padding:15px 18px;
+  display:flex;align-items:center;gap:10px;
+}
+details.sec>summary::-webkit-details-marker{display:none}
+details.sec>summary::after{
+  content:"";flex:0 0 auto;width:9px;height:9px;
+  border-right:2px solid #A6B2B8;border-bottom:2px solid #A6B2B8;
+  transform:rotate(45deg) translateY(-2px);transition:transform .18s ease;
+}
+details.sec[open]>summary::after{transform:rotate(-135deg) translateY(-2px)}
+details.sec>summary:focus-visible{outline:3px solid var(--signal);outline-offset:-3px}
+details.sec>summary:hover .sname{color:var(--signal-ink)}
+.sname{font-size:16.5px;font-weight:700;transition:color .12s ease}
+.cnt{
+  margin-left:auto;font-family:"Barlow Condensed",sans-serif;
+  font-weight:600;font-size:14px;letter-spacing:.04em;color:var(--muted);
+  background:var(--paper);border-radius:20px;padding:2px 10px;white-space:nowrap;
+}
+.cnt.done{background:var(--safe-soft);color:var(--safe)}
+.cnt.empty{background:var(--signal-soft);color:var(--signal-ink)}
+.sec-body{padding:0 18px 15px}
+details.sec.setup{border-color:#EBD9B4;background:linear-gradient(180deg,#FFFCF6 0%,#FFFFFF 60%)}
+details.sec.setup>summary::after{border-color:#C9A967}
+details.sec .note{margin-top:0}
+details.sec.rules{background:var(--alert-soft);border-color:#EDCFCB}
+details.sec.rules .tag{background:#F4D9D6;color:var(--alert)}
+details.sec.rules>summary::after{border-color:#C89A93}
+details.sec.rules>summary:hover .sname{color:var(--alert)}
+.expand{
+  display:flex;gap:8px;margin:0 0 13px;
+}
+.expand button{
+  font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;
+  padding:5px 13px;border-radius:20px;border:1px solid var(--line);
+  background:transparent;color:var(--muted);transition:all .12s ease;
+}
+.expand button:hover{border-color:var(--asphalt);color:var(--asphalt)}
+.expand button:focus-visible{outline:3px solid var(--signal);outline-offset:2px}
+
+/* ---------- guide ---------- */
+.qrow{margin-bottom:14px}
+.qlabel{display:block;font-size:14.5px;font-weight:500;margin-bottom:7px}
+.route{
+  background:var(--safe-soft);border:1px solid #C9E2DA;
+  border-radius:12px;padding:15px 17px;margin-top:16px;
+}
+.route .rname{
+  font-size:16px;font-weight:700;color:#0F5B45;margin:0 0 3px;
+}
+.route .rwhy{font-size:13.5px;color:#3E7365;margin:0 0 12px;line-height:1.6}
+.route ol{margin:0;padding-left:19px}
+.route ol li{font-size:14.5px;line-height:1.65;padding:3px 0}
+.route ol li small{display:block;font-size:12.5px;color:#4F7D70;line-height:1.55}
+.route .rtip{
+  margin:13px 0 0;padding-top:11px;border-top:1px solid #C9E2DA;
+  font-size:13.5px;color:#3E7365;line-height:1.6;
+}
+.route.wait{background:var(--signal-soft);border-color:#EEDCB8}
+.route.wait .rname{color:var(--signal-ink)}
+.route.wait .rwhy,.route.wait .rtip,.route.wait ol li small{color:#8A6A34}
+.route.wait .rtip{border-top-color:#EEDCB8}
+
+/* ---------- hotline directory ---------- */
+details.dir{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  margin-bottom:16px;box-shadow:var(--shadow);overflow:hidden;
+}
+details.dir>summary{
+  list-style:none;cursor:pointer;padding:15px 18px;
+  display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;
+}
+details.dir>summary::-webkit-details-marker{display:none}
+details.dir>summary::after{
+  content:"";margin-left:auto;width:9px;height:9px;
+  border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);
+  transform:rotate(45deg) translateY(-2px);transition:transform .18s ease;
+}
+details.dir[open]>summary::after{transform:rotate(-135deg) translateY(-2px)}
+details.dir>summary:focus-visible{outline:3px solid var(--signal);outline-offset:-3px}
+.dir-body{padding:0 18px 16px}
+.dir-note{font-size:13px;color:var(--muted);margin:0 0 12px;line-height:1.6}
+.dir-list{display:grid;grid-template-columns:1fr 1fr;gap:0 22px}
+.dir-list a{
+  display:flex;align-items:baseline;gap:8px;text-decoration:none;color:var(--asphalt);
+  padding:9px 0;border-top:1px solid var(--line);
+}
+.dir-list a:hover .num{color:var(--signal-ink)}
+.dir-list .co{font-size:14.5px;white-space:nowrap}
+.dir-list .num{
+  margin-left:auto;font-family:"Barlow Condensed",sans-serif;
+  font-weight:600;font-size:17px;letter-spacing:.02em;color:var(--muted);
+  transition:color .12s ease;
+}
+.dir-sub{
+  font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:12px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  margin:18px 0 0;padding-top:2px;
+}
+.dir-list.one{grid-template-columns:1fr}
+.dir-list a.loc{align-items:flex-start;padding:11px 0}
+.dir-list a.loc .co{white-space:normal;line-height:1.4}
+.dir-list a.loc .co small{
+  display:block;font-size:12.5px;color:var(--muted);margin-top:2px;line-height:1.45;
+}
+@media (max-width:600px){ .dir-list{grid-template-columns:1fr} }
+
+/* ---------- scripts ---------- */
+.pills{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.pill{
+  font-family:inherit;font-size:13.5px;font-weight:500;cursor:pointer;
+  padding:6px 13px;border-radius:20px;background:#fff;
+  border:1px solid var(--line);color:var(--muted);transition:all .12s ease;
+}
+.pill:hover{border-color:var(--asphalt);color:var(--asphalt)}
+.pill[aria-selected=true]{background:var(--asphalt);border-color:var(--asphalt);color:#fff}
+.pill:focus-visible{outline:3px solid var(--signal);outline-offset:2px}
+.script{
+  border-left:3px solid var(--signal);background:#FAFBFB;
+  border-radius:0 10px 10px 0;padding:14px 16px;margin-bottom:12px;
+}
+.script p{margin:0 0 12px;font-size:14.5px;line-height:1.75;white-space:pre-wrap}
+.script p:last-of-type{margin-bottom:0}
+.script .cue{
+  font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:12px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--signal-ink);
+  display:block;margin:14px 0 3px;white-space:normal;
+}
+.script .cue:first-child{margin-top:0}
+.script .cue.zh{font-family:"Noto Sans TC",sans-serif;letter-spacing:.06em;font-size:12.5px}
+.mini{
+  font-family:inherit;font-size:13.5px;font-weight:500;cursor:pointer;
+  padding:8px 15px;border-radius:9px;border:1px solid var(--line);
+  background:#fff;color:var(--asphalt);transition:all .12s ease;margin-bottom:14px;
+}
+.mini:hover{border-color:var(--asphalt)}
+.mini:focus-visible{outline:3px solid var(--signal);outline-offset:2px}
+
+/* ---------- contact card ---------- */
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fields .fw{grid-column:1 / -1}
+.fields input,.fields select{width:100%}
+.fields input[type=date]{width:100%}
+.flabel{font-size:12px;color:var(--muted);display:block;margin-bottom:3px;letter-spacing:.03em}
+.flabel i{
+  font-style:normal;font-size:10.5px;font-weight:600;letter-spacing:.06em;
+  color:var(--signal-ink);background:var(--signal-soft);
+  border-radius:3px;padding:1px 5px;margin-left:4px;
+}
+.datefield{padding-top:3px}
+.datefield input{font-weight:500}
+select.f{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,#8B979D 50%),linear-gradient(135deg,#8B979D 50%,transparent 50%);background-position:calc(100% - 16px) 17px,calc(100% - 11px) 17px;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:32px}
+.cotel{
+  display:flex;align-items:center;gap:8px;text-decoration:none;
+  background:var(--signal-soft);border:1px solid #EEDCB8;border-radius:9px;
+  padding:9px 13px;color:var(--signal-ink);font-size:13.5px;
+}
+.cotel b{margin-left:auto;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:17px;letter-spacing:.02em}
+
+/* ---------- footer bar ---------- */
+.bar{
+  position:sticky;bottom:0;margin:26px -18px -96px;padding:12px 18px calc(12px + env(safe-area-inset-bottom));
+  background:rgba(238,241,240,.94);backdrop-filter:blur(8px);
+  border-top:1px solid var(--line);display:flex;gap:10px;
+}
+.bar button{
+  flex:1;font-family:inherit;font-size:14.5px;font-weight:500;
+  padding:11px;border-radius:10px;border:1px solid var(--line);
+  background:#fff;color:var(--asphalt);cursor:pointer;transition:all .12s ease;
+}
+.bar button:hover{border-color:var(--asphalt);}
+.bar button.primary{background:var(--asphalt);color:#fff;border-color:var(--asphalt)}
+.bar button.primary:hover{background:var(--asphalt-2)}
+.bar button:focus-visible{outline:3px solid var(--signal);outline-offset:2px}
+
+.disclaimer{font-size:12px;color:var(--muted);text-align:center;margin:22px 0 0;line-height:1.6}
+
+.toast{
+  position:fixed;left:50%;bottom:84px;transform:translate(-50%,14px);
+  background:var(--asphalt);color:#fff;font-size:14px;
+  padding:10px 18px;border-radius:24px;opacity:0;pointer-events:none;
+  transition:opacity .2s ease,transform .2s ease;z-index:50;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:520px){
+  h1{font-size:22px}
+  .gauge{flex-basis:66px;width:66px}
+  .gauge svg{width:66px;height:58px}
+  .fields{grid-template-columns:1fr}
+  .sos .n{font-size:23px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none !important;animation:none !important}
+}
+@media print{
+  body{background:#fff}
+  header{background:#fff;color:#000;border-bottom:2px solid #000}
+  .sub,.eyebrow{color:#444}
+  .bar,.gauge,.toast,.expand{display:none}
+  details.sec>summary::after{display:none}
+  details.sec{break-inside:avoid;box-shadow:none}
+  .panel{break-inside:avoid;box-shadow:none}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head-grid">
+    <div style="flex:1">
+      <p class="eyebrow">Accident Claim Checklist</p>
+      <h1>車禍出險檢核表<span class="vtag cust">保戶版</span></h1>
+      <p class="sub">依序完成，逐項打勾。<br>本表可存於手機，事故當下直接開啟使用。</p>
+    </div>
+    <div class="gauge">
+      <svg viewBox="0 0 84 74" aria-hidden="true">
+        <defs>
+          <clipPath id="tri">
+            <path d="M42 6 L80 68 L4 68 Z"/>
+          </clipPath>
+        </defs>
+        <path d="M42 6 L80 68 L4 68 Z" fill="none" stroke="#4A5C68" stroke-width="4" stroke-linejoin="round"/>
+        <g clip-path="url(#tri)">
+          <rect id="fill" x="0" y="74" width="84" height="74" fill="#F5A623"/>
+        </g>
+        <path d="M42 6 L80 68 L4 68 Z" fill="none" stroke="#4A5C68" stroke-width="4" stroke-linejoin="round"/>
+      </svg>
+      <div class="gauge-num" id="pct">0%</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <nav class="sos" aria-label="緊急撥號">
+    <a href="tel:119"><div class="n">119</div><div class="l">有人受傷．先打</div></a>
+    <a href="tel:110"><div class="n">110</div><div class="l">報警．一定要報</div></a>
+    <a href="#dirBox" class="ins" id="insLink"><div class="n" id="insNum">查專線</div><div class="l">保險公司 24 小時</div></a>
+  </nav>
+
+  <details class="sec setup" id="setup" open>
+    <summary><span class="tag">Start</span><span class="sname">先填這裡</span><span class="cnt" id="fCnt"></span></summary>
+    <div class="sec-body">
+      <p class="note">填好車牌號碼與事故發生日。下面的期限會自動算出來，話術裡的車牌也會自動帶入。資料只存在這台裝置，不會上傳。</p>
+      <div class="fields">
+        <div><span class="flabel">車牌號碼 <i>必填</i></span><input class="f" id="f_car" placeholder="ABC-1234"></div>
+        <div class="fw datefield"><span class="flabel">事故發生日 <i>必填</i></span><input type="date" id="acc"></div>
+      </div>
+    </div>
+  </details>
+
+  <!-- 期限 -->
+  <details class="sec" id="dlSec">
+    <summary><span class="tag">Deadlines</span><span class="sname">關鍵期限</span><span class="cnt" id="dlCnt"></span></summary>
+    <div class="sec-body">
+      <p class="note" id="dlHint">請先在最上方「先填這裡」填入事故發生日，這裡就會自動算出每一項的到期日與剩餘天數。</p>
+      <ul class="dl" id="dl"></ul>
+    </div>
+  </details>
+
+  <details class="dir" id="dirBox">
+    <summary>不確定是哪一家？查各產險 24 小時專線</summary>
+    <div class="dir-body">
+      <p class="dir-note">點號碼即可撥出。這些專線都受理出險通知、派遣現場理賠人員與道路救援。號碼也印在強制險證上，以保單記載為準。</p>
+      <div class="dir-list" id="dirList"></div>
+      <p class="dir-sub">宜蘭．羅東在地據點</p>
+      <div class="dir-list one" id="dirList3"></div>
+      <p class="dir-sub">相關單位</p>
+      <div class="dir-list" id="dirList2"></div>
+    </div>
+  </details>
+
+  <div class="expand">
+    <button id="openAll" type="button">全部展開</button>
+    <button id="closeAll" type="button">全部收合</button>
+  </div>
+
+  <!-- 現場 -->
+  <details class="sec" data-g="g1">
+    <summary><span class="tag">Step 1</span><span class="sname">事故當下</span><span class="cnt"></span></summary>
+    <div class="sec-body">
+      <p class="note">前 30 分鐘做對，後面的理賠就順。</p>
+      <ul class="check" id="g1"></ul>
+    </div>
+  </details>
+
+  <!-- 蒐證 -->
+  <details class="sec" data-g="g2">
+    <summary><span class="tag">Step 2</span><span class="sname">拍照蒐證</span><span class="cnt"></span></summary>
+    <div class="sec-body">
+      <p class="note">警方到場前保留現場，能拍多少拍多少。照片是日後認定肇責的關鍵。</p>
+      <ul class="check" id="g2"></ul>
+    </div>
+  </details>
+
+  <!-- 三不 -->
+  <details class="sec rules">
+    <summary><span class="tag">Warning</span><span class="sname">三不原則</span></summary>
+    <div class="sec-body">
+      <p class="note" style="color:#8A6560">最容易出事、也最常被忽略的三件事。</p>
+      <div class="rule"><div class="no">01</div><p><b>不承認過失</b><small>關心對方可以，但別說「都是我的錯」。肇責由初判表與鑑定認定，現場說的話會成為證據。</small></p></div>
+      <div class="rule"><div class="no">02</div><p><b>不私下和解、不先給錢</b><small>未經保險公司同意即議定金額，保險公司得不受拘束，可能影響理賠。</small></p></div>
+      <div class="rule"><div class="no">03</div><p><b>勘估前不動工</b><small>有投保車體險可直接進廠，由修車廠通報保險公司到廠勘車（原廠服務廠多半能代辦）；但無論如何，都要等勘估完成才開始修復。先修好再報，損害無法還原，估價容易產生爭議。</small></p></div>
+    </div>
+  </details>
+
+  <!-- 引導 -->
+  <details class="sec">
+    <summary><span class="tag">Guide</span><span class="sname">我該怎麼辦出險？</span></summary>
+    <div class="sec-body">
+      <p class="note">回答兩個問題，直接告訴您走哪一條最省事。</p>
+      <div class="qrow">
+        <span class="qlabel">1. 您有投保車體險嗎？</span>
+        <div class="pills" id="q1"></div>
+      </div>
+      <div class="qrow">
+        <span class="qlabel">2. 這幾天能自己跑一趟保險公司窗口嗎？</span>
+        <div class="pills" id="q2"></div>
+      </div>
+      <div id="route"></div>
+    </div>
+  </details>
+
+  <!-- 出險文件 -->
+  <details class="sec" data-g="g3">
+    <summary><span class="tag">Step 3</span><span class="sname">出險應備文件</span><span class="cnt"></span></summary>
+    <div class="sec-body">
+      <p class="note">事故後 5 日內提出申請。車主與駕駛人若為同一人，證件備一份即可。</p>
+      <ul class="check" id="g3"></ul>
+    </div>
+  </details>
+
+  <!-- 後續 -->
+  <details class="sec" data-g="g4">
+    <summary><span class="tag">Step 4</span><span class="sname">後續作業</span><span class="cnt"></span></summary>
+    <div class="sec-body">
+      <p class="note">送件之後，由保險公司出面處理，您只需配合提供資料。</p>
+      <ul class="check" id="g4"></ul>
+    </div>
+  </details>
+
+  <!-- 話術 -->
+  <details class="sec">
+    <summary><span class="tag">Scripts</span><span class="sname">聯繫話術</span><span class="cnt">5 則</span></summary>
+    <div class="sec-body">
+      <p class="note">前三則傳給對方，後兩則是自己看的。照著念、照著傳就好。</p>
+      <div class="pills" id="pills" role="tablist"></div>
+      <div class="script" id="script"></div>
+      <button class="mini" id="copyScript">複製這段</button>
+    </div>
+  </details>
+
+  <p class="disclaimer">本表僅供一般流程參考，個案理賠仍依保單條款及保險公司核定為準。</p>
+
+  <div class="bar">
+    <button id="copy" class="primary">複製摘要</button>
+    <button id="print">列印</button>
+    <button id="reset">清除</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const DATA = {
+  g1:[
+    ["開啟雙黃燈，確認自己與同車人員狀況",""],
+    ["在車身後方 30～100 公尺放置三角警告標誌","依車速與路況調整距離，避免後車追撞"],
+    ["有人受傷先打 119，再打 110","即使只是輕微擦撞，也一定要報警留紀錄"],
+    ["撥打保險公司 24 小時專線報備","假日或夜間先報備留紀錄，正式出險手續於上班日辦理"],
+    ["確認對方是否無照或飲酒","主動請警方當場檢測並記錄"],
+    ["配合警方製作筆錄","雙方口供是日後判決依據"],
+    ["取得報案三聯單","作完筆錄後拍照留存，出險時要用"]
+  ],
+  g2:[
+    ["車輛前後左右四個角度（含車牌）",""],
+    ["撞擊點特寫",""],
+    ["地面煞車痕",""],
+    ["擋泥板、底盤等隱蔽損傷","容易漏拍，但常是爭議來源"],
+    ["現場全景：號誌、標線、路況",""],
+    ["對方車牌、駕照與行照",""]
+  ],
+  g3:[
+    ["駕駛人身分證、駕照",""],
+    ["車主身分證、駕照、行照",""],
+    ["報案三聯單（事故聯單）",""],
+    ["印章",""],
+    ["存摺封面影本","理賠匯款用"],
+    ["診斷證明書","如有人員受傷"],
+    ["醫療費用收據正本","如有人員受傷"],
+    ["薪資或請假證明","如需申請工作損失"]
+  ],
+  g4:[
+    ["確認自己有無投保車體險","有的話，自己的車損才有理賠；沒有則自負"],
+    ["有車體險：可直接將車開往修理廠","建議選原廠服務廠，由廠方通報保險公司到廠勘估，不必自己跑窗口"],
+    ["詢問修車廠是否協辦出險","原廠服務廠（TOYOTA、HONDA 等）多半可代辦；一般修車廠不一定，進廠前先問"],
+    ["勘估完成前不要動工維修","可先進廠，但要等理賠人員勘車或視訊勘估後才開始修復"],
+    ["事故後 7 日：向轄區警局申請現場圖與照片",""],
+    ["事故後 30 日：申請初步分析研判表",""],
+    ["理賠人員與雙方聯繫、核定金額",""],
+    ["協商不成：向鄉鎮市公所調解委員會申請調解","免費，多數案件在此階段解決"],
+    ["調解不成立：評估是否進入民事訴訟",""]
+  ]
+};
+
+const DEADLINES = [
+  [5,"日","向保險公司提出出險申請","逾期可能影響權益"],
+  [7,"日","可申請現場圖與現場照片",""],
+  [30,"日","可申請初步分析研判表（初判表）",""],
+  [180,"日","過失傷害告訴期間","告訴乃論，自知悉時起算 6 個月"],
+  [730,"日","損害賠償請求權時效","自知有損害及賠償義務人時起算 2 年"]
+];
+
+function counts(){
+  document.querySelectorAll("details.sec[data-g]").forEach(d=>{
+    const boxes=d.querySelectorAll('input[type=checkbox]');
+    const done=[...boxes].filter(c=>c.checked).length;
+    const el=d.querySelector(".cnt");
+    if(!el||!boxes.length) return;
+    el.textContent=done+" / "+boxes.length;
+    el.className="cnt"+(done===boxes.length?" done":(done===0?" empty":""));
+  });
+  const dc=document.getElementById("dlCnt");
+  if(dc){
+    dc.textContent = state.acc ? "已設定" : "待填日期";
+    dc.className = "cnt"+(state.acc?" done":" empty");
+  }
+  const fc=document.getElementById("fCnt");
+  if(fc){
+    const need=["f_car","acc"];
+    const filled=need.filter(id=>{
+      const el=document.getElementById(id);
+      return el && el.value.trim();
+    }).length;
+    fc.textContent = filled===need.length ? "已完成" : filled+" / "+need.length;
+    fc.className="cnt"+(filled===need.length?" done":(filled===0?" empty":""));
+  }
+}
+
+function secKey(d){ return d.dataset.g || d.querySelector(".sname").textContent; }
+
+function bindSections(){
+  document.querySelectorAll("details.sec, details.dir").forEach((d,i)=>{
+    const k = d.classList.contains("dir") ? "dir" : secKey(d);
+    d.addEventListener("toggle",()=>{
+      state.open=state.open||{};
+      state.open[k]=d.open;
+      save();
+    });
+  });
+  const il=document.getElementById("insLink");
+  if(il) il.addEventListener("click",e=>{
+    e.preventDefault();
+    const d=document.getElementById("dirBox");
+    d.open=true;
+    d.scrollIntoView({behavior:"smooth",block:"start"});
+  });
+  document.getElementById("openAll").addEventListener("click",()=>{
+    document.querySelectorAll("details.sec").forEach(d=>d.open=true);
+  });
+  document.getElementById("closeAll").addEventListener("click",()=>{
+    document.querySelectorAll("details.sec, details.dir").forEach(d=>{
+      if(d.id!=="setup") d.open=false;
+    });
+  });
+}
+
+function restoreOpen(){
+  const o=state.open||{};
+  document.querySelectorAll("details.sec, details.dir").forEach(d=>{
+    const k = d.classList.contains("dir") ? "dir" : secKey(d);
+    if(o[k]!==undefined) d.open=o[k];
+    else if(o[k]) d.open=true;
+  });
+  // 資料未填齊時，填寫區維持展開
+  const need=["f_car","acc"];
+  const miss=need.some(id=>{const el=document.getElementById(id);return !el||!el.value.trim();});
+  if(miss) document.getElementById("setup").open=true;
+}
+
+const Q1=["有","沒有","不確定"];
+const Q2=["可以","不太行"];
+
+const ROUTES={
+  shop:{
+    name:"路線 A｜在修車廠一次辦完",
+    why:"您有車體險，這是最省事的走法，連窗口都不必跑。",
+    steps:[
+      ["把車開到修理廠（無法行駛就叫拖吊）","道路救援請撥保險公司 24 小時專線"],
+      ["優先選原廠服務廠","TOYOTA、HONDA、NISSAN 等品牌服務廠多半設有專人協辦出險"],
+      ["進廠時先問一句：「你們有協辦出險嗎？」","一般個體修車廠不一定有，先問再決定進哪一家"],
+      ["請廠方通報保險公司到廠勘車","部分公司採視訊勘估，十分鐘內就能完成"],
+      ["等勘估完成，確認估價後才動工",""],
+      ["保留事故聯單與估價單影像","後續核賠、對帳都用得到"]
+    ],
+    tip:"若這家不協辦，換一家原廠服務廠，或改走路線 B、C，一樣來得及。"
+  },
+  counter:{
+    name:"路線 B｜自己到窗口辦理",
+    why:"當場就能確認資料齊不齊全，有問題馬上補，速度最快。",
+    steps:[
+      ["備妥證件與文件（見下方清單）",""],
+      ["到保險公司服務據點，說明要辦理車禍出險",""],
+      ["現場填寫出險申請書",""],
+      ["留下聯絡方式，等理賠人員通知勘車",""],
+      ["留存收件回執","方便日後查詢案件進度"]
+    ],
+    tip:"窗口多為週一至週五上班時間，出發前先打電話確認。"
+  },
+  agent:{
+    name:"路線 C｜委託代送",
+    why:"實在挪不出時間時走這條，由服務人員代為送件，您不用跑這一趟。",
+    steps:[
+      ["把證件影本與印章交給代辦人員",""],
+      ["請對方回覆一則收件訊息","等於書面簽收，雙方都有紀錄"],
+      ["由代辦人員於上班日送件至窗口",""],
+      ["等理賠人員通知勘車與核定",""],
+      ["印章送件後記得取回",""]
+    ],
+    tip:"證件給影本就好，正本自己留著；印章交出前先拍照留紀錄。"
+  },
+  wait:{
+    name:"先確認保單內容",
+    why:"有沒有車體險，會決定您的車損能不能理賠，也影響走哪條路。",
+    steps:[
+      ["撥 24 小時客服專線查詢承保項目","報上車牌即可查詢"],
+      ["確認後回到上面第 1 題重新選擇",""]
+    ],
+    tip:"沒有車體險也不影響出險——強制險與責任險的部分照樣申請。"
+  }
+};
+
+function buildGuide(){
+  const mk=(arr,el,key)=>{
+    const box=document.getElementById(el);
+    arr.forEach(v=>{
+      const b=document.createElement("button");
+      b.className="pill";b.type="button";b.textContent=v;
+      b.setAttribute("aria-selected","false");
+      b.addEventListener("click",()=>{
+        state.guide=state.guide||{};
+        state.guide[key] = (state.guide[key]===v ? null : v);
+        save();drawGuide();
+      });
+      box.appendChild(b);
+    });
+  };
+  mk(Q1,"q1","cover");
+  mk(Q2,"q2","visit");
+}
+
+function drawGuide(){
+  const g=state.guide||{};
+  document.querySelectorAll("#q1 .pill").forEach(b=>
+    b.setAttribute("aria-selected", b.textContent===g.cover?"true":"false"));
+  document.querySelectorAll("#q2 .pill").forEach(b=>
+    b.setAttribute("aria-selected", b.textContent===g.visit?"true":"false"));
+
+  const box=document.getElementById("route");
+  if(!g.cover){ box.innerHTML=""; return; }
+
+  let r, wait=false;
+  if(g.cover==="不確定"){ r=ROUTES.wait; wait=true; }
+  else if(g.cover==="有"){ r=ROUTES.shop; }
+  else if(!g.visit){ box.innerHTML=""; return; }
+  else { r = g.visit==="可以" ? ROUTES.counter : ROUTES.agent; }
+
+  box.innerHTML='<div class="route'+(wait?" wait":"")+'">'+
+    '<p class="rname">'+r.name+'</p>'+
+    '<p class="rwhy">'+r.why+'</p>'+
+    '<ol>'+r.steps.map(s=>'<li>'+s[0]+(s[1]?'<small>'+s[1]+'</small>':'')+'</li>').join("")+'</ol>'+
+    '<p class="rtip">'+r.tip+'</p></div>';
+}
+
+const LOCAL=[
+["富邦產險．蘭陽分公司","(03)905-5066","羅東鎮公正路197號3樓"],
+["富邦產險．宜蘭通訊處","(03)936-2121","宜蘭市中山路二段101號3樓"],
+["臺灣產物．宜蘭分公司","(03)954-9743","羅東鎮公正路52號"],
+["新安東京．羅東服務中心","(03)961-5888","羅東鎮純精路二段107號1樓"],
+["中國信託產險．宜蘭服務中心","(03)956-9511","五結鄉中正路一段81號"],
+["泰安產物．宜蘭","(03)965-2328","五結鄉中正路二段8號2樓"]
+];
+
+const HOTLINES=[
+["臺灣產物","0809-068-888"],["兆豐產物","0800-053-588"],
+["富邦產物","0800-009-888"],["和泰產物","0800-077-568"],
+["泰安產物","0800-012-080"],["明台產物","0800-078-888"],
+["南山產物","0800-020-060"],["第一產物","0800-288-068"],
+["旺旺友聯","0800-024-024"],["新光產物","0800-789-999"],
+["華南產物","0800-010-850"],["國泰世紀","0800-212-880"],
+["新安東京","0800-050-119"],["中國信託產物","0800-075-777"],
+["安達產物","0800-608-989"]
+];
+const HOTLINES2=[
+["產險公會","0800-221-783"],
+["汽車交通事故特別補償基金","0800-565-678"]
+];
+
+function buildDir(){
+  const mk=(arr,el)=>{
+    const box=document.getElementById(el);
+    arr.forEach(h=>{
+      const a=document.createElement("a");
+      a.href="tel:"+h[1].replace(/-/g,"");
+      a.innerHTML='<span class="co">'+h[0]+'</span><span class="num">'+h[1]+'</span>';
+      box.appendChild(a);
+    });
+  };
+  mk(HOTLINES,"dirList");
+  mk(HOTLINES2,"dirList2");
+  const box=document.getElementById("dirList3");
+  LOCAL.forEach(h=>{
+    const a=document.createElement("a");
+    a.className="loc";
+    a.href="tel:"+h[1].replace(/[^0-9]/g,"");
+    a.innerHTML='<span class="co">'+h[0]+'<small>'+h[2]+'</small></span>'+
+                '<span class="num">'+h[1]+'</span>';
+    box.appendChild(a);
+  });
+}
+
+const SCRIPTS=([
+{n:"簡訊．完整",t:"sms",b:
+"您好，我是本次事故的另一方，敝姓＿（車牌 {車牌}）。\n\n"+
+"這次的意外是雙方都不願樂見的，對於造成您的困擾與不便，我深感遺憾，也先關心一下您的身體狀況，不知道還好嗎？\n\n"+
+"我將進行報案，請保險公司辦理出險。後續的聯繫、勘估與賠償事宜，我已全權委託保險公司出面處理，理賠人員會主動與您聯繫，我這邊也會全力配合。\n\n"+
+"【重要提醒】如果您的車子需要維修，麻煩先不要進廠，請等保險公司通知、完成車損勘估後再進行。若未經勘估就先修復，可能影響損失認定與您的理賠權益，可先拍照保留受損部位。\n\n"+
+"若有醫療需求，也請保留診斷證明與收據。\n\n"+
+"這幾天報備出險之後，您也可以直接與保險公司客服聯繫，報上車牌 {車牌} 即可查詢案件進度。\n\n"+
+"如有需要，歡迎再來電與我聯繫，謝謝您。"},
+
+{n:"簡訊．精簡",t:"sms",b:
+"您好，我是本次事故的對方車主，敝姓＿（{車牌}）。\n\n"+
+"意外發生非我們所願，造成您的不便深感遺憾，也希望您一切平安。\n\n"+
+"我已投保並完成報案，一切已委託保險公司出面處理，理賠人員會與您聯繫。\n\n"+
+"車子如需維修，請先等保險公司通知勘車後再進廠，以免影響理賠。\n\n"+
+"報上車牌 {車牌}，也可直接向保險公司查詢進度。如有需要再來電，謝謝。"},
+
+{n:"簡訊．對方催討時",t:"sms",b:
+"您好，關於賠償的部分，因為我已經投保並完成報案，依保險契約規定必須由保險公司核定，我個人不便先行議定金額，也請您見諒。\n\n"+
+"理賠人員會主動與您聯繫，該賠的部分保險公司都會依規定處理。\n\n"+
+"若您希望加快進度，可先備妥診斷證明、醫療收據、估價單等資料，並與保險公司理賠部門聯繫（報上車牌 {車牌}）。\n\n"+
+"謝謝您的理解。"},
+
+{n:"電話．講法",t:"call",b:
+"@開場|您好，請問是○先生／小姐嗎？我是本次事故的另一方，敝姓＿。\n"+
+"@表達關心|這次的意外是大家都不願樂見的，造成您的困擾我深感遺憾。先跟您關心一下，身體狀況還好嗎？有沒有去看醫生？\n"+
+"@主軸（重複這段就好）|這部分我有投保，也已經跟保險公司報案了。後續理賠會由保險公司的理賠人員直接跟您聯繫、依程序處理，我這邊一定全力配合。\n"+
+"@提到修車|另外提醒您一下，車子如果要修，麻煩先不要進廠，等保險公司通知、勘完車再修。沒勘估過的損失後面認定會有困難，這對您的理賠比較有保障。\n"+
+"@對方問「你要賠多少」|金額的部分要由保險公司核定，我這邊不方便先講數字，不然反而會影響到您的權益跟後續核賠。理賠人員會跟您聯絡。\n"+
+"@收尾|報車牌 {車牌} 就能向保險公司查到案件進度。如果有需要再打給我，謝謝您。"},
+
+{n:"通知保戶．回傳事故單",t:"sms",b:
+"＿先生／小姐您好，剛才辛苦了。\n\n"+
+"作完筆錄之後，麻煩您把警方給的事故聯單（三聯單）拍照傳給我，我先幫您確認資料是否齊全，也能提早跟保險公司報備案件。\n\n"+
+"如果現場還有拍到照片，一併傳給我更好：車輛四個角度、撞擊點、煞車痕、現場全景。\n\n"+
+"另外提醒兩件事：\n"+
+"1. 車子如需維修，請先不要進廠，等保險公司通知勘車後再修。\n"+
+"2. 初判表出來前，請勿自行與對方和解或給付金額。\n\n"+
+"收到資料我會馬上跟您聯繫後續流程，謝謝您。"},
+
+{n:"通知保戶．已先報備",t:"sms",b:
+"＿先生／小姐您好：\n\n"+
+"您的案件我已經先向保險公司的 24 小時專線完成報備，案件已經留下紀錄，時效上不會受到影響，請您放心。\n\n"+
+"因為窗口目前休息，正式的出險手續會在上班日辦理，屆時我會協助您完成。\n\n"+
+"在這之前，麻煩您先做兩件事：\n"+
+"1. 把事故聯單（三聯單）拍照傳給我\n"+
+"2. 備妥身分證、駕照、行照、印章、存摺封面影本；如有就醫，再附診斷證明與醫療收據正本\n\n"+
+"另外提醒：您有投保車體險，車子可以直接開到修理廠，請廠方通報保險公司到廠勘車。原廠服務廠多半能一併協辦出險手續，會省事很多；但無論如何，都要等勘估完成後才能動工維修。初判表出來前也請勿自行與對方和解或給付金額。\n\n"+
+"上班日一早我就幫您送件，有任何問題隨時來電，謝謝您。"},
+
+{n:"通知保戶．假日休息",t:"sms",b:
+"＿先生／小姐您好：\n\n"+
+"這次的意外是我們都不願樂見的，深感遺憾，也先關心您的身體狀況。\n\n"+
+"因為今天是假日，保險公司窗口休息，我已先向 24 小時專線完成報備，案件已留下紀錄，時效不受影響。正式的出險手續會在上班日辦理，屆時我會協助您完成。\n\n"+
+"另外，作完筆錄後麻煩把事故聯單（三聯單）拍照傳給我，我先幫您確認資料齊不齊全。\n\n"+
+"【兩種辦理方式，您選一種即可】\n\n"+
+"方式一：您親自臨櫃（建議）\n"+
+"帶雙證件與相關資料，直接到窗口現場填寫辦理，當場就能確認資料齊不齊全，速度最快。\n\n"+
+"方式二：委託我代為送件\n"+
+"如果您實在挪不出時間，把證件與印章交給我，我上班日直接幫您送到窗口，您不用跑這一趟。\n\n"+
+"方式三：在修車廠辦理（限有投保車體險）\n"+
+"如果您有車體險，可以直接把車開到修理廠，請廠方通報保險公司到廠勘車。建議選原廠服務廠（TOYOTA、HONDA 等），多半設有專人協辦出險，等於連窗口都不用跑。一般修車廠不一定有，進廠前先問一句：「你們有協辦出險嗎？」\n\n"+
+"服務窗口的地址與電話我會另外提供給您。\n\n"+
+"【需要準備的資料】\n"+
+"‧ 駕駛人：身分證、駕照\n"+
+"‧ 車主：身分證、駕照、行照\n"+
+"‧ 報案三聯單（事故聯單）\n"+
+"‧ 印章\n"+
+"‧ 存摺封面影本（匯款用）\n"+
+"‧ 如有就醫：診斷證明、醫療收據正本\n"+
+"（車主與駕駛人同一人，證件備一份即可）\n\n"+
+"【兩件重要提醒】\n"+
+"1. 車子如需維修，請先不要進廠，等保險公司通知、完成勘車後再修。\n"+
+"2. 初判表出來前，請勿自行與對方和解或給付金額。\n\n"+
+"後續聯繫與賠償事宜會由保險公司出面處理，請您放心。有任何問題隨時來電，謝謝您。"},
+
+{n:"通知保戶．等待回覆中",t:"sms",b:
+"＿先生／小姐您好：\n\n"+
+"您的案件我已經送出，目前正在等窗口回覆，一有消息我會立刻通知您。\n\n"+
+"在等待的期間，先把後續流程提供給您，收到回覆後我就協助您辦理出險。\n\n"+
+"如果事故聯單（三聯單）還沒提供，麻煩補拍一張，我先幫您確認資料齊不齊全。\n\n"+
+"【兩種辦理方式，您選一種即可】\n\n"+
+"方式一：您親自臨櫃（建議）\n"+
+"帶雙證件與相關資料到窗口現場填寫，當場確認資料齊全，速度最快。\n\n"+
+"方式二：委託我代為送件\n"+
+"把證件與印章交給我，我幫您送到窗口辦理。\n\n"+
+"服務窗口的地址與電話我會另外提供給您。\n\n"+
+"【先準備好的資料】\n"+
+"‧ 駕駛人：身分證、駕照\n"+
+"‧ 車主：身分證、駕照、行照\n"+
+"‧ 報案三聯單、印章、存摺封面影本\n"+
+"‧ 如有就醫：診斷證明、醫療收據正本\n\n"+
+"提醒您：車子請等保險公司勘車後再修，初判表出來前也先不要自行和解。\n\n"+
+"如有需要，隨時來電，謝謝您。"},
+
+{n:"避免說的話",t:"avoid",b:
+"@不要說|都是我的錯／我沒注意到你\n"+
+"@改成說|讓您受驚了，很不好意思\n"+
+"@不要說|你修多少我賠你／我先給你一點錢\n"+
+"@改成說|金額由保險公司核定，理賠人員會跟您聯繫\n"+
+"@不要說|我們私下處理就好，不要報警\n"+
+"@改成說|還是報個案比較好，對雙方都有保障\n"+
+"@不要提供|身分證字號、住家地址\n"+
+"@提供這些就夠|車牌號碼、姓氏、保險公司名稱"}
+]).filter(x=>!x.n.startsWith("通知保戶"));
+let curScript=0;
+
+function fillVars(s){
+  const car=(state.fields.f_car||"").trim()||"＿＿＿＿";
+  return s.replace(/\{車牌\}/g,car);
+}
+
+function buildPills(){
+  const p=document.getElementById("pills");
+  SCRIPTS.forEach((s,i)=>{
+    const b=document.createElement("button");
+    b.className="pill";b.type="button";b.textContent=s.n;
+    b.setAttribute("role","tab");
+    b.setAttribute("aria-selected", i===0?"true":"false");
+    b.addEventListener("click",()=>{curScript=i;drawScript();});
+    p.appendChild(b);
+  });
+}
+
+function drawScript(){
+  document.querySelectorAll("#pills .pill").forEach((b,i)=>
+    b.setAttribute("aria-selected", i===curScript?"true":"false"));
+  const s=SCRIPTS[curScript];
+  const box=document.getElementById("script");
+  const body=fillVars(s.b);
+  if(s.t==="sms"){
+    box.innerHTML="<p>"+body.replace(/&/g,"&amp;").replace(/</g,"&lt;")+"</p>";
+  }else{
+    box.innerHTML=body.split("\n").map(line=>{
+      const m=line.match(/^@([^|]+)\|([\s\S]*)$/);
+      if(!m) return "";
+      return '<span class="cue zh">'+m[1]+'</span><p>'+m[2].replace(/</g,"&lt;")+'</p>';
+    }).join("");
+  }
+  document.getElementById("copyScript").textContent =
+    s.t==="sms" ? "複製這則簡訊" : "複製這段";
+}
+
+document.getElementById("copyScript").addEventListener("click",()=>{
+  const s=SCRIPTS[curScript];
+  let out=fillVars(s.b);
+  if(s.t!=="sms") out=out.split("\n").map(l=>{
+    const m=l.match(/^@([^|]+)\|([\s\S]*)$/);
+    return m? "【"+m[1]+"】\n"+m[2] : l;
+  }).join("\n\n");
+  navigator.clipboard.writeText(out.trim())
+    .then(()=>toast("已複製"))
+    .catch(()=>toast("複製失敗，請手動選取"));
+});
+
+const KEY="crash-sop:v1";
+let state={checked:{},fields:{},acc:"",guide:{},open:{}};
+let canPersist=false;
+
+const tick='<svg viewBox="0 0 14 14" fill="none"><path d="M2 7.4l3.3 3.3L12 3.6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function build(){
+  for(const g in DATA){
+    const ul=document.getElementById(g);
+    DATA[g].forEach((row,i)=>{
+      const id=g+"-"+i;
+      const li=document.createElement("li");
+      li.innerHTML='<label class="item"><input type="checkbox" data-id="'+id+'">'+
+        '<span class="box">'+tick+'</span>'+
+        '<span class="txt">'+row[0]+(row[1]?'<small>'+row[1]+'</small>':'')+'</span></label>';
+      ul.appendChild(li);
+    });
+  }
+  document.querySelectorAll('input[type=checkbox]').forEach(c=>{
+    c.addEventListener("change",()=>{state.checked[c.dataset.id]=c.checked;save();gauge();counts();});
+  });
+  document.querySelectorAll('.fields input.f').forEach(f=>{
+    f.addEventListener("input",()=>{state.fields[f.id]=f.value;save();applyFields();counts();});
+  });
+  document.getElementById("acc").addEventListener("change",e=>{state.acc=e.target.value;save();deadlines();counts();
+    if(state.acc){const d=document.getElementById("dlSec"); if(d) d.open=true;}});
+}
+
+function gauge(){
+  const all=document.querySelectorAll('input[type=checkbox]');
+  const done=[...all].filter(c=>c.checked).length;
+  const p=all.length?Math.round(done/all.length*100):0;
+  document.getElementById("pct").textContent=p+"%";
+  document.getElementById("fill").setAttribute("y", 74-(74*p/100));
+}
+
+function deadlines(){
+  const ul=document.getElementById("dl");
+  ul.innerHTML="";
+  const base=state.acc?new Date(state.acc+"T00:00:00"):null;
+  const hint=document.getElementById("dlHint");
+  if(hint) hint.style.display = base ? "none" : "block";
+  const today=new Date();today.setHours(0,0,0,0);
+  DEADLINES.forEach(d=>{
+    const li=document.createElement("li");
+    let when='<b>—</b>';
+    if(base){
+      const t=new Date(base);t.setDate(t.getDate()+d[0]);
+      const diff=Math.round((t-today)/86400000);
+      const ds=(t.getMonth()+1)+"/"+t.getDate()+"/"+t.getFullYear();
+      let lbl = diff<0 ? "已過期" : (diff===0 ? "就是今天" : "剩 "+diff+" 天");
+      when=ds+'<b>'+lbl+'</b>';
+      if(diff<0) li.className="past";
+      else if(diff<=3) li.className="soon";
+    }
+    const unit=d[0]>=730?["2","YEARS"]:d[0]>=180?["6","MONTHS"]:[String(d[0]),"DAYS"];
+    li.innerHTML='<div class="day">'+unit[0]+'<span>'+unit[1]+'</span></div>'+
+      '<div class="what">'+d[2]+(d[3]?'<small>'+d[3]+'</small>':'')+'</div>'+
+      '<div class="when">'+when+'</div>';
+    ul.appendChild(li);
+  });
+}
+
+function applyFields(){
+  drawScript();
+}
+
+function render(){
+  document.querySelectorAll('input[type=checkbox]').forEach(c=>{
+    c.checked=!!state.checked[c.dataset.id];
+  });
+  document.querySelectorAll('.fields input.f').forEach(f=>{
+    if(state.fields[f.id]!==undefined) f.value=state.fields[f.id];
+  });
+  document.getElementById("acc").value=state.acc||"";
+  gauge();deadlines();applyFields();drawGuide();counts();restoreOpen();
+}
+
+async function save(){
+  if(!canPersist) return;
+  try{ await window.storage.set(KEY, JSON.stringify(state)); }catch(e){}
+}
+async function load(){
+  try{
+    if(!window.storage) return;
+    const r=await window.storage.get(KEY);
+    if(r&&r.value){state=JSON.parse(r.value);}
+    canPersist=true;
+  }catch(e){ canPersist=!!window.storage; }
+}
+
+function toast(m){
+  const t=document.getElementById("toast");
+  t.textContent=m;t.classList.add("show");
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),1900);
+}
+
+function buildSummary(){
+  const titles={g1:"事故當下",g2:"拍照蒐證",g3:"出險應備文件",g4:"後續作業"};
+  let out="【車禍出險進度】\n";
+  if(state.acc){
+    const b=new Date(state.acc+"T00:00:00"), t=new Date(); t.setHours(0,0,0,0);
+    const n=Math.round((t-b)/86400000);
+    out+="事故日："+state.acc+"（第 "+(n+1)+" 天）\n";
+  }
+  if(state.fields.f_car) out+="車牌："+state.fields.f_car+"\n";
+
+  const all=document.querySelectorAll('input[type=checkbox]');
+  const done=[...all].filter(c=>c.checked).length;
+  out+="整體進度："+Math.round(done/all.length*100)+"%\n\n";
+
+  for(const g in DATA){
+    const n=DATA[g].filter((r,i)=>state.checked[g+"-"+i]).length;
+    out+="▸ "+titles[g]+"　"+n+"/"+DATA[g].length+"\n";
+  }
+
+  const todo=[];
+  for(const g in DATA) DATA[g].forEach((r,i)=>{
+    if(!state.checked[g+"-"+i]) todo.push(r[0]);
+  });
+  if(todo.length){
+    out+="\n還沒完成：\n";
+    todo.slice(0,8).forEach(t=>out+="・"+t+"\n");
+    if(todo.length>8) out+="・…等共 "+todo.length+" 項\n";
+  }else{
+    out+="\n全部項目已完成。\n";
+  }
+
+  const g=state.guide||{};
+  if(g.cover){
+    let r;
+    if(g.cover==="不確定") r=ROUTES.wait;
+    else if(g.cover==="有") r=ROUTES.shop;
+    else if(g.visit) r = g.visit==="可以"?ROUTES.counter:ROUTES.agent;
+    if(r) out+="\n辦理方式："+r.name+"\n";
+  }
+
+  if(state.acc){
+    const b=new Date(state.acc+"T00:00:00"), t=new Date(); t.setHours(0,0,0,0);
+    const near=DEADLINES.map(d=>{
+      const x=new Date(b); x.setDate(x.getDate()+d[0]);
+      return [d[2], Math.round((x-t)/86400000)];
+    }).filter(x=>x[1]>=0&&x[1]<=30);
+    if(near.length){
+      out+="\n期限提醒：\n";
+      near.forEach(x=>out+="・"+x[0]+"　剩 "+x[1]+" 天\n");
+    }
+  }
+  return out.trim();
+}
+
+document.getElementById("copy").addEventListener("click",async()=>{
+  try{
+    await navigator.clipboard.writeText(buildSummary());
+    toast("摘要已複製，可貼到 LINE 傳送");
+  }catch(e){
+    toast("複製失敗，請手動選取");
+  }
+});
+
+document.getElementById("print").addEventListener("click",()=>{
+  document.querySelectorAll("details.sec, details.dir").forEach(d=>d.open=true);
+  setTimeout(()=>window.print(),120);
+});
+
+document.getElementById("reset").addEventListener("click",()=>{
+  if(!confirm("將清除所有勾選與填寫的資料，確定嗎？")) return;
+  state={checked:{},fields:{},acc:"",guide:{},open:{}};
+  document.querySelectorAll("details.sec, details.dir").forEach(d=>d.open=false);
+  document.querySelectorAll('.fields input').forEach(f=>f.value="");
+  save();render();toast("已清除");
+});
+
+(async()=>{ build(); buildPills(); buildGuide(); buildDir(); bindSections(); await load(); render(); })();
+</script>
+</body>
+</html>
