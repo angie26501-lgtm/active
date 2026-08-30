@@ -105,6 +105,14 @@ h2{font-size:17.5px;font-weight:700;margin:0}
 
 /* ---------- checklist ---------- */
 ul.check{list-style:none;margin:0;padding:0}
+ul.check li.grouphead{
+  display:flex;align-items:baseline;gap:9px;padding:13px 2px 6px;border-top:1px solid var(--line);
+}
+ul.check li.grouphead:first-child{border-top:0;padding-top:2px}
+.gh{
+  font-size:13px;font-weight:700;letter-spacing:.04em;color:var(--asphalt);
+}
+.ghs{font-size:12px;color:var(--muted)}
 ul.check li{border-top:1px solid var(--line)}
 ul.check li:first-child{border-top:0}
 label.item{
@@ -136,6 +144,12 @@ input[type=date],input.f,select.f{
   border:1px solid var(--line);border-radius:9px;padding:8px 11px;background:#fff;
 }
 input[type=date]:focus,input.f:focus,select.f:focus{outline:2px solid var(--signal);outline-offset:1px;border-color:var(--signal)}
+.dnote{
+  margin:14px 0 0;padding:12px 14px;background:var(--signal-soft);
+  border:1px solid #EEDCB8;border-radius:10px;
+  font-size:13.5px;line-height:1.7;color:var(--signal-ink);
+}
+.dnote b{font-weight:700}
 .dl{list-style:none;margin:0;padding:0}
 .dl li{
   display:flex;align-items:center;gap:12px;
@@ -233,6 +247,37 @@ details.sec.rules>summary:hover .sname{color:var(--alert)}
 .route .rtip{
   margin:13px 0 0;padding-top:11px;border-top:1px solid #C9E2DA;
   font-size:13.5px;color:#3E7365;line-height:1.6;
+}
+details.sec.value{border-color:#C9E2DA;background:linear-gradient(180deg,#F5FBF9 0%,#FFFFFF 55%)}
+details.sec.value .tag{background:var(--safe-soft);color:var(--safe)}
+details.sec.value>summary::after{border-color:#8FBCAE}
+details.sec.value>summary:hover .sname{color:#0F5B45}
+.vrow{display:flex;gap:12px;padding:11px 0;border-top:1px solid #DCEAE5}
+.vrow:first-of-type{border-top:0}
+.vno{
+  font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:18px;
+  color:var(--safe);flex:0 0 auto;line-height:1.55;
+}
+.vrow p{margin:0;font-size:14.5px}
+.vrow p b{display:block;font-weight:700;margin-bottom:1px}
+.vrow p small{display:block;color:#4F7D70;font-size:13px;line-height:1.6}
+.vtip{
+  margin:14px 0 0;padding:12px 14px;background:var(--safe-soft);
+  border-radius:10px;font-size:13.5px;line-height:1.7;color:#0F5B45;
+}
+.alt{
+  margin-top:11px;padding:12px 15px;background:var(--paper);
+  border:1px solid var(--line);border-radius:11px;
+}
+.altt{
+  margin:0 0 7px;font-size:12px;font-weight:600;letter-spacing:.05em;color:var(--muted);
+}
+.altrow{font-size:13.5px;line-height:1.6;padding:3px 0;color:var(--asphalt)}
+.altrow b{
+  display:inline-block;font-family:"Barlow Condensed",sans-serif;
+  font-weight:700;font-size:13px;letter-spacing:.06em;
+  background:#fff;border:1px solid var(--line);border-radius:4px;
+  padding:0 6px;margin-right:7px;color:var(--muted);
 }
 .route.wait{background:var(--signal-soft);border-color:#EEDCB8}
 .route.wait .rname{color:var(--signal-ink)}
@@ -434,6 +479,7 @@ select.f{appearance:none;-webkit-appearance:none;background-image:linear-gradien
     <div class="sec-body">
       <p class="note" id="dlHint">請先在最上方「先填這裡」填入事故發生日，這裡就會自動算出每一項的到期日與剩餘天數。</p>
       <ul class="dl" id="dl"></ul>
+      <p class="dnote">另外提醒：如果後續要申請道路事故鑑定報告，警方調閱與核發大約需要 <b>30 個工作天</b>（約 6 週），不是 30 天。若打算走調解或訴訟，要及早申請，別卡在時效前才動作。</p>
     </div>
   </details>
 
@@ -487,16 +533,33 @@ select.f{appearance:none;-webkit-appearance:none;background-image:linear-gradien
   <details class="sec">
     <summary><span class="tag">Guide</span><span class="sname">我該怎麼辦出險？</span></summary>
     <div class="sec-body">
-      <p class="note">回答兩個問題，直接告訴您走哪一條最省事。</p>
+      <p class="note">回答幾個問題，直接告訴您走哪一條最省事。</p>
       <div class="qrow">
-        <span class="qlabel">1. 您有投保車體險嗎？</span>
-        <div class="pills" id="q1"></div>
+        <span class="qlabel">1. 車子打算怎麼處理？</span>
+        <div class="pills" id="q0"></div>
       </div>
       <div class="qrow">
-        <span class="qlabel">2. 這幾天能自己跑一趟保險公司窗口嗎？</span>
+        <span class="qlabel">2. 您有投保車體險嗎？</span>
+        <div class="pills" id="q1"></div>
+      </div>
+      <div class="qrow" id="q2row">
+        <span class="qlabel">3. 這幾天能自己跑一趟保險公司窗口嗎？</span>
         <div class="pills" id="q2"></div>
       </div>
       <div id="route"></div>
+    </div>
+  </details>
+
+  <!-- 顧問價值 -->
+  <details class="sec value">
+    <summary><span class="tag">Support</span><span class="sname">多一道把關</span></summary>
+    <div class="sec-body">
+      <p class="note">送件自己跑最快，但送出去之後的追蹤與把關，才是最花時間的部分。</p>
+      <div class="vrow"><div class="vno">01</div><p><b>找得到人</b><small>保險公司窗口不一定會主動回電，案件卡住時常常不知道該問誰。顧問是那個隨時找得到、會替您追下去的窗口。</small></p></div>
+      <div class="vrow"><div class="vno">02</div><p><b>中間協調</b><small>直接對接理賠人員，代為追進度、協調勘車與核賠時程，您不必反覆打電話重講一次案情。</small></p></div>
+      <div class="vrow"><div class="vno">03</div><p><b>幫您把關</b><small>核賠金額合不合理、和解條件有沒有陷阱、文件缺不缺，先幫您看過一遍再簽再送，避免權益受損。</small></p></div>
+      <div class="vrow"><div class="vno">04</div><p><b>選對管道</b><small>哪條路最快、該找哪個單位、什麼時候該申請什麼，直接告訴您，不用自己一步步試錯。</small></p></div>
+      <p class="vtip">簡單說：送件您自己跑最快，後面的事交給我處理。有任何一步卡住，先問我，不用自己在電話裡耗。</p>
     </div>
   </details>
 
@@ -504,7 +567,7 @@ select.f{appearance:none;-webkit-appearance:none;background-image:linear-gradien
   <details class="sec" data-g="g3">
     <summary><span class="tag">Step 3</span><span class="sname">出險應備文件</span><span class="cnt"></span></summary>
     <div class="sec-body">
-      <p class="note">事故後 5 日內提出申請。車主與駕駛人若為同一人，證件備一份即可。</p>
+      <p class="note">事故後 5 日內提出申請。基本三樣備齊就能先送件，其餘資料後續再補即可，不必等湊齊才辦。</p>
       <ul class="check" id="g3"></ul>
     </div>
   </details>
@@ -522,7 +585,7 @@ select.f{appearance:none;-webkit-appearance:none;background-image:linear-gradien
   <details class="sec">
     <summary><span class="tag">Scripts</span><span class="sname">聯繫話術</span><span class="cnt">5 則</span></summary>
     <div class="sec-body">
-      <p class="note">前三則傳給對方，後兩則是自己看的。照著念、照著傳就好。</p>
+      <p class="note">提供您與對方聯繫的對話用語，節省雙方聯繫往返的時間成本。前三則可直接傳給對方，後兩則是打電話前自己看的。</p>
       <div class="pills" id="pills" role="tablist"></div>
       <div class="script" id="script"></div>
       <button class="mini" id="copyScript">複製這段</button>
@@ -560,14 +623,16 @@ const DATA = {
     ["對方車牌、駕照與行照",""]
   ],
   g3:[
-    ["駕駛人身分證、駕照",""],
-    ["車主身分證、駕照、行照",""],
-    ["報案三聯單（事故聯單）",""],
+    ["##基本文件　備齊這三樣就能送件"],
+    ["行照、駕照　影本","車主與駕駛人若不是同一人，兩邊的都要帶"],
+    ["事故登記聯單　正本","警方作完筆錄後核發，這份一定要正本"],
     ["印章",""],
+    ["##後續再補　視情況提供"],
     ["存摺封面影本","理賠匯款用"],
-    ["診斷證明書","如有人員受傷"],
-    ["醫療費用收據正本","如有人員受傷"],
-    ["薪資或請假證明","如需申請工作損失"]
+    ["修車估價單","車損理賠時"],
+    ["診斷證明書","有人員受傷時"],
+    ["醫療費用收據　正本","有人員受傷時"],
+    ["薪資或請假證明","要申請工作損失時"]
   ],
   g4:[
     ["確認自己有無投保車體險","有的話，自己的車損才有理賠；沒有則自負"],
@@ -576,6 +641,7 @@ const DATA = {
     ["勘估完成前不要動工維修","可先進廠，但要等理賠人員勘車或視訊勘估後才開始修復"],
     ["事故後 7 日：向轄區警局申請現場圖與照片",""],
     ["事故後 30 日：申請初步分析研判表",""],
+    ["需要時再申請道路事故鑑定報告","警方調閱與核發約需 30 個工作天（約 6 週），要預留時間，別等到快超過時效才申請"],
     ["理賠人員與雙方聯繫、核定金額",""],
     ["協商不成：向鄉鎮市公所調解委員會申請調解","免費，多數案件在此階段解決"],
     ["調解不成立：評估是否進入民事訴訟",""]
@@ -585,7 +651,7 @@ const DATA = {
 const DEADLINES = [
   [5,"日","向保險公司提出出險申請","逾期可能影響權益"],
   [7,"日","可申請現場圖與現場照片",""],
-  [30,"日","可申請初步分析研判表（初判表）",""],
+  [30,"日","可申請初步分析研判表（初判表）","這天起可提出申請，核發另需作業時間"],
   [180,"日","過失傷害告訴期間","告訴乃論，自知悉時起算 6 個月"],
   [730,"日","損害賠償請求權時效","自知有損害及賠償義務人時起算 2 年"]
 ];
@@ -657,10 +723,23 @@ function restoreOpen(){
   if(miss) document.getElementById("setup").open=true;
 }
 
+const Q0=["要送修","暫時不修"];
 const Q1=["有","沒有","不確定"];
 const Q2=["可以","不太行"];
 
 const ROUTES={
+  nofix:{
+    name:"路線 D｜不修理，改領賠償金",
+    why:"車況還能開、或修理不划算時，可以選擇不修，直接就損失金額求償。",
+    steps:[
+      ["還是要先找修車廠估價","估價單是求償金額的依據，不修也要先估出來"],
+      ["等初判表確認肇事責任比例","賠償金額按責任比例計算，30 日後可申請"],
+      ["向對方或其保險公司提出協議賠償","以估價單金額協議，不必實際修復"],
+      ["出險送件照樣要辦","強制險醫療給付、責任險的部分不受影響"],
+      ["談定後簽和解書","寫明金額、細項與拋棄其他請求權"]
+    ],
+    tip:"注意：自己的車體險多為實支實付，沒有實際修復通常領不到；不修時主要是向對方求償。"
+  },
   shop:{
     name:"路線 A｜在修車廠一次辦完",
     why:"您有車體險，這是最省事的走法，連窗口都不必跑。",
@@ -675,8 +754,8 @@ const ROUTES={
     tip:"若這家不協辦，換一家原廠服務廠，或改走路線 B、C，一樣來得及。"
   },
   counter:{
-    name:"路線 B｜自己到窗口辦理",
-    why:"當場就能確認資料齊不齊全，有問題馬上補，速度最快。",
+    name:"路線 B｜自己到窗口辦理　建議",
+    why:"本人親臨服務處是最快的方式：當場收件、當場確認資料，有缺馬上補，不必再等轉件。",
     steps:[
       ["備妥證件與文件（見下方清單）",""],
       ["到保險公司服務據點，說明要辦理車禍出險",""],
@@ -688,7 +767,7 @@ const ROUTES={
   },
   agent:{
     name:"路線 C｜委託代送",
-    why:"實在挪不出時間時走這條，由服務人員代為送件，您不用跑這一趟。",
+    why:"實在挪不出時間時才走這條。經由保經代送要多走一道轉送報備的行政流程，收件時間會比親辦慢幾天。",
     steps:[
       ["把證件影本與印章交給代辦人員",""],
       ["請對方回覆一則收件訊息","等於書面簽收，雙方都有紀錄"],
@@ -696,7 +775,7 @@ const ROUTES={
       ["等理賠人員通知勘車與核定",""],
       ["印章送件後記得取回",""]
     ],
-    tip:"證件給影本就好，正本自己留著；印章交出前先拍照留紀錄。"
+    tip:"證件給影本就好，正本自己留著；印章交出前先拍照留紀錄。趕時間的話，還是建議改走路線 B 親自跑一趟。"
   },
   wait:{
     name:"先確認保單內容",
@@ -724,41 +803,87 @@ function buildGuide(){
       box.appendChild(b);
     });
   };
+  mk(Q0,"q0","fix");
   mk(Q1,"q1","cover");
   mk(Q2,"q2","visit");
 }
 
 function drawGuide(){
   const g=state.guide||{};
+  document.querySelectorAll("#q0 .pill").forEach(b=>
+    b.setAttribute("aria-selected", b.textContent===g.fix?"true":"false"));
   document.querySelectorAll("#q1 .pill").forEach(b=>
     b.setAttribute("aria-selected", b.textContent===g.cover?"true":"false"));
   document.querySelectorAll("#q2 .pill").forEach(b=>
     b.setAttribute("aria-selected", b.textContent===g.visit?"true":"false"));
 
   const box=document.getElementById("route");
-  if(!g.cover){ box.innerHTML=""; return; }
-
-  let r, wait=false;
-  if(g.cover==="不確定"){ r=ROUTES.wait; wait=true; }
-  else if(g.cover==="有"){ r=ROUTES.shop; }
-  else if(!g.visit){ box.innerHTML=""; return; }
-  else { r = g.visit==="可以" ? ROUTES.counter : ROUTES.agent; }
-
-  box.innerHTML='<div class="route'+(wait?" wait":"")+'">'+
+  const card=(r,cls)=>'<div class="route'+(cls||"")+'">'+
     '<p class="rname">'+r.name+'</p>'+
     '<p class="rwhy">'+r.why+'</p>'+
     '<ol>'+r.steps.map(s=>'<li>'+s[0]+(s[1]?'<small>'+s[1]+'</small>':'')+'</li>').join("")+'</ol>'+
     '<p class="rtip">'+r.tip+'</p></div>';
-}
 
-const LOCAL=[
-["富邦產險．蘭陽分公司","(03)905-5066","羅東鎮公正路197號3樓"],
-["富邦產險．宜蘭通訊處","(03)936-2121","宜蘭市中山路二段101號3樓"],
-["臺灣產物．宜蘭分公司","(03)954-9743","羅東鎮公正路52號"],
-["新安東京．羅東服務中心","(03)961-5888","羅東鎮純精路二段107號1樓"],
-["中國信託產險．宜蘭服務中心","(03)956-9511","五結鄉中正路一段81號"],
-["泰安產物．宜蘭","(03)965-2328","五結鄉中正路二段8號2樓"]
-];
+  const altBox=(title,rows)=>'<div class="alt"><p class="altt">'+title+'</p>'+
+    rows.map(x=>'<div class="altrow"><b>'+x[0]+'</b>'+x[1]+'</div>').join("")+'</div>';
+
+  const sendAlt = () => {
+    if(g.visit==="可以") return altBox("另一個選擇",[["路線 C","委託代送　—　會多一道轉送報備流程，較慢"]]);
+    if(g.visit==="不太行") return altBox("另一個選擇",[["路線 B","自己到窗口辦理　—　親辦最快，當場收件當場補件"]]);
+    return altBox("送件方式，二選一",[
+      ["路線 B","自己到窗口辦理　—　親辦最快，當場收件當場補件"],
+      ["路線 C","委託代送　—　會多一道轉送報備流程，較慢"]
+    ]);
+  };
+
+  // 第 3 題只在需要時顯示
+  const needVisit = g.fix==="暫時不修" || (g.fix==="要送修" && g.cover && g.cover!=="有");
+  const q2row=document.getElementById("q2row");
+  if(q2row) q2row.style.display = needVisit ? "" : "none";
+
+  if(!g.fix){ box.innerHTML=""; return; }
+
+  if(g.fix==="暫時不修"){
+    box.innerHTML=card(ROUTES.nofix)+sendAlt();
+    return;
+  }
+
+  if(!g.cover){
+    box.innerHTML='<div class="route wait">'+
+      '<p class="rname">再回答第 2 題就知道了</p>'+
+      '<p class="rwhy">有沒有車體險，會決定您的車損能不能理賠，也影響要走哪一條路。</p>'+
+      '<ol><li>有車體險<small>可直接進廠，由修車廠通報保險公司到廠勘車，最省事</small></li>'+
+      '<li>沒有車體險<small>自己的車損自負，但仍要出險申請強制險與責任險</small></li></ol>'+
+      '<p class="rtip">不確定的話也可以選「不確定」，我會告訴您怎麼查。</p></div>';
+    return;
+  }
+
+  if(g.cover==="不確定"){ box.innerHTML=card(ROUTES.wait," wait"); return; }
+
+  if(g.cover==="有"){
+    box.innerHTML=card(ROUTES.shop)+
+      altBox("如果修車廠不協辦，改走這兩條",[
+        ["路線 B","自己到窗口辦理　—　親辦最快，當場收件當場補件"],
+        ["路線 C","委託代送　—　會多一道轉送報備流程，較慢"]
+      ]);
+    return;
+  }
+
+  if(!g.visit){
+    box.innerHTML='<div class="route wait">'+
+      '<p class="rname">兩條路可以走，請回答第 3 題</p>'+
+      '<p class="rwhy">沒有車體險不影響出險，強制險與責任險的部分照樣申請，只是要自己送件。</p>'+
+      '<ol><li>路線 B｜自己到窗口辦理<small>本人親臨最快，當場收件、當場補件</small></li>'+
+      '<li>路線 C｜委託代送<small>要多走一道轉送報備流程，會比親辦慢幾天</small></li></ol>'+
+      '<p class="rtip">選一下上面第 3 題，我幫您把該做的步驟列出來。</p></div>';
+    return;
+  }
+
+  const pick = g.visit==="可以" ? ROUTES.counter : ROUTES.agent;
+  const other = g.visit==="可以" ? ROUTES.agent : ROUTES.counter;
+  box.innerHTML=card(pick)+
+    altBox("另一個選擇",[[other.name.split("｜")[0], other.name.split("｜")[1]+"　—　"+other.why]]);
+}
 
 const HOTLINES=[
 ["臺灣產物","0809-068-888"],["兆豐產物","0800-053-588"],
@@ -844,7 +969,7 @@ const SCRIPTS=([
 "因為窗口目前休息，正式的出險手續會在上班日辦理，屆時我會協助您完成。\n\n"+
 "在這之前，麻煩您先做兩件事：\n"+
 "1. 把事故聯單（三聯單）拍照傳給我\n"+
-"2. 備妥身分證、駕照、行照、印章、存摺封面影本；如有就醫，再附診斷證明與醫療收據正本\n\n"+
+"2. 備妥基本文件：行照與駕照影本、事故登記聯單正本、印章（其餘資料後續再補）\n\n"+
 "另外提醒：您有投保車體險，車子可以直接開到修理廠，請廠方通報保險公司到廠勘車。原廠服務廠多半能一併協辦出險手續，會省事很多；但無論如何，都要等勘估完成後才能動工維修。初判表出來前也請勿自行與對方和解或給付金額。\n\n"+
 "上班日一早我就幫您送件，有任何問題隨時來電，謝謝您。"},
 
@@ -854,21 +979,18 @@ const SCRIPTS=([
 "因為今天是假日，保險公司窗口休息，我已先向 24 小時專線完成報備，案件已留下紀錄，時效不受影響。正式的出險手續會在上班日辦理，屆時我會協助您完成。\n\n"+
 "另外，作完筆錄後麻煩把事故聯單（三聯單）拍照傳給我，我先幫您確認資料齊不齊全。\n\n"+
 "【兩種辦理方式，您選一種即可】\n\n"+
-"方式一：您親自臨櫃（建議）\n"+
-"帶雙證件與相關資料，直接到窗口現場填寫辦理，當場就能確認資料齊不齊全，速度最快。\n\n"+
+"方式一：您親自臨櫃（建議，最快）\n"+
+"本人親臨服務處辦理，當場收件、當場確認資料，有缺馬上補。\n\n"+
 "方式二：委託我代為送件\n"+
-"如果您實在挪不出時間，把證件與印章交給我，我上班日直接幫您送到窗口，您不用跑這一趟。\n\n"+
+"如果您實在挪不出時間，把文件與印章交給我代辦。要提醒的是，經由保經代送需再走一道轉送報備的行政流程，收件時間會比親辦慢幾天。\n\n"+
 "方式三：在修車廠辦理（限有投保車體險）\n"+
 "如果您有車體險，可以直接把車開到修理廠，請廠方通報保險公司到廠勘車。建議選原廠服務廠（TOYOTA、HONDA 等），多半設有專人協辦出險，等於連窗口都不用跑。一般修車廠不一定有，進廠前先問一句：「你們有協辦出險嗎？」\n\n"+
 "服務窗口的地址與電話我會另外提供給您。\n\n"+
-"【需要準備的資料】\n"+
-"‧ 駕駛人：身分證、駕照\n"+
-"‧ 車主：身分證、駕照、行照\n"+
-"‧ 報案三聯單（事故聯單）\n"+
-"‧ 印章\n"+
-"‧ 存摺封面影本（匯款用）\n"+
-"‧ 如有就醫：診斷證明、醫療收據正本\n"+
-"（車主與駕駛人同一人，證件備一份即可）\n\n"+
+"【基本文件，備齊這三樣就能送件】\n"+
+"‧ 行照、駕照　影本\n"+
+"‧ 事故登記聯單　正本\n"+
+"‧ 印章\n\n"+
+"其餘資料（存摺封面影本、估價單、診斷證明、醫療收據等）後續再補即可，不必等湊齊才辦。\n\n"+
 "【兩件重要提醒】\n"+
 "1. 車子如需維修，請先不要進廠，等保險公司通知、完成勘車後再修。\n"+
 "2. 初判表出來前，請勿自行與對方和解或給付金額。\n\n"+
@@ -880,16 +1002,16 @@ const SCRIPTS=([
 "在等待的期間，先把後續流程提供給您，收到回覆後我就協助您辦理出險。\n\n"+
 "如果事故聯單（三聯單）還沒提供，麻煩補拍一張，我先幫您確認資料齊不齊全。\n\n"+
 "【兩種辦理方式，您選一種即可】\n\n"+
-"方式一：您親自臨櫃（建議）\n"+
-"帶雙證件與相關資料到窗口現場填寫，當場確認資料齊全，速度最快。\n\n"+
+"方式一：您親自臨櫃（建議，最快）\n"+
+"本人親臨服務處辦理，當場收件、當場確認資料。\n\n"+
 "方式二：委託我代為送件\n"+
-"把證件與印章交給我，我幫您送到窗口辦理。\n\n"+
+"把文件與印章交給我代辦，但會多一道轉送報備流程，時間上比親辦慢。\n\n"+
 "服務窗口的地址與電話我會另外提供給您。\n\n"+
-"【先準備好的資料】\n"+
-"‧ 駕駛人：身分證、駕照\n"+
-"‧ 車主：身分證、駕照、行照\n"+
-"‧ 報案三聯單、印章、存摺封面影本\n"+
-"‧ 如有就醫：診斷證明、醫療收據正本\n\n"+
+"【先準備好的基本文件】\n"+
+"‧ 行照、駕照　影本\n"+
+"‧ 事故登記聯單　正本\n"+
+"‧ 印章\n\n"+
+"其餘資料後續再補即可。\n\n"+
 "提醒您：車子請等保險公司勘車後再修，初判表出來前也先不要自行和解。\n\n"+
 "如有需要，隨時來電，謝謝您。"},
 
@@ -963,8 +1085,15 @@ function build(){
   for(const g in DATA){
     const ul=document.getElementById(g);
     DATA[g].forEach((row,i)=>{
-      const id=g+"-"+i;
       const li=document.createElement("li");
+      if(row[0].startsWith("##")){
+        li.className="grouphead";
+        const t=row[0].slice(2).split("　");
+        li.innerHTML='<span class="gh">'+t[0]+'</span>'+(t[1]?'<span class="ghs">'+t[1]+'</span>':'');
+        ul.appendChild(li);
+        return;
+      }
+      const id=g+"-"+i;
       li.innerHTML='<label class="item"><input type="checkbox" data-id="'+id+'">'+
         '<span class="box">'+tick+'</span>'+
         '<span class="txt">'+row[0]+(row[1]?'<small>'+row[1]+'</small>':'')+'</span></label>';
@@ -1065,12 +1194,14 @@ function buildSummary(){
   out+="整體進度："+Math.round(done/all.length*100)+"%\n\n";
 
   for(const g in DATA){
-    const n=DATA[g].filter((r,i)=>state.checked[g+"-"+i]).length;
-    out+="▸ "+titles[g]+"　"+n+"/"+DATA[g].length+"\n";
+    const rows=DATA[g].filter(r=>!r[0].startsWith("##"));
+    const n=DATA[g].filter((r,i)=>!r[0].startsWith("##")&&state.checked[g+"-"+i]).length;
+    out+="▸ "+titles[g]+"　"+n+"/"+rows.length+"\n";
   }
 
   const todo=[];
   for(const g in DATA) DATA[g].forEach((r,i)=>{
+    if(r[0].startsWith("##")) return;
     if(!state.checked[g+"-"+i]) todo.push(r[0]);
   });
   if(todo.length){
@@ -1082,13 +1213,14 @@ function buildSummary(){
   }
 
   const g=state.guide||{};
-  if(g.cover){
-    let r;
+  let r=null;
+  if(g.fix==="暫時不修") r=ROUTES.nofix;
+  else if(g.fix==="要送修"){
     if(g.cover==="不確定") r=ROUTES.wait;
     else if(g.cover==="有") r=ROUTES.shop;
-    else if(g.visit) r = g.visit==="可以"?ROUTES.counter:ROUTES.agent;
-    if(r) out+="\n辦理方式："+r.name+"\n";
+    else if(g.cover==="沒有" && g.visit) r = g.visit==="可以"?ROUTES.counter:ROUTES.agent;
   }
+  if(r) out+="\n辦理方式："+r.name+"\n";
 
   if(state.acc){
     const b=new Date(state.acc+"T00:00:00"), t=new Date(); t.setHours(0,0,0,0);
