@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>車禍出險檢核表．保戶版</title>
+<title>車禍處理檢核表．保戶版</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -396,6 +396,17 @@ select.f{appearance:none;-webkit-appearance:none;background-image:linear-gradien
 .bar button.primary:hover{background:var(--asphalt-2)}
 .bar button:focus-visible{outline:3px solid var(--signal);outline-offset:2px}
 
+.bkbtns{display:flex;flex-wrap:wrap;gap:9px}
+.bk{
+  font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;
+  padding:11px 18px;border-radius:10px;border:1px solid var(--line);
+  background:#fff;color:var(--asphalt);transition:all .12s ease;
+}
+.bk:hover{border-color:var(--asphalt)}
+.bk:focus-visible{outline:3px solid var(--signal);outline-offset:2px}
+.bk.primary{background:#06C755;border-color:#06C755;color:#fff}
+.bk.primary:hover{filter:brightness(1.06)}
+.bknote{margin:12px 0 0;font-size:12.5px;color:var(--muted);line-height:1.6}
 .disclaimer{font-size:12px;color:var(--muted);text-align:center;margin:22px 0 0;line-height:1.6}
 
 .toast{
@@ -433,7 +444,7 @@ select.f{appearance:none;-webkit-appearance:none;background-image:linear-gradien
   <div class="head-grid">
     <div style="flex:1">
       <p class="eyebrow">Accident Claim Checklist</p>
-      <h1>車禍出險檢核表<span class="vtag cust">保戶版</span></h1>
+      <h1>車禍處理檢核表<span class="vtag cust">保戶版</span></h1>
       <p class="sub">依序完成，逐項打勾。<br>本表可存於手機，事故當下直接開啟使用。</p>
     </div>
     <div class="gauge">
@@ -465,7 +476,7 @@ select.f{appearance:none;-webkit-appearance:none;background-image:linear-gradien
   <details class="sec setup" id="setup" open>
     <summary><span class="tag">Start</span><span class="sname">先填這裡</span><span class="cnt" id="fCnt"></span></summary>
     <div class="sec-body">
-      <p class="note">填好車牌號碼與事故發生日。下面的期限會自動算出來，話術裡的車牌也會自動帶入。資料只存在這台裝置，不會上傳。</p>
+      <p class="note">填好車牌號碼與事故發生日。下面的期限會自動算出來，要傳給對方的訊息裡也會自動帶入車牌。資料只存在這台手機或電腦裡，不會上傳。</p>
       <div class="fields">
         <div><span class="flabel">車牌號碼 <i>必填</i></span><input class="f" id="f_car" placeholder="ABC-1234"></div>
         <div class="fw datefield"><span class="flabel">事故發生日 <i>必填</i></span><input type="date" id="acc"></div>
@@ -486,7 +497,7 @@ select.f{appearance:none;-webkit-appearance:none;background-image:linear-gradien
   <details class="dir" id="dirBox">
     <summary>不確定是哪一家？查各產險 24 小時專線</summary>
     <div class="dir-body">
-      <p class="dir-note">點號碼即可撥出。這些專線都受理出險通知、派遣現場理賠人員與道路救援。號碼也印在強制險證上，以保單記載為準。</p>
+      <p class="dir-note">點號碼就能直接撥出。這些專線都受理事故通知、派人到現場、以及道路救援。號碼也印在強制險證上，以保單上的為準。</p>
       <div class="dir-list" id="dirList"></div>
       <p class="dir-sub">宜蘭．羅東在地據點</p>
       <div class="dir-list one" id="dirList3"></div>
@@ -511,39 +522,39 @@ select.f{appearance:none;-webkit-appearance:none;background-image:linear-gradien
 
   <!-- 蒐證 -->
   <details class="sec" data-g="g2">
-    <summary><span class="tag">Step 2</span><span class="sname">拍照蒐證</span><span class="cnt"></span></summary>
+    <summary><span class="tag">Step 2</span><span class="sname">現場拍照</span><span class="cnt"></span></summary>
     <div class="sec-body">
-      <p class="note">警方到場前保留現場，能拍多少拍多少。照片是日後認定肇責的關鍵。</p>
+      <p class="note">警方到場前保留現場，能拍多少拍多少。照片是日後認定誰該負責的關鍵。</p>
       <ul class="check" id="g2"></ul>
     </div>
   </details>
 
   <!-- 三不 -->
   <details class="sec rules">
-    <summary><span class="tag">Warning</span><span class="sname">三不原則</span></summary>
+    <summary><span class="tag">Warning</span><span class="sname">三件千萬別做的事</span></summary>
     <div class="sec-body">
-      <p class="note" style="color:#8A6560">最容易出事、也最常被忽略的三件事。</p>
-      <div class="rule"><div class="no">01</div><p><b>不承認過失</b><small>關心對方可以，但別說「都是我的錯」。肇責由初判表與鑑定認定，現場說的話會成為證據。</small></p></div>
-      <div class="rule"><div class="no">02</div><p><b>不私下和解、不先給錢</b><small>未經保險公司同意即議定金額，保險公司得不受拘束，可能影響理賠。</small></p></div>
-      <div class="rule"><div class="no">03</div><p><b>勘估前不動工</b><small>有投保車體險可直接進廠，由修車廠通報保險公司到廠勘車（原廠服務廠多半能代辦）；但無論如何，都要等勘估完成才開始修復。先修好再報，損害無法還原，估價容易產生爭議。</small></p></div>
+      <p class="note" style="color:#8A6560">最容易吃虧、也最常被忽略的三件事。</p>
+      <div class="rule"><div class="no">01</div><p><b>不承認過失</b><small>關心對方可以，但別說「都是我的錯」。誰對誰錯是由警方的研判表和後續鑑定認定的，現場講的話會被記下來當證據。</small></p></div>
+      <div class="rule"><div class="no">02</div><p><b>不私下和解、不先給錢</b><small>沒有先問過保險公司就跟對方講好金額，保險公司可以不認這個數字，錢有可能要自己出。</small></p></div>
+      <div class="rule"><div class="no">03</div><p><b>保險公司看過車損前，不要動工修車</b><small>有保車體險的話可以直接把車開進修車廠，請廠方通知保險公司來看車（原廠服務廠多半能幫忙代辦）。但無論如何，都要等保險公司看過、拍照估價之後才能開始修。先修好再講，撞成什麼樣已經看不出來，金額很容易吵。</small></p></div>
     </div>
   </details>
 
   <!-- 引導 -->
   <details class="sec">
-    <summary><span class="tag">Guide</span><span class="sname">我該怎麼辦出險？</span></summary>
+    <summary><span class="tag">Guide</span><span class="sname">我該怎麼申請理賠？</span></summary>
     <div class="sec-body">
-      <p class="note">回答幾個問題，直接告訴您走哪一條最省事。</p>
+      <p class="note">回答幾個問題，直接告訴您該怎麼辦最省事。</p>
       <div class="qrow">
         <span class="qlabel">1. 車子打算怎麼處理？</span>
         <div class="pills" id="q0"></div>
       </div>
       <div class="qrow">
-        <span class="qlabel">2. 您有投保車體險嗎？</span>
+        <span class="qlabel">2. 您有保車體險嗎？</span>
         <div class="pills" id="q1"></div>
       </div>
       <div class="qrow" id="q2row">
-        <span class="qlabel">3. 這幾天能自己跑一趟保險公司窗口嗎？</span>
+        <span class="qlabel">3. 這幾天能自己跑一趟保險公司嗎？</span>
         <div class="pills" id="q2"></div>
       </div>
       <div id="route"></div>
@@ -554,41 +565,56 @@ select.f{appearance:none;-webkit-appearance:none;background-image:linear-gradien
   <details class="sec value">
     <summary><span class="tag">Support</span><span class="sname">多一道把關</span></summary>
     <div class="sec-body">
-      <p class="note">送件自己跑最快，但送出去之後的追蹤與把關，才是最花時間的部分。</p>
-      <div class="vrow"><div class="vno">01</div><p><b>找得到人</b><small>保險公司窗口不一定會主動回電，案件卡住時常常不知道該問誰。顧問是那個隨時找得到、會替您追下去的窗口。</small></p></div>
-      <div class="vrow"><div class="vno">02</div><p><b>中間協調</b><small>直接對接理賠人員，代為追進度、協調勘車與核賠時程，您不必反覆打電話重講一次案情。</small></p></div>
-      <div class="vrow"><div class="vno">03</div><p><b>幫您把關</b><small>核賠金額合不合理、和解條件有沒有陷阱、文件缺不缺，先幫您看過一遍再簽再送，避免權益受損。</small></p></div>
-      <div class="vrow"><div class="vno">04</div><p><b>選對管道</b><small>哪條路最快、該找哪個單位、什麼時候該申請什麼，直接告訴您，不用自己一步步試錯。</small></p></div>
-      <p class="vtip">簡單說：送件您自己跑最快，後面的事交給我處理。有任何一步卡住，先問我，不用自己在電話裡耗。</p>
+      <p class="note">文件自己送最快，但送出去之後的追蹤與確認，才是最花時間的部分。</p>
+      <div class="vrow"><div class="vno">01</div><p><b>找得到人</b><small>保險公司不一定會主動回電，案子卡住時常常不知道該找誰問。我是那個隨時找得到、會幫您一直追下去的人。</small></p></div>
+      <div class="vrow"><div class="vno">02</div><p><b>中間協調</b><small>我直接跟理賠人員聯絡，幫您追進度、安排看車跟核算的時間，您不用一次又一次打電話重講經過。</small></p></div>
+      <div class="vrow"><div class="vno">03</div><p><b>幫您把關</b><small>賠的金額合不合理、和解條件有沒有陷阱、文件缺不缺，先幫您看過一遍再簽、再送，免得吃虧。</small></p></div>
+      <div class="vrow"><div class="vno">04</div><p><b>選對管道</b><small>哪個方式最快、該找哪個單位、什麼時候要申請什麼，直接告訴您，不用自己一步步碰運氣。</small></p></div>
+      <p class="vtip">簡單說：文件您自己送最快，後面的事交給我。哪一步卡住了，先問我，不用自己在電話裡耗。</p>
     </div>
   </details>
 
-  <!-- 出險文件 -->
+  <!-- 要帶的文件 -->
   <details class="sec" data-g="g3">
-    <summary><span class="tag">Step 3</span><span class="sname">出險應備文件</span><span class="cnt"></span></summary>
+    <summary><span class="tag">Step 3</span><span class="sname">申請理賠要帶的文件</span><span class="cnt"></span></summary>
     <div class="sec-body">
-      <p class="note">事故後 5 日內提出申請。基本三樣備齊就能先送件，其餘資料後續再補即可，不必等湊齊才辦。</p>
+      <p class="note">事故後 5 天內要提出申請。基本三樣帶齊就能先辦，其餘資料之後再補就好，不必等全部湊齊。</p>
       <ul class="check" id="g3"></ul>
     </div>
   </details>
 
   <!-- 後續 -->
   <details class="sec" data-g="g4">
-    <summary><span class="tag">Step 4</span><span class="sname">後續作業</span><span class="cnt"></span></summary>
+    <summary><span class="tag">Step 4</span><span class="sname">接下來要做的事</span><span class="cnt"></span></summary>
     <div class="sec-body">
-      <p class="note">送件之後，由保險公司出面處理，您只需配合提供資料。</p>
+      <p class="note">申請送出之後，保險公司會出面處理，您只要配合提供資料就好。</p>
       <ul class="check" id="g4"></ul>
     </div>
   </details>
 
-  <!-- 話術 -->
+  <!-- 怎麼跟對方說 -->
   <details class="sec">
-    <summary><span class="tag">Scripts</span><span class="sname">聯繫話術</span><span class="cnt">5 則</span></summary>
+    <summary><span class="tag">Scripts</span><span class="sname">怎麼跟對方說</span><span class="cnt">5 則</span></summary>
     <div class="sec-body">
-      <p class="note">提供您與對方聯繫的對話用語，節省雙方聯繫往返的時間成本。前三則可直接傳給對方，後兩則是打電話前自己看的。</p>
+      <p class="note">這裡有幾則寫好的訊息，可以直接傳給對方，省去雙方來回溝通的時間。前三則是傳給對方的，後兩則是打電話前自己先看的。</p>
       <div class="pills" id="pills" role="tablist"></div>
       <div class="script" id="script"></div>
       <button class="mini" id="copyScript">複製這段</button>
+    </div>
+  </details>
+
+  <!-- 備份 -->
+  <details class="sec">
+    <summary><span class="tag">Backup</span><span class="sname">備份與傳送紀錄</span></summary>
+    <div class="sec-body">
+      <p class="note">按「傳到 LINE 給芸助理」會複製一份進度摘要，貼到 LINE 傳給芸助理，她就知道您目前辦到哪、還缺什麼。<br>另外，勾選紀錄平常存在這台手機或電腦裡，換手機或清除瀏覽器資料前，記得先下載一份備份檔，之後可以完整還原。</p>
+      <div class="bkbtns">
+        <button type="button" class="bk primary" id="toLine">傳到 LINE 給芸助理</button>
+        <button type="button" class="bk" id="dlBak">下載備份檔</button>
+        <button type="button" class="bk" id="rsBak">還原備份</button>
+      </div>
+      <input type="file" id="rsFile" accept="application/json,.json" hidden>
+      <p class="bknote">備份檔為純文字格式，只含您自己填的內容，不會上傳到任何伺服器。</p>
     </div>
   </details>
 
@@ -609,10 +635,10 @@ const DATA = {
     ["開啟雙黃燈，確認自己與同車人員狀況",""],
     ["在車身後方 30～100 公尺放置三角警告標誌","依車速與路況調整距離，避免後車追撞"],
     ["有人受傷先打 119，再打 110","即使只是輕微擦撞，也一定要報警留紀錄"],
-    ["撥打保險公司 24 小時專線報備","假日或夜間先報備留紀錄，正式出險手續於上班日辦理"],
-    ["確認對方是否無照或飲酒","主動請警方當場檢測並記錄"],
-    ["配合警方製作筆錄","雙方口供是日後判決依據"],
-    ["取得報案三聯單","作完筆錄後拍照留存，出險時要用"]
+    ["打保險公司 24 小時專線通知","假日或晚上先打電話留下紀錄，正式的申請手續等上班日再辦"],
+    ["留意對方有沒有無照或喝酒","主動請警方當場檢測、記錄下來"],
+    ["配合警方做筆錄","雙方講的話會成為日後判斷的依據"],
+    ["拿到事故登記聯單","做完筆錄警方會給，記得拍照留一份，申請理賠要用"]
   ],
   g2:[
     ["車輛前後左右四個角度（含車牌）",""],
@@ -623,33 +649,33 @@ const DATA = {
     ["對方車牌、駕照與行照",""]
   ],
   g3:[
-    ["##基本文件　備齊這三樣就能送件"],
-    ["行照、駕照　影本","車主與駕駛人若不是同一人，兩邊的都要帶"],
-    ["事故登記聯單　正本","警方作完筆錄後核發，這份一定要正本"],
+    ["##基本文件　帶齊這三樣就能先辦"],
+    ["行照、駕照　影本","開車的人和車主如果不是同一個人，兩邊的都要帶"],
+    ["事故登記聯單　正本","做完筆錄警方會給，這份一定要正本，影本不行"],
     ["印章",""],
-    ["##後續再補　視情況提供"],
-    ["存摺封面影本","理賠匯款用"],
-    ["修車估價單","車損理賠時"],
-    ["診斷證明書","有人員受傷時"],
-    ["醫療費用收據　正本","有人員受傷時"],
-    ["薪資或請假證明","要申請工作損失時"]
+    ["##之後再補　看情況需要"],
+    ["存摺封面影本","理賠金匯款用"],
+    ["修車估價單","要理賠車損時"],
+    ["診斷證明書","有人受傷時"],
+    ["醫療費用收據　正本","有人受傷時"],
+    ["薪資單或請假證明","要請求工作損失的賠償時"]
   ],
   g4:[
-    ["確認自己有無投保車體險","有的話，自己的車損才有理賠；沒有則自負"],
-    ["有車體險：可直接將車開往修理廠","建議選原廠服務廠，由廠方通報保險公司到廠勘估，不必自己跑窗口"],
-    ["詢問修車廠是否協辦出險","原廠服務廠（TOYOTA、HONDA 等）多半可代辦；一般修車廠不一定，進廠前先問"],
-    ["勘估完成前不要動工維修","可先進廠，但要等理賠人員勘車或視訊勘估後才開始修復"],
-    ["事故後 7 日：向轄區警局申請現場圖與照片",""],
-    ["事故後 30 日：申請初步分析研判表",""],
-    ["需要時再申請道路事故鑑定報告","警方調閱與核發約需 30 個工作天（約 6 週），要預留時間，別等到快超過時效才申請"],
-    ["理賠人員與雙方聯繫、核定金額",""],
-    ["協商不成：向鄉鎮市公所調解委員會申請調解","免費，多數案件在此階段解決"],
-    ["調解不成立：評估是否進入民事訴訟",""]
+    ["確認自己有沒有保車體險","有保，自己的車才賠得到；沒保就要自己出錢修"],
+    ["有車體險：可以直接把車開去修車廠","建議找原廠服務廠，請廠方通知保險公司來看車，您不必自己跑一趟"],
+    ["問修車廠能不能幫忙代辦理賠","原廠服務廠（TOYOTA、HONDA 等）多半可以；一般修車廠不一定，進廠前先問一句"],
+    ["保險公司看過車之前，先不要動工","車可以先進廠，但要等理賠人員來看過車（或視訊看過）才開始修"],
+    ["事故後第 7 天：可以去警局申請現場圖和照片",""],
+    ["事故後第 30 天：可以申請初步分析研判表","就是俗稱的初判表，上面會寫警方認定的肇事原因"],
+    ["有需要再申請車禍鑑定報告","警方調資料加上核發大約要 30 個工作天（約 6 週），要提早申請，別等到快來不及"],
+    ["理賠人員會聯絡雙方，核算賠償金額",""],
+    ["談不攏：向鄉鎮市公所的調解委員會申請調解","免費，大部分案件在這個階段就解決了"],
+    ["調解也談不成：再考慮要不要打民事官司",""]
   ]
 };
 
 const DEADLINES = [
-  [5,"日","向保險公司提出出險申請","逾期可能影響權益"],
+  [5,"日","向保險公司提出理賠申請","超過可能影響權益"],
   [7,"日","可申請現場圖與現場照片",""],
   [30,"日","可申請初步分析研判表（初判表）","這天起可提出申請，核發另需作業時間"],
   [180,"日","過失傷害告訴期間","告訴乃論，自知悉時起算 6 個月"],
@@ -729,62 +755,62 @@ const Q2=["可以","不太行"];
 
 const ROUTES={
   nofix:{
-    name:"路線 D｜不修理，改領賠償金",
-    why:"車況還能開、或修理不划算時，可以選擇不修，直接就損失金額求償。",
+    name:"作法 D｜不修車，改拿賠償金",
+    why:"車子還能開、或是修起來不划算，可以選擇不修，直接拿錢。",
     steps:[
-      ["還是要先找修車廠估價","估價單是求償金額的依據，不修也要先估出來"],
-      ["等初判表確認肇事責任比例","賠償金額按責任比例計算，30 日後可申請"],
-      ["向對方或其保險公司提出協議賠償","以估價單金額協議，不必實際修復"],
-      ["出險送件照樣要辦","強制險醫療給付、責任險的部分不受影響"],
-      ["談定後簽和解書","寫明金額、細項與拋棄其他請求權"]
+      ["還是要先請修車廠估價","估價單是跟對方要錢的依據，不修也要先估"],
+      ["等警方的初判表確認雙方責任比例","賠多少要按責任比例算，事故後 30 天可以申請"],
+      ["拿估價單向對方或對方的保險公司談賠償","談的是估價單上的金額，車子不用真的去修"],
+      ["理賠申請照樣要辦","強制險的醫療給付、責任險的部分不受影響"],
+      ["談好之後簽和解書","寫清楚金額、細項，以及不再另外求償"]
     ],
-    tip:"注意：自己的車體險多為實支實付，沒有實際修復通常領不到；不修時主要是向對方求償。"
+    tip:"要注意：車體險是照實際修車花費賠的，車子沒真的修，通常領不到。所以不修車時，錢主要是跟對方要。"
   },
   shop:{
-    name:"路線 A｜在修車廠一次辦完",
-    why:"您有車體險，這是最省事的走法，連窗口都不必跑。",
+    name:"作法 A｜在修車廠一次辦完",
+    why:"您有保車體險，這是最省事的作法，連保險公司都不用跑。",
     steps:[
-      ["把車開到修理廠（無法行駛就叫拖吊）","道路救援請撥保險公司 24 小時專線"],
-      ["優先選原廠服務廠","TOYOTA、HONDA、NISSAN 等品牌服務廠多半設有專人協辦出險"],
-      ["進廠時先問一句：「你們有協辦出險嗎？」","一般個體修車廠不一定有，先問再決定進哪一家"],
-      ["請廠方通報保險公司到廠勘車","部分公司採視訊勘估，十分鐘內就能完成"],
-      ["等勘估完成，確認估價後才動工",""],
-      ["保留事故聯單與估價單影像","後續核賠、對帳都用得到"]
+      ["把車開去修車廠（不能開就叫拖吊）","拖吊可以打保險公司 24 小時專線，多半含道路救援"],
+      ["盡量找原廠服務廠","TOYOTA、HONDA、NISSAN 這類品牌的服務廠多半有專人幫忙辦理賠"],
+      ["進廠先問一句：「你們可以幫忙辦理賠嗎？」","一般小型修車廠不一定有，先問清楚再決定去哪一家"],
+      ["請修車廠通知保險公司來看車","有些公司改用視訊看車，十分鐘就能完成"],
+      ["等保險公司看過、金額談定，才開始修",""],
+      ["把事故登記聯單和估價單拍照留著","後面對帳、確認金額都用得到"]
     ],
-    tip:"若這家不協辦，換一家原廠服務廠，或改走路線 B、C，一樣來得及。"
+    tip:"這家不能代辦就換一家原廠服務廠，或改用作法 B、C，一樣來得及。"
   },
   counter:{
-    name:"路線 B｜自己到窗口辦理　建議",
-    why:"本人親臨服務處是最快的方式：當場收件、當場確認資料，有缺馬上補，不必再等轉件。",
+    name:"作法 B｜自己跑一趟保險公司　建議",
+    why:"自己跑一趟最快：當場收件、當場看資料齊不齊，缺什麼馬上補，不用等人轉交。",
     steps:[
-      ["備妥證件與文件（見下方清單）",""],
-      ["到保險公司服務據點，說明要辦理車禍出險",""],
-      ["現場填寫出險申請書",""],
-      ["留下聯絡方式，等理賠人員通知勘車",""],
-      ["留存收件回執","方便日後查詢案件進度"]
+      ["把證件和文件準備好（見下面清單）",""],
+      ["到保險公司服務據點，說要辦車禍理賠",""],
+      ["現場填寫理賠申請書",""],
+      ["留下電話，等理賠人員通知來看車",""],
+      ["把收件回條留著","之後查進度會用到"]
     ],
-    tip:"窗口多為週一至週五上班時間，出發前先打電話確認。"
+    tip:"服務據點大多只有週一到週五上班，出門前先打電話確認。"
   },
   agent:{
-    name:"路線 C｜委託代送",
-    why:"實在挪不出時間時才走這條。經由保經代送要多走一道轉送報備的行政流程，收件時間會比親辦慢幾天。",
+    name:"作法 C｜請人幫忙送件",
+    why:"真的抽不出時間才用這個方式。請保經代送要多一道轉交手續，收件時間會比自己跑慢幾天。",
     steps:[
-      ["把證件影本與印章交給代辦人員",""],
-      ["請對方回覆一則收件訊息","等於書面簽收，雙方都有紀錄"],
-      ["由代辦人員於上班日送件至窗口",""],
-      ["等理賠人員通知勘車與核定",""],
-      ["印章送件後記得取回",""]
+      ["把證件影本和印章交給幫您送件的人",""],
+      ["請對方回一則訊息說收到了","等於簽收，雙方都有紀錄"],
+      ["由對方在上班日送到保險公司",""],
+      ["等理賠人員通知看車、核算金額",""],
+      ["送完件記得把印章拿回來",""]
     ],
-    tip:"證件給影本就好，正本自己留著；印章交出前先拍照留紀錄。趕時間的話，還是建議改走路線 B 親自跑一趟。"
+    tip:"證件給影本就好，正本自己留著；印章交出去前先拍照存證。趕時間的話，還是建議自己跑一趟比較快。"
   },
   wait:{
     name:"先確認保單內容",
     why:"有沒有車體險，會決定您的車損能不能理賠，也影響走哪條路。",
     steps:[
-      ["撥 24 小時客服專線查詢承保項目","報上車牌即可查詢"],
-      ["確認後回到上面第 1 題重新選擇",""]
+      ["打 24 小時客服專線問自己保了哪些","報車牌就能查"],
+      ["問清楚之後，回上面重選一次",""]
     ],
-    tip:"沒有車體險也不影響出險——強制險與責任險的部分照樣申請。"
+    tip:"沒保車體險也還是能申請理賠，強制險和責任險的部分不受影響。"
   }
 };
 
@@ -828,11 +854,11 @@ function drawGuide(){
     rows.map(x=>'<div class="altrow"><b>'+x[0]+'</b>'+x[1]+'</div>').join("")+'</div>';
 
   const sendAlt = () => {
-    if(g.visit==="可以") return altBox("另一個選擇",[["路線 C","委託代送　—　會多一道轉送報備流程，較慢"]]);
-    if(g.visit==="不太行") return altBox("另一個選擇",[["路線 B","自己到窗口辦理　—　親辦最快，當場收件當場補件"]]);
-    return altBox("送件方式，二選一",[
-      ["路線 B","自己到窗口辦理　—　親辦最快，當場收件當場補件"],
-      ["路線 C","委託代送　—　會多一道轉送報備流程，較慢"]
+    if(g.visit==="可以") return altBox("另一個選擇",[["作法 C","請人幫忙送件　—　多一道轉交手續，比較慢"]]);
+    if(g.visit==="不太行") return altBox("另一個選擇",[["作法 B","自己跑一趟　—　最快，當場收件、缺什麼馬上補"]]);
+    return altBox("送件方式，兩種選一種",[
+      ["作法 B","自己跑一趟　—　最快，當場收件、缺什麼馬上補"],
+      ["作法 C","請人幫忙送件　—　多一道轉交手續，比較慢"]
     ]);
   };
 
@@ -852,9 +878,9 @@ function drawGuide(){
     box.innerHTML='<div class="route wait">'+
       '<p class="rname">再回答第 2 題就知道了</p>'+
       '<p class="rwhy">有沒有車體險，會決定您的車損能不能理賠，也影響要走哪一條路。</p>'+
-      '<ol><li>有車體險<small>可直接進廠，由修車廠通報保險公司到廠勘車，最省事</small></li>'+
-      '<li>沒有車體險<small>自己的車損自負，但仍要出險申請強制險與責任險</small></li></ol>'+
-      '<p class="rtip">不確定的話也可以選「不確定」，我會告訴您怎麼查。</p></div>';
+      '<ol><li>有保車體險<small>可以直接進廠，請修車廠通知保險公司來看車，最省事</small></li>'+
+      '<li>沒保車體險<small>自己的車要自己修，但強制險和責任險還是要申請</small></li></ol>'+
+      '<p class="rtip">不確定的話就選「不確定」，會告訴您怎麼查。</p></div>';
     return;
   }
 
@@ -862,20 +888,20 @@ function drawGuide(){
 
   if(g.cover==="有"){
     box.innerHTML=card(ROUTES.shop)+
-      altBox("如果修車廠不協辦，改走這兩條",[
-        ["路線 B","自己到窗口辦理　—　親辦最快，當場收件當場補件"],
-        ["路線 C","委託代送　—　會多一道轉送報備流程，較慢"]
+      altBox("如果修車廠不能代辦，改用這兩種",[
+        ["作法 B","自己跑一趟　—　最快，當場收件、缺什麼馬上補"],
+        ["作法 C","請人幫忙送件　—　多一道轉交手續，比較慢"]
       ]);
     return;
   }
 
   if(!g.visit){
     box.innerHTML='<div class="route wait">'+
-      '<p class="rname">兩條路可以走，請回答第 3 題</p>'+
-      '<p class="rwhy">沒有車體險不影響出險，強制險與責任險的部分照樣申請，只是要自己送件。</p>'+
-      '<ol><li>路線 B｜自己到窗口辦理<small>本人親臨最快，當場收件、當場補件</small></li>'+
-      '<li>路線 C｜委託代送<small>要多走一道轉送報備流程，會比親辦慢幾天</small></li></ol>'+
-      '<p class="rtip">選一下上面第 3 題，我幫您把該做的步驟列出來。</p></div>';
+      '<p class="rname">有兩種作法，請回答第 3 題</p>'+
+      '<p class="rwhy">沒保車體險也還是能申請理賠，強制險和責任險的部分照樣辦，只是要自己送件。</p>'+
+      '<ol><li>作法 B｜自己到窗口辦理<small>自己跑最快，當場收件、缺什麼馬上補</small></li>'+
+      '<li>作法 C｜委託代送<small>要多一道轉交手續，會比自己跑慢幾天</small></li></ol>'+
+      '<p class="rtip">選一下上面第 3 題，就會列出您該做的步驟。</p></div>';
     return;
   }
 
@@ -927,10 +953,10 @@ const SCRIPTS=([
 {n:"簡訊．完整",t:"sms",b:
 "您好，我是本次事故的另一方，敝姓＿（車牌 {車牌}）。\n\n"+
 "這次的意外是雙方都不願樂見的，對於造成您的困擾與不便，我深感遺憾，也先關心一下您的身體狀況，不知道還好嗎？\n\n"+
-"我將進行報案，請保險公司辦理出險。後續的聯繫、勘估與賠償事宜，我已全權委託保險公司出面處理，理賠人員會主動與您聯繫，我這邊也會全力配合。\n\n"+
-"【重要提醒】如果您的車子需要維修，麻煩先不要進廠，請等保險公司通知、完成車損勘估後再進行。若未經勘估就先修復，可能影響損失認定與您的理賠權益，可先拍照保留受損部位。\n\n"+
+"我將進行報案，請保險公司辦理理賠。後續的聯繫、看車估價與賠償事宜，我已全權委託保險公司出面處理，理賠人員會主動與您聯繫，我這邊也會全力配合。\n\n"+
+"【重要提醒】如果您的車子需要維修，麻煩先不要進廠，請等保險公司通知、看過車並完成估價後再修。如果沒讓保險公司看過就先修好，撞成什麼樣已經看不出來，賠償金額容易產生爭議。可以先拍照留下受損部位。\n\n"+
 "若有醫療需求，也請保留診斷證明與收據。\n\n"+
-"這幾天報備出險之後，您也可以直接與保險公司客服聯繫，報上車牌 {車牌} 即可查詢案件進度。\n\n"+
+"這幾天通知保險公司之後，您也可以直接打給保險公司客服，報上車牌 {車牌} 就能查詢案件進度。\n\n"+
 "如有需要，歡迎再來電與我聯繫，謝謝您。"},
 
 {n:"簡訊．精簡",t:"sms",b:
@@ -950,8 +976,8 @@ const SCRIPTS=([
 "@開場|您好，請問是○先生／小姐嗎？我是本次事故的另一方，敝姓＿。\n"+
 "@表達關心|這次的意外是大家都不願樂見的，造成您的困擾我深感遺憾。先跟您關心一下，身體狀況還好嗎？有沒有去看醫生？\n"+
 "@主軸（重複這段就好）|這部分我有投保，也已經跟保險公司報案了。後續理賠會由保險公司的理賠人員直接跟您聯繫、依程序處理，我這邊一定全力配合。\n"+
-"@提到修車|另外提醒您一下，車子如果要修，麻煩先不要進廠，等保險公司通知、勘完車再修。沒勘估過的損失後面認定會有困難，這對您的理賠比較有保障。\n"+
-"@對方問「你要賠多少」|金額的部分要由保險公司核定，我這邊不方便先講數字，不然反而會影響到您的權益跟後續核賠。理賠人員會跟您聯絡。\n"+
+"@提到修車|另外提醒您一下，車子如果要修，麻煩先不要進廠，等保險公司通知、看過車再修。沒讓保險公司看過的損傷，後面認定會有困難，這對您的理賠比較有保障。\n"+
+"@對方問「你要賠多少」|金額的部分要由保險公司核定，我這邊不方便先講數字，不然反而會影響到您的權益跟後面的理賠審核。理賠人員會跟您聯絡。\n"+
 "@收尾|報車牌 {車牌} 就能向保險公司查到案件進度。如果有需要再打給我，謝謝您。"},
 
 {n:"通知保戶．回傳事故單",t:"sms",b:
@@ -965,18 +991,18 @@ const SCRIPTS=([
 
 {n:"通知保戶．已先報備",t:"sms",b:
 "＿先生／小姐您好：\n\n"+
-"您的案件我已經先向保險公司的 24 小時專線完成報備，案件已經留下紀錄，時效上不會受到影響，請您放心。\n\n"+
-"因為窗口目前休息，正式的出險手續會在上班日辦理，屆時我會協助您完成。\n\n"+
+"您的案件我已經先打保險公司的 24 小時專線通知過了，案件已經留下紀錄，時效上不會受到影響，請您放心。\n\n"+
+"因為窗口目前休息，正式的理賠申請手續會在上班日辦理，屆時我會協助您完成。\n\n"+
 "在這之前，麻煩您先做兩件事：\n"+
 "1. 把事故聯單（三聯單）拍照傳給我\n"+
 "2. 備妥基本文件：行照與駕照影本、事故登記聯單正本、印章（其餘資料後續再補）\n\n"+
-"另外提醒：您有投保車體險，車子可以直接開到修理廠，請廠方通報保險公司到廠勘車。原廠服務廠多半能一併協辦出險手續，會省事很多；但無論如何，都要等勘估完成後才能動工維修。初判表出來前也請勿自行與對方和解或給付金額。\n\n"+
+"另外提醒：您有投保車體險，車子可以直接開到修理廠，請廠方通報保險公司到廠勘車。原廠服務廠多半能順便幫忙代辦理賠手續，會省事很多；但無論如何，都要等保險公司看過車、估好價才能開始修。初判表出來前也請勿自行與對方和解或給付金額。\n\n"+
 "上班日一早我就幫您送件，有任何問題隨時來電，謝謝您。"},
 
 {n:"通知保戶．假日休息",t:"sms",b:
 "＿先生／小姐您好：\n\n"+
 "這次的意外是我們都不願樂見的，深感遺憾，也先關心您的身體狀況。\n\n"+
-"因為今天是假日，保險公司窗口休息，我已先向 24 小時專線完成報備，案件已留下紀錄，時效不受影響。正式的出險手續會在上班日辦理，屆時我會協助您完成。\n\n"+
+"因為今天是假日，保險公司窗口休息，我已先打 24 小時專線通知，案件已留下紀錄，時效不受影響。正式的理賠申請手續會在上班日辦理，屆時我會協助您完成。\n\n"+
 "另外，作完筆錄後麻煩把事故聯單（三聯單）拍照傳給我，我先幫您確認資料齊不齊全。\n\n"+
 "【兩種辦理方式，您選一種即可】\n\n"+
 "方式一：您親自臨櫃（建議，最快）\n"+
@@ -984,7 +1010,7 @@ const SCRIPTS=([
 "方式二：委託我代為送件\n"+
 "如果您實在挪不出時間，把文件與印章交給我代辦。要提醒的是，經由保經代送需再走一道轉送報備的行政流程，收件時間會比親辦慢幾天。\n\n"+
 "方式三：在修車廠辦理（限有投保車體險）\n"+
-"如果您有車體險，可以直接把車開到修理廠，請廠方通報保險公司到廠勘車。建議選原廠服務廠（TOYOTA、HONDA 等），多半設有專人協辦出險，等於連窗口都不用跑。一般修車廠不一定有，進廠前先問一句：「你們有協辦出險嗎？」\n\n"+
+"如果您有車體險，可以直接把車開到修理廠，請廠方通報保險公司到廠勘車。建議找原廠服務廠（TOYOTA、HONDA 等），多半有專人幫忙代辦理賠，等於連保險公司都不用跑。一般修車廠不一定有，進廠前先問一句：「你們可以幫忙辦理賠嗎？」\n\n"+
 "服務窗口的地址與電話我會另外提供給您。\n\n"+
 "【基本文件，備齊這三樣就能送件】\n"+
 "‧ 行照、駕照　影本\n"+
@@ -999,7 +1025,7 @@ const SCRIPTS=([
 {n:"通知保戶．等待回覆中",t:"sms",b:
 "＿先生／小姐您好：\n\n"+
 "您的案件我已經送出，目前正在等窗口回覆，一有消息我會立刻通知您。\n\n"+
-"在等待的期間，先把後續流程提供給您，收到回覆後我就協助您辦理出險。\n\n"+
+"在等待的期間，先把後續流程提供給您，收到回覆後我就協助您申請理賠。\n\n"+
 "如果事故聯單（三聯單）還沒提供，麻煩補拍一張，我先幫您確認資料齊不齊全。\n\n"+
 "【兩種辦理方式，您選一種即可】\n\n"+
 "方式一：您親自臨櫃（建議，最快）\n"+
@@ -1180,8 +1206,8 @@ function toast(m){
 }
 
 function buildSummary(){
-  const titles={g1:"事故當下",g2:"拍照蒐證",g3:"出險應備文件",g4:"後續作業"};
-  let out="【車禍出險進度】\n";
+  const titles={g1:"事故當下",g2:"現場拍照",g3:"要帶的文件",g4:"接下來要做的事"};
+  let out="【車禍處理進度】\n";
   if(state.acc){
     const b=new Date(state.acc+"T00:00:00"), t=new Date(); t.setHours(0,0,0,0);
     const n=Math.round((t-b)/86400000);
@@ -1243,6 +1269,56 @@ document.getElementById("copy").addEventListener("click",async()=>{
   }catch(e){
     toast("複製失敗，請手動選取");
   }
+});
+
+const LINE_URL="https://line.me/R/ti/p/@＿＿＿＿";   // ← 改成芸助理的 LINE 連結
+
+function bakName(){
+  const d=new Date(), p=n=>String(n).padStart(2,"0");
+  return "車禍處理紀錄_"+d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+".json";
+}
+
+document.getElementById("dlBak").addEventListener("click",()=>{
+  try{
+    const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url; a.download=bakName();
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+    toast("備份檔已下載");
+  }catch(e){ toast("下載失敗"); }
+});
+
+document.getElementById("rsBak").addEventListener("click",()=>
+  document.getElementById("rsFile").click());
+
+document.getElementById("rsFile").addEventListener("change",e=>{
+  const f=e.target.files&&e.target.files[0];
+  if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{
+    try{
+      const o=JSON.parse(r.result);
+      if(!o||typeof o!=="object"||Array.isArray(o)) throw 0;
+      state=Object.assign({checked:{},fields:{},acc:"",guide:{},open:{}},o);
+      save(); render(); toast("已還原備份");
+    }catch(err){ toast("檔案格式不正確"); }
+    e.target.value="";
+  };
+  r.onerror=()=>{ toast("讀取失敗"); e.target.value=""; };
+  r.readAsText(f);
+});
+
+document.getElementById("toLine").addEventListener("click",async()=>{
+  try{ await navigator.clipboard.writeText(buildSummary()); }
+  catch(e){ toast("複製失敗，請手動選取"); return; }
+  if(LINE_URL.indexOf("＿")>=0){
+    toast("摘要已複製，貼到 LINE 傳給芸助理");
+    return;
+  }
+  toast("摘要已複製，開啟 LINE 後貼上傳送");
+  setTimeout(()=>window.open(LINE_URL,"_blank","noopener"),600);
 });
 
 document.getElementById("print").addEventListener("click",()=>{
