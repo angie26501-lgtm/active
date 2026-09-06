@@ -301,6 +301,12 @@
       transform: translateY(-2px);
       background: #fff;
     }
+    .nav-hint {
+      margin-top: 14px;
+      font-size: 13.5px;
+      color: var(--medium-gray);
+      font-weight: 700;
+    }
     .section {
       margin: 0 0 34px;
       padding: 34px 26px;
@@ -838,6 +844,84 @@
       font-weight: 900;
       flex: 0 0 auto;
     }
+    /* ===== 預告課程 + 已完課 ===== */
+    .event-preview {
+      border-radius: 26px;
+      padding: 26px 30px;
+      margin-bottom: 22px;
+      background: linear-gradient(135deg, #a78243, var(--milk-tea-gold));
+      color: #fff;
+      box-shadow: 0 18px 38px rgba(200, 166, 106, 0.28);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .event-preview::after {
+      content: "";
+      position: absolute;
+      right: -60px; top: -70px;
+      width: 190px; height: 190px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.14);
+    }
+    .event-preview > * { position: relative; z-index: 1; }
+    .ep-tag {
+      display: inline-block;
+      padding: 6px 15px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.22);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      margin-bottom: 10px;
+    }
+    .event-preview h3 {
+      font-size: clamp(20px, 2.6vw, 26px);
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+    .event-preview p {
+      color: rgba(255, 255, 255, 0.92);
+      font-size: 15px;
+      max-width: 640px;
+    }
+    .event-preview .ep-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 30px 15px;
+      border-radius: 16px;
+      background: #fff;
+      color: var(--forest);
+      font-weight: 900;
+      font-size: 15px;
+      white-space: nowrap;
+      box-shadow: 0 10px 22px rgba(39, 66, 52, 0.18);
+      transition: 0.25s ease;
+    }
+    .event-preview .ep-btn:hover { transform: translateY(-2px); }
+    .event-tag.done {
+      background: rgba(95, 127, 104, 0.14);
+      border-color: rgba(95, 127, 104, 0.3);
+      color: var(--deep-green);
+    }
+    .event-done-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 22px;
+      border-radius: 16px;
+      background: rgba(95, 127, 104, 0.12);
+      border: 1px solid rgba(95, 127, 104, 0.24);
+      color: var(--deep-green);
+      font-weight: 900;
+      font-size: 15px;
+    }
     /* ===== 線上課回放 ===== */
     .online-grid {
       display: grid;
@@ -1029,6 +1113,88 @@
       white-space: nowrap;
       padding: 12px 28px 13px;
     }
+    /* ===== 指示詞卡 ===== */
+    .prompt-card {
+      margin-top: 22px;
+      border-radius: 26px;
+      padding: 28px 26px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.97), rgba(237, 242, 236, 0.84));
+      border: 1px solid rgba(95, 127, 104, 0.16);
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .prompt-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 5px;
+      background: linear-gradient(90deg, var(--herbal-green), var(--milk-tea-gold));
+    }
+    .prompt-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    .prompt-head h3 {
+      font-size: 21px;
+      color: var(--deep-green);
+    }
+    .prompt-desc {
+      color: var(--medium-gray);
+      font-size: 15px;
+      margin-bottom: 18px;
+    }
+    .prompt-tools {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .copy-button,
+    .prompt-link {
+      padding: 11px 18px;
+      border-radius: 13px;
+      font-weight: 900;
+      font-size: 14px;
+      letter-spacing: .03em;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.25s ease;
+    }
+    .copy-button {
+      border: none;
+      color: #fff;
+      background: linear-gradient(135deg, var(--forest), var(--herbal-green));
+      box-shadow: 0 8px 18px rgba(63, 95, 77, 0.2);
+    }
+    .copy-button:hover { transform: translateY(-2px); }
+    .prompt-link {
+      background: rgba(200, 166, 106, 0.18);
+      color: var(--deep-green);
+      border: 1px solid rgba(200, 166, 106, 0.45);
+    }
+    .prompt-link:hover { transform: translateY(-2px); background: rgba(200, 166, 106, 0.28); }
+    .prompt-text {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      font-size: 14.5px;
+      line-height: 1.9;
+      color: var(--deep-gray);
+      background: rgba(63, 95, 77, 0.05);
+      border: 1px dashed rgba(95, 127, 104, 0.35);
+      border-radius: 16px;
+      padding: 20px;
+      overflow-x: auto;
+    }
+    .prompt-card + .prompt-card { margin-top: 20px; }
     .step-badge {
       display: inline-flex;
       align-items: center;
@@ -1227,76 +1393,7 @@
       padding: 11px 13px 12px;
       font-size: 14px;
     }
-
-    /* ===== 作品牆收合選單與 0825 外連 ===== */
-    .showcase-link-card {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
-      gap: 24px;
-      margin: 0 0 24px;
-      padding: 26px 28px;
-      border-radius: 26px;
-      background: linear-gradient(135deg, rgba(63,95,77,.98), rgba(39,66,52,.96));
-      color: #fff;
-      box-shadow: 0 20px 42px rgba(39,66,52,.22);
-    }
-    .showcase-link-card .showcase-link-date {
-      color: var(--soft-gold);
-      font-size: 13px;
-      font-weight: 900;
-      letter-spacing: .1em;
-      margin-bottom: 8px;
-    }
-    .showcase-link-card h3 {
-      font-size: 26px;
-      line-height: 1.35;
-      margin-bottom: 8px;
-    }
-    .showcase-link-card p {
-      color: rgba(255,255,255,.78);
-    }
-    .showcase-link-card .watch-button {
-      min-width: 210px;
-      width: auto;
-    }
-    .student-collection {
-      margin-top: 24px;
-      border-radius: 24px;
-      background: rgba(255,255,255,.72);
-      border: 1px solid rgba(95,127,104,.16);
-      box-shadow: var(--card-shadow);
-      overflow: hidden;
-    }
-    .student-collection-summary {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 20px 24px;
-      cursor: pointer;
-      list-style: none;
-      color: var(--deep-green);
-      font-size: 19px;
-      font-weight: 900;
-      background: linear-gradient(145deg, rgba(255,255,255,.98), rgba(237,242,236,.9));
-    }
-    .student-collection-summary::-webkit-details-marker { display: none; }
-    .student-collection-summary::after {
-      content: "展開作品 ＋";
-      color: var(--herbal-green);
-      font-size: 14px;
-      white-space: nowrap;
-    }
-    .student-collection[open] .student-collection-summary {
-      border-bottom: 1px solid rgba(95,127,104,.14);
-    }
-    .student-collection[open] .student-collection-summary::after {
-      content: "收合作品 －";
-    }
-    .student-collection-body {
-      padding: 18px;
-    }    /* ===== 留言板 ===== */
+    /* ===== 留言板 ===== */
     .board-note {
       padding: 15px 18px;
       border-radius: 16px;
@@ -1533,22 +1630,7 @@
         white-space: normal;
         text-align: center;
       }
-
-      .showcase-link-card {
-        grid-template-columns: 1fr;
-        padding: 22px 18px;
-      }
-      .showcase-link-card .watch-button {
-        width: 100%;
-      }
-      .student-collection-summary {
-        align-items: flex-start;
-        flex-direction: column;
-        padding: 18px;
-      }
-      .student-collection-body {
-        padding: 14px;
-      }      .board-item p { margin-left: 0; }
+      .board-item p { margin-left: 0; }
     }
   </style>
 </head>
@@ -1586,12 +1668,14 @@
           </p>
           <nav class="quick-nav" aria-label="快速導覽">
             <a class="pill-link" href="#benefit">365 福利</a>
+            <a class="pill-link" href="#events">最新活動</a>
             <a class="pill-link" href="#courseVideos">課程回放</a>
             <a class="pill-link" href="#onlineCourses">線上課回放</a>
             <a class="pill-link" href="#studentPortfolio">學員作品</a>
             <a class="pill-link" href="#aiTools">AI 工具箱</a>
             <a class="pill-link" href="#followLinks">延伸連結</a>
           </nav>
+          <p class="nav-hint">💡 各區塊預設收合，點上方選單或區塊標題即可展開檢視；最新內容都排在各區最前面。</p>
         </div>
         <aside class="hero-panel">
           <div>
@@ -1644,6 +1728,64 @@
         </p>
         <div class="share-sign">— 芸琪</div>
       </div>
+      <section id="events" class="section">
+        <div class="section-header">
+          <span>Latest Event</span>
+          <h2>最新活動｜課程預告與紀錄</h2>
+          <p>掌握下一場課程預告，並保留近期活動紀錄。</p>
+        </div>
+        <div class="event-preview">
+          <div>
+            <span class="ep-tag">🎉 近期預告課程</span>
+            <h3>下一場 AI 實作課程．預告中</h3>
+            <p>更多精彩的 AI 實作課程正在規劃中，點右方查看最新課程預告與報名資訊。</p>
+          </div>
+          <a class="ep-btn" href="https://reurl.cc/7YVy9k" target="_blank" rel="noopener noreferrer">查看課程預告 →</a>
+        </div>
+        <div class="event-card">
+          <div class="event-main">
+            <div class="event-tag done">✅ 8/25 已完課．感謝參與</div>
+            <h3>AI 賦能來囉！<br>手把手用「一張圖」做出一頁式影片與 15 秒個人短片</h3>
+            <div class="event-meta">
+              <span>📅 2026.08.25（二）</span>
+              <span>🕑 14:00–16:00</span>
+              <span>📍 西門頂尖會所</span>
+            </div>
+            <ul class="event-points">
+              <li>學會製作「一頁式影片」，用一張圖手把手做成 15 秒個人影片。</li>
+              <li>加碼教學：可愛的「萌寵動畫」，讓你的作品更吸睛。</li>
+              <li>現場實務交流分享，彼此觀摩、互相學習。</li>
+              <li>如有時間，還會加碼分享最近開發的「理賠研討模版」。</li>
+              <li>想了解的內容或其他需求都可以事先「許願」，屆時一起分享。</li>
+              <li>幫你減少人生試錯成本，把 AI 真正用在自己身上。</li>
+            </ul>
+            <div class="event-done-badge">✅ 本場已完課，感謝大家的參與</div>
+          </div>
+          <aside class="event-side">
+            <h4>參加資格與費用</h4>
+            <div class="event-fee">
+              <div>✅ 今年「365 推薦人」或「945 AI 推薦人」<b>芸琪</b>的學員：首發陪跑體驗，只要 <b>200 元</b></div>
+              <div>💵 一般報名體驗費：<b>500 元</b></div>
+            </div>
+            <div class="event-note">
+              📍 地點：西門頂尖會所<br />
+              📝 報名方式：填寫報名表單並私訊芸琪、截圖「945 會員卡」<br />
+              ✅ 出席請回覆「A」
+            </div>
+          </aside>
+        </div>
+        <div class="event-signups">
+          <div class="signup-title">📋 報名接龍｜本場出席名單（已完課）</div>
+          <ol class="signup-list">
+            <li>芸琪</li>
+            <li>曉萍</li>
+            <li>秀惠</li>
+            <li>桂琴</li>
+            <li>子淳</li>
+            <li>淑貞</li>
+          </ol>
+        </div>
+      </section>
       <section id="courseVideos" class="section">
         <div class="section-header">
           <span>Course Replay</span>
@@ -1651,7 +1793,7 @@
           <p>整合各梯次課程回放，讓學員可以依日期快速回到課程影片進行複習。</p>
         </div>
 
-        <!-- 2026.06.15 中山包班 競品分析 -->
+        <!-- 2026.06.15 中山包班 競品分析（最新） -->
         <div class="course-group">
           <div class="course-subhead">📅 2026.06.15 中山包班｜AI 競品分析</div>
           <div class="course-grid">
@@ -1703,6 +1845,34 @@
                 觀看第三段
               </a>
             </article>
+          </div>
+          <div class="prompt-card">
+            <div class="prompt-head">
+              <h3>🔍 競品分析指示詞 × NotebookLM 學習筆記</h3>
+              <div class="prompt-tools">
+                <button type="button" class="copy-button" id="copyPromptButton" data-label="複製指示詞">複製指示詞</button>
+                <a class="prompt-link" href="https://notebooklm.google.com/" target="_blank" rel="noopener noreferrer">開啟 NotebookLM</a>
+              </div>
+            </div>
+            <p class="prompt-desc">
+              搭配本段回放使用：把下方指示詞貼到 AI 工具（例如 Gemini、ChatGPT）中，
+              並將回放整理成 NotebookLM 學習筆記，就能一步步完成自己的競品分析。
+            </p>
+            <pre class="prompt-text" id="promptText">你是一位「競品分析策略顧問」。
+以下是我的基本資料：
+【我做什麼行業】：XXX
+【公司叫什麼】（如果有）：XXX
+【我在這個產業中的角色】：XXX
+【主要商品或服務】：XXX
+【我想為客戶解決的問題】：XXX
+【現在面臨什麼困難】：XXX
+請至少完成以下任務：
+任務 1：適合的定位
+任務 2：5~8個同行分析（包含：定位、客群、產品、通路、為何值得分析）
+任務 3：差異化觀察
+任務 4：短/長期目標
+任務 5：其他
+內容請表達清楚、可落地、內容真實性，不要抽象。</pre>
           </div>
         </div>
 
@@ -1848,6 +2018,14 @@
         <div class="online-grid">
           <article class="online-card">
             <div>
+              <div class="online-date">2026.09.05</div>
+              <h3>Canva 做海報、簡報、社群圖</h3>
+              <p>用 Canva 快速做出海報、簡報與社群貼圖，輕鬆產出專業質感的視覺素材。</p>
+            </div>
+            <a class="watch-button gold" href="https://youtu.be/4LQFskSQKhU" target="_blank" rel="noopener noreferrer">觀看回放</a>
+          </article>
+          <article class="online-card">
+            <div>
               <div class="online-date">2026.04.05</div>
               <h3>不能不知的 Line@ 深度應用實戰</h3>
               <p>深入 Line@ 進階操作，把官方帳號變成經營與行銷的利器。</p>
@@ -1899,18 +2077,10 @@
       <section id="studentPortfolio" class="section">
         <div class="section-header">
           <span>Student Showcase</span>
-          <h2>公勝包班｜浩茂AI科技｜學員作品展示牆</h2>
-          <p>集中展示公勝包班學員的 AI 專業品牌作品，並將 8/25 付費小班成果獨立整理。</p>
+          <h2>學員作品集｜AI 專業品牌成果展</h2>
+          <p>集中展示學員 Gamma 網頁作品，方便觀摩、回訪與後續優化。</p>
         </div>
-
-        <article class="showcase-link-card">
-          <div>
-            <div class="showcase-link-date">2026.08.25 · AI 共學小班 · 4 位學員</div>
-            <h3>8/25 財顧芸AI共學頂尖作品集</h3>
-            <p>8/25 作品已整理為獨立頁面，僅展示四位學員完成的品牌形象圖、短片與萌寵加碼成果。</p>
-          </div>
-          <a class="watch-button gold" href="0825-student-showcase.html" onclick='sessionStorage.setItem("active_0825_entered_from_365", "true")'>開啟 8/25 獨立作品集</a>
-        </article>        <div class="portfolio-feature">
+        <div class="portfolio-feature">
           <article class="feature-card">
             <div class="feature-label">PADLET COLLECTION</div>
             <h3>課程作品總牆</h3>
@@ -1941,7 +2111,6 @@
             </div>
           </div>
         </div>
-        <details class="student-collection"><summary class="student-collection-summary">公勝包班學員作品（22 件）</summary><div class="student-collection-body">
         <div class="student-toolbar">
           <input id="studentSearch" type="search" placeholder="搜尋學員姓名，例如：桂琴、欣婷、財顧芸" />
           <div class="toolbar-note">點擊卡片即可開啟作品網頁</div>
@@ -2124,7 +2293,6 @@
             <a class="watch-button gold" href="https://jie-ru-wealth-w245t5l.gamma.site/" target="_blank" rel="noopener noreferrer">開啟作品</a>
           </article>
         </div>
-        </div></details>
       </section>
       <section id="aiTools" class="section">
         <div class="section-header">
@@ -2189,6 +2357,204 @@
             </div>
             <a class="watch-button gold" href="https://aihb.zeabur.app/?openExternalBrowser=1" target="_blank" rel="noopener noreferrer">開啟一鍵海報</a>
           </article>
+        </div>
+      </section>
+      <section id="promptLibrary" class="section">
+        <div class="section-header">
+          <span>Prompt Library</span>
+          <h2>指示詞補充｜LINE 官方帳號建置教學步驟</h2>
+          <p>講師於課程群組分享的指示詞（教學學習進度記錄），依步驟複製即可套用到你的 AI 工具中。</p>
+        </div>
+        <div class="prompt-card">
+          <div class="prompt-head">
+            <div>
+              <div class="step-badge">STEP 1 · 品牌設定</div>
+              <div class="online-date" style="margin-bottom:8px;">2026.07.16</div>
+              <h3>🟢 LINE 官方帳號品牌顧問設定</h3>
+            </div>
+            <div class="prompt-tools">
+              <button type="button" class="copy-button" data-label="複製指示詞">複製指示詞</button>
+              <a class="prompt-link" href="https://manager.line.biz/" target="_blank" rel="noopener noreferrer">開啟 LINE 後台</a>
+            </div>
+          </div>
+          <p class="prompt-desc">
+            把下方指示詞貼到 AI 工具（例如 Gemini、ChatGPT），依提示替換成你自己的品牌資料，
+            即可快速產出品牌名稱、狀態消息與設定文案。（範例為講師示範版本，可自行調整）
+          </p>
+          <pre class="prompt-text">你是LINE官方帳號品牌顧問，請根據以下資料，幫我完成LINE官方帳號設定。
+品牌名稱：浩茂智能管家
+行業／服務：協助學員使用AI工具幫助學員在自己本業降本增效、企業培訓AI
+主要客戶：AI小白、公司企業
+品牌特色：手把手式教學，包班教學
+聯絡方式：Line ID : maggies93328/電話
+服務時間：早上9:00~晚上9:00
+請幫我產出：
+1. 品牌名稱給我五個選擇。品牌介紹，30字內
+2. 狀態消息5句，每句簡短有力
+3. 聯絡方式的正式寫法
+4. 服務時間的正式寫法
+5. 最後整理成可直接貼進LINE後台的版本
+資料不足時，請問我最多3個問題。
+請使用台灣繁體中文。</pre>
+        </div>
+
+        <div class="prompt-card">
+          <div class="prompt-head">
+            <div>
+              <div class="step-badge">STEP 2 · 品牌頭像</div>
+              <h3>🖼️ LINE 官方帳號頭像設計指示詞（1:1）</h3>
+            </div>
+            <div class="prompt-tools">
+              <button type="button" class="copy-button" data-label="複製指示詞">複製指示詞</button>
+              <a class="prompt-link" href="https://www.canva.com/" target="_blank" rel="noopener noreferrer">前往 Canva</a>
+            </div>
+          </div>
+          <p class="prompt-desc">
+            承接 STEP 1 的品牌資料，讓 AI 生圖工具設計 5 種不同風格的正方形品牌頭像，挑選最合適的一款。
+          </p>
+          <pre class="prompt-text">請根據剛才你已經了解的品牌資料，直接為我設計並生成一張適合LINE官方帳號使用的品牌頭像。
+請自行決定最適合我的：
+- 品牌色系
+- 視覺風格
+- 代表元素
+- 圖像構圖
+設計要求：
+1. 正方形1:1
+2. 主體置中
+3. 簡潔清楚
+4. 符合我的行業、客戶與品牌特色
+5. 小尺寸顯示時仍容易辨識
+6. 色彩有品牌感
+7. 不要放太多文字
+8. 品牌名稱太長時，改用代表圖像或簡短縮寫
+9. 適合直接作為LINE官方帳號頭像
+提供五個圖片給我，風格不同</pre>
+        </div>
+
+        <div class="prompt-card">
+          <div class="prompt-head">
+            <div>
+              <div class="step-badge">STEP 3 · 背景圖片</div>
+              <h3>🌅 LINE 官方帳號背景圖片指示詞（629×315）</h3>
+            </div>
+            <div class="prompt-tools">
+              <button type="button" class="copy-button" data-label="複製指示詞">複製指示詞</button>
+              <a class="prompt-link" href="https://www.canva.com/" target="_blank" rel="noopener noreferrer">前往 Canva</a>
+            </div>
+          </div>
+          <p class="prompt-desc">
+            延續頭像的品牌色系與風格，生成一張橫式背景圖，畫面需有層次與情境感。
+          </p>
+          <pre class="prompt-text">請根據剛才你已經了解的品牌資料，以及前面為我製作的LINE官方帳號頭像，直接設計並生成一張LINE官方帳號背景圖片。
+請自行判斷最適合我的：
+- 品牌色系
+- 視覺風格
+- 代表元素
+- 主題場景
+- 畫面構圖
+圖片規格：
+- 寬629 x 高315 px
+- 橫式構圖
+- 高畫質、清晰細緻
+設計要求：
+1. 與前面製作的LINE頭像使用一致的品牌色系與視覺風格
+2. 畫面不要過度簡約，需要有適量的品牌元素、背景層次與情境感
+3. 可以加入與我的行業、產品、服務或客戶相關的圖像元素
+4. 使用前景、中景、背景的層次構圖，讓畫面豐富但不雜亂
+5. 可以加入柔和光影、漸層、幾何圖形、線條、圖示或裝飾元素
+6. 保留適當留白，避免所有元素都集中在畫面中央
+7. 重要元素不要太靠近邊緣，避免不同裝置顯示時被裁切
+8. 不要加入過多小字或複雜資訊
+9. 如需文字，只能放一句簡短的品牌標語或品牌名稱
+10. 整體要具有專業感、品牌辨識度與視覺吸引力
+11. 適合直接上傳作為LINE官方帳號背景圖片
+提供1個圖片給我</pre>
+        </div>
+
+        <div class="prompt-card">
+          <div class="prompt-head">
+            <div>
+              <div class="step-badge">STEP 4 · 圖文選單</div>
+              <h3>🔲 四宮格圖文選單指示詞（2500×1686）</h3>
+            </div>
+            <div class="prompt-tools">
+              <button type="button" class="copy-button" data-label="複製指示詞">複製指示詞</button>
+              <a class="prompt-link" href="https://www.canva.com/" target="_blank" rel="noopener noreferrer">前往 Canva</a>
+            </div>
+          </div>
+          <p class="prompt-desc">
+            生成 2×2 四宮格圖文選單：服務項目、最新活動、常見問題、聯絡真人，可直接上傳 LINE 後台。
+          </p>
+          <pre class="prompt-text">請根據剛才你已經了解的品牌資料，以及前面為我製作的LINE官方帳號頭像與背景圖片，直接設計並生成一張適合LINE官方帳號使用的四宮格圖文選單圖片。
+請延續前面已建立的品牌色系、視覺風格與品牌調性，直接生成圖片，不要再詢問我，也不要提供多個方案。
+圖片規格：
+- 尺寸：2500 px × 1686 px
+- 橫式構圖
+- 2欄 × 2列，共4格
+- 四個區塊大小一致
+- 可直接上傳至LINE官方帳號後台作為圖文選單
+固定要出現的四個選單名稱：
+1. 服務項目
+2. 最新活動
+3. 常見問題
+4. 聯絡真人
+版面配置：
+- 左上：服務項目
+- 右上：最新活動
+- 左下：常見問題
+- 右下：聯絡真人
+設計要求：
+1. 使用與前面頭像、背景圖片一致或協調的品牌色系
+2. 整體要有品牌感、專業感、設計感與一致性
+3. 四格要清楚分隔，版面整齊、易讀、易點擊
+4. 每一格都要有清楚的大標題與對應圖示
+5. 圖示風格一致，簡潔、現代，可帶一點科技感或專業感
+6. 文字使用正確的繁體中文，不可有錯字、亂碼或簡體字
+7. 文字要大且清楚，手機小畫面也能辨識
+8. 不要放太多小字或複雜說明
+9. 圖片四周保留安全邊界，避免文字與圖示太靠近邊緣
+10. 整體不要太花亂，也不要過度空白，要有適量層次感與視覺吸引力
+11. 只輸出平面的圖文選單圖片，不要做成手機樣機、情境圖或展示畫面
+圖示建議方向：
+- 服務項目：資訊、清單、工具、服務類圖示
+- 最新活動：日曆、活動、公告類圖示
+- 常見問題：問號、FAQ、說明類圖示
+- 聯絡真人：耳機、客服、對話類圖示
+請直接依照以上要求生成完整的四宮格LINE圖文選單圖片。
+給我1張圖</pre>
+        </div>
+
+        <div class="prompt-card">
+          <div class="prompt-head">
+            <div>
+              <div class="step-badge">STEP 5 · 歡迎詞</div>
+              <h3>💬 加入好友歡迎詞指示詞</h3>
+            </div>
+            <div class="prompt-tools">
+              <button type="button" class="copy-button" data-label="複製指示詞">複製指示詞</button>
+              <a class="prompt-link" href="https://manager.line.biz/" target="_blank" rel="noopener noreferrer">開啟 LINE 後台</a>
+            </div>
+          </div>
+          <p class="prompt-desc">
+            產出一則可直接貼進 LINE 後台的加入好友歡迎詞，並引導點擊下方圖文選單。
+          </p>
+          <pre class="prompt-text">請根據剛才你已經了解的品牌資料，以及前面完成的LINE圖文選單，直接幫我產出一則「LINE官方帳號加入好友歡迎詞」。
+請依照以下結構撰寫：
+嗨，歡迎加入＿＿＿＿！
+我們主要提供＿＿＿＿。
+你可以點擊下方選單，取得資料。
+真人服務時間：＿＿＿＿。
+撰寫要求：
+1. 自動填入我的品牌名稱、主要服務與真人服務時間
+2. 簡單介紹我能幫客戶解決什麼問題
+3. 引導客戶點擊下方的「服務項目、最新活動、常見問題、聯絡真人」
+4. 語氣要符合我的品牌風格，親切、自然、不生硬
+5. 適合手機閱讀，分段清楚，不要太長
+6. 可加入少量適合的Emoji
+7. 不要虛構我沒有提供的服務、優惠或活動
+8. 若沒有真人服務時間，請標示「請填入服務時間」
+9. 不要再詢問我，也不要提供多個版本
+請直接輸出一則可以複製貼進LINE官方帳號後台的完整歡迎詞。</pre>
         </div>
       </section>
       <section id="followLinks" class="section">
@@ -2272,7 +2638,7 @@
   <script>
     (function () {
       const correctPassword = "84200994";
-      const loginStorageKey = "aiLearningLoggedIn_abcd70b5f18c4fa18de32029f172e847";
+      const loginStorageKey = "fuyun_ai_course_login_20260504";
       const boardStorageKey = "fuyun_board_messages_v1";
       const loginPage = document.getElementById("loginPage");
       const mainPage = document.getElementById("mainPage");
@@ -2319,7 +2685,40 @@
         });
       }
 
-    /* ===== 留言板 ===== */
+      /* ===== 複製指示詞（支援多張卡片） ===== */
+      function bindCopyButtons() {
+        Array.from(document.querySelectorAll(".copy-button")).forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            const card = btn.closest(".prompt-card");
+            const pre = card ? card.querySelector(".prompt-text") : null;
+            if (!pre) return;
+            const text = pre.textContent;
+            const label = btn.getAttribute("data-label") || btn.textContent;
+            const done = function () {
+              btn.textContent = "✓ 已複製";
+              setTimeout(function () { btn.textContent = label; }, 1800);
+            };
+            const fallback = function () {
+              const ta = document.createElement("textarea");
+              ta.value = text;
+              ta.style.position = "fixed";
+              ta.style.opacity = "0";
+              document.body.appendChild(ta);
+              ta.select();
+              try { document.execCommand("copy"); done(); } catch (e) {}
+              document.body.removeChild(ta);
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(text).then(done).catch(fallback);
+            } else {
+              fallback();
+            }
+          });
+        });
+      }
+      bindCopyButtons();
+
+      /* ===== 留言板 ===== */
       const boardForm = document.getElementById("boardForm");
       const boardName = document.getElementById("boardName");
       const boardMessage = document.getElementById("boardMessage");
@@ -2415,7 +2814,9 @@
         renderMessages();
       }
 
-      /* ===== 區塊收合／展開 ===== */
+      /* ===== 區塊收合／展開（預設收合，最新活動預設展開） ===== */
+      const defaultOpenSections = { events: true, onlineCourses: true };
+      function collapseKey(id) { return "fuyun_collapse_v3_" + id; }
       Array.from(document.querySelectorAll(".section")).forEach(function (sec) {
         const header = sec.querySelector(".section-header");
         if (!header) return;
@@ -2425,19 +2826,34 @@
         btn.setAttribute("aria-label", "收合或展開這個區塊");
         btn.textContent = "▾";
         header.appendChild(btn);
-        const key = "fuyun_collapse_" + (sec.id || "");
-        try {
-          if (sec.id && localStorage.getItem(key) === "1") {
-            sec.classList.add("collapsed");
-          }
-        } catch (e) {}
+        const id = sec.id || "";
+        let stored = null;
+        try { stored = id ? localStorage.getItem(collapseKey(id)) : null; } catch (e) {}
+        let collapsed;
+        if (stored === "1") collapsed = true;
+        else if (stored === "0") collapsed = false;
+        else collapsed = !defaultOpenSections[id]; // 首次瀏覽：預設收合，例外者展開
+        if (collapsed) sec.classList.add("collapsed");
         header.addEventListener("click", function () {
           sec.classList.toggle("collapsed");
           try {
-            if (sec.id) {
-              localStorage.setItem(key, sec.classList.contains("collapsed") ? "1" : "0");
-            }
+            if (id) localStorage.setItem(collapseKey(id), sec.classList.contains("collapsed") ? "1" : "0");
           } catch (e) {}
+        });
+      });
+
+      /* 點頁內導覽連結時，自動展開目標區塊，方便檢視 */
+      function expandSection(id) {
+        const target = document.getElementById(id);
+        if (target && target.classList.contains("section") && target.classList.contains("collapsed")) {
+          target.classList.remove("collapsed");
+          try { localStorage.setItem(collapseKey(id), "0"); } catch (e) {}
+        }
+      }
+      Array.from(document.querySelectorAll('a[href^="#"]')).forEach(function (a) {
+        a.addEventListener("click", function () {
+          const href = a.getAttribute("href") || "";
+          if (href.length > 1) expandSection(href.slice(1));
         });
       });
 
