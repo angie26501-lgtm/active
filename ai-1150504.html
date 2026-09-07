@@ -1651,7 +1651,7 @@
         <button type="button" class="login-button" id="loginButton">進入學習成果入口</button>
       </div>
       <div id="errorMessage" class="error-message"></div>
-      <div class="secure-note">本頁內容僅供課程學員學習使用</div>
+      <div class="secure-note">本頁內容僅供課程學員學習使用｜登入後 30 天內免再輸入密碼</div>
     </div>
   </section>
   <main id="mainPage" class="main-page">
@@ -2636,8 +2636,9 @@
   </main>
   <script>
     (function () {
-      const correctPassword = "84200994";
-      const loginStorageKey = "fuyun_ai_course_login_20260504";
+      const correctPassword = "vv84200994";
+      const loginStorageKey = "fuyun_ai_course_login_v2";
+      const loginValidDays = 30;
       const boardStorageKey = "fuyun_board_messages_v1";
       const loginPage = document.getElementById("loginPage");
       const mainPage = document.getElementById("mainPage");
@@ -2659,7 +2660,9 @@
       function checkPassword() {
         const inputPassword = passwordInput.value.trim();
         if (inputPassword === correctPassword) {
-          localStorage.setItem(loginStorageKey, "true");
+          try {
+            localStorage.setItem(loginStorageKey, JSON.stringify({ exp: Date.now() + loginValidDays * 24 * 60 * 60 * 1000 }));
+          } catch (e) {}
           errorMessage.textContent = "";
           passwordInput.value = "";
           showMainPage();
@@ -2868,10 +2871,16 @@
 
       window.addEventListener("load", function () {
         if (boardList) renderMessages();
-        const isLoggedIn = localStorage.getItem(loginStorageKey);
-        if (isLoggedIn === "true") {
+        let loginValid = false;
+        try {
+          const raw = localStorage.getItem(loginStorageKey);
+          const data = raw ? JSON.parse(raw) : null;
+          loginValid = !!(data && typeof data.exp === "number" && Date.now() < data.exp);
+        } catch (e) { loginValid = false; }
+        if (loginValid) {
           showMainPage();
         } else {
+          localStorage.removeItem(loginStorageKey);
           showLoginPage();
           passwordInput.focus();
         }
