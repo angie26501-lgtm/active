@@ -149,7 +149,15 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
   color:var(--forest);margin-bottom:5px}
 .win p{margin:0;font-size:15px;line-height:1.85;color:var(--muted)}
 
-@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+.back{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;
+  padding-top:18px;border-top:1px solid var(--line)}
+.back a{flex:1;min-width:150px;text-align:center;text-decoration:none;
+  font-size:14.5px;font-weight:900;color:var(--forest);
+  background:rgba(95,127,104,.1);border:1px solid var(--line);
+  border-radius:11px;padding:11px 14px;min-height:44px;
+  display:flex;align-items:center;justify-content:center}
+.back a:hover,.back a:focus-visible{border-color:rgba(200,166,106,.65)}
+.back a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
 <div class="wrap">
@@ -198,6 +206,10 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
   </div>
   <p class="hintline" id="msg">複製之後貼到 0921 群組，我就知道你走到哪裡、卡在哪裡。</p>
 
+  <nav class="back">
+    <a href="index.html">🏠 回學員專區</a>
+    <a href="task.html">📘 課後任務頁</a>
+  </nav>
   <div class="rep" id="rep" hidden>
     <h3>這段會被複製</h3>
     <pre id="repTxt"></pre>

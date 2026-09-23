@@ -356,7 +356,14 @@ body.noticing{overflow:hidden}
 .fc.over{color:#b4542e}
 .fmsg{font-size:13.5px;color:var(--muted);line-height:1.8;margin:10px 0 0}
 #fourbox .fs-go{width:100%;margin-top:13px}
-</style>
+/* 進度表入口 */
+.goprog{display:inline-block;margin-top:11px;font-size:14.5px;font-weight:900;
+  color:#6b4a12;background:rgba(255,253,248,.72);border:1px solid rgba(200,166,106,.55);
+  border-radius:10px;padding:8px 14px;text-decoration:none}
+.goprog:hover,.goprog:focus-visible{background:#fffdf8;border-color:var(--gold)}
+.goprog:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.progbtn{display:block;text-align:center;text-decoration:none;width:100%;
+  box-sizing:border-box;margin-top:13px}</style>
 </head>
 <body>
 
@@ -422,6 +429,7 @@ body.noticing{overflow:hidden}
   <div class="openbar">
     <b>⏳ 這頁開放到 9/28（一）</b>
     <p>這一週想複習、想重做都可以回來。完成任務並在群組打卡的學員，可以領取整理好的<b>指示詞 PDF 合輯</b>。</p>
+    <a class="goprog" id="lnk-check-top" href="check.html">✅ 想知道自己做到哪了？打開學習進度表 →</a>
   </div>
 
   <div class="hw">
@@ -1612,6 +1620,13 @@ Shot 4（00:11–00:15）
       <span>換另一個工具試試，或隔天再跑。免費版是用時間換，不急的話完全夠用。</span></div>
   </div>
 
+  <h2><i>進度</i>做到哪了，自己勾</h2>
+  <p class="hint">19 項自我檢核，從課前準備到加分題。<b>進度只存在你自己的手機裡</b>，別人看不到；想回報的時候按一下就能複製貼到群組。</p>
+    <div class="card prompt hotcard">
+      <div class="p-head"><h4>學習進度表</h4></div>
+      <p class="p-desc">勾選會自動記住，關掉再開還在。做完一組會亮起來，全部完成有小驚喜。</p>
+      <a class="copy fs-go progbtn" id="lnk-check-bottom" href="check.html">✅ 打開學習進度表</a>
+    </div>
   <h2><i>接下來</i>卡住隨時問</h2>
   <div class="card">
     <p class="p-desc" style="margin-bottom:0">
