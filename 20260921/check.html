@@ -1,0 +1,414 @@
+<title>0921 學習進度表</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<style>
+:root{
+  --forest:#274234; --herbal:#5f7f68; --gold:#c8a66a; --soft-gold:#ead8ad;
+  --apricot:#f0c9a6; --cream:#f8f3e9; --paper:#fffdf8;
+  --ink:#2f3430; --muted:#565c56; --line:rgba(95,127,104,.2);
+  --done:#4a7c59; --track:rgba(95,127,104,.16);
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --forest:#e8ddc4; --herbal:#9dbca6; --gold:#d8b87e; --soft-gold:#6b5a35;
+    --apricot:#6d5340; --cream:#161a17; --paper:#1e241f;
+    --ink:#ece9e1; --muted:#a3ab a3; --muted:#a3aba3; --line:rgba(157,188,166,.22);
+    --done:#7fb08c; --track:rgba(157,188,166,.18);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --forest:#e8ddc4; --herbal:#9dbca6; --gold:#d8b87e; --soft-gold:#6b5a35;
+  --apricot:#6d5340; --cream:#161a17; --paper:#1e241f;
+  --ink:#ece9e1; --muted:#a3aba3; --line:rgba(157,188,166,.22);
+  --done:#7fb08c; --track:rgba(157,188,166,.18);
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.75;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:660px;margin:0 auto;padding-inline:18px;padding-block:0 60px}
+
+/* ── 頁首 ── */
+.top{background:var(--forest);color:var(--cream);margin-inline:-18px;
+  padding:22px 18px 20px;border-radius:0 0 22px 22px}
+:root[data-theme="dark"] .top,
+@media (prefers-color-scheme: dark){}
+.top h1{font-family:var(--serif);font-size:23px;font-weight:900;
+  margin:0 0 3px;letter-spacing:.01em;text-wrap:balance;color:var(--cream)}
+:root:not([data-theme="light"]) .top{background:#20302a}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .top{background:#274234}}
+.top p{margin:0;font-size:13.5px;color:rgba(248,243,233,.72)}
+
+/* ── 總進度 ── */
+.sum{display:flex;align-items:center;gap:16px;margin-top:17px;
+  background:rgba(248,243,233,.1);border:1px solid rgba(234,216,173,.25);
+  border-radius:16px;padding:15px 17px}
+.ring{position:relative;flex:0 0 74px;width:74px;height:74px}
+.ring svg{transform:rotate(-90deg);display:block}
+.ring circle{fill:none;stroke-width:8;stroke-linecap:round}
+.ring .bg{stroke:rgba(248,243,233,.18)}
+.ring .fg{stroke:var(--soft-gold);transition:stroke-dasharray .45s ease}
+:root:not([data-theme="light"]) .ring .fg{stroke:#d8b87e}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;
+  font-family:var(--serif);font-size:19px;font-weight:900;color:var(--cream);
+  font-variant-numeric:tabular-nums}
+.sum-t{min-width:0}
+.sum-t strong{display:block;font-family:var(--serif);font-size:17.5px;
+  font-weight:700;color:var(--cream);margin-bottom:2px}
+.sum-t span{font-size:13.5px;color:rgba(248,243,233,.72);
+  font-variant-numeric:tabular-nums}
+
+/* ── 姓名 ── */
+.who{display:flex;align-items:center;gap:9px;margin-top:13px}
+.who label{font-size:13px;font-weight:700;color:rgba(248,243,233,.78);
+  white-space:nowrap}
+.who input{flex:1;min-width:0;font-family:var(--sans);font-size:15px;
+  color:var(--cream);background:rgba(248,243,233,.12);
+  border:1px solid rgba(234,216,173,.3);border-radius:10px;padding:8px 12px}
+.who input::placeholder{color:rgba(248,243,233,.45)}
+.who input:focus{outline:2px solid var(--soft-gold);outline-offset:1px}
+
+/* ── 期限 ── */
+.due{display:flex;gap:10px;align-items:flex-start;margin:20px 0 4px;
+  background:rgba(240,201,166,.4);border:1px solid rgba(200,166,106,.5);
+  border-left:4px solid var(--gold);border-radius:0 13px 13px 0;padding:13px 15px}
+:root:not([data-theme="light"]) .due{background:rgba(109,83,64,.35)}
+.due b{font-family:var(--serif);font-size:16px;color:var(--forest)}
+.due p{margin:2px 0 0;font-size:14.5px;line-height:1.8;color:var(--muted)}
+
+/* ── 分組 ── */
+.grp{background:var(--paper);border:1px solid var(--line);
+  border-radius:17px;padding:17px 17px 8px;margin-top:16px}
+.grp.done{border-color:rgba(74,124,89,.45);
+  box-shadow:0 0 0 1px rgba(74,124,89,.18)}
+.grp-h{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;
+  padding-bottom:11px;border-bottom:1px solid var(--line);margin-bottom:6px}
+.grp-h h2{font-family:var(--serif);font-size:19px;font-weight:900;
+  color:var(--forest);margin:0;flex:1;min-width:0;text-wrap:balance}
+.chip{font-size:12.5px;font-weight:900;letter-spacing:.03em;
+  color:var(--herbal);background:var(--track);border-radius:999px;
+  padding:3px 11px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.grp.done .chip{color:#fff;background:var(--done)}
+:root:not([data-theme="light"]) .grp.done .chip{color:#10160f}
+.grp-n{font-size:12px;font-weight:900;letter-spacing:.08em;
+  color:var(--gold);text-transform:uppercase}
+.grp-sub{font-size:13.5px;color:var(--muted);margin:-2px 0 9px;line-height:1.7}
+
+/* ── 項目 ── */
+.it{display:flex;gap:12px;align-items:flex-start;cursor:pointer;
+  padding:11px 2px;min-height:44px;border-bottom:1px solid var(--line)}
+.it:last-child{border-bottom:0}
+.it input{position:absolute;opacity:0;width:0;height:0}
+.box{flex:0 0 23px;width:23px;height:23px;margin-top:2px;border-radius:7px;
+  border:2px solid var(--herbal);background:transparent;display:grid;
+  place-items:center;transition:background .16s,border-color .16s}
+.box svg{width:13px;height:13px;opacity:0;transition:opacity .16s}
+.it input:checked~.box{background:var(--done);border-color:var(--done)}
+.it input:checked~.box svg{opacity:1}
+.it input:focus-visible~.box{outline:2px solid var(--gold);outline-offset:2px}
+.txt{flex:1;min-width:0;font-size:15.5px;line-height:1.75;transition:color .16s}
+.it input:checked~.txt{color:var(--muted);text-decoration:line-through;
+  text-decoration-color:var(--track);text-decoration-thickness:2px}
+.txt em{display:block;font-style:normal;font-size:13px;color:var(--muted);
+  margin-top:2px;line-height:1.65}
+.key{font-size:11.5px;font-weight:900;color:var(--gold);letter-spacing:.04em;
+  border:1px solid rgba(200,166,106,.5);border-radius:5px;padding:0 5px;
+  margin-left:6px;white-space:nowrap}
+
+/* ── 動作 ── */
+.act{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+button{font-family:var(--sans);font-size:15.5px;font-weight:900;
+  border-radius:12px;padding:13px 20px;cursor:pointer;border:1px solid transparent;
+  min-height:46px}
+.b1{background:var(--forest);color:var(--cream);flex:1;min-width:190px}
+:root:not([data-theme="light"]) .b1{background:#2f4a3b;color:#f0ead9}
+.b2{background:transparent;color:var(--muted);border-color:var(--line)}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.hintline{font-size:13.5px;color:var(--muted);margin:11px 0 0;line-height:1.8}
+
+/* ── 回報預覽 ── */
+.rep{margin-top:15px;background:var(--paper);border:1px solid var(--line);
+  border-radius:15px;padding:15px 16px}
+.rep h3{font-family:var(--serif);font-size:16px;color:var(--forest);margin:0 0 9px}
+.rep pre{margin:0;font-family:var(--sans);font-size:14px;line-height:1.9;
+  white-space:pre-wrap;word-break:break-word;color:var(--ink)}
+
+/* ── 全部完成 ── */
+.win{margin-top:18px;background:linear-gradient(135deg,
+  rgba(240,201,166,.6),rgba(234,216,173,.45));
+  border:1px solid rgba(200,166,106,.55);border-radius:17px;padding:19px 18px}
+:root:not([data-theme="light"]) .win{background:linear-gradient(135deg,
+  rgba(109,83,64,.5),rgba(107,90,53,.4))}
+.win b{display:block;font-family:var(--serif);font-size:20px;
+  color:var(--forest);margin-bottom:5px}
+.win p{margin:0;font-size:15px;line-height:1.85;color:var(--muted)}
+
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <h1>0921 學習進度表</h1>
+    <p>雷神基地 AI 應用課 · 財顧芸 Angie</p>
+
+    <div class="sum">
+      <div class="ring">
+        <svg width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
+          <circle class="bg" cx="37" cy="37" r="31"></circle>
+          <circle class="fg" id="ring" cx="37" cy="37" r="31"
+                  stroke-dasharray="0 195"></circle>
+        </svg>
+        <b id="pct">0%</b>
+      </div>
+      <div class="sum-t">
+        <strong id="stat">還沒開始</strong>
+        <span id="count">0 / 0 項完成</span>
+      </div>
+    </div>
+
+    <div class="who">
+      <label for="nm">你的名字</label>
+      <input id="nm" type="text" placeholder="填了回報才知道是誰" autocomplete="off">
+    </div>
+  </header>
+
+  <div class="due">
+    <div>
+      <b>⏳ 這一週做完就好</b>
+      <p>課程到 <b>9/28（一）</b>。趁記憶還熱的時候做最省力——勾起來的進度只存在你自己手機裡，別人看不到。</p>
+    </div>
+  </div>
+
+  <main id="list"></main>
+
+  <div id="win" hidden class="win">
+    <b>🎉 全部完成了</b>
+    <p>你已經有一張代表自己的形象照、一支會說話的影片，還有一套改得動的指示詞。下一支影片，你只要換四句話。</p>
+  </div>
+
+  <div class="act">
+    <button class="b1" id="copy" type="button">📋 複製進度，回報群組</button>
+    <button class="b2" id="reset" type="button">重來</button>
+  </div>
+  <p class="hintline" id="msg">複製之後貼到 0921 群組，我就知道你走到哪裡、卡在哪裡。</p>
+
+  <div class="rep" id="rep" hidden>
+    <h3>這段會被複製</h3>
+    <pre id="repTxt"></pre>
+  </div>
+</div>
+
+<script>
+var GROUPS = [
+ {n:"課前", t:"準備兩樣東西", s:"沒備齊會做到一半卡住。", items:[
+   {t:"登入好生圖工具", d:"ChatGPT 或 Gemini，擇一即可，免費版就夠"},
+   {t:"登入好影片工具", d:"Grok 或 Dola，免費額度足以完成"},
+   {t:"手機裡挑好一張自己的正面照", d:"光線清楚、臉不要被遮住"}
+ ]},
+ {n:"任務一", t:"個人品牌形象照", s:"9:16 直式，留白處放姓名與 QR Code。", items:[
+   {t:"貼第一段指令，讓 AI 幫你填十個品牌欄位"},
+   {t:"十個欄位改到自己點頭", d:"品牌象徵最關鍵——不順眼就換成你自己想的", k:"關鍵"},
+   {t:"先上傳照片，再貼第二段指令", d:"順序反了，AI 會用想像的臉", k:"順序"},
+   {t:"生出你的 9:16 形象照"},
+   {t:"回傳 0921 群組", d:"順便說一句你選了什麼品牌象徵、為什麼"},
+   {t:"換成 LINE 或 FB 大頭貼", d:"做完不換上去，等於沒做"}
+ ]},
+ {n:"任務二", t:"讓形象照開口說話", s:"同一張圖，加四句話，變成 15 秒影片。", items:[
+   {t:"讀完「為什麼指示詞要這麼長」"},
+   {t:"寫出你的四句話", d:"開場 → 痛點 → 解法 → 行動呼籲", k:"關鍵"},
+   {t:"每句唸出來，超過 4 秒就砍字", d:"一句 15 到 18 個字"},
+   {t:"先上傳形象照，再貼指示詞"},
+   {t:"生出 15 秒影片"},
+   {t:"回傳 0921 群組"}
+ ]},
+ {n:"最重要", t:"把指示詞變成你的", s:"這一項做了，這堂課才算真的帶走。", items:[
+   {t:"把任何一份指示詞改掉至少三個地方，再生一次",
+    d:"改過一次，它才真的是你的", k:"必做"}
+ ]},
+ {n:"加分", t:"還有時間就玩這些", s:"不做也沒關係，做了會更熟。", items:[
+   {t:"雙視圖彩鉛人物設定稿", d:"同一張照片，完全不同的風格"},
+   {t:"企業制服宣傳影片", d:"換成你自己的商品照再跑一次"},
+   {t:"直播短片模板挑一個行業做一支", d:"產品篇／帶看篇／顧問篇"}
+ ]}
+];
+
+var KEY = "yunplan0921-progress-v1";
+var state = {name:"", done:{}};
+
+function load(){
+  try{
+    var raw = localStorage.getItem(KEY);
+    if(raw){
+      var o = JSON.parse(raw);
+      if(o && typeof o === "object"){
+        state.name = typeof o.name === "string" ? o.name : "";
+        state.done = (o.done && typeof o.done === "object") ? o.done : {};
+      }
+    }
+  }catch(e){ /* 無痕視窗或封鎖儲存：照常運作，只是不記住 */ }
+}
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+
+var TICK = '<svg viewBox="0 0 16 16" aria-hidden="true">'
+  + '<path d="M2.5 8.5l3.5 3.5 7.5-8" fill="none" stroke="#fffdf8"'
+  + ' stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function esc(s){
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+function build(){
+  var list = document.getElementById("list");
+  var html = "";
+  GROUPS.forEach(function(g, gi){
+    html += '<section class="grp" id="g'+gi+'">'
+      + '<div class="grp-h"><span class="grp-n">'+esc(g.n)+'</span>'
+      + '<h2>'+esc(g.t)+'</h2>'
+      + '<span class="chip" id="c'+gi+'">0/'+g.items.length+'</span></div>';
+    if(g.s) html += '<p class="grp-sub">'+esc(g.s)+'</p>';
+    g.items.forEach(function(it, ii){
+      var id = "i"+gi+"-"+ii;
+      html += '<label class="it" for="'+id+'">'
+        + '<input type="checkbox" id="'+id+'" data-g="'+gi+'" data-i="'+ii+'">'
+        + '<span class="box">'+TICK+'</span>'
+        + '<span class="txt">'+esc(it.t)
+        + (it.k ? '<span class="key">'+esc(it.k)+'</span>' : '')
+        + (it.d ? '<em>'+esc(it.d)+'</em>' : '')
+        + '</span></label>';
+    });
+    html += '</section>';
+  });
+  list.innerHTML = html;
+
+  list.addEventListener("change", function(ev){
+    var el = ev.target;
+    if(!el || el.type !== "checkbox") return;
+    state.done[el.id] = el.checked;
+    if(!el.checked) delete state.done[el.id];
+    save(); render();
+  });
+}
+
+function counts(){
+  var total = 0, done = 0, per = [];
+  GROUPS.forEach(function(g, gi){
+    var d = 0;
+    g.items.forEach(function(_, ii){ if(state.done["i"+gi+"-"+ii]) d++; });
+    per.push(d); total += g.items.length; done += d;
+  });
+  return {total:total, done:done, per:per};
+}
+
+function render(){
+  var c = counts();
+  var p = c.total ? Math.round(c.done / c.total * 100) : 0;
+  var CIRC = 2 * Math.PI * 31;
+
+  document.getElementById("pct").textContent = p + "%";
+  document.getElementById("ring").setAttribute("stroke-dasharray",
+    (CIRC * p / 100).toFixed(1) + " " + CIRC.toFixed(1));
+  document.getElementById("count").textContent = c.done + " / " + c.total + " 項完成";
+
+  var stat = "還沒開始";
+  if(p === 100) stat = "全部完成了 🎉";
+  else if(c.done > 0 && p < 34) stat = "開始了，繼續";
+  else if(p < 67) stat = "走到一半了";
+  else if(p < 100) stat = "快到了";
+  document.getElementById("stat").textContent = stat;
+
+  GROUPS.forEach(function(g, gi){
+    document.getElementById("c" + gi).textContent = c.per[gi] + "/" + g.items.length;
+    document.getElementById("g" + gi)
+      .classList.toggle("done", c.per[gi] === g.items.length);
+  });
+
+  document.getElementById("win").hidden = (p !== 100);
+}
+
+function report(){
+  var c = counts();
+  var p = c.total ? Math.round(c.done / c.total * 100) : 0;
+  var nm = state.name.trim();
+  var out = "【0921 學習進度】" + (nm || "（沒填名字）") + "\n"
+          + "完成 " + c.done + "/" + c.total + " 項（" + p + "%）\n";
+  GROUPS.forEach(function(g, gi){
+    var full = c.per[gi] === g.items.length;
+    out += "\n" + (full ? "✅" : (c.per[gi] ? "🔸" : "◻️")) + " "
+         + g.t + "　" + c.per[gi] + "/" + g.items.length;
+  });
+  if(p === 100) out += "\n\n全部做完了 🎉";
+  return out;
+}
+
+function flash(t){
+  var m = document.getElementById("msg");
+  m.textContent = t;
+  clearTimeout(flash.t);
+  flash.t = setTimeout(function(){
+    m.textContent = "複製之後貼到 0921 群組，我就知道你走到哪裡、卡在哪裡。";
+  }, 4000);
+}
+
+/* ── 啟動 ── */
+load();
+build();
+
+var nm = document.getElementById("nm");
+nm.value = state.name;
+nm.addEventListener("input", function(){ state.name = nm.value; save(); });
+
+Object.keys(state.done).forEach(function(id){
+  var el = document.getElementById(id);
+  if(el) el.checked = !!state.done[id];
+});
+render();
+
+document.getElementById("copy").addEventListener("click", function(){
+  var txt = report();
+  document.getElementById("repTxt").textContent = txt;
+  document.getElementById("rep").hidden = false;
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(function(){
+      flash("✓ 已複製，直接貼到群組就好");
+    }).catch(function(){
+      flash("複製鈕沒作用，下面那段長按選取複製");
+    });
+  }else{
+    flash("複製鈕沒作用，下面那段長按選取複製");
+  }
+});
+
+var resetArmed = false, resetTimer;
+document.getElementById("reset").addEventListener("click", function(){
+  var b = document.getElementById("reset");
+  if(!resetArmed){
+    resetArmed = true;
+    b.textContent = "確定清空？再按一次";
+    flash("按第二次才會清空，勾好的都會不見。");
+    clearTimeout(resetTimer);
+    resetTimer = setTimeout(function(){
+      resetArmed = false; b.textContent = "重來";
+    }, 5000);
+    return;
+  }
+  resetArmed = false;
+  clearTimeout(resetTimer);
+  b.textContent = "重來";
+  state.done = {};
+  save();
+  Array.prototype.forEach.call(
+    document.querySelectorAll('#list input[type=checkbox]'),
+    function(el){ el.checked = false; });
+  document.getElementById("rep").hidden = true;
+  render();
+  flash("清空了，重新開始。");
+});
+</script>

@@ -1,0 +1,184 @@
+<title>20260921 學員專區</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<style>
+:root{
+  --forest:#274234; --herbal:#5f7f68; --gold:#c8a66a; --soft-gold:#ead8ad;
+  --apricot:#f0c9a6; --cream:#f8f3e9; --paper:#fffdf8;
+  --ink:#2f3430; --muted:#565c56; --line:rgba(95,127,104,.2);
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --forest:#e8ddc4; --herbal:#9dbca6; --gold:#d8b87e; --soft-gold:#6b5a35;
+    --apricot:#6d5340; --cream:#161a17; --paper:#1e241f;
+    --ink:#ece9e1; --muted:#a3aba3; --line:rgba(157,188,166,.22);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --forest:#e8ddc4; --herbal:#9dbca6; --gold:#d8b87e; --soft-gold:#6b5a35;
+  --apricot:#6d5340; --cream:#161a17; --paper:#1e241f;
+  --ink:#ece9e1; --muted:#a3aba3; --line:rgba(157,188,166,.22);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.75;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:620px;margin:0 auto;padding-inline:18px;padding-block:0 54px}
+
+.top{background:#274234;color:#f8f3e9;margin-inline:-18px;
+  padding:30px 18px 26px;border-radius:0 0 24px 24px;text-align:center}
+:root:not([data-theme="light"]) .top{background:#20302a}
+.mark{width:52px;height:52px;border-radius:50%;background:var(--soft-gold);
+  color:#274234;display:grid;place-items:center;margin:0 auto 11px;
+  font-family:var(--serif);font-size:24px;font-weight:900}
+.top h1{font-family:var(--serif);font-size:26px;font-weight:900;margin:0 0 5px;
+  letter-spacing:.02em;color:#f8f3e9;text-wrap:balance}
+.top p{margin:0;font-size:14px;color:rgba(248,243,233,.72)}
+
+.due{display:flex;gap:11px;margin:20px 0 6px;
+  background:rgba(240,201,166,.42);border:1px solid rgba(200,166,106,.5);
+  border-left:4px solid var(--gold);border-radius:0 13px 13px 0;padding:14px 16px}
+:root:not([data-theme="light"]) .due{background:rgba(109,83,64,.35)}
+.due b{font-family:var(--serif);font-size:16.5px;color:var(--forest)}
+.due p{margin:3px 0 0;font-size:14.5px;line-height:1.8;color:var(--muted)}
+
+.cards{display:grid;gap:15px;margin-top:17px}
+a.card{display:block;text-decoration:none;color:inherit;
+  background:var(--paper);border:1px solid var(--line);border-radius:18px;
+  padding:20px 19px;transition:transform .16s,box-shadow .16s,border-color .16s}
+a.card:hover,a.card:focus-visible{transform:translateY(-2px);
+  border-color:rgba(200,166,106,.6);box-shadow:0 8px 22px rgba(45,61,49,.12)}
+a.card:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.c-top{display:flex;align-items:center;gap:11px;margin-bottom:9px}
+.c-ico{flex:0 0 42px;width:42px;height:42px;border-radius:12px;
+  display:grid;place-items:center;font-size:21px;background:rgba(95,127,104,.13)}
+.c-1 .c-ico{background:rgba(200,166,106,.22)}
+.c-top h2{font-family:var(--serif);font-size:20px;font-weight:900;
+  color:var(--forest);margin:0;flex:1;min-width:0}
+.c-desc{font-size:15px;line-height:1.85;color:var(--muted);margin:0 0 11px}
+.c-list{margin:0 0 13px;padding-left:19px}
+.c-list li{font-size:14.5px;line-height:1.8;color:var(--ink);margin-bottom:3px}
+.c-go{display:inline-flex;align-items:center;gap:6px;font-size:15px;
+  font-weight:900;color:var(--forest);background:var(--soft-gold);
+  border-radius:10px;padding:9px 16px}
+:root:not([data-theme="light"]) .c-go{color:#f0ead9;background:#4a5f3d}
+.foot{margin-top:26px;padding-top:20px;border-top:1px solid var(--line);
+  text-align:center}
+.foot p{margin:0 0 9px;font-size:14.5px;line-height:1.85;color:var(--muted)}
+.foot a{color:var(--forest);font-weight:700}
+.foot .sig{font-family:var(--serif);font-size:14px;color:var(--muted);
+  margin-top:14px}
+.sech{font-family:var(--serif);font-size:19px;font-weight:900;
+  color:var(--forest);margin:28px 0 11px}
+.mecard{background:var(--paper);border:1px solid var(--line);
+  border-radius:17px;padding:17px}
+.meline{margin:0 0 14px;font-size:14.5px;line-height:1.85;color:var(--muted)}
+.meline b{color:var(--ink)}
+.melinks{display:grid;gap:10px}
+@media(min-width:520px){.melinks{grid-template-columns:1fr 1fr}}
+a.me{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;
+  background:rgba(95,127,104,.09);border:1px solid var(--line);
+  border-radius:13px;padding:12px 14px;min-height:44px;transition:border-color .15s}
+a.me:hover,a.me:focus-visible{border-color:rgba(200,166,106,.65)}
+a.me:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.me-i{flex:0 0 32px;width:32px;height:32px;border-radius:9px;font-size:16px;
+  background:rgba(200,166,106,.2);display:grid;place-items:center}
+.me-b{min-width:0}
+.me-b b{display:block;font-size:15.5px;font-weight:900;color:var(--forest);
+  line-height:1.5}
+.me-b span{font-size:13px;color:var(--muted)}
+a.teach{display:inline-block;font-size:13.5px;font-weight:700;color:var(--muted);
+  text-decoration:none;border:1px dashed var(--line);border-radius:10px;
+  padding:8px 15px;margin-bottom:14px}
+a.teach:hover,a.teach:focus-visible{color:var(--forest);
+  border-color:rgba(200,166,106,.6)}
+a.teach:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){a.card,a.me{transition:none}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="mark">芸</div>
+    <h1>20260921 學員專區</h1>
+    <p>雷神基地 AI 應用課 · 財顧芸 Angie</p>
+  </header>
+
+  <div class="due">
+    <div>
+      <b>⏳ 這裡開放到 9/28（一）</b>
+      <p>這一週想複習、想重做都可以回來。完成任務並在群組打卡的學員，可以領取整理好的<b>指示詞 PDF 合輯</b>。</p>
+    </div>
+  </div>
+
+  <div class="cards">
+    <a class="card c-1" id="lnk-task" href="#">
+      <div class="c-top">
+        <span class="c-ico" aria-hidden="true">📘</span>
+        <h2>課後任務頁</h2>
+      </div>
+      <p class="c-desc">課堂上用到的指示詞全部在這裡，附複製鈕。還有四句話公式、手機怎麼做，以及填四格就能產生指示詞的工具。</p>
+      <ul class="c-list">
+        <li>本週作業：個人品牌形象照</li>
+        <li>今天的任務：讓形象照開口說話</li>
+        <li>四句話公式 · 六個行業對照</li>
+        <li>全部指示詞（制服影片、彩鉛、直播模板）</li>
+      </ul>
+      <p class="c-desc" style="margin-bottom:11px">需要課程密碼，<b>密碼在 0921 群組公告裡</b>。</p>
+      <span class="c-go">進入課後任務頁 →</span>
+    </a>
+
+    <a class="card c-2" id="lnk-check" href="#">
+      <div class="c-top">
+        <span class="c-ico" aria-hidden="true">✅</span>
+        <h2>學習進度表</h2>
+      </div>
+      <p class="c-desc">19 項自我檢核，做到哪裡自己勾。進度只存在你自己的手機裡，別人看不到；想回報進度時按一下就能複製貼到群組。</p>
+      <ul class="c-list">
+        <li>課前準備、兩份任務、加分題</li>
+        <li>勾選自動記住，關掉再開還在</li>
+        <li>一鍵複製進度，貼到群組</li>
+      </ul>
+      <span class="c-go">打開進度表 →</span>
+    </a>
+  </div>
+
+  <h3 class="sech">找我</h3>
+  <div class="mecard">
+    <p class="meline"><b>卡住隨時問。</b>做到一半卡住、生出來不像你、額度用完了，直接在 0921 群組說一聲，不用客氣。</p>
+    <div class="melinks">
+      <a class="me" href="https://lin.ee/6hkkECK" target="_blank" rel="noopener noreferrer">
+        <span class="me-i" aria-hidden="true">💬</span>
+        <span class="me-b"><b>LINE@ 財顧芸</b><span>一對一問我</span></span>
+      </a>
+      <a class="me" href="https://www.allfreedom.info/" target="_blank" rel="noopener noreferrer">
+        <span class="me-i" aria-hidden="true">🌿</span>
+        <span class="me-b"><b>馥芸財富學苑</b><span>官方網站</span></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="foot">
+    <a class="teach" id="lnk-admin" href="#">🔒 老師管理頁（僅限講師）</a>
+    <p class="sig">課程內容與指示詞版權所有，僅供 20260921 學員使用</p>
+  </div>
+</div>
+
+<script>
+/* ─────────────────────────────────────────────
+   各頁網址。四個 HTML 都放同一層，所以直接寫檔名。
+   ───────────────────────────────────────────── */
+var LINKS = {
+  task : "task.html",
+  check: "check.html",
+  admin: "admin.html"
+};
+
+document.getElementById("lnk-task").setAttribute("href", LINKS.task);
+document.getElementById("lnk-check").setAttribute("href", LINKS.check);
+document.getElementById("lnk-admin").setAttribute("href", LINKS.admin);
+</script>

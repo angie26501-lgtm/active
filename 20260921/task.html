@@ -1,0 +1,1783 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#274234" />
+<title>0921 課後任務｜AI 個人品牌影像實作課</title>
+<style>
+:root{
+  --forest:#274234; --herbal:#5f7f68; --gold:#c8a66a; --soft-gold:#ead8ad;
+  --apricot:#f0c9a6; --cream:#f8f3e9; --paper:#fffdf8; --ink:#2f3430; --muted:#565c56;
+  --line:rgba(95,127,104,.2);
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);font-size:17px;color:var(--ink);line-height:1.85;
+  background:radial-gradient(circle at 92% -8%, rgba(240,201,166,.45), transparent 44%),
+             linear-gradient(170deg,var(--cream),#eef2ec 80%);
+  background-attachment:fixed;-webkit-text-size-adjust:100%;padding-bottom:50px}
+.wrap{max-width:820px;margin:0 auto;padding:0 clamp(14px,3.5vw,26px)}
+a{color:var(--herbal);font-weight:700}
+
+.top{position:sticky;top:0;z-index:30;background:rgba(39,66,52,.97);color:#fff;
+  backdrop-filter:blur(8px);padding:11px clamp(14px,3.5vw,26px);display:flex;align-items:center;gap:10px}
+.top .mk{width:28px;height:28px;flex:0 0 auto;border-radius:50%;
+  background:linear-gradient(150deg,var(--gold),var(--soft-gold));color:var(--forest);
+  font-family:var(--serif);font-size:16.5px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.top b{font-size:16px}
+.top span{margin-left:auto;font-size:13px;color:rgba(255,255,255,.6)}
+
+header{padding:clamp(24px,5vw,40px) 0 clamp(8px,2vw,14px)}
+.eyebrow{display:inline-block;font-size:15px;font-weight:900;letter-spacing:.14em;color:var(--forest);
+  padding:5px 13px;border-radius:999px;background:rgba(240,201,166,.5);border:1px solid rgba(200,166,106,.42)}
+h1{font-family:var(--serif);font-size:clamp(29px,6.05vw,42.6px);line-height:1.26;color:var(--forest);margin:14px 0 10px}
+h1 em{font-style:normal;color:var(--gold)}
+header p{font-size:17.5px;color:var(--muted);line-height:1.95;max-width:48ch}
+.facts{margin-top:18px;display:flex;gap:8px;flex-wrap:wrap}
+.facts span{font-size:15.5px;font-weight:700;color:var(--forest);background:var(--paper);
+  border:1px solid var(--line);border-radius:10px;padding:7px 13px}
+
+h2{font-family:var(--serif);font-size:clamp(23.2px,3.81vw,30.2px);color:var(--forest);
+  display:flex;align-items:center;gap:11px;margin:clamp(30px,5vw,46px) 0 5px}
+h2 i{font-style:normal;font-size:15px;font-weight:900;letter-spacing:.1em;color:#fff;
+  background:var(--herbal);border-radius:7px;padding:3px 9px}
+.hint{font-size:16px;color:var(--muted);margin-bottom:16px;max-width:60ch;line-height:1.9}
+
+/* 作業區 */
+.hw{background:linear-gradient(140deg,#223a2c,#2f4a39);border-radius:20px;
+  padding:clamp(22px,4.5vw,32px);color:#fff;position:relative;overflow:hidden;
+  box-shadow:0 20px 44px rgba(39,66,52,.26)}
+.hw::before{content:"";position:absolute;right:-50px;top:-70px;width:230px;height:230px;
+  border-radius:50%;background:rgba(234,216,173,.09)}
+.hw-tag{position:relative;display:inline-block;font-size:15px;font-weight:900;letter-spacing:.12em;
+  color:var(--forest);background:var(--soft-gold);border-radius:99px;padding:4px 14px}
+.hw h3{position:relative;font-family:var(--serif);font-size:clamp(25.5px,4.93vw,33.6px);
+  color:#fff;margin:13px 0 9px;line-height:1.35}
+.hw h3 em{font-style:normal;color:var(--soft-gold)}
+.hw > p{position:relative;font-size:17px;line-height:2;color:rgba(255,255,255,.88);max-width:50ch}
+.hw-steps{position:relative;display:grid;gap:9px;margin-top:20px}
+.hws{display:flex;gap:13px;align-items:flex-start;background:rgba(255,255,255,.09);
+  border:1px solid rgba(234,216,173,.2);border-radius:13px;padding:13px 16px}
+.hws > i{font-style:normal;flex:0 0 auto;width:26px;height:26px;border-radius:8px;
+  background:var(--soft-gold);color:#274234;font-size:15.5px;font-weight:900;
+  display:flex;align-items:center;justify-content:center}
+.hws b{display:block;font-size:17px;color:#fff;line-height:1.65}
+.hws span b{display:inline;font-size:inherit;color:#fff;font-weight:900}
+.hws span{display:block;font-size:15.5px;color:rgba(255,255,255,.8);line-height:1.85;margin-top:2px}
+.hws a{color:var(--soft-gold)}
+.hw-due{position:relative;margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+  background:rgba(200,166,106,.2);border:1px solid rgba(234,216,173,.35);border-radius:13px;padding:13px 17px}
+.hw-due b{font-family:var(--serif);font-size:19px;color:var(--soft-gold)}
+.hw-due span{font-size:16px;color:rgba(255,255,255,.88);line-height:1.8}
+
+.bonus{margin-top:14px;background:var(--paper);border:1px solid rgba(200,166,106,.5);
+  border-radius:16px;padding:17px 20px}
+.bonus b{display:block;font-family:var(--serif);font-size:19px;color:var(--forest);margin-bottom:5px}
+.bonus p{font-size:16.5px;color:#4a514a;line-height:1.9}
+
+/* 卡片 */
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;
+  padding:clamp(17px,3.4vw,23px);margin-bottom:13px;box-shadow:0 10px 24px rgba(63,95,77,.06)}
+.card.prompt{border-color:rgba(200,166,106,.4)}
+.card.prompt.hot{border-color:var(--gold);box-shadow:0 14px 32px rgba(63,95,77,.13)}
+.p-tag{display:inline-block;font-size:15px;font-weight:900;letter-spacing:.07em;color:#7d5722;
+  background:rgba(240,201,166,.45);border-radius:7px;padding:3px 10px;margin-bottom:9px}
+.p-head{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-bottom:7px}
+.p-head h4{font-family:var(--serif);font-size:clamp(20.3px,3.81vw,22.4px);color:var(--forest);flex:1;min-width:150px}
+.p-actions{display:flex;gap:7px;flex-wrap:wrap}
+button{font-family:inherit;cursor:pointer;font-size:15.5px;font-weight:900;
+  border:1px solid var(--forest);background:var(--forest);color:#fff;
+  border-radius:9px;padding:8px 15px;transition:.16s}
+button:hover{background:var(--herbal);border-color:var(--herbal)}
+button.done{background:var(--gold);border-color:var(--gold)}
+.p-desc{font-size:16.5px;color:var(--muted);line-height:1.95;margin-bottom:12px}
+.p-desc b{color:var(--forest);font-weight:900}
+details.code{border-top:1px dashed rgba(95,127,104,.35);padding-top:12px;margin-top:4px}
+details.code summary{cursor:pointer;font-weight:900;font-size:16px;color:var(--herbal);
+  list-style:none;display:flex;align-items:center;gap:7px}
+details.code summary::-webkit-details-marker{display:none}
+details.code summary::before{content:"\25B8";transition:transform .2s ease;display:inline-block}
+details.code[open] summary::before{transform:rotate(90deg)}
+pre.text{margin-top:11px;white-space:pre-wrap;word-break:break-word;font-family:var(--sans);
+  font-size:15.5px;line-height:1.95;color:#3d443e;background:rgba(95,127,104,.06);
+  border:1px solid var(--line);border-radius:11px;padding:14px 16px;max-height:420px;overflow:auto}
+.filled{margin-top:12px;font-size:15.5px;line-height:1.88;color:var(--forest);
+  background:rgba(95,127,104,.09);border:1px solid rgba(95,127,104,.2);border-radius:11px;padding:11px 14px}
+.filled b{font-weight:900}
+.cta{display:inline-flex;align-items:center;gap:7px;background:var(--gold);color:#fff;
+  font-size:16px;font-weight:900;border-radius:99px;padding:9px 19px;text-decoration:none;
+  margin-bottom:12px;transition:.16s}
+.cta:hover{background:var(--forest);color:#fff}
+
+
+/* ---- 關於我 ---- */
+.me{background:var(--paper);border:1px solid var(--line);border-radius:19px;
+  padding:clamp(19px,4vw,26px);box-shadow:0 10px 26px rgba(63,95,77,.07)}
+.me-hd{display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;margin-bottom:4px}
+.me-hd b{font-family:var(--serif);font-size:clamp(22px,4.03vw,25.8px);color:var(--forest)}
+.me-hd span{font-size:15.5px;color:var(--gold);font-weight:700}
+.me-role{font-size:15.5px;color:var(--muted);line-height:1.85;margin-bottom:14px}
+.me p{font-size:17px;color:#4a514a;line-height:2.05;margin-bottom:11px}
+.me p b{color:var(--forest);font-weight:900}
+.me p:last-child{margin-bottom:0}
+.story{margin-top:15px;border-top:1px dashed rgba(95,127,104,.3);padding-top:15px}
+.story > summary{cursor:pointer;font-weight:900;font-size:16.5px;color:var(--herbal);
+  list-style:none;display:flex;align-items:center;gap:8px}
+.story > summary::-webkit-details-marker{display:none}
+.story > summary::before{content:"\25B8";transition:transform .2s ease;display:inline-block}
+.story[open] > summary::before{transform:rotate(90deg)}
+.story > summary span{font-weight:400;font-size:12.3px;color:var(--muted)}
+.story-in{margin-top:13px}
+.story-in p{font-size:16.5px;line-height:2.05;color:#4a514a;margin-bottom:10px}
+.story-in p b{color:var(--forest)}
+.story-q{margin:13px 0;padding:13px 17px;background:rgba(240,201,166,.26);
+  border-left:3px solid var(--gold);border-radius:0 11px 11px 0;
+  font-size:17px;line-height:1.95;color:var(--forest);font-weight:700}
+.tl{display:grid;gap:7px;margin-top:14px}
+.tli{display:flex;gap:12px;align-items:baseline;font-size:13.3px;line-height:1.85}
+.tli i{font-style:normal;flex:0 0 52px;font-family:ui-monospace,Menlo,Consolas,monospace;
+  font-size:12.3px;font-weight:700;color:var(--gold)}
+.tli span{color:#4a514a}
+.tli b{color:var(--forest);font-weight:900}
+
+/* ---- 自學流程 ---- */
+.flow{display:grid;gap:11px}
+.fs{background:var(--paper);border:1px solid var(--line);border-radius:17px;overflow:hidden}
+.fs.now{border-color:var(--gold);box-shadow:0 0 0 2px rgba(200,166,106,.18)}
+.fs-h{display:flex;align-items:center;gap:13px;padding:15px 19px;background:rgba(95,127,104,.055)}
+.fs.now .fs-h{background:rgba(240,201,166,.26)}
+.fs-n{flex:0 0 auto;width:34px;height:34px;border-radius:11px;
+  background:linear-gradient(150deg,var(--forest),var(--herbal));color:var(--soft-gold);
+  font-family:var(--serif);font-size:18.5px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.fs.now .fs-n{background:linear-gradient(150deg,var(--gold),#b8924f);color:#fff}
+.fs-h b{font-family:var(--serif);font-size:19.5px;color:var(--forest);flex:1;min-width:110px;line-height:1.5}
+.fs-t{font-size:15px;color:var(--muted);white-space:nowrap;
+  border:1px solid var(--line);border-radius:99px;padding:3px 10px;background:var(--paper)}
+.fs-b{padding:15px 19px 18px}
+.fs-b > p{font-size:16.5px;color:#4a514a;line-height:2;margin-bottom:11px}
+.fs-b > p:last-child{margin-bottom:0}
+.fs-b b{color:var(--forest);font-weight:900}
+.fs-do{list-style:none;display:grid;gap:6px;margin:11px 0}
+.fs-do li{font-size:16px;color:#4a514a;line-height:1.85;padding-left:19px;position:relative}
+.fs-do li::before{content:"\25B9";position:absolute;left:2px;color:var(--gold);font-weight:900}
+.fs-warn{margin-top:11px;font-size:15.5px;line-height:1.85;color:#7d5722;
+  background:rgba(240,201,166,.3);border:1px solid rgba(200,166,106,.42);border-radius:11px;padding:11px 14px}
+.fs-warn b{color:#6b4a12;font-weight:900}
+.fs-go{display:inline-flex;align-items:center;gap:6px;margin-top:10px;
+  background:var(--forest);color:#fff;font-size:15.5px;font-weight:900;
+  border-radius:99px;padding:8px 17px;text-decoration:none;transition:.16s}
+.fs-go:hover{background:var(--herbal);color:#fff}
+.jump{display:inline-block;margin-top:9px;font-size:15.5px;font-weight:700;color:var(--herbal)}
+
+/* 今天做了什麼 */
+.did{display:grid;grid-template-columns:1fr;gap:11px}
+@media(max-width:620px){.did{grid-template-columns:1fr}}
+.dd{background:var(--paper);border:1px solid var(--line);border-radius:15px;padding:16px 19px}
+.dd b{display:block;font-family:var(--serif);font-size:19px;color:var(--forest);margin-bottom:4px}
+.dd span{display:block;font-size:13.3px;color:var(--muted);line-height:1.85}
+.dd.main{border-color:var(--gold);background:rgba(240,201,166,.22)}
+
+/* 工具 */
+.tools{display:grid;gap:9px}
+.tl{background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:13px 17px}
+.tl b{display:block;font-size:16.5px;color:var(--forest);margin-bottom:3px}
+.tl span{font-size:15.5px;color:var(--muted);line-height:1.9}
+.tl a{display:inline-block;margin-right:12px;font-size:15.5px}
+
+footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);
+  text-align:center;font-size:15.5px;color:var(--muted);line-height:1.95}
+footer b{font-family:var(--serif);color:var(--forest)}
+.warn{margin-top:13px;font-size:15.5px;line-height:1.88;color:#7d5722;
+  background:rgba(240,201,166,.32);border:1px solid rgba(200,166,106,.45);border-radius:12px;padding:12px 15px}
+
+.hw-copy{display:inline-block;margin-top:8px;font-family:inherit;cursor:pointer;
+  font-size:18.5px;font-weight:900;color:#fff;background:var(--forest);
+  border:1px solid var(--forest);border-radius:11px;padding:11px 22px;transition:.18s}
+.hw-copy:hover{background:var(--herbal);border-color:var(--herbal)}
+.hws .hw-copy{background:var(--soft-gold);border-color:var(--soft-gold);color:#274234}
+.hws .hw-copy:hover{background:#fff;border-color:#fff;color:#274234}
+.hws .hw-copy.done{background:var(--gold);border-color:var(--gold);color:#fff}
+.hw-copy.done{background:var(--gold);border-color:var(--gold)}
+#hwPrompt{display:block;height:0;scroll-margin-top:72px}
+
+button.fs-go{font-family:inherit;cursor:pointer;text-align:center;border:none}
+button.fs-go.done{background:var(--gold)}
+
+/* ---- 熟齡友善 ---- */
+body{letter-spacing:.01em}
+pre.text{font-family:var(--sans);font-size:16.5px;line-height:2.0;white-space:pre-wrap;word-break:break-word}
+.hint,.fs-b p,.fs-do li,.hws span,.p-desc{line-height:1.95}
+
+/* 收合式指示詞（淺底／深底兩種） */
+.mini{margin-top:11px;border-top:1px dashed rgba(95,127,104,.32);padding-top:10px}
+.mini > summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:7px;
+  font-size:15px;font-weight:900;color:var(--herbal)}
+.mini > summary::-webkit-details-marker{display:none}
+.mini > summary::before{content:"\25B8";display:inline-block;transition:transform .2s ease}
+.mini[open] > summary::before{transform:rotate(90deg)}
+.mini-pre{margin-top:9px;white-space:pre-wrap;word-break:break-word;font-family:var(--sans);
+  font-size:15px;line-height:1.95;color:#3d443e;background:rgba(95,127,104,.07);
+  border:1px solid var(--line);border-radius:11px;padding:13px 15px;max-height:300px;overflow:auto}
+.mini.on-dark{border-top-color:rgba(234,216,173,.28)}
+.mini.on-dark > summary{color:var(--soft-gold)}
+.mini.on-dark .mini-pre{color:rgba(255,255,255,.93);background:rgba(0,0,0,.2);
+  border-color:rgba(234,216,173,.22)}
+
+/* 開頭提醒：會改的人不用套版 */
+.freehand{position:relative;margin-top:16px;font-size:15.5px;line-height:1.95;
+  color:rgba(255,255,255,.9);background:rgba(234,216,173,.13);
+  border:1px solid rgba(234,216,173,.34);border-left:3px solid var(--soft-gold);
+  border-radius:0 13px 13px 0;padding:14px 17px}
+.freehand b{color:var(--soft-gold);font-weight:900}
+
+/* ================= 密碼鎖 ＋ 版權同意 ================= */
+body.locked{overflow:hidden}
+body.locked .top,body.locked .wrap{display:none}
+#gate{
+  position:fixed;inset:0;z-index:200;display:none;
+  align-items:center;justify-content:center;padding:24px;
+  background:radial-gradient(circle at 80% 0%, rgba(240,201,166,.5), transparent 45%),
+             linear-gradient(160deg,var(--cream),#eef2ec 80%);
+}
+body.locked #gate{display:flex}
+.gate-card{width:100%;max-width:440px;text-align:center;
+  background:var(--paper);border:1px solid rgba(200,166,106,.4);
+  border-radius:26px;padding:40px 28px;box-shadow:0 20px 46px rgba(63,95,77,.16)}
+.gate-card .mark{width:70px;height:70px;margin:0 auto 18px;border-radius:50%;
+  background:linear-gradient(150deg,var(--forest),var(--herbal));
+  color:var(--soft-gold);font-family:var(--serif);font-weight:900;font-size:29px;
+  display:flex;align-items:center;justify-content:center}
+.gate-card h2{font-family:var(--serif);font-size:25px;color:var(--forest);margin-bottom:7px}
+.gate-card > p{font-size:16px;color:var(--muted);margin-bottom:22px;line-height:1.85}
+.gate-card input{width:100%;padding:16px 17px;border-radius:14px;font-family:inherit;
+  font-size:18px;border:1px solid rgba(95,127,104,.3);background:#fff;color:var(--ink);
+  outline:none;text-align:center;letter-spacing:.06em}
+.gate-card input:focus{border-color:var(--herbal);box-shadow:0 0 0 4px rgba(95,127,104,.12)}
+.gate-card button{width:100%;margin-top:13px;padding:16px;border:none;border-radius:14px;
+  cursor:pointer;font-family:inherit;font-size:17.5px;font-weight:900;color:#fff;
+  background:linear-gradient(135deg,var(--forest),var(--herbal));
+  box-shadow:0 9px 20px rgba(63,95,77,.24)}
+.gate-err{min-height:24px;margin-top:11px;color:#b64545;font-size:15.5px;font-weight:800}
+.gate-note{margin-top:18px;font-size:14.5px;color:var(--muted);line-height:1.85}
+
+#notice{position:fixed;inset:0;z-index:300;display:none;
+  align-items:center;justify-content:center;padding:22px;
+  background:rgba(23,34,26,.62);backdrop-filter:blur(4px)}
+body.noticing #notice{display:flex}
+body.noticing{overflow:hidden}
+.notice-card{width:100%;max-width:480px;max-height:88vh;overflow:auto;
+  background:var(--paper);border:1px solid rgba(200,166,106,.45);
+  border-radius:22px;padding:30px 26px;box-shadow:0 24px 54px rgba(23,34,26,.34)}
+.notice-card h3{font-family:var(--serif);font-size:23px;color:var(--forest);
+  margin-bottom:15px;display:flex;align-items:center;gap:9px}
+.notice-card p{font-size:16.5px;line-height:1.95;color:var(--ink);margin-bottom:13px}
+.notice-card .rules{background:rgba(240,201,166,.28);border:1px solid rgba(200,166,106,.42);
+  border-radius:14px;padding:16px 18px;margin-bottom:17px}
+.notice-card .rules div{font-size:16px;line-height:1.9;color:#7d5722;
+  padding-left:21px;position:relative}
+.notice-card .rules div + div{margin-top:8px}
+.notice-card .rules div::before{content:"\00B7";position:absolute;left:7px;font-weight:900}
+.notice-card button{width:100%;padding:16px;border:none;border-radius:14px;cursor:pointer;
+  font-family:inherit;font-size:17.5px;font-weight:900;color:#fff;
+  background:linear-gradient(135deg,var(--forest),var(--herbal));
+  box-shadow:0 9px 20px rgba(63,95,77,.24)}
+.notice-card .sub-note{margin-top:13px;font-size:14.5px;color:var(--muted);
+  text-align:center;line-height:1.8}
+.logout{display:block;margin:22px auto 0;padding:11px 22px;border-radius:999px;
+  cursor:pointer;font-family:inherit;font-size:15px;font-weight:700;color:var(--muted);
+  background:rgba(255,255,255,.75);border:1px solid var(--line)}
+.logout:hover{color:var(--forest);border-color:var(--gold)}
+
+/* 開放期限公告條 */
+.openbar{margin:18px 0 6px;background:linear-gradient(135deg,rgba(240,201,166,.55),rgba(234,216,173,.4));
+  border:1px solid rgba(200,166,106,.55);border-left:4px solid var(--gold);
+  border-radius:0 15px 15px 0;padding:16px 19px}
+.openbar b{display:block;font-family:var(--serif);font-size:19px;color:#6b4a12;margin-bottom:5px}
+.openbar p{font-size:16px;line-height:1.95;color:#7d5722}
+.openbar p b{display:inline;font-family:var(--sans);font-size:inherit;
+  font-weight:900;color:#6b4a12;margin:0}
+
+/* 影片範例 */
+.vwrap{margin:4px 0 16px}
+.vwrap video{display:block;width:100%;max-width:270px;aspect-ratio:9/16;
+  border-radius:14px;background:#000;border:1px solid rgba(45,61,49,.18);
+  box-shadow:0 6px 20px rgba(45,61,49,.16)}
+.vcap{display:block;max-width:270px;margin-top:7px;font-size:13.5px;
+  color:var(--muted);text-align:center}
+
+/* 手機 vs 電腦對照 */
+.cmp{display:grid;grid-template-columns:1fr;gap:12px;margin:14px 0 4px}
+@media(min-width:640px){.cmp{grid-template-columns:1fr 1fr}}
+.cmp-c{border-radius:14px;padding:14px 16px;border:1px solid var(--line)}
+.cmp-p{background:rgba(240,201,166,.24)}
+.cmp-d{background:rgba(95,127,104,.1)}
+.cmp-h{font-family:var(--serif);font-size:17px;font-weight:900;
+  color:var(--forest);margin-bottom:9px}
+.cmp-c ul{margin:0;padding-left:19px}
+.cmp-c li{font-size:14.5px;line-height:1.85;margin-bottom:5px;color:var(--ink)}
+
+/* 推薦卡 */
+.hotcard{border:2px solid var(--gold);box-shadow:0 4px 18px rgba(200,166,106,.2)}
+
+/* 四句話公式 */
+.p-job{font-size:15px;font-weight:900;color:var(--forest);
+  background:rgba(95,127,104,.1);border-radius:9px;padding:8px 12px;margin-bottom:11px}
+.ex{margin:13px 0;border-left:3px solid var(--soft-gold);padding-left:13px}
+.ex-r{margin-bottom:9px}
+.ex-r:last-child{margin-bottom:0}
+.ex-t{display:inline-block;min-width:44px;font-size:12px;font-weight:900;
+  color:var(--gold);letter-spacing:.04em}
+.ex-r b{font-family:var(--serif);font-size:16.5px;color:var(--ink);line-height:1.7}
+.tipline{background:rgba(234,216,173,.28);border-radius:11px;padding:11px 13px;margin-top:11px}
+
+/* 行業對照分隔 */
+.ex-sep{margin:13px 0 9px;font-size:12px;font-weight:900;color:var(--herbal);
+  letter-spacing:.06em;border-top:1px dashed var(--line);padding-top:11px}
+.ex-t{min-width:52px}
+
+/* 四句話填寫表 */
+.ff{display:grid;gap:13px;margin:15px 0 4px}
+.fr label{display:block;font-family:var(--serif);font-size:16px;font-weight:900;
+  color:var(--forest);margin-bottom:5px}
+.fr label span{font-family:var(--sans);font-size:13px;font-weight:700;
+  color:var(--muted)}
+.fr textarea{width:100%;box-sizing:border-box;font-family:var(--sans);
+  font-size:16px;line-height:1.7;color:var(--ink);background:var(--paper);
+  border:1.5px solid var(--line);border-radius:11px;padding:10px 12px;
+  resize:vertical}
+.fr textarea:focus{outline:2px solid var(--gold);outline-offset:1px;
+  border-color:var(--gold)}
+.fr textarea::placeholder{color:#9aa39c}
+.fc{font-size:12.5px;font-weight:900;color:var(--muted);
+  text-align:right;margin-top:3px;font-variant-numeric:tabular-nums}
+.fc.over{color:#b4542e}
+.fmsg{font-size:13.5px;color:var(--muted);line-height:1.8;margin:10px 0 0}
+#fourbox .fs-go{width:100%;margin-top:13px}
+</style>
+</head>
+<body>
+
+<section id="gate">
+  <div class="gate-card">
+    <div class="mark">芸</div>
+    <h2>0921 課後任務</h2>
+    <p>本頁僅供本班學員使用<br />請輸入課程密碼</p>
+    <input type="password" id="gatePw" placeholder="課程密碼" autocomplete="off" />
+    <button type="button" id="gateBtn">進入課後任務頁</button>
+    <div class="gate-err" id="gateErr"></div>
+    <div class="gate-note">
+      本頁指示詞及教學內容來源為 945AI 課程講師及財顧芸分享，相關版權所有。<br />
+      僅供參與學員使用，非經同意請勿公開分享或轉貼。
+    </div>
+  </div>
+</section>
+
+<section id="notice">
+  <div class="notice-card">
+    <h3>📜 使用前請先閱讀</h3>
+    <p>
+      本頁指示詞及教學內容來源為 <b>945AI 課程講師及財顧芸分享</b>，相關版權所有，
+      僅供參與學員使用。
+    </p>
+    <div class="rules">
+      <div>可以自己使用、修改成自己的版本，用在你的品牌與工作上</div>
+      <div>不可公開分享、轉貼、上傳到公開平台或群組</div>
+      <div>不可提供給未參與本課程的人</div>
+      <div>不可作為商業販售或另行開課教學使用</div>
+    </div>
+    <p style="margin-bottom:18px">
+      如需分享給其他夥伴，請先與財顧芸聯繫取得同意。謝謝你的尊重 💛
+    </p>
+    <button type="button" id="noticeBtn">我已閱讀並同意，進入課後任務頁</button>
+    <div class="sub-note">按下同意即表示你理解並願意遵守以上約定</div>
+  </div>
+</section>
+
+<div class="top">
+  <span class="mk">芸</span>
+  <b>0921 課後任務</b>
+  <span>財顧芸 Angie</span>
+</div>
+
+<div class="wrap">
+
+  <header>
+    <span class="eyebrow">✦ AI 個人品牌影像實作課</span>
+    <h1>0921 辛苦了，<em>回家後還有任務</em></h1>
+    <p>
+      9/21 那天我們一起做出了<b>企業制服的 10 秒宣傳影片</b>——
+      你看到一套怎麼把一張商品照變成會說話的影片邏輯。
+      這一頁把 9/21 用到的指示詞留給你，還有<b>這週要完成的作業</b>。
+    </p>
+    <div class="facts">
+      <span>📅 2026/9/21（一）</span>
+      <span>📍 雷神昇彩創客基地</span>
+      <span>🎬 完成：企業制服宣傳影片</span>
+    </div>
+  </header>
+
+  <div class="openbar">
+    <b>⏳ 這頁開放到 9/28（一）</b>
+    <p>這一週想複習、想重做都可以回來。完成任務並在群組打卡的學員，可以領取整理好的<b>指示詞 PDF 合輯</b>。</p>
+  </div>
+
+  <div class="hw">
+    <span class="hw-tag">本週作業</span>
+    <h3>做一張<em>你自己的 9:16 品牌形象圖</em></h3>
+    <p>
+      影片已經會做了，但別人第一眼認識你，還是靠那張圖。
+      這週請完成一張自己的品牌形象照——<b>用你自己的照片</b>，不是範例、不是別人的。
+    </p>
+
+    <div class="freehand">
+      <b>先講一句：已經會改指示詞的人，直接照自己的方式做就好。</b>
+      下面的兩段指令是<b>給還不知道從哪下手的人用的套版</b>。
+      你如果本來就會拆指示詞、知道要調哪幾句，那就用你自己的寫法——<b>做出一張你滿意的形象照才是重點，不是照著範本走。</b>
+    </div>
+
+    <div class="hw-steps">
+      <div class="hws"><i>1</i><div>
+        <b>挑一張自己的正面照</b>
+        <span>光線清楚、臉不要被遮住。手機隨手拍的就可以。</span>
+      </div></div>
+      <div class="hws"><i>2</i><div>
+        <b>第一段指令：先讓 AI 幫你填品牌資料</b>
+        <span>開一個新對話，貼第一段指令。AI 會幫你填出十個欄位——品牌／職稱、服務對象、服裝、品牌象徵……不像你的就直接叫它改。</span>
+        <button type="button" class="copy hw-copy" data-target="pt-brand">複製第一段指令</button><details class="mini on-dark"><summary>看這段指示詞的內容</summary><pre class="mini-pre" data-from="pt-brand"></pre></details>
+      </div></div>
+      <div class="hws"><i>3</i><div>
+        <b>第二段指令：上傳照片＋貼生成指令</b>
+        <span><b>留在同一個對話裡</b>，先上傳你的照片，再貼第二段指令。AI 會把剛剛填好的資料自動套進去。</span>
+        <button type="button" class="copy hw-copy" data-target="pt-gen22">複製第二段指令</button><details class="mini on-dark"><summary>看這段指示詞的內容</summary><pre class="mini-pre" data-from="pt-gen22"></pre></details>
+      </div></div>
+      <div class="hws"><i>4</i><div>
+        <b>不滿意就直接跟 AI 說要改哪裡</b>
+        <span>「留白再多一點」「品牌象徵換成樹」——同一個對話裡講就好，不用重貼整段。</span>
+      </div></div>
+      <div class="hws"><i>5</i><div>
+        <b>換上你的大頭貼</b>
+        <span>LINE、Facebook、名片——做完就換上去。十分鐘的事，但這是別人開始認得你的起點。</span>
+      </div></div>
+    </div>
+
+    <div class="hw-due">
+      <b>📮 9/22 打卡任務</b>
+      <span>依上面的步驟完成個人形象照，<b>完成後上傳本群組（這一頁開放到 9/28）</b>，
+      順便說一句「我選了什麼品牌象徵、為什麼」。<br />
+      趁記憶還熱的時候做最省力，整套大約 20 分鐘就能完成。</span>
+    </div>
+  </div>
+
+  <div class="bonus">
+    <b>🎁 加分題（有空再做）</b>
+    <p>
+      同一張照片，換一份指示詞，就變成完全不同的東西——<b>雙視圖彩鉛人物設定稿</b>（左邊全身、右邊胸像）。
+      商務形象照給名片和 LINE 用，彩鉛稿給貼文主視覺、講義封面用，兩種互補。指示詞在下面。
+    </p>
+  </div>
+
+
+  <h2><i>關於</i>9/21 陪你的人</h2>
+  <div class="me">
+    <div class="me-hd"><b>財顧芸 Angie</b><span>陳芸琪</span></div>
+    <div class="me-role">
+      宜蘭在地家族生活顧問 · 財富管理顧問公司 資深顧問 · RFP 美國註冊財務策劃師 · AI 應用講師<br />
+      馥芸財富學苑 創辦人
+    </div>
+
+    <p>
+      我做的不是賣一張商品，是陪你<b>看懂自己的財務全貌</b>——現金流、保障、退休與傳承，
+      從現況、缺口，到下一步。
+    </p>
+    <p>
+      AI 對我來說是<b>專業放大器</b>。我自己一路自費在學，學到真的好用的，
+      就整理成看得懂的步驟帶回來，讓你少走冤枉路、少付試錯的學費。
+    </p>
+    <p>
+      說實話，<b>開課不是我的收入來源</b>。報名費扣掉時間跟準備其實不剩什麼，
+      我教，是因為我喜歡，也因為想認識不同專業的人——你的專業我不會，我的專業你可能正好用得上。
+      <b>學會了，就是你自己的。</b>
+    </p>
+
+    <details class="story">
+      <summary>我這四年是怎麼走過來的<span>　想知道的話可以點開</span></summary>
+      <div class="story-in">
+        <p>
+          我不是一開始就會。<b>這四年每一格，都是當時真的卡住、然後想辦法解決的事。</b>
+        </p>
+        <div class="tl">
+          <div class="tli"><i>2022</i><span><b>專職財顧，什麼都自己慢慢做。</b>一張講座海報、一篇貼文，全部從零排版，一個晚上做不完一張圖。</span></div>
+          <div class="tli"><i>2023</i><span><b>第一次用 AI，寫完還不敢用。</b>生出來的東西看起來像那麼一回事，但總覺得不像自己講的話。</span></div>
+          <div class="tli"><i>2024</i><span><b>把 AI 放進工作流。</b>形象圖、文案、短影音、簡報全部自己做。省下的時間，拿去見客戶。</span></div>
+          <div class="tli"><i>2025</i><span><b>整理成教材，開第一堂共學課。</b>把自己做過幾十次、改到穩定的做法，整理成看得懂的步驟。</span></div>
+          <div class="tli"><i>2026</i><span><b>一場一場調整教法。</b>好用的才留下——9/21 你用到的產生器，就是上一場學員卡住之後才做出來的。</span></div>
+        </div>
+
+        <p style="margin-top:15px">
+          為什麼一直學？因為我的客戶。每一次坐在他們對面，我都會想：<b>我能不能再多給他們一點？</b>
+          不是多賣一張保單，是多一個看事情的角度。
+        </p>
+
+        <div class="story-q">
+          上週跟一位客戶對帳。認識他，是從他媽媽開始的——那時候他還是個孩子。
+          媽媽最開始問過我一句話：「我也不知道你會做多久。」那時候我沒辦法回答，我只能說我會一直在。
+          一晃眼他長大了，換他坐在我對面問我：「我這樣規劃可以嗎？」
+        </div>
+
+        <p>
+          那一刻我想起媽媽當年那句話。<b>原來有些問題不用回答，時間會替你回答。</b>
+        </p>
+        <p>
+          我講這個不是要說我多厲害。是想說——<b>AI 幫我省下的是時間跟效率，但省下來的時間要有地方去</b>：
+          去記得這個家走過什麼，去判斷該不該這樣做。
+          <b>AI 放大的是你原本就有的專業價值；沒有那個價值，放大的只是空的。</b>
+        </p>
+        <p>
+          所以這堂課學的是工具，真正要帶走的，是把省下來的時間放回你的專業上。
+        </p>
+      </div>
+    </details>
+  </div>
+
+  <h2><i>9/21</i>我們做了什麼</h2>
+  <p class="hint">9/21 主線走完了一整套：從商品照 → 辨識商品 → 分鏡腳本 → 口播台詞 → 10 秒成品。</p>
+  <div class="did">
+    <div class="dd main"><b>🎬 企業制服 10 秒宣傳影片</b>
+      <span>9/21 的主作品。四個鏡頭、三句口播，AI 自動辨識商品細節，不亂改品牌標誌。</span></div>
+  </div>
+
+
+  <h2><i>自學</i>照這六步做，你自己也能完成</h2>
+  <p class="hint">
+    課堂上走過一次，之後照這個順序再跑一遍就行。<b>整套大約 45 分鐘</b>，
+    其中一半是等 AI 生成的時間。每一步都有明確的動作，不用回想上課講了什麼。
+  </p>
+  <div class="flow"><div class="fs"><div class="fs-h"><span class="fs-n">0</span><b>準備兩樣東西</b><span class="fs-t">3 分鐘</span></div><div class="fs-b"><p>開始之前先備齊，不然做到一半會卡住。</p><ul class="fs-do"><li><b>一張自己的正面照</b>——光線清楚、臉不要被遮住，手機隨手拍的就可以</li><li><b>ChatGPT 或 Gemini，任一個</b>——先下載並登入好，兩個都有免費額度</li></ul></div></div><div class="fs"><div class="fs-h"><span class="fs-n">1</span><b>先想，還不要碰 AI</b><span class="fs-t">5 分鐘</span></div><div class="fs-b"><p><b>這一步最多人跳過，也最決定成果。</b>AI 只能放大你已經有的東西——沒先想清楚自己是誰，生出來就會像範本，不像你。</p><ul class="fs-do"><li>客戶看到這張圖的第一秒，你希望他想到「<b>你是做什麼的</b>」？一句話講完</li><li>你的客戶最常在<b>煩惱什麼</b>？想一個真的坐在你面前說過這句話的人</li><li>如果用<b>一個東西</b>代表你的專業，你會選什麼？（理財是羅盤、傳承是樹、教學是書、療癒是葉子）</li></ul><div class="fs-warn">⚠️ 想不出來也沒關係，下一步的第一段指令會讓 AI 先幫你填一版，你只要挑要不要改。</div></div></div><div class="fs now"><div class="fs-h"><span class="fs-n">2</span><b>第一段指令：先讓 AI 幫你填品牌資料</b><span class="fs-t">5 分鐘</span></div><div class="fs-b"><p><b>已經會改指示詞的人可以跳過套版，用自己的寫法。</b>這一段不生圖，只是<b>把你的品牌資料問出來</b>。十個欄位自己想很久，但 AI 認識你之後幾秒就填完，你只要改不滿意的地方。</p><ul class="fs-do"><li>打開 <b>ChatGPT 或 Gemini</b>，開一個<b>新對話</b></li><li>複製第一段指令貼上去，按送出</li><li>看 AI 填出來的十個欄位，<b>不像你的就直接跟它說改</b>（「品牌象徵改成樹」）</li><li>改到十個欄位你都點頭了，再往下一步</li></ul><div class="fs-warn">⚠️ <b>這一段最關鍵的是「品牌象徵」</b>——它是你專業的隱喻。AI 給的如果不順眼，換成你自己想的那個（羅盤、樹、書、葉子、橋、燈塔…）。</div><button type="button" class="copy fs-go" data-target="pt-brand">⚡ 複製第一段指令</button><details class="mini"><summary>看這段指示詞的內容</summary><pre class="mini-pre" data-from="pt-brand"></pre></details></div></div><div class="fs now"><div class="fs-h"><span class="fs-n">3</span><b>第二段指令：上傳照片，貼生成指令</b><span class="fs-t">5 分鐘＋等待</span></div><div class="fs-b"><p><b>留在同一個對話裡，不要另開新的。</b>AI 記得剛剛填好的品牌資料，第二段指令裡的【　】它會自己對應進去。</p><ul class="fs-do"><li><b>先上傳你的正面照</b>——就在剛剛那個對話裡</li><li>照片上傳好之後，<b>再貼第二段指令</b>，按送出</li><li>等它畫。第一次可能要一兩分鐘，<b>不要一直重按</b></li></ul><div class="fs-warn">⚠️ 兩個最常犯的錯：<b>另開新對話</b>（AI 就忘了你的品牌資料）、<b>先貼指示詞才上傳照片</b>（AI 會用想像的臉）。順序照上面做就不會錯。</div><button type="button" class="copy fs-go" data-target="pt-gen22">⚡ 複製第二段指令</button><details class="mini"><summary>看這段指示詞的內容</summary><pre class="mini-pre" data-from="pt-gen22"></pre></details></div></div><div class="fs"><div class="fs-h"><span class="fs-n">4</span><b>看圖，然後調</b><span class="fs-t">10 分鐘</span></div><div class="fs-b"><p>先別急著說「可以了」。問自己一句：<b>這張要放在哪裡？</b>LINE 大頭貼、名片，還是講座海報？放哪裡決定要不要再調。</p><ul class="fs-do"><li>不滿意就<b>在同一個對話裡跟 AI 說要改哪裡</b>——「留白再多一點」「品牌象徵換成樹」，不用重貼整段</li><li><b>最值得調的兩欄</b>：象徵圖案、品牌氣質</li><li>生到你自己看了<b>會想用</b>為止，通常兩三次就到了</li></ul></div></div><div class="fs"><div class="fs-h"><span class="fs-n">5</span><b>換上去，然後回傳</b><span class="fs-t">10 分鐘</span></div><div class="fs-b"><p>做完不換上去，等於沒做。</p><ul class="fs-do"><li>LINE、Facebook、名片——<b>做好就換掉</b></li><li>把圖<b>回傳 0921 群組</b>，順便說一句「我選了什麼象徵圖案、為什麼」</li><li>回家做一件事：<b>把指示詞改掉至少三個地方，再生一次</b></li></ul><div class="fs-warn">⚠️ 改過一次，這份指示詞才真的變成你的。<b>這是整堂課最重要的一句話。</b></div></div></div><div class="fs"><div class="fs-h"><span class="fs-n">6</span><b>進階：把圖變成影片</b><span class="fs-t">看你的時間</span></div><div class="fs-b"><p>形象圖做順了再來。同一套邏輯：上傳素材 → 貼指示詞 → 等它跑。</p><ul class="fs-do"><li><b>商品／服務宣傳片</b>：用 9/21 的制服影片指示詞，換成你的商品照</li><li><b>彩鉛設定稿</b>：同一張人像照，完全不同的風格，適合貼文主視覺</li><li><b>客製化</b>：參考中秋魔術那份，看它怎麼同時鎖定人物與商品</li></ul><div class="fs-warn">⚠️ 影片生成要排隊，跑五到十分鐘是正常的。額度用完就換工具或隔天再試。</div></div></div></div>
+
+  <h2><i>先讀</i>為什麼指示詞要這麼長？</h2>
+  <p class="hint">課堂上被問到的問題，答案寫在這裡。<b>看懂這一頁，後面所有指示詞都會變得好用。</b></p>
+
+    <div class="card prompt">
+      <div class="p-head">
+        <h4>因為「你沒寫到的，AI 會自己編」</h4>
+      </div>
+      <p class="p-desc">AI 生影片跟你交代事情給助理不一樣——<b>助理不懂會問，AI 不懂會自己填</b>，而且每次填的都不一樣。</p>
+      <p class="p-desc">指示詞每多一句，就是<b>鎖住一個變數</b>：</p>
+      <ul class="fs-do">
+        <li>不寫「保留臉部、不要瘦臉」→ 生出來<b>不是你</b></li>
+        <li>不寫秒數跟鏡位 → 四個鏡頭<b>自己亂剪</b></li>
+        <li>不寫「台灣腔」→ 口音跑掉，<b>口型對不上</b></li>
+        <li>不寫「不要浮水印、不要 logo」→ 畫面<b>冒出奇怪的字</b></li>
+      </ul>
+      <p class="p-desc">所以長度不是講究，是<b>把不想要的結果一個一個關掉</b>。短的指示詞不是比較簡單，是把決定權交給 AI——你會得到一支別人的影片。</p>
+      <div class="fs-warn">💡 <b>換句話說：長的是模板，不是你要打的字。</b>你真正要動的只有三到五個地方，其他全部複製貼上就好——這也是為什麼每一份指示詞我都做了複製鈕。<br><b>往下滑到「模板 C」</b>，那份是專門為手機排版的，要改的四句話全部圈在「」裡。</div>
+    </div>
+
+    <div class="card prompt">
+      <div class="p-tag">手機 vs 電腦</div>
+      <div class="p-head">
+        <h4>用手機完全做得到，但要換個做法</h4>
+      </div>
+      <p class="p-desc">手機不是比較差，是<b>卡的地方不一樣</b>。知道差在哪，手機一樣跑得完。</p>
+
+      <div class="cmp">
+        <div class="cmp-c cmp-p">
+          <div class="cmp-h">📱 手機</div>
+          <ul>
+            <li>上傳照片<b>最快</b>，照片本來就在手機裡</li>
+            <li>隨時隨地能做，零碎時間就能跑一輪</li>
+            <li>⚠️ 長指示詞<b>自己選取很容易選錯</b>（少一段就出錯）</li>
+            <li>⚠️ 看不到全文，<b>不知道自己改到哪</b></li>
+            <li>⚠️ 切出去看指示詞再切回來，<b>容易中斷</b></li>
+          </ul>
+        </div>
+        <div class="cmp-c cmp-d">
+          <div class="cmp-h">💻 電腦</div>
+          <ul>
+            <li>整段指示詞<b>一眼看完</b>，要改哪裡很清楚</li>
+            <li>兩個視窗並排，<b>對照著改比較快</b></li>
+            <li>複製貼上不會選錯</li>
+            <li>⚠️ 照片要先傳到電腦，<b>多一道手續</b></li>
+            <li>⚠️ 只能坐在電腦前做</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="fs-warn">✅ <b>手機的正解，就兩件事：</b><br>
+      <b>① 一律按複製鈕，不要自己長按選取。</b>這頁每一份指示詞都有鈕，按了就是完整一份，不會漏段。<br>
+      <b>② 不要在手機上編輯那一大段字。</b>先原封不動貼進去送出，然後<b>用講的跟 AI 說要改哪裡</b>——「品牌象徵改成樹」「背景換成木質桌」。它會自己改，你完全不用碰那段長文字。</div>
+
+      <p class="p-desc"><b>第二點其實是更好的習慣，不只手機適用。</b>在同一個對話裡用講的微調，比重貼一整段還快，而且 AI 記得前面的設定，改出來會更貼近你要的。</p>
+    </div>
+
+  <h2><i>主作品</i>企業制服宣傳影片</h2>
+  <p class="hint">上課現場做的就是這一份。現在換成你自己的商品照，同一套流程再跑一次。</p>
+
+    <div class="card prompt hot">
+      <div class="p-tag">上課現場做的 · 主作品</div>
+      <div class="p-head">
+        <h4>企業制服 10 秒宣傳影片</h4>
+        <div class="p-actions"><button type="button" class="copy" data-target="pt-uniform">複製指示詞</button></div>
+      </div>
+      <p class="p-desc">上傳服飾商品照，AI 會自動辨識品牌、領型、袖口、刺繡與布料，再依照四個鏡頭產出 10 秒直式影片。<b>重點在「嚴格鎖定商品外觀」那幾段</b>——那是防止 AI 亂改你商品的關鍵。</p>
+      <div class="filled">💡 <b>換成你的商品</b>：只要換上傳的照片就好，指示詞完全不用改。口播台詞想改的話，找「台灣中文口播」那三句換掉即可。</div>
+      <details class="code">
+        <summary>展開指示詞全文</summary>
+        <pre class="text" id="pt-uniform">請根據本次上傳的服飾商品照片，製作一支 10 秒、9:16 直式的高質感服飾宣傳影片。
+整體風格為「精品時尚廣告＋真實手機直播帶貨」，畫面超寫實、節奏俐落、自然有活力。主持人使用台灣繁體中文口播，必須呈現自然的台灣口音與準確口型同步。
+影片長度必須控制在 10 秒內，不得加入字幕、價格、促銷文字、浮動圖示、浮水印或任何額外文字。
+━━━━━━━━━━━━━━━━━━━━
+一、上傳商品自動辨識
+━━━━━━━━━━━━━━━━━━━━
+生成影片前，請先分析本次上傳的所有服飾照片，自動辨識：
+•	品牌名稱與品牌標誌
+•	商品類型
+•	商品主要顏色
+•	領型與領口設計
+•	袖型與袖口設計
+•	品牌標誌或刺繡的位置
+•	印花、圖案與文字位置
+•	布料外觀與材質紋理
+•	正面與背面設計
+•	鈕扣、車線、標籤及其他特色
+•	同一件商品的正面照、背面照與細節照
+只能採用照片中清楚可見的資訊。
+不可猜測、杜撰或自行補完看不清楚的品牌名稱與商品細節。
+如果同一件服飾同時上傳正面、背面或細節照片，必須自動判斷為同一項商品，不可當成不同商品。
+━━━━━━━━━━━━━━━━━━━━
+二、商品自動分配規則
+━━━━━━━━━━━━━━━━━━━━
+請依照照片的完整度與清晰度，自動分配商品：
+【主商品 A】
+選擇照片最清楚、外觀最完整、品牌與設計細節最容易辨識的服飾，作為影片主要展示商品。
+【副商品 B】
+選擇第二清楚且與主商品不同的服飾，作為第二件展示商品。
+【其他商品】
+其餘上傳商品只能作為衣架陳列或快速展示使用，不可自行增加、複製或變造。
+如果只上傳一件商品：
+•	全片只展示該商品。
+•	可呈現正面、側面、領口、袖口、布料與品牌細節。
+•	不得虛構其他商品或品牌。
+如果上傳兩件商品：
+•	主商品 A 由主持人穿著。
+•	副商品 B 可由主持人穿著或手持展示。
+如果上傳三件以上商品：
+•	主商品 A 與副商品 B 作為重點展示。
+•	其餘商品自然陳列於衣架上。
+•	不得複製商品填滿衣架。
+━━━━━━━━━━━━━━━━━━━━
+三、商品外觀嚴格鎖定
+━━━━━━━━━━━━━━━━━━━━
+只能使用本次上傳照片中的服飾作為商品參考。
+每件商品都必須精準對應自己的原始照片，嚴格保留：
+•	原始品牌名稱與標誌
+•	標誌的位置、大小、顏色與比例
+•	刺繡內容與位置
+•	印花與圖案配置
+•	商品原始顏色
+•	布料紋理與質感
+•	車線與縫製細節
+•	領口造型
+•	袖口與袖型
+•	鈕扣
+•	標籤
+•	服裝版型與鬆緊度
+•	正面與背面設計
+•	所有清楚可見的商品特徵
+禁止重新設計、美化、簡化、換色、替換或重新詮釋服裝。
+不得把不同商品的品牌標誌、領口、袖口、顏色、刺繡、印花或布料特徵混合在一起。
+不得生成上傳照片中不存在的品牌或商品。
+所有品牌標誌必須方向正確、清晰銳利、位置準確，不得鏡像、變形、拼錯或產生亂碼。
+如果無法準確呈現某項細節，請縮短該商品的特寫時間，或改用較寬的拍攝角度；不得自行補畫錯誤細節。
+主持人的手不可遮住品牌標誌、刺繡、圖案或重要商品特徵。
+━━━━━━━━━━━━━━━━━━━━
+四、品牌口播自動替換規則
+━━━━━━━━━━━━━━━━━━━━
+請自動讀取上傳商品照片中清楚可辨識的品牌名稱，最多選擇兩個品牌放入口播。
+若可清楚辨識兩個品牌，第三段口播自動改成：
+「【品牌 A】、【品牌 B】，多款質感服飾任你挑！」
+實際影片中必須說出辨識到的真實品牌名稱，不可直接念出「品牌 A」或「品牌 B」。
+若只辨識到一個品牌，或品牌名稱不夠清楚，請改說：
+「多款質感服飾，任你挑！」
+不得猜測品牌名稱，也不得提及照片中沒有出現的品牌。
+━━━━━━━━━━━━━━━━━━━━
+五、場景設定
+━━━━━━━━━━━━━━━━━━━━
+場景位於台灣的現代高質感服飾展示間。
+室內採用白色、暖米色與淺木色設計，大片窗戶引入明亮自然光，搭配簡約服飾展示台與精緻衣架。
+空間乾淨、明亮、專業，具有精品服飾門市的質感，同時保留真實手機直播的親近感。
+衣架上只能出現本次上傳的服飾商品，不得增加其他品牌、虛構商品或無關配件。
+採用柔和陰影、淺景深、自然反射與暖色中性調色。
+━━━━━━━━━━━━━━━━━━━━
+六、主持人設定
+━━━━━━━━━━━━━━━━━━━━
+一位 25～30 歲的台灣女性直播主持人。
+人物特質：
+•	自信、親切、有活力
+•	專業但不生硬
+•	自然的台灣女性五官
+•	真實自然的皮膚紋理
+•	清爽精緻的自然妝容
+•	整齊俐落的髮型
+•	溫暖笑容
+•	自然且不誇張的手勢
+•	流利、清楚的台灣中文
+•	帶有直播主持人的節奏，但不可過度吵鬧或油膩
+口型必須與台灣中文完全同步，語速自然，不可趕拍、吞字或出現外國中文口音。
+不可出現僵硬表情、五官扭曲、牙齒異常、塑膠皮膚、手指變形或多餘手指。
+━━━━━━━━━━━━━━━━━━━━
+七、10 秒分鏡
+━━━━━━━━━━━━━━━━━━━━
+【鏡頭一｜0～2.5 秒】
+中景至全身鏡頭。
+主持人穿著主商品 A，自信地朝鏡頭走近。
+攝影機平穩後退並微微推近，呈現高質感手機直播感。
+主持人用一隻手輕輕整理衣領，面向鏡頭自然微笑。
+服裝必須準確保留主商品 A 的品牌、顏色、標誌、領口、袖型、布料、版型與所有設計細節。
+品牌標誌必須清楚可見，不可被手遮住。
+台灣中文口播：
+「企業制服，也能穿出高級感！」
+【鏡頭二｜2.5～5 秒】
+主商品 A 的電影感近距離特寫。
+根據商品照片，自動選擇最具辨識度的細節進行展示，例如：
+•	品牌標誌或刺繡
+•	領口結構
+•	布料紋理
+•	車線
+•	鈕扣
+•	袖口
+•	印花或特色設計
+主持人用手輕指重要細節旁邊，不可直接遮住或碰觸品牌標誌。
+自然光柔和地掠過布料，呈現真實質感。
+台灣中文口播：
+「我們和一般團體服不一樣。」
+【鏡頭三｜5～8 秒】
+使用快速但優雅的精品時尚剪輯。
+如果有副商品 B，讓主持人穿著或自然手持副商品 B。
+如果沒有副商品 B，繼續使用不同角度展示主商品 A。
+畫面可包含：
+•	正面展示
+•	短暫側面角度
+•	自然走動鏡頭
+•	自信時尚姿勢
+•	清楚的商品全貌
+若能清楚辨識兩個品牌，台灣中文口播：
+「【品牌 A】、【品牌 B】，多款質感服飾任你挑！」
+必須把括號內文字自動替換成照片中的真實品牌名稱。
+若品牌不足兩個或無法清楚辨識，台灣中文口播：
+「多款質感服飾，任你挑！」
+【鏡頭四｜8～10 秒】
+中景收尾。
+主持人站在精緻衣架旁，衣架上只陳列本次上傳的商品。
+主商品 A 位於前景，副商品 B 與其他上傳商品自然排列於後方。
+攝影機緩慢推近。
+主持人直視鏡頭、溫暖微笑，做出小幅度邀請手勢。
+最後定格於乾淨、高級且商品清楚的畫面。
+台灣中文口播：
+「物超所值，快看主頁！」
+━━━━━━━━━━━━━━━━━━━━
+八、攝影與畫面規格
+━━━━━━━━━━━━━━━━━━━━
+•	影片長度：正好 10 秒
+•	畫面比例：直式 9:16
+•	超寫實影像
+•	精品時尚廣告攝影
+•	真實高品質手機直播感
+•	平穩自然的手持運鏡
+•	明亮自然光
+•	真實布料紋理
+•	服飾微距特寫
+•	柔和淺景深
+•	暖色中性調色
+•	自然皮膚質感
+•	專業服飾展示間
+•	快速、乾淨的轉場
+•	自然的人體動作
+•	正確的台灣中文發音
+•	準確的中文口型同步
+•	HDR 高細節商業影片品質
+━━━━━━━━━━━━━━━━━━━━
+九、禁止事項
+━━━━━━━━━━━━━━━━━━━━
+禁止字幕。
+禁止任何畫面文字。
+禁止價格標示。
+禁止浮水印。
+禁止浮動圖示。
+禁止額外促銷標語。
+禁止虛構品牌名稱。
+禁止生成未上傳的服裝。
+禁止增加無關商品。
+禁止複製商品填滿衣架。
+禁止替換品牌標誌。
+禁止品牌拼字錯誤。
+禁止品牌標誌鏡像。
+禁止品牌標誌變形。
+禁止改變品牌標誌的位置、大小或顏色。
+禁止重新設計服裝。
+禁止混合不同商品的細節。
+禁止改變商品顏色。
+禁止改變領口。
+禁止改變袖型與袖口。
+禁止改變刺繡。
+禁止改變印花。
+禁止改變布料紋理。
+禁止服裝在鏡頭中突然變形或融化。
+禁止使用魔法換裝效果。
+禁止人物手部遮住商品重點。
+禁止手部扭曲或出現多餘手指。
+禁止臉部不自然或塑膠肌膚。
+禁止過度美顏。
+禁止非台灣中文口音。
+禁止口播過快。
+禁止口型與聲音不同步。
+禁止旁白聲音與主持人口型分離。</pre>
+      </details>
+    </div>
+
+  <h2><i>任務一</i>個人形象照設定（兩段指令）</h2>
+  <p class="hint">這是第一份作業。<b>兩段指令，照順序貼，中間不要換對話。</b>第一段讓 AI 幫你把品牌資料填出來，第二段才生圖。</p>
+
+    <div class="card prompt hot">
+      <span id="hwPrompt"></span>
+      <div class="p-tag">第一段 · 先填品牌資料</div>
+      <div class="p-head">
+        <h4>① 請 AI 幫你填出十個欄位</h4>
+        <div class="p-actions"><button type="button" class="copy" data-target="pt-brand">複製第一段指令</button></div>
+      </div>
+      <p class="p-desc">開一個<b>新對話</b>，把這段貼進 ChatGPT 或 Gemini。它會依照對你的認識，把十個欄位都填出來。<b>這一段不會生圖</b>，純粹是把你的品牌資料問清楚。</p>
+      <div class="filled">💡 <b>填出來不像你怎麼辦</b>：直接在同一個對話裡跟它說——「品牌象徵改成樹」「服務對象改成新手爸媽」。改到十個欄位你都點頭，再做第二段。</div>
+      <details class="code">
+        <summary>展開第一段指令</summary>
+        <pre class="text" id="pt-brand">請依你對我的認識幫我填寫此文案
+
+品牌／職稱：【例如：宜蘭在地家族生活顧問】
+專業服務：【例如：財務規劃、退休、長照與傳承】
+服務對象：【例如：熟齡人士、家庭、企業主】
+第一印象：【例如：溫暖、專業、親切、有質感】
+服裝：【例如：米白西裝，內搭淺杏針織上衣，卡其長褲】
+主色／輔色：【例如：精品米白、象牙白】
+品牌色／點綴色：【例如：奶茶金、淡金色】
+品牌象徵：【例如：羅盤】
+象徵意義：【例如：人生方向、選擇權與陪伴】
+核心意象：【例如：溫暖導航、穩定成長】</pre>
+      </details>
+    </div>
+
+    <div class="card prompt hot">
+      <div class="p-tag">第二段 · 上傳照片後才貼</div>
+      <div class="p-head">
+        <h4>② 生成指令（9:16 個人品牌形象照）</h4>
+        <div class="p-actions"><button type="button" class="copy" data-target="pt-gen22">複製第二段指令</button></div>
+      </div>
+      <p class="p-desc"><b>留在同一個對話裡</b>，先上傳你的正面照，再貼這一段。裡面的【品牌／職稱】【服裝】【品牌象徵】等等，AI 會自動對應第一段填好的答案，<b>你不用自己換</b>。</p>
+      <div class="filled">⚠️ <b>順序不能反</b>：先上傳照片 → 再貼指示詞。反過來的話 AI 手上沒有你的臉，會直接用想像的畫一個人。</div>
+      <details class="code">
+        <summary>展開第二段指令</summary>
+        <pre class="text" id="pt-gen22">請以上傳照片中的人物作為唯一人物與臉部參考，並對應個人品牌資料，生成一張 9:16 直式、高質感個人品牌形象照。
+
+嚴格保留本人的臉型、五官比例、眼型、鼻形、嘴唇、膚色、髮型、身形比例與自然年齡感；不得換臉、混入其他人物、過度年輕化、變成網紅臉或娃娃臉。僅可輕微淡化黑眼圈與細紋，保留真實皮膚紋理。若原照片戴眼鏡，可自然保留或移除，但不得改變本人辨識度。
+
+人物定位為【品牌／職稱】，呈現【第一印象】，服務【服務對象】，專業內容為【專業服務】。
+人物穿著【服裝】，配戴可有低調耳環與細緻項鍊，但不可搶眼。
+
+人物完整半身安排在畫面左側，人物最右側不得超過畫面寬度的 40%；身體微微朝向鏡頭，自然從容地微笑，雙手自然放在身側或輕鬆交疊，手指完整正確。頭頂、手部與身體都不可超出畫面。
+
+畫面右側 60% 必須保留明亮、乾淨、完整的留白，供後續加入姓名、服務與 QR Code；右側不得出現人物、手臂、家具、桌椅、盆栽、圖案、符號、文字或任何明顯裝飾。
+
+背景以【主色／輔色】做柔和漸層光影，只在左側人物周圍加入少量【品牌色／點綴色】細節。品牌象徵為【品牌象徵】；若非「無」，僅能以左上角半透明、低對比的大型線條呈現，不能遮臉，也不能進入右側留白。加入極少量柔和弧線、光暈與底部絲帶曲線，呼應【核心意象】。
+
+85mm 人像鏡頭、柔和棚燈、自然輪廓光、高清寫實、知性優雅、溫暖專業、自然人體比例、服裝紋理清楚。
+
+不得出現任何文字、數字、品牌名稱、Logo、假文字、浮水印、QR Code；避免人物置中、制式企業海報、傳統業務推銷感、房仲感、直銷感、辦公室會議場景、簽約握手、濃妝、尖下巴、大眼、塑膠肌、插畫、動漫或 AI 繪畫感。</pre>
+      </details>
+    </div>
+
+
+
+    <div class="card prompt">
+      <div class="p-tag">第一步 · 先想</div>
+      <div class="p-head">
+        <h4>六個欄位，先用自己的話填</h4>
+        <div class="p-actions"><button type="button" class="copy" data-target="pt-six">複製指示詞</button></div>
+      </div>
+      <p class="p-desc">不用寫得漂亮，寫得<b>具體</b>就好。「服務什麼客戶」寫「45–65 歲、準備退休的雙薪家庭」，比寫「一般大眾」有用一百倍。填不出來的先空著。</p>
+      
+      <details class="code">
+        <summary>展開指示詞全文</summary>
+        <pre class="text" id="pt-six">我的資料：
+【我的職業或專業】：
+【我平常服務什麼樣的客戶】：
+【我希望客戶看到我時的第一印象】：
+【我常穿的顏色與風格】：
+【我的品牌色（沒有就寫沒有，請幫我建議）】：
+【這張圖要用在哪裡】：</pre>
+      </details>
+    </div>
+
+    <div class="card prompt">
+      <div class="p-tag">課堂原稿 · 對照用</div>
+      <div class="p-head">
+        <h4>課堂上發的那份（含未填的【】）</h4>
+        <div class="p-actions"><button type="button" class="copy" data-target="pt-portrait">複製指示詞</button></div>
+      </div>
+      <p class="p-desc">這是 9/21 當天 10:14 在群組發的原稿。<b>留著對照用</b>——看得出哪些地方沒換掉，就知道自己改指示詞時要檢查什麼。<b>真正要用的請往下看修正版。</b></p>
+      <div class="filled">⚠️ <b>順序很重要</b>：開 AI 之後<b>先上傳照片，再貼指示詞</b>。順序反了，AI 會用想像的臉。</div>
+      <details class="code">
+        <summary>展開指示詞全文</summary>
+        <pre class="text" id="pt-portrait">請以上傳的人物照片作為唯一臉部與人物參考，保留本人原有五官、臉型、眼神、膚色、髮型、年齡感與自然氣質，確保臉部辨識度高，不得換臉或生成其他人物。
+適度美肌，輕微淡化細紋與黑眼圈，但保留真實皮膚紋理，不要過度磨皮、過度美化或生成網紅臉。
+
+一、個人品牌定位
+製作一張 9:16 直式、高質感個人品牌形象背景圖。
+品牌定位：
+・宜蘭在地家族生活顧問
+・財務顧問
+・熟齡人士或家有長輩
+・温暖
+
+二、人物構圖
+人物安排在畫面左側約三分之一處，採半身的站姿。
+人物身體微微朝向鏡頭，姿態自然從容，雙手自然放置於身側。
+人物神情溫暖、自信、親切，帶有自然微笑，呈現專業但沒有距離感的財務顧問形象。
+畫面另一側保留約 55% 至 60% 的大片乾淨留白，方便後續加入：
+・【姓名｜品牌名稱】
+・宜蘭在地家族生活顧問
+・【專業證照／資歷】
+・財務顧問
+・【品牌標語】
+・聯絡方式或 QR Code
+留白區不得出現人物、家具、文字或明顯裝飾，保持明亮、乾淨、易於排版。
+
+三、服裝造型
+人物穿著剪裁俐落的米白色專業套裝，內搭【內搭顏色與款式】，下身搭配【褲裝／裙裝及顏色】。
+服裝風格高級、簡潔、合身，具有個人品牌質感，不要制服感、廉價感或傳統宣傳照感。
+配戴愛心小型耳環，可搭配細緻項鍊。妝容乾淨自然、知性優雅，保留人物真實年齡與自然氣質。
+
+四、品牌背景
+背景主色使用：
+・【主色，例如：精品米白】
+・【輔色，例如：象牙白】
+・【品牌色，例如：奶茶金】
+・【點綴色，例如：淡金色】
+採用柔和漸層光影，呈現高端品牌形象與溫暖質感。
+在畫面左上方加入大型、半透明、低對比的【品牌象徵圖案，例如：羅盤、樹木、書本、羽毛、光環或建築線條】。
+象徵【品牌意義，例如：人生方向、財務導航、成長、選擇權與陪伴】。
+品牌象徵圖案可以局部延伸至畫面邊緣，但不得遮住人物臉部，也不得出現文字、英文字母或錯誤符號。
+背景可加入少量柔和弧線與細緻光暈，營造【品牌核心意象】，所有元素維持低對比、半透明與精緻質感。
+
+五、裝飾元素
+畫面四周加入極細的【淡金色／品牌色】圓角邊框。
+底部可搭配：柔和流動的絲帶線條、布料波紋、細緻的曲線。
+畫面右下角加入少量植物葉片與細緻線條。
+所有裝飾必須低調、精緻、簡約，不得搶過人物，也不得侵占主要留白排版區。
+
+六、整體視覺風格
+高端精品感、溫暖專業、知性優雅、目標客群友善、個人品牌形象、柔光棚拍、自然膚色、寫實攝影、細膩光影、乾淨構圖、商業形象照、雜誌封面質感。
+避免傳統產業宣傳單、廉價廣告模板、過度華麗或制式證件照的感覺。
+
+七、攝影設定
+85mm 人像鏡頭效果、柔和棚燈、自然輪廓光、細膩景深、人物清晰、背景柔和、高清寫實、自然人體比例、雙手完整、手指正確、服裝紋理清楚、商業攝影品質。
+
+八、重要限制
+・圖片中不得生成中文、英文、數字、品牌名稱、假文字、浮水印、Logo 或 QR Code。
+・右側必須保留 55% 至 60% 的大片乾淨留白。
+・人物必須位於畫面左側，不可置中。
+・必須保留本人原臉、髮型、年齡感與辨識度。
+・不得過度瘦臉、尖下巴、大眼、濃妝、塑膠肌或改變人物年齡。
+・不得換臉或生成陌生網紅臉。
+・不得多手、多指、少指、手指變形或身體比例異常。
+・不得過度金碧輝煌、宮廷化或堆疊過多裝飾。
+・品牌象徵圖案不得遮住人物臉部。
+・留白區不得放置沙發、櫃子、盆栽、桌椅或複雜背景。
+・不得生成傳統保險、房仲、直銷或制式企業宣傳海報風格。
+
+九、輸出規格
+・畫面比例：9:16 直式
+・建議尺寸：1080 × 1920 px
+・輸出品質：高清、照片級寫實、自然光影
+・適用平台：FB</pre>
+      </details>
+    </div>
+
+
+    <div class="card prompt hot">
+      <div class="p-tag">備用 · 一段式完整版</div>
+      <div class="p-head">
+        <h4>9:16 品牌形象圖（一段式．不想分兩段時用）</h4>
+        <div class="p-actions"><button type="button" class="copy" data-target="pt-fixed">複製指示詞</button></div>
+      </div>
+      <p class="p-desc">
+這份是<b>不分兩段、一次貼完</b>的版本，所有欄位都已經填好（拿芸老師自己的資料當範例）。
+        習慣一次搞定的人可以用這份，把裡面的答案換成你自己的就好。
+      </p>
+      <div class="filled">
+        📌 <b>換成你自己的</b>：把「宜蘭在地家族生活顧問、財務顧問、熟齡人士或家有長輩、羅盤、精品米白…」
+        這些換成你的答案就好。<b>其他一個字都不用動</b>——整段已經沒有任何方括號了，直接貼給 AI 就能跑。
+      </div>
+      <details class="code">
+        <summary>展開指示詞全文</summary>
+        <pre class="text" id="pt-fixed">請以上傳的人物照片作為唯一臉部與人物參考，保留本人原有五官、臉型、眼神、膚色、髮型、年齡感與自然氣質，確保臉部辨識度高，不得換臉或生成其他人物。
+適度美肌，輕微淡化細紋與黑眼圈，但保留真實皮膚紋理，不要過度磨皮、過度美化或生成網紅臉。
+
+一、個人品牌定位
+製作一張 9:16 直式、高質感個人品牌形象背景圖。
+品牌定位：
+・宜蘭在地家族生活顧問
+・財務顧問
+・熟齡人士或家有長輩
+・溫暖、專業、知性、親切
+
+二、人物構圖
+人物安排在畫面左側約三分之一處，採半身的站姿。
+人物身體微微朝向鏡頭，姿態自然從容，雙手自然放置於身側。
+人物神情溫暖、自信、親切，帶有自然微笑，呈現專業但沒有距離感的財務顧問形象。
+畫面另一側保留約 55% 至 60% 的大片乾淨留白，方便後續加入：
+・財顧芸｜馥芸財富學苑
+・宜蘭在地家族生活顧問
+・RFP 美國註冊財務策劃師
+・財務顧問
+・陪你看懂自己的財務全貌
+・聯絡方式或 QR Code
+留白區不得出現人物、家具、文字或明顯裝飾，保持明亮、乾淨、易於排版。
+
+三、服裝造型
+人物穿著剪裁俐落的米白色專業套裝，內搭象牙白絲質上衣，下身搭配米白色直筒褲。
+服裝風格高級、簡潔、合身，具有個人品牌質感，不要制服感、廉價感或傳統宣傳照感。
+配戴愛心小型耳環，可搭配細緻項鍊。妝容乾淨自然、知性優雅，保留人物真實年齡與自然氣質。
+
+四、品牌背景
+背景主色使用：
+・精品米白
+・象牙白
+・奶茶金
+・淡金色
+採用柔和漸層光影，呈現高端品牌形象與溫暖質感。
+在畫面左上方加入大型、半透明、低對比的羅盤。
+象徵人生方向、財務導航與長期陪伴。
+品牌象徵圖案可以局部延伸至畫面邊緣，但不得遮住人物臉部，也不得出現文字、英文字母或錯誤符號。
+背景可加入少量柔和弧線與細緻光暈，營造人生方向、財務導航與長期陪伴的核心意象，所有元素維持低對比、半透明與精緻質感。
+
+五、裝飾元素
+畫面四周加入極細的淡金色圓角邊框。
+底部可搭配：柔和流動的絲帶線條、布料波紋、細緻的曲線。
+畫面右下角加入少量植物葉片與細緻線條。
+所有裝飾必須低調、精緻、簡約，不得搶過人物，也不得侵占主要留白排版區。
+
+六、整體視覺風格
+高端精品感、溫暖專業、知性優雅、目標客群友善、個人品牌形象、柔光棚拍、自然膚色、寫實攝影、細膩光影、乾淨構圖、商業形象照、雜誌封面質感。
+避免傳統產業宣傳單、廉價廣告模板、過度華麗或制式證件照的感覺。
+
+七、攝影設定
+85mm 人像鏡頭效果、柔和棚燈、自然輪廓光、細膩景深、人物清晰、背景柔和、高清寫實、自然人體比例、雙手完整、手指正確、服裝紋理清楚、商業攝影品質。
+
+八、重要限制
+・圖片中不得生成中文、英文、數字、品牌名稱、假文字、浮水印、Logo 或 QR Code。
+・右側必須保留 55% 至 60% 的大片乾淨留白。
+・人物必須位於畫面左側，不可置中。
+・必須保留本人原臉、髮型、年齡感與辨識度。
+・不得過度瘦臉、尖下巴、大眼、濃妝、塑膠肌或改變人物年齡。
+・不得換臉或生成陌生網紅臉。
+・不得多手、多指、少指、手指變形或身體比例異常。
+・不得過度金碧輝煌、宮廷化或堆疊過多裝飾。
+・品牌象徵圖案不得遮住人物臉部。
+・留白區不得放置沙發、櫃子、盆栽、桌椅或複雜背景。
+・不得生成傳統保險、房仲、直銷或制式企業宣傳海報風格。
+
+九、輸出規格
+・畫面比例：9:16 直式
+・建議尺寸：1080 × 1920 px
+・輸出品質：高清、照片級寫實、自然光影
+・適用平台：FB</pre>
+      </details>
+    </div>
+
+  <h2><i>加分</i>雙視圖彩鉛人物設定稿</h2>
+  <p class="hint">同一張照片，完全不同的風格。16:9 橫式，左邊全身、右邊胸像。</p>
+
+    <div class="card prompt">
+      <div class="p-tag">加分題 · 同一張照片的另一種用法</div>
+      <div class="p-head">
+        <h4>雙視圖寫實彩鉛人物設定稿</h4>
+        <div class="p-actions"><button type="button" class="copy" data-target="pt-pencil">複製指示詞</button></div>
+      </div>
+      <p class="p-desc">16:9 橫式，左邊完整全身、右邊大型胸像，傳統彩色鉛筆質感。<b>不挑原照片的光線</b>，適合當貼文主視覺或講義封面。</p>
+      
+      <details class="code">
+        <summary>展開指示詞全文</summary>
+        <pre class="text" id="pt-pencil">【雙視圖寫實彩鉛人物設定稿｜上傳照片自動生成】
+
+請以上傳的人物照片作為唯一人物身份與造型參考，生成一張16:9橫式「寫實手繪彩色鉛筆雙視圖人物肖像設定稿」。
+
+【最高優先｜人物身份鎖定】
+必須保持上傳照片中的同一人物，不重新設計人物身份、不換臉、不混臉、不改變性別呈現與明顯年齡感。
+精準保留可辨識的臉型、額頭比例、眉型、眼睛大小與間距、眼皮結構、鼻型、嘴唇、顴骨、下顎線、膚色、髮型、髮際線、髮色、身形比例與個人辨識特徵。
+照片中若有眼鏡、耳飾、項鍊或其他明顯配件，完整保留。
+保持人物原本真實長相，不過度美化、不改成另一位俊男美女、不放大眼睛、不削尖下巴、不過度年輕化。
+
+【服裝與造型】
+以上傳照片中可辨識的服裝、配色、材質、髮型與配件作為造型來源，不自行重新換裝。
+若照片只有半身、下半身不可確認，依已知服裝風格、材質與配色自然延伸成合理完整造型，保持簡潔協調，不加入誇張的新服裝或配件。
+
+【固定雙視圖版型｜必須遵守】
+畫面為16:9橫式，左右並列雙視圖，只出現同一人物兩次。
+整體構圖接近專業人物肖像畫家的人物研究稿，左右人物彼此獨立但屬於同一張完整作品，不使用邊框或格線。
+
+左側約45%：
+同一人物完整全身肖像，人物位於左側中央略偏上。
+正面或非常輕微四分之三站姿，自然直立、肩膀放鬆、重心自然。
+從頭頂、頭髮、雙手、服裝、雙腿到鞋底全部完整可見，絕不裁切腳部。
+人物約佔畫面高度80%～88%，四周保留大量乾淨紙張留白。
+完整呈現人物身形比例、服裝輪廓、材質、褲裝／裙裝與鞋履。
+腳下只有非常淡、由鉛筆排線形成的接地陰影。
+
+右側約55%：
+同一人物的大型胸像近景，從胸口下方附近裁切至頭頂，頭部完整，不裁切頭髮。
+人物明顯大於左側全身像，臉部為右側主要視覺焦點。
+正面或非常輕微四分之三角度面向觀者，雙眼自然看向前方。
+表情依照原照片；若原照片表情不明確，使用自然、平靜、放鬆的閉唇表情。
+完整呈現臉型、五官、眼神、髮型、髮絲、皮膚色階、衣領、肩部服裝與配件。
+右側胸像與左側全身人物必須具有完全一致的臉型、五官比例、年齡、髮型、髮色、服裝與配件。
+
+【核心畫風｜寫實傳統彩色鉛筆】
+畫面必須明確看得出「由真人照片觀察後，以傳統彩色鉛筆在素描紙上逐筆繪製的人物肖像」，不是照片轉濾鏡。
+
+整體採用高寫實但保留強烈手繪證據的彩色鉛筆技法：
+細而清楚的鉛筆輪廓線、
+大量短而細密的平行排線、
+順著臉部與身體結構轉折的方向性排線、
+陰影區域使用細密交叉排線、
+透明薄層式彩鉛疊色、
+局部石墨灰與深色彩鉛加深輪廓、
+保留紙張底色穿透顏料層，
+不將顏色完全塗滿。
+
+彩鉛顏料呈現乾燥、細緻、略帶粉質的傳統鉛筆質地，不使用油亮、濕潤或數位噴槍式上色。
+
+【臉部彩鉛處理｜重要】
+臉部保持高度可辨識，但必須仍然看得出手繪筆觸。
+先以非常細的灰褐色鉛筆建立五官與輪廓，再使用淡膚色、暖米色、淺粉、灰褐與少量冷灰進行透明疊色。
+額頭、鼻梁、雙頰與下巴亮部大量保留紙張原色，不使用純白數位高光。
+眼窩、鼻翼、嘴角、下顎與耳朵使用細密短排線塑造立體感。
+皮膚不做照片級平滑漸層，不磨皮、不使用數位柔焦。
+近看可以辨認細微鉛筆線條與紙張紋理，遠看仍具有真實人物肖像的立體感。
+
+【頭髮處理】
+頭髮不是一整片深色色塊。
+依照真實髮流方向，以大量細長鉛筆線逐束描繪。
+深色髮束使用深褐、炭灰與黑色彩鉛多層交錯排線，亮部保留紙張與較淡線條。
+髮絲邊緣保留少量自然鬆散的手繪細線。
+
+【服裝彩鉛處理｜重要】
+服裝必須具有非常明顯的鉛筆排線質感。
+沿著布料結構、摺痕、袖子方向與身體曲面安排筆觸。
+使用中等密度的平行排線＋局部交叉排線建立明暗。
+縫線、衣領、口袋、鈕扣、布料摺痕與材質邊界使用較清楚的細線描繪。
+淺色服裝大量保留紙張底色，只用淡色鉛筆建立陰影與材質。
+深色服裝仍必須保留密集可見的鉛筆線條與紙張顆粒，禁止形成純黑實心色塊。
+服裝色彩比真人照片略微降低飽和度，呈現自然傳統彩鉛效果。
+
+【明暗與色彩特徵】
+整體為柔和、低至中等對比。
+亮部主要依靠「減少鉛筆覆蓋＋露出紙張」形成，不使用強烈白色高光。
+中間調由稀疏至中等密度的彩鉛排線建立。
+暗部由多層灰色、褐色與原服裝色交叉排線逐漸加深。
+禁止大面積純黑。
+陰影邊緣柔和但仍可看見鉛筆筆觸。
+
+色彩自然、克制、略微低飽和。
+保留人物原照片的膚色、髮色與服裝主色，但所有顏色呈現「薄層彩鉛疊色」，讓灰米色紙張自然透出。
+整體不偏黃、不做復古濾鏡、不使用鮮豔數位色彩。
+
+【紙張背景｜接近參考圖】
+背景使用非常淡的暖灰、灰米白、象牙灰色高品質細紋素描紙。
+整張畫面都能隱約感受到細小紙張纖維與自然顆粒。
+紙張色彩均勻、乾淨、低飽和，不做明顯舊紙、泛黃、污漬、折痕或復古效果。
+沒有任何實際場景、家具或裝飾。
+人物周圍保留大量乾淨負空間。
+左右人物之間只有自然紙張留白，不使用垂直分隔線、框線或版面UI。
+
+【整體完成度】
+作品像專業肖像插畫師使用高品質藝術級彩色鉛筆，在細紋素描紙上完成的寫實人物研究稿。
+五官辨識度高、比例準確，但仍保留大量人工鉛筆線條、交叉排線、薄層疊色、紙張透色與局部未完全填滿的手繪質感。
+畫面介於「精細人物素描」與「寫實彩色鉛筆肖像」之間，以素描線條為骨架、彩鉛薄層上色為主，不追求照片般完全平滑。
+
+【版面限制｜不可違反】
+16:9橫式。
+固定左側完整全身＋右側大型胸像。
+只有同一人物的兩個視圖。
+左側必須完整看見雙腳與鞋子。
+右側頭頂與頭髮不得裁切。
+左右兩張臉必須為同一身份。
+不要第三視圖、額外人物或背景人物。
+不要任何文字、姓名、標題、Logo、浮水印、格線、尺寸標記、設計標籤或UI。
+不要攝影照片效果。
+不要照片套素描濾鏡。
+不要數位噴槍插畫。
+不要光滑數位皮膚。
+不要3D渲染。
+不要油畫。
+不要水彩。
+不要麥克筆。
+不要蠟筆。
+不要漫畫或動畫風。
+不要純黑白素描。
+不要厚重顏料覆蓋紙張紋理。</pre>
+      </details>
+    </div>
+
+  <h2><i>公式</i>四句話怎麼寫</h2>
+  <p class="hint">影片的畫面是 AI 生的，<b>但這四句話只有你寫得出來</b>。下面的範例用的是同一組任務，只是換了行業——下面把每一句的任務拆開講。</p>
+
+    <div class="card prompt hotcard">
+      <div class="p-head"><h4>先記住這件事</h4></div>
+      <p class="p-desc">15 秒分成四句，<b>一句大約 3.5 秒</b>。中文口播一秒講四到五個字，所以<b>每句控制在 15 到 18 個字</b>——寫太長，AI 會講太快，口型就對不上了。</p>
+      <p class="p-desc"><b>四句的順序不能換。</b>它是一條路：先讓他停下來 → 說中他的痛 → 給他出口 → 告訴他現在做什麼。少一句，人就走掉了。</p>
+    </div>
+
+    <div class="card prompt">
+      <div class="p-tag">第 1 句 · 0–3 秒</div>
+      <div class="p-head"><h4>開場：讓他停下來</h4></div>
+      <p class="p-job">任務：三秒內讓滑手指的人停住。</p>
+      <p class="p-desc">這一句<b>不是自我介紹</b>。觀眾還不認識你，也不在乎你是誰——他只在乎「要不要繼續看」。所以第一句要製造一個<b>斷點</b>：打斷他原本的滑動節奏。「等一下」「我先講重點」這種話之所以有效，是因為它聽起來像有話要說，而且馬上就要說。</p>
+      <div class="ex"><div class="ex-r"><span class="ex-t">帶貨</span><b>等一下！我先講重點</b></div><div class="ex-r"><span class="ex-t">帶看</span><b>這間我帶看過八次，我先講重點——</b></div><div class="ex-r"><span class="ex-t">顧問</span><b>等一下，我先講重點</b></div><div class="ex-sep">你們班上的行業</div><div class="ex-r"><span class="ex-t">美業</span><b>等一下，我先講一件事</b></div><div class="ex-r"><span class="ex-t">變臉</span><b>等一下，先別眨眼</b></div><div class="ex-r"><span class="ex-t">推課程</span><b>等一下，我先講重點</b></div></div>
+      <div class="fs-warn">✗ <b>常見寫壞的樣子：</b>「大家好，我是○○○，今天要跟大家分享……」——三秒講完自我介紹，人已經滑走了。</div>
+      <p class="p-desc tipline">💡 帶看那句多了「我帶看過八次」，比純粹喊「等一下」更好：<b>它同時給了一個你值得聽的理由</b>。有具體數字的話，加進去。</p>
+    </div>
+
+    <div class="card prompt">
+      <div class="p-tag">第 2 句 · 3–7 秒</div>
+      <div class="p-head"><h4>痛點：讓他覺得你在說他</h4></div>
+      <p class="p-job">任務：講出一件他真的煩惱、而且點得出頭的事。</p>
+      <p class="p-desc"><b>這一句決定整支片。</b>寫對了，前後都成立；寫錯了，後面再好也沒人看。用<b>問句</b>，而且要<b>具體到他會在心裡點頭</b>。注意這幾句都用同一個句型：「你是不是⋯⋯？」——這個句型的好處是，它逼你把煩惱講成一個畫面，而不是一個概念。</p>
+      <div class="ex"><div class="ex-r"><span class="ex-t">帶貨</span><b>你是不是每次錄影片，都搞到半夜？</b></div><div class="ex-r"><span class="ex-t">帶看</span><b>你是不是看了十間，每間都差一點？</b></div><div class="ex-r"><span class="ex-t">顧問</span><b>你是不是賺得多，但都存不到錢？</b></div><div class="ex-sep">你們班上的行業</div><div class="ex-r"><span class="ex-t">美業</span><b>你是不是保養品買了一堆，皮膚還是老樣子？</b></div><div class="ex-r"><span class="ex-t">變臉</span><b>你是不是覺得尾牙表演，每年都差不多？</b></div><div class="ex-r"><span class="ex-t">推課程</span><b>你是不是知道該做自媒體，卻總卡在不知道放什麼？</b></div></div>
+      <div class="fs-warn">✗ <b>常見寫壞的樣子：</b>「你是不是想要理財？」——太廣，沒有人會因為這句話覺得被說中。</div>
+      <p class="p-desc tipline">💡 檢查方法：把這句話念給一個真的客戶聽，<b>他會不會說「對，就是這樣」</b>？不會，就重寫。想不出來，就回想最近一個坐在你面前、講過類似話的人。</p>
+    </div>
+
+    <div class="card prompt">
+      <div class="p-tag">第 3 句 · 7–11 秒</div>
+      <div class="p-head"><h4>解法：給他一個出口</h4></div>
+      <p class="p-job">任務：一句話講完你怎麼幫他，不解釋細節。</p>
+      <p class="p-desc">最多人在這裡寫壞——因為忍不住想把服務全部講完。但這一句<b>不是要說服他</b>，是要讓他知道「有解」。細節留到他來找你的時候再講。這幾句都只給一個<b>對比</b>：原本很難 → 現在不難。</p>
+      <div class="ex"><div class="ex-r"><span class="ex-t">帶貨</span><b>這個，三分鐘。真的，不用三分鐘。</b></div><div class="ex-r"><span class="ex-t">帶看</span><b>這間差的那一點，剛好補起來了。</b></div><div class="ex-r"><span class="ex-t">顧問</span><b>決定之前，先整理現況</b></div><div class="ex-sep">你們班上的行業</div><div class="ex-r"><span class="ex-t">美業</span><b>問題不在產品，在順序</b></div><div class="ex-r"><span class="ex-t">變臉</span><b>這張臉，三秒換三次</b></div><div class="ex-r"><span class="ex-t">推課程</span><b>兩小時，帶走一張圖和一支影片</b></div></div>
+      <div class="fs-warn">✗ <b>常見寫壞的樣子：</b>「我們提供完整的財務規劃服務，包含現金流、保障、退休與傳承四大面向……」——一句話講不完，就是寫太多了。</div>
+      <p class="p-desc tipline">💡 技巧：<b>直接回應第二句的那個字</b>。帶看第二句說「差一點」，第三句就接「那一點補起來了」——前後咬住，聽起來才像同一件事。</p>
+    </div>
+
+    <div class="card prompt">
+      <div class="p-tag">第 4 句 · 11–15 秒</div>
+      <div class="p-head"><h4>行動呼籲：告訴他現在做什麼</h4></div>
+      <p class="p-job">任務：給一個他當下就能完成的動作。</p>
+      <p class="p-desc">不要寫「歡迎洽詢」這種話——太軟，沒有動作。要具體到<b>他知道手指要點哪裡</b>：留言、私訊、按下面。而且動作要<b>小</b>：叫人留言比叫人預約容易得多，先讓他動一下，後面才有機會。</p>
+      <div class="ex"><div class="ex-r"><span class="ex-t">帶貨</span><b>三、二、一——現在下單！</b></div><div class="ex-r"><span class="ex-t">帶看</span><b>想看這間，私訊我約時間。</b></div><div class="ex-r"><span class="ex-t">顧問</span><b>想看你自己的版本，留言告訴我</b></div><div class="ex-sep">你們班上的行業</div><div class="ex-r"><span class="ex-t">美業</span><b>想知道你的順序對不對，留言問我</b></div><div class="ex-r"><span class="ex-t">變臉</span><b>想讓你的場子炸一次，私訊我</b></div><div class="ex-r"><span class="ex-t">推課程</span><b>只收六位，想來的私訊我</b></div></div>
+      <div class="fs-warn">✗ <b>常見寫壞的樣子：</b>放網址。<b>網址不能用唸的</b>，AI 會唸出一串亂碼，或在畫面上生出奇怪的字。網址放貼文文案，不要放進口播。</div>
+      <p class="p-desc tipline">💡 顧問那句是裡面最好的：<b>「你自己的版本」</b>把服務變成他的東西，而且「留言」的門檻比「私訊」更低。做顧問、做諮詢的，這句可以直接拿去改。</p>
+    </div>
+
+    <div class="card prompt">
+      <div class="p-head"><h4>寫完自己檢查四件事</h4></div>
+      <ul class="fs-do">
+        <li>每句<b>唸出來</b>，超過 4 秒就砍字</li>
+        <li>第二句有沒有<b>具體到會被點頭</b>？</li>
+        <li>第三句有沒有<b>回應第二句</b>用的那個詞？</li>
+        <li>第四句<b>有沒有動作</b>？「歡迎洽詢」不算</li>
+      </ul>
+      <div class="fs-warn">⚠️ 四句都寫好，再去貼指示詞。<b>先寫字、後生圖</b>——反過來做，你會為了配合畫面去改台詞，那支片就不是你的了。</div>
+    </div>
+
+  <h2><i>任務二</i>用形象照做出你的第一支影片</h2>
+  <p class="hint">第一份任務你做出了一張<b>會代表你的圖</b>。這一份只多做一件事：<b>讓圖裡的你開口說話</b>。不用出鏡、不用錄音、不用剪片——你只要寫四句話。</p>
+
+    <div class="card prompt hotcard">
+      <div class="p-head"><h4>三步，十分鐘</h4></div>
+      <div class="flow">
+        <div class="fs now"><div class="fs-h"><span class="fs-n">1</span><b>先寫你的四句話</b><span class="fs-t">5 分鐘</span></div><div class="fs-b">
+          <p><b>這一步最重要，而且只有你寫得出來。</b>照著上面公式那一節寫：開場、痛點、解法、行動呼籲，一句 15 到 18 個字。</p>
+          <ul class="fs-do">
+            <li>寫不出來就<b>看上面的行業對照</b>，找最接近你的那一行改</li>
+            <li>每句<b>唸出來</b>，超過 4 秒就砍字</li>
+            <li>四句都寫好再往下，<b>不要邊生影片邊想</b></li>
+          </ul>
+        </div></div>
+        <div class="fs now"><div class="fs-h"><span class="fs-n">2</span><b>上傳形象照，貼指示詞</b><span class="fs-t">2 分鐘</span></div><div class="fs-b">
+          <p><b>順序不能反。</b>先上傳你做好的那張 9:16 形象照，照片上傳好了<b>再</b>貼指示詞。</p>
+          <ul class="fs-do">
+            <li>按下面的複製鈕，<b>不要自己長按選取</b></li>
+            <li>貼上後，把四個「＿＿＿」換成你的四句話</li>
+            <li>手機打字慢沒關係，<b>四句而已</b></li>
+          </ul>
+          <button type="button" class="copy fs-go" data-target="pt-talk">⚡ 複製指示詞</button>
+        </div></div>
+        <div class="fs"><div class="fs-h"><span class="fs-n">3</span><b>等它跑，然後回傳群組</b><span class="fs-t">3 分鐘＋等待</span></div><div class="fs-b">
+          <p>影片生成要排隊，跑三到十分鐘都正常，<b>不要一直重按</b>。</p>
+          <ul class="fs-do">
+            <li>做出來<b>回傳 0921 群組</b>，順便說一句你的痛點那句怎麼想的</li>
+            <li>不滿意就<b>在同一個對話裡用講的改</b>——「第二句講慢一點」「表情自然一點」</li>
+          </ul>
+        </div></div>
+      </div>
+      <div class="fs-warn">⚠️ <b>不要追求完美。</b>先做出一支完整的、會講話的你。做出來了，後面換題目就是換四句話的事——這才是你真正帶走的東西。</div>
+    </div>
+
+
+    <div class="card prompt hotcard" id="fourbox">
+      <div class="p-tag">填這裡 · 不用改長文字</div>
+      <div class="p-head"><h4>填好四句話，一鍵產生你的指示詞</h4></div>
+      <p class="p-desc">把你的四句話打在下面四格，按按鈕，<b>完整指示詞會自動填好並複製</b>。手機上不用去動那一大段字。</p>
+
+      <div class="ff">
+        <div class="fr">
+          <label for="f1">① 開場　<span>把人叫住</span></label>
+          <textarea id="f1" rows="2" placeholder="等一下，我先講重點"></textarea>
+          <div class="fc" id="c1">0 字</div>
+        </div>
+        <div class="fr">
+          <label for="f2">② 痛點　<span>他真的會有的煩惱</span></label>
+          <textarea id="f2" rows="2" placeholder="你是不是保養品買了一堆，皮膚還是老樣子？"></textarea>
+          <div class="fc" id="c2">0 字</div>
+        </div>
+        <div class="fr">
+          <label for="f3">③ 解法　<span>一句話講完你怎麼幫他</span></label>
+          <textarea id="f3" rows="2" placeholder="問題不在產品，在順序"></textarea>
+          <div class="fc" id="c3">0 字</div>
+        </div>
+        <div class="fr">
+          <label for="f4">④ 行動呼籲　<span>他現在就能做的動作</span></label>
+          <textarea id="f4" rows="2" placeholder="想知道你的順序對不對，留言問我"></textarea>
+          <div class="fc" id="c4">0 字</div>
+        </div>
+      </div>
+
+      <button type="button" class="copy fs-go" id="fourGo">⚡ 產生並複製我的指示詞</button>
+      <p class="fmsg" id="fmsg">一句 15 到 18 個字最順。超過 18 字會變色提醒你。</p>
+
+      <details class="code" id="fprev" hidden>
+        <summary>看產生出來的指示詞</summary>
+        <pre class="text" id="fout"></pre>
+      </details>
+    </div>
+
+    <div class="card prompt">
+      <div class="p-tag">原始模板 · 單張照片版</div>
+      <div class="p-head">
+        <h4>形象照開口說話（15 秒）</h4>
+        <div class="p-actions"><button type="button" class="copy" data-target="pt-talk">複製指示詞</button></div>
+      </div>
+      <p class="p-desc">這是所有模板裡<b>最簡單的一份</b>：只要一張照片，沒有商品、沒有直播介面、沒有變速。做順了再回去玩前面那幾份。</p>
+      <details class="code">
+        <summary>展開指示詞全文</summary>
+        <pre class="text" id="pt-talk">【只改「」裡的四句話，其他不要動】
+
+以上傳的形象照為唯一人物參考：鎖定臉部、膚色、髮型、服裝，全程一致。保留原本骨相與皮膚紋理，不修圖、不瘦臉、不美白。背景沿用照片原本的場景與光線。
+
+15 秒、9:16 直式。台灣腔中文口播，親切自然不浮誇，口型精準同步。
+
+四鏡，一句一鏡：
+
+1（0–3s）中景，看向鏡頭微笑點頭，鏡頭緩緩 push-in。
+「＿＿＿」
+
+2（3–7s）近景，眉頭微皺、身體略前傾，像在問人。
+「＿＿＿」
+
+3（7–11s）半身，表情放鬆、張開雙手。
+「＿＿＿」
+
+4（11–15s）中景，微笑、對鏡頭比出手勢。
+「＿＿＿」
+
+風格：自然光感，輕微手持晃動，35mm 淺景深，photorealistic。不要字幕、不要螢幕文字、不要浮水印、不要 logo。</pre>
+      </details>
+    </div>
+
+  <h2><i>延伸</i>客製化範例：中秋魔術短片</h2>
+  <p class="hint">這份是現場依照學員的職業客製的。看它怎麼把「人物」與「商品」同時鎖定——換成你的行業也一樣能寫。</p>
+
+    <div class="card prompt">
+      <div class="p-tag">延伸範例 · 客製化</div>
+      <div class="p-head">
+        <h4>中秋魔術師月餅短片</h4>
+        <div class="p-actions"><button type="button" class="copy" data-target="pt-mid">複製指示詞</button></div>
+      </div>
+      <p class="p-desc">這份的寫法值得學：<b>同時鎖定「人物」與「商品」兩張參考圖</b>，再配上時間軸分鏡與口播台詞。換成你的行業、你的商品，結構完全一樣。</p>
+      
+      <details class="code">
+        <summary>展開指示詞全文</summary>
+        <pre class="text" id="pt-mid">請使用上傳圖二的魔術師作為唯一人物參考，完整保留他的臉型、五官、髮色、眼鏡、笑容與黑金魔術師服裝；上傳圖一作為唯一月餅禮盒參考，保留黑金紅配色、月餅造型、禮盒質感與「神奇傑克」品牌辨識。
+
+製作一支 10 秒、9:16 直式、電影級質感的中秋節魔術短影片。場景是中式華麗的中秋夜晚，深紅絲絨布幕、金色燈籠、滿月、梅花枝與金色微光粒子，整體黑金紅色調，高級、喜氣又神秘。
+
+0–3 秒：魔術師站在畫面中央，手持撲克牌，面向鏡頭露出自信微笑，說台灣國語：「中秋佳節，準備好見證奇蹟了嗎？」
+
+3–6 秒：他快速甩動魔術棒，空中爆出金色星光與紅金緞帶；鏡頭跟隨特效推近，魔術帽從桌面浮起並旋轉。
+
+6–9 秒：魔術師將手伸進帽子，一口氣拉出上傳圖一的精緻中秋月餅禮盒。禮盒平穩落在紅絲絨桌上並自動打開，露出六顆金黃月餅；畫面呈現驚喜、精緻又有節慶氛圍。
+
+9–10 秒：魔術師指向禮盒、俏皮眨眼，說：「神奇傑克，祝你中秋團圓又幸福！」
+
+口型需精準同步台灣繁體中文。鏡頭節奏明快、有吸睛魔術轉場。不要新增錯誤文字、亂碼、浮水印或其他品牌。</pre>
+      </details>
+    </div>
+
+  <h2><i>延伸</i>直播短片模板：產品篇 × 帶看篇</h2>
+  <p class="hint">下面兩支<b>是同一套指示詞</b>——只換了商品、台詞和行業。這就是重點：<b>分鏡結構固定，內容才是你的</b>。看完你會發現換成你的行業也一樣寫得出來。</p>
+
+    <div class="card prompt">
+      <div class="p-tag">模板 A · 產品篇（帶貨）</div>
+      <div class="p-head">
+        <h4>直播帶貨 15 秒短片</h4>
+        <div class="p-actions"><button type="button" class="copy" data-target="pt-live">複製指示詞</button></div>
+      </div>
+
+      <div class="vwrap">
+        <video controls playsinline preload="metadata" poster="live-demo-poster.jpg" src="live-demo.mp4"></video>
+        <span class="vcap">成品範例 · 點開播放（記得開聲音）</span>
+      </div>
+
+      <p class="p-desc">這份值得學的是<b>分鏡表的寫法</b>：每一個 Shot 都寫清楚「秒數 ＋ 鏡位 ＋ 動作 ＋ 台詞」，AI 才知道怎麼剪。後面再補上 HUD 介面、場景、風格三段，畫面質感就穩定了。</p>
+      <div class="fs-warn">⚠️ <b>兩個地方一定要換成你自己的：</b><br><b>① Shot 4 的台詞</b>——那句是行動呼籲，網址不能用唸的，改成「現在下單」「私訊我」這類真的會說出口的話。<br><b>② 商品照</b>——上面這支是課堂示範，用的是市售商品。自己要公開發布的話，<b>請換成你自己的商品或服務</b>。</div>
+
+      <details class="code">
+        <summary>展開指示詞全文</summary>
+        <pre class="text" id="pt-live">以上傳的人與產品兩張圖片為參考，對應腳本中的情境。
+請完全鎖定外型：臉部、膚色、髮型、服裝、體型，全程保持一致。
+
+嚴格保留參考圖的五官比例與骨相，不要修飾、不要瘦臉、不要放大眼睛、不要美白，保留真實的皮膚紋理。
+
+口播使用台灣腔中文，語速偏帶貨感但不油膩，口型精準同步中文。
+
+Shot 1（00:00–00:03）
+中景俯視。一雙手把商品放到木質長桌中央，手指輕點商品兩下。鏡頭快速 push-in 到商品特寫。
+台詞（畫外音）：「等一下！我先講重點」
+※ 畫面中只出現一雙成年人的手，不要出現臉、不要出現完整人物。
+
+Shot 2（00:03–00:07）
+切近景。主播舉起商品，另一手指向鏡頭，眉頭皺起。背景彈幕加速上升。
+台詞：「你是不是每次錄影片，都搞到半夜？」
+
+Shot 3（00:07–00:11）
+特寫商品在主播手中緩慢旋轉，slow motion at 15%，表面反光掃過。接著 speed ramps to 600%，畫面切回半身景，主播張開雙手。
+台詞：「這個，三分鐘。真的，不用三分鐘。」
+
+Shot 4（00:11–00:15）
+鏡頭 360 度環繞主播與桌面，訂單數字 HUD 暴衝，彈幕氣泡塞滿畫面。主播比出食指，對鏡頭用力一指，笑開。
+台詞：「三、二、一——現在下單！」　← 這句換成你自己的行動呼籲
+
+直播 HUD 介面：左上角紅色 LIVE 圓點與觀看人數，右上角庫存倒數卡，左側漂浮上升的彈幕氣泡，底部中央亮綠色圓形下單按鈕，右下角跳動愛心特效。
+
+場景：暖色調居家攝影棚，木質長桌，木層架上有綠植，牆面米白色。主光為前方環形補光燈，在眼中形成明顯環形眼神光。
+
+風格：真實手機直播質感，輕微手持晃動，暖色調，35mm 淺景深，photorealistic，8K。
+
+不要出現字幕、不要螢幕文字、不要浮水印、不要 logo。</pre>
+      </details>
+    </div>
+
+
+    <div class="card prompt">
+      <div class="p-tag">模板 B · 帶看篇（不動產）</div>
+      <div class="p-head">
+        <h4>直播帶看 15 秒短片</h4>
+        <div class="p-actions"><button type="button" class="copy" data-target="pt-tour">複製指示詞</button></div>
+      </div>
+
+      <div class="vwrap">
+        <video controls playsinline preload="metadata" poster="tour-demo-poster.jpg" src="tour-demo.mp4"></video>
+        <span class="vcap">成品範例 · 點開播放（記得開聲音）</span>
+      </div>
+
+      <p class="p-desc">跟上面那支<b>結構一模一樣</b>，只換了三個地方：商品變成 iPad 上的物件照、台詞換成帶看的語言、行動呼籲換成「私訊我約時間」。<b>你的行業要怎麼換，看這兩支對照就懂了。</b></p>
+      <div class="fs-warn">💡 <b>對照著看最有感：</b>「你是不是每次錄影片都搞到半夜？」→「你是不是看了十間，每間都差一點？」——<b>同一個句型，換成你客戶真的會有的煩惱</b>，這句寫得好，整支片就成立了。</div>
+
+      <details class="code">
+        <summary>展開指示詞全文</summary>
+        <pre class="text" id="pt-tour">請以上傳的人物與不動產物件為主體，對應腳本內容，主角來自上傳的人物圖片。
+請完全鎖定外型：臉部、膚色、髮型、服裝、體型，全程保持一致。
+
+嚴格保留參考圖的五官比例與骨相，不要修飾、不要瘦臉、不要放大眼睛、不要美白，保留真實的皮膚紋理。
+
+口播使用台灣腔中文，語速偏帶貨感但不油膩，口型精準同步中文。
+
+Shot 1（00:00–00:03）
+中景俯視。一雙手拿 iPad，畫面中有不動產物件照片，將 iPad 放到木質長桌中央，手指輕點兩下。鏡頭快速 push-in 到螢幕特寫。
+台詞（畫外音）：「這間我帶看過八次，我先講重點——」
+※ 畫面中只出現一雙成年人的手，不要出現臉、不要出現完整人物。
+
+Shot 2（00:03–00:07）
+切近景。主播舉起 iPad，另一手指向鏡頭，眉頭皺起。背景彈幕加速上升。
+台詞：「你是不是看了十間，每間都差一點？」
+
+Shot 3（00:07–00:11）
+特寫螢幕在主播手中緩慢旋轉，slow motion at 15%，表面反光掃過。接著 speed ramps to 600%，畫面切回半身景，主播張開雙手。
+台詞：「這間差的那一點，剛好補起來了。」
+
+Shot 4（00:11–00:15）
+鏡頭 360 度環繞主播與桌面，數字 HUD 暴衝，彈幕氣泡塞滿畫面。主播比出食指，對鏡頭用力一指，笑開。
+台詞：「想看這間，私訊我約時間。」
+
+直播 HUD 介面：左上角紅色 LIVE 圓點與觀看人數，右上角庫存倒數卡，左側漂浮上升的彈幕氣泡，底部中央亮綠色圓形下單按鈕，右下角跳動愛心特效。
+
+場景：暖色調居家攝影棚，木質長桌，木層架上有綠植，牆面米白色。主光為前方環形補光燈，在眼中形成明顯環形眼神光。
+
+風格：真實手機直播質感，輕微手持晃動，暖色調，35mm 淺景深，photorealistic，8K。
+
+不要出現字幕、不要螢幕文字、不要浮水印、不要 logo。</pre>
+      </details>
+    </div>
+
+
+    <div class="card prompt hotcard">
+      <div class="p-tag">模板 C · 顧問篇（手機短版）</div>
+      <div class="p-head">
+        <h4>財務顧問 15 秒短片</h4>
+        <div class="p-actions"><button type="button" class="copy" data-target="pt-adv">複製指示詞</button></div>
+      </div>
+      <p class="p-desc"><b>這份是專門為手機改寫的。</b>該鎖的全部留著——鎖臉、直播運鏡、彈幕熱況、四句台詞一句一鏡；<b>真正的差別是排版</b>：一個鏡頭一行，要改的四句話全部圈在「」裡，在手機上一眼就找得到。</p>
+      <div class="fs-warn">📱 <b>手機這樣用：</b>按複製鈕貼進去，<b>只改「」裡的四句話</b>，其他一個字都不用動，改完直接送出。</div>
+      <details class="code">
+        <summary>展開指示詞全文</summary>
+        <pre class="text" id="pt-adv">【只改「」裡的四句話，其他不要動】
+
+人物以上傳人像為準，鎖定臉部、膚色、髮型、服裝、體型，全程一致；保留原本骨相與皮膚紋理，不修圖、不瘦臉、不美白。道具以上傳的另一張圖為準。
+15 秒、9:16 直式，台灣腔中文口播，帶貨語速但不油膩，口型精準同步。
+
+四鏡，一句一鏡：
+
+1（0–3s）中景，拍桌前傾、招手、眼睛睜大，快速 push-in 到半身。
+「等一下，我先講重點」
+
+2（3–7s）近景，舉起 iPad 顯示財務報告書，另一手指鏡頭，眉頭皺起，彈幕加速。
+「你是不是賺得多，但都存不到錢？」
+
+3（7–11s）特寫道具慢轉（slow motion 15%）反光掃過，speed ramp 到 600%，切半身張開雙手。
+「決定之前，先整理現況」
+
+4（11–15s）360 度環繞主播與桌面，預約數字 HUD 暴衝，彈幕塞滿，比三根手指、用力一指、笑開。
+「想看你自己的版本，留言告訴我」
+
+直播 HUD：左上 LIVE 紅點與觀看人數，右上名額倒數卡，左側彈幕氣泡上升，底部亮綠色圓形預約鈕，右下跳動愛心。
+場景：暖色調居家攝影棚，木質長桌，層架綠植，米白牆，環形補光燈形成明顯眼神光。
+風格：手機直播質感，輕微手持晃動，35mm 淺景深，photorealistic，8K。不要字幕、螢幕文字、浮水印、logo。</pre>
+      </details>
+    </div>
+
+    <div class="card prompt">
+      <div class="p-tag">模板 C 空白版 · 換成你的行業</div>
+      <div class="p-head">
+        <h4>四句話填空模板</h4>
+        <div class="p-actions"><button type="button" class="copy" data-target="pt-blank">複製指示詞</button></div>
+      </div>
+      <p class="p-desc">同一份，四句台詞留空給你填。每一句旁邊寫了<b>它的任務</b>——開場、痛點、解法、行動呼籲。照著任務寫，套什麼行業都成立。</p>
+      <details class="code">
+        <summary>展開指示詞全文</summary>
+        <pre class="text" id="pt-blank">【只改「」裡的四句話，其他不要動】
+
+人物以上傳人像為準，鎖定臉部、膚色、髮型、服裝、體型，全程一致；保留原本骨相與皮膚紋理，不修圖、不瘦臉、不美白。道具以上傳的另一張圖為準。
+15 秒、9:16 直式，台灣腔中文口播，帶貨語速但不油膩，口型精準同步。
+
+四鏡，一句一鏡：
+
+1（0–3s）中景，拍桌前傾、招手、眼睛睜大，快速 push-in 到半身。
+「＿＿＿」← 開場，把人叫住
+
+2（3–7s）近景，舉起道具，另一手指鏡頭，眉頭皺起，彈幕加速。
+「＿＿＿」← 痛點，講出客戶真的會有的煩惱
+
+3（7–11s）特寫道具慢轉（slow motion 15%）反光掃過，speed ramp 到 600%，切半身張開雙手。
+「＿＿＿」← 解法，一句話講完你怎麼幫他
+
+4（11–15s）360 度環繞主播與桌面，數字 HUD 暴衝，彈幕塞滿，比出手勢、用力一指、笑開。
+「＿＿＿」← 行動呼籲，真的會說出口的那句話
+
+直播 HUD：左上 LIVE 紅點與觀看人數，右上名額倒數卡，左側彈幕氣泡上升，底部亮綠色圓形按鈕，右下跳動愛心。
+場景：暖色調居家攝影棚，木質長桌，層架綠植，米白牆，環形補光燈形成明顯眼神光。
+風格：手機直播質感，輕微手持晃動，35mm 淺景深，photorealistic，8K。不要字幕、螢幕文字、浮水印、logo。</pre>
+      </details>
+    </div>
+
+  <h2><i>工具</i>9/21 用到的</h2>
+  <div class="tools">
+    <div class="tl"><b>🎨 生圖（兩個擇一）</b>
+      <span><a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a>
+      <a href="https://gemini.google.com/app?hl=zh-TW" target="_blank" rel="noopener noreferrer">Google Gemini</a></span></div>
+    <div class="tl"><b>🎬 做影片</b>
+      <span><a href="https://grok.com/" target="_blank" rel="noopener noreferrer">Grok（瀏覽器直接開）</a>
+      <a href="https://www.dola.com/chat/" target="_blank" rel="noopener noreferrer">Dola 網頁版</a>
+      <a href="https://app.notion.com/p/2-35ed6400015d810b9a48dd3ceea38674?source=copy_link" target="_blank" rel="noopener noreferrer">千問使用說明</a></span></div>
+    <div class="tl"><b>💡 額度用完了怎麼辦</b>
+      <span>換另一個工具試試，或隔天再跑。免費版是用時間換，不急的話完全夠用。</span></div>
+  </div>
+
+  <h2><i>接下來</i>卡住隨時問</h2>
+  <div class="card">
+    <p class="p-desc" style="margin-bottom:0">
+      <b>課後一週群組陪跑</b>——做到一半卡住、生出來不像你、額度用完了，直接在 0921 群組問我，不用客氣。<br /><br />
+      想繼續做下去的，我們有 <b>365 陪跑</b>；想聊聊你正在做的事，或對我這份工作好奇，隨時可以找我。
+      <br /><br />
+      🙋‍♀️ 找我：<a href="https://lin.ee/6hkkECK" target="_blank" rel="noopener noreferrer">LINE@ 財顧芸</a>　·　
+      <a href="https://www.allfreedom.info/about-angie-profile.html" target="_blank" rel="noopener noreferrer">更完整認識我</a>　·　
+      <a href="https://www.allfreedom.info/" target="_blank" rel="noopener noreferrer">馥芸財富學苑</a>
+    </p>
+  </div>
+
+  <div class="warn">
+    📌 <b>最後一句真心話</b>：回家一定要做一件事——把課堂的指示詞<b>改掉至少三個地方，再生一次</b>。
+    改過一次，這份指示詞才真的變成你的。你帶走的不是一支影片，是一套做法。
+  </div>
+
+  <footer>
+    <b>財顧芸 Angie · 陳芸琪</b>　馥芸財富學苑<br />
+    2026.09.21｜雷神昇彩創客基地<br />
+    本頁指示詞及教學內容來源為 945AI 課程講師及財顧芸分享，相關版權所有<br />
+    <b>僅供參與學員使用，非經同意請勿公開分享或轉貼</b>
+    <button type="button" class="logout" id="logoutBtn">登出</button>
+  </footer>
+</div>
+
+<script>
+/* ===== 課程密碼 ＋ 版權同意 ===== */
+(function(){
+  var PASSWORD = "yunplan0921";              /* ← 要換密碼改這一行 */
+  var KEY = "fuyun_0921_hw_login";
+
+  var body   = document.body;
+  var gatePw = document.getElementById("gatePw");
+  var gateErr= document.getElementById("gateErr");
+
+  function lock(){ body.classList.add("locked"); }
+  function unlock(){ body.classList.remove("locked"); }
+
+  try{ if(localStorage.getItem(KEY) === "true"){ unlock(); } else { lock(); } }
+  catch(e){ lock(); }
+
+  function showNotice(){
+    body.classList.remove("locked");
+    body.classList.add("noticing");
+  }
+  document.getElementById("noticeBtn").addEventListener("click", function(){
+    body.classList.remove("noticing");
+    try{ localStorage.setItem(KEY, "true"); }catch(e){}
+    window.scrollTo(0,0);
+  });
+
+  function check(){
+    if(gatePw.value.trim() === PASSWORD){
+      gateErr.textContent = ""; gatePw.value = ""; showNotice();
+    } else {
+      gateErr.textContent = "密碼錯誤，請再試一次";
+      gatePw.value = ""; gatePw.focus();
+    }
+  }
+  document.getElementById("gateBtn").addEventListener("click", check);
+  gatePw.addEventListener("keydown", function(e){ if(e.key === "Enter") check(); });
+
+  var lo = document.getElementById("logoutBtn");
+  if(lo) lo.addEventListener("click", function(){
+    try{ localStorage.removeItem(KEY); }catch(e){}
+    body.classList.remove("noticing");
+    lock(); gatePw.focus();
+  });
+})();
+</script>
+
+<script>
+/* 收合式指示詞：從原始區塊取文字填入 */
+(function(){
+  document.querySelectorAll(".mini-pre").forEach(function(el){
+    var src = document.getElementById(el.dataset.from);
+    if(src) el.textContent = src.textContent;
+  });
+})();
+</script>
+
+<script>
+(function(){
+  document.querySelectorAll(".copy").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var pre = document.getElementById(btn.dataset.target);
+      if(!pre) return;
+      var text = pre.textContent, label = btn.textContent;
+      var done = function(){
+        btn.textContent = "\u2713 \u5df2\u8907\u88fd";
+        btn.classList.add("done");
+        setTimeout(function(){ btn.textContent = label; btn.classList.remove("done"); }, 1800);
+      };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done).catch(function(){ fb(text, done); });
+      } else { fb(text, done); }
+    });
+  });
+  function fb(text, done){
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand("copy"); done(); }catch(e){ window.prompt("\u624b\u52d5\u8907\u88fd\uff1a", text); }
+    document.body.removeChild(ta);
+  }
+})();
+</script>
+<script>
+(function(){
+  var box=document.getElementById("fourbox"); if(!box) return;
+  var KEY="yunplan0921-four-v1";
+  var ids=["f1","f2","f3","f4"];
+  var els=ids.map(function(i){return document.getElementById(i);});
+  var cs=[1,2,3,4].map(function(n){return document.getElementById("c"+n);});
+  var msg=document.getElementById("fmsg");
+  var DEF="一句 15 到 18 個字最順。超過 18 字會變色提醒你。";
+
+  try{
+    var raw=localStorage.getItem(KEY);
+    if(raw){ var o=JSON.parse(raw);
+      if(o&&o.length===4) els.forEach(function(e,i){ e.value=o[i]||""; }); }
+  }catch(e){}
+
+  function count(){
+    els.forEach(function(e,i){
+      var n=e.value.trim().length;
+      cs[i].textContent=n+" 字";
+      cs[i].classList.toggle("over", n>18);
+    });
+    try{ localStorage.setItem(KEY,
+      JSON.stringify(els.map(function(e){return e.value;}))); }catch(e){}
+  }
+  els.forEach(function(e){ e.addEventListener("input",count); });
+  count();
+
+  function flash(t){
+    msg.textContent=t; clearTimeout(flash.t);
+    flash.t=setTimeout(function(){ msg.textContent=DEF; },5000);
+  }
+
+  document.getElementById("fourGo").addEventListener("click",function(){
+    var base=document.getElementById("pt-talk");
+    if(!base){ flash("找不到模板，請用下面那份手動複製。"); return; }
+    var vals=els.map(function(e){return e.value.trim();});
+    var empty=vals.filter(function(v){return !v;}).length;
+    var i=0;
+    var out=base.textContent.replace(/＿＿＿/g,function(){
+      var v=vals[i++]; return v||"＿＿＿";
+    });
+    document.getElementById("fout").textContent=out;
+    document.getElementById("fprev").hidden=false;
+
+    function done(ok){
+      if(!ok){ flash("複製鈕沒作用，點開下面「看產生出來的指示詞」長按複製。"); return; }
+      if(empty===4) flash("⚠️ 四句都還沒填，複製到的還是空白模板。");
+      else if(empty) flash("✓ 已複製，但還有 "+empty+" 句沒填。");
+      else flash("✓ 已複製。回到 AI 那邊，先上傳形象照，再貼上。");
+    }
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(out).then(function(){done(true);},
+        function(){done(false);});
+    }else{ done(false); }
+  });
+})();
+</script>
+
+</body>
+</html>
