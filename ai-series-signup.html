@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="AI 賦能｜從零開始的 AI 個人品牌十堂課。查看課表、費用，填寫報名與課前問卷。">
+<title>AI 個人品牌十堂課報名</title>
+<style>
+/* 版面：招生介紹＋報名問卷合一的單頁。深綠標頭、訴求框、課表卡片、價格、FAQ，最後是報名問卷與結果卡。手機優先 */
+:root{
+  --bg:#f8f3e9; --paper:#fffdf8; --ink:#2f3430; --muted:#5a605a;
+  --forest:#274234; --herbal:#5f7f68; --gold:#b8914f; --tint:#efe4cc;
+  --line:rgba(95,127,104,.22); --head:#274234; --headfg:#f8f3e9; --warn:#b4542e; --pick:#e3ecdf;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#151a16; --paper:#1d241f; --ink:#ebe7dd; --muted:#a6ada6;
+  --forest:#dfd3b6; --herbal:#9dbca6; --gold:#d8b87e; --tint:#2c2a20;
+  --line:rgba(157,188,166,.22); --head:#1f2e26; --headfg:#f0ead9; --warn:#e08a5f; --pick:#26352b; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#151a16; --paper:#1d241f; --ink:#ebe7dd; --muted:#a6ada6;
+  --forest:#dfd3b6; --herbal:#9dbca6; --gold:#d8b87e; --tint:#2c2a20;
+  --line:rgba(157,188,166,.22); --head:#1f2e26; --headfg:#f0ead9; --warn:#e08a5f; --pick:#26352b; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.8;-webkit-text-size-adjust:100%}
+.wrap{max-width:760px;margin:0 auto;padding-inline:18px;padding-block:0 56px}
+a{color:var(--herbal)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.top{background:var(--head);color:var(--headfg);margin-inline:-18px;padding:30px 18px 26px;border-radius:0 0 24px 24px}
+.top .eb{font-size:12px;letter-spacing:.14em;color:var(--gold);font-weight:700}
+.top h1{font-family:var(--serif);font-size:clamp(26px,7vw,38px);line-height:1.3;margin:8px 0 10px;text-wrap:balance}
+.top h1 small{display:block;font-size:.55em;color:var(--gold);letter-spacing:.1em}
+.top .pos{font-size:16px;margin:0 0 6px;font-weight:700}
+.top p{margin:0;font-size:15px;opacity:.88;max-width:60ch}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:18px}
+.facts div{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:8px 12px;min-width:0}
+.facts b{display:block;font-size:12px;letter-spacing:.08em;color:var(--gold)}
+h2{font-family:var(--serif);font-size:22px;color:var(--forest);margin:34px 0 8px;text-wrap:balance}
+h2 small{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--gold);display:block}
+.lead{color:var(--muted);font-size:15px;margin:0 0 14px}
+.vow{background:var(--paper);border:2px solid var(--gold);border-radius:18px;padding:16px 18px;margin-top:18px}
+.vow b{color:var(--forest);font-size:17px;display:block;margin-bottom:4px}
+.vow p{margin:0;font-size:15.5px}
+.vow .no{margin-top:8px;color:var(--warn);font-size:14.5px}
+.list{display:grid;gap:10px}
+.ls{display:grid;grid-template-columns:92px minmax(0,1fr);gap:14px;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:12px 14px;align-items:start}
+.ls .d{font-family:var(--serif);color:var(--gold);font-size:19px;line-height:1.3;font-variant-numeric:tabular-nums}
+.ls .d small{display:block;font-family:var(--sans);font-size:12.5px;color:var(--muted)}
+.ls b{display:block;color:var(--forest);font-size:16.5px;line-height:1.5}
+.ls span{font-size:14.5px;color:var(--muted)}
+.ls .tag{display:inline-block;font-size:12px;font-weight:700;color:var(--herbal);border:1px solid var(--herbal);border-radius:999px;padding:0 8px;margin-top:4px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;counter-reset:s}
+.steps div{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px 14px;counter-increment:s;min-width:0}
+.steps div::before{content:counter(s);display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--gold);color:var(--paper);font-size:13px;font-weight:700;margin-bottom:4px}
+.steps b{display:block;color:var(--forest)}
+.steps span{font-size:14px;color:var(--muted)}
+.price{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+.price .big{font-family:var(--serif);font-size:30px;color:var(--warn);font-weight:700}
+.price s{color:var(--muted)}
+.cta{background:var(--head);color:var(--headfg);border-radius:18px;padding:20px;margin-top:30px}
+.cta h2{color:var(--gold);margin:0 0 6px}
+.cta p{margin:0 0 12px;font-size:14.5px;opacity:.9}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:10px 20px;border-radius:12px;background:#06c755;color:#fff;font-weight:700;text-decoration:none}
+.sel{font-size:13px;opacity:.8;margin-top:8px;user-select:all}
+details{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-bottom:8px}
+summary{cursor:pointer;font-weight:700;color:var(--forest)}
+details p{margin:8px 0 2px;font-size:15px}
+.foot{margin-top:26px;font-size:12.5px;color:var(--muted);text-align:center;line-height:1.9}
+.sec{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:14px}
+.sec h2{font-family:var(--serif);font-size:18px;color:var(--forest);margin:0 0 2px}
+.sec .hint{font-size:13.5px;color:var(--muted);margin:0 0 10px}
+.q{margin-top:14px}
+.q:first-of-type{margin-top:6px}
+.q>.ql{display:block;font-weight:700;font-size:15.5px;margin-bottom:6px}
+.q>.ql em{font-style:normal;color:var(--warn);font-size:13px;margin-left:4px}
+.opts{display:grid;gap:6px}
+.opts.two{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.opt{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:11px;padding:9px 12px;cursor:pointer;background:var(--bg);min-width:0}
+.opt small{display:block;font-size:13px;color:var(--muted);line-height:1.6;margin-top:1px}
+.qhint{display:block;font-size:13px;color:var(--muted);margin:-2px 0 8px;line-height:1.7}
+.opt input{width:19px;height:19px;margin-top:4px;flex:none;accent-color:var(--herbal)}
+.opt:has(input:checked){background:var(--pick);border-color:var(--herbal)}
+input[type=text],textarea{width:100%;padding:10px 12px;border-radius:11px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+textarea{min-height:70px;resize:vertical}
+.go{display:flex;width:100%;justify-content:center;min-height:50px;margin-top:18px;border:0;border-radius:13px;background:var(--head);color:var(--headfg);font-weight:700;font-size:17px;cursor:pointer}
+.err{color:var(--warn);font-size:14.5px;margin-top:10px;min-height:22px}
+#result{margin-top:18px}
+.rc{background:var(--paper);border:2px solid var(--gold);border-radius:18px;padding:18px}
+.rc .eb{font-size:12px;letter-spacing:.12em;color:var(--gold);font-weight:700}
+.lv{font-family:var(--serif);font-size:28px;color:var(--forest);margin:2px 0}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.badges span{font-size:13.5px;border:1px solid var(--line);border-radius:999px;padding:2px 10px;background:var(--tint)}
+.rc ul{margin:6px 0 0;padding-left:1.2em}
+.rc li{margin:3px 0}
+.sum{white-space:pre-wrap;background:var(--tint);border-radius:12px;padding:12px;font-size:14px;margin-top:12px;overflow-wrap:anywhere}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.row button,.row a{flex:1;min-width:150px;min-height:46px;display:inline-flex;align-items:center;justify-content:center;border-radius:12px;font-weight:700;text-decoration:none;cursor:pointer}
+.copy{border:0;background:var(--head);color:var(--headfg)}
+.line{background:#06c755;color:#fff;border:0}
+.msg{font-size:14px;color:var(--herbal);margin-top:6px;min-height:20px}
+button,input,textarea,select{font:inherit}
+.jump{display:inline-flex;align-items:center;justify-content:center;min-height:46px;margin-top:16px;padding:10px 22px;border-radius:12px;background:var(--gold);color:#1f2a22;font-weight:700;text-decoration:none}
+.signup{scroll-margin-top:12px}
+.signup .intro{background:var(--paper);border:2px solid var(--gold);border-radius:16px;padding:14px 16px;font-size:15px}
+.signup .intro p{margin:0 0 6px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div class="eb">財顧芸 AI 共學｜2026 第一梯</div>
+    <h1><small>AI 賦能</small>從零開始的<br>AI 個人品牌十堂課</h1>
+    <p class="pos">做中學 AI，在不完美中共學。</p>
+    <p>從註冊帳號開始，每堂兩小時、當天帶走一個作品。十堂上完，你會有自己的形象照、電子名片、年節祝福影片、真人短片、LINE 貼圖、招生 DM、專屬 AI 小助理、個人網站，和一個會自動回覆的 LINE 官方帳號。</p>
+    <div class="facts">
+      <div><b>時間</b>每堂 14:00–16:00</div>
+      <div><b>期間</b>10/27–1/18，共 10 堂</div>
+      <div><b>班型</b>6 人即開班，小班手把手</div>
+      <div><b>講師</b>財顧芸 Angie</div>
+    </div>
+    <a class="jump" href="#signup">立即報名・填課前問卷</a>
+  </header>
+
+  <div class="vow">
+    <b>本課程學習系列的訴求</b>
+    <p>以共學為主、不追求完美、分享所學。這裡沒有第一名，只有開始。先完成，再完美：作品不用完美，做出來、用出去，就是這堂課的成功。</p>
+    <p class="no">如果你想比第一名、期待每件作品都精緻完美，這系列課不適合你，請先不要報名。</p>
+  </div>
+
+  <h2><small>SCHEDULE</small>十堂課表</h2>
+  <p class="lead">每堂都能單獨報名，也可以一路上完。沒上過形象照那堂也能上貼圖課，老師會現場帶你做角色。</p>
+  <div class="list">
+    <div class="ls"><div class="d">10/27<small>星期二</small></div><div><b>個人 LINE 貼圖：做好就上架</b><span>帶走 8 張自己的貼圖＋上架檔案</span><br><span class="tag">已開放報名</span></div></div>
+    <div class="ls"><div class="d">11/2<small>星期一</small></div><div><b>AI 入門：萬用指示詞＋安全紅線</b><span>帶走三版自我介紹（LINE、FB、講座開場），學會用 AI 不踩雷</span><br><span class="tag">零基礎從這堂開始</span></div></div>
+    <div class="ls"><div class="d">11/9<small>星期一</small></div><div><b>多場景品牌形象照＋電子名片</b><span>帶走 3 個場景的形象照、新大頭貼和一張電子名片</span></div></div>
+    <div class="ls"><div class="d">11/16<small>星期一</small></div><div><b>年節祝福影片：聖誕、新年、春節一次做好</b><span>帶走 3 支祝福影片，年底直接傳給親友客戶</span></div></div>
+    <div class="ls"><div class="d">11/24<small>星期二</small></div><div><b>AI 寫稿、自己拍：手機拍出 30 秒專業短片</b><span>AI 寫稿、手機當提詞器，帶走一支真人短片（不想露臉也可以）</span></div></div>
+    <div class="ls"><div class="d">12/4<small>星期五</small></div><div><b>AI 招生海報與圖卡</b><span>帶走 1 張 DM＋3 張 FB 圖卡</span></div></div>
+    <div class="ls"><div class="d">12/11<small>星期五</small></div><div><b>一鍵成片入門：配音、字幕、配樂</b><span>帶走 1 支 30 秒 Reels 短片</span></div></div>
+    <div class="ls"><div class="d">12/22<small>星期二</small></div><div><b>打造你的 AI 小助理</b><span>帶走一個專屬自己的文案小助理，以後寫貼文、回客戶都靠它</span></div></div>
+    <div class="ls"><div class="d">12/29<small>星期二</small></div><div><b>一頁式網站＋簡報</b><span>帶走可以分享的個人網站和一份簡報</span></div></div>
+    <div class="ls"><div class="d">1/18<small>星期一</small></div><div><b>LINE 官方帳號入門＋品牌上線發表</b><span>開好會自動回覆的官方帳號，排好 30 天發文，上台發表你的品牌上線</span></div></div>
+  </div>
+
+  <h2><small>EVERY CLASS</small>每一堂你會得到</h2>
+  <div class="steps">
+    <div><b>填下方報名問卷</b><span>選全修、套票或單堂，4 分鐘了解你的 3C 配備與程度</span></div>
+    <div><b>複製結果傳官方 LINE</b><span>財顧芸確認名額、回覆繳費方式</span></div>
+    <div><b>加入學員群組</b><span>課前會收到工具清單與教學頁</span></div>
+  </div>
+
+  <h2><small>PRICE</small>費用</h2>
+  <div class="price">
+    <div>⭐ 10 堂全修 <span class="big">4,800</span> 元　<s>原價 8,000 元</s></div>
+    <p style="margin:4px 0 10px;font-size:15px">平均一堂 480 元，加送財務座標盤點一次，最後一堂上台發表你的品牌上線。</p>
+    <div style="display:grid;gap:4px;font-size:15.5px;font-variant-numeric:tabular-nums">
+      <div>5 堂套票　2,700 元（一堂 540）</div>
+      <div>3 堂套票　1,680 元（一堂 560）</div>
+      <div>單堂體驗　600 元（原價 800）</div>
+      <div>上過的課，複訓半價 300 元</div>
+    </div>
+    <p style="margin:10px 0 0;font-size:14px;color:var(--muted)">已報名單堂的學員，11/2 前升級全修，已付金額全額折抵。</p>
+  </div>
+
+  <h2><small>HOW</small>怎麼報名</h2>
+  <div class="steps">
+    <div><b>私訊報名</b><span>加財顧芸官方 LINE，告訴我想上哪幾堂</span></div>
+    <div><b>填課前問卷</b><span>3 分鐘了解你的 3C 配備與程度</span></div>
+    <div><b>加入學員群組</b><span>課前會收到工具清單與教學頁</span></div>
+  </div>
+
+  <h2><small>FAQ</small>常見問題</h2>
+  <details><summary>完全沒用過 AI 可以上嗎？</summary><p>可以。建議從 11/2「AI 入門」開始，老師會帶你註冊帳號、學會最基本的用法。</p></details>
+  <details><summary>只有手機可以上嗎？</summary><p>每一堂都能用手機做；12/22 AI 小助理那堂有平板或筆電會更順。課前問卷會依你的設備分組。</p></details>
+  <details><summary>已經報名 10/27，還能改成全修嗎？</summary><p>可以。11/2 第 2 堂開課前升級，已付的 600 元全額折抵，只要再補 4,200 元。</p></details>
+  <details><summary>缺課怎麼辦？</summary><p>每堂都有課後教學頁和懶人包可以自學；下一梯開課時，可以免費補上同一主題。</p></details>
+  <details><summary>一定要十堂都上嗎？</summary><p>不用，每堂都能單獨報名，挑你最需要的就好。</p></details>
+  <details><summary>上過的課可以再上嗎？</summary><p>可以。上過的學員可半價複訓，每堂 300 元，依當堂座位空額安排。</p></details>
+  <details><summary>做不完怎麼辦？</summary><p>課後有一週群組陪跑，做不完可以回家補，有問題隨時在群組問。</p></details>
+
+  <section class="signup" id="signup">
+  <h2><small>SIGN UP</small>報名＋課前問卷</h2>
+  <div class="intro">
+    <p>歡迎報名，很開心能和你一起邊做邊學！</p>
+    <p>為了讓每個人都跟得上，想先了解你想上哪幾堂、手機與 3C 配備、AI 使用經驗和學習習慣。大約 4 分鐘，填完會看到你的程度和分組。</p>
+    <p style="margin:0">最後按「複製結果」，貼到財顧芸官方 LINE 就完成報名，老師會回覆名額與繳費方式。沒用過 AI 也完全沒關係。</p>
+  </div>
+  <form id="f" novalidate>
+    <section class="sec">
+      <h2>1．報名方案</h2>
+      <p class="hint">全修 4,800（平均一堂 480，送財務座標盤點一次）｜5 堂 2,700｜3 堂 1,680｜單堂 600</p>
+      <div class="q"><span class="ql">你想報名的方案</span><span class="qhint">還在考慮也沒關係，選「還不確定」，老師會再跟你聊。</span>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="plan" value="先試聽一堂"> 先上 1 堂再決定（單堂 600 元）</label>
+          <label class="opt"><input type="radio" name="plan" value="選修最需要的幾堂"> 選修最需要的幾堂（3 堂 1,680／5 堂 2,700）</label>
+          <label class="opt"><input type="radio" name="plan" value="完整跟完"> 十堂全修（4,800 元，送財務座標盤點一次）</label>
+          <label class="opt"><input type="radio" name="plan" value="還不確定"> 還不確定</label>
+        </div>
+      </div>
+      <div class="q"><span class="ql">你最想上哪幾堂（可複選）</span><span class="qhint">每堂都能單獨報名。勾你最需要的，老師會依大家的選擇調整示範內容。</span>
+        <div class="opts two">
+          <label class="opt"><input type="checkbox" name="pick" value="10/27 LINE 貼圖"> 10/27 個人 LINE 貼圖</label>
+          <label class="opt"><input type="checkbox" name="pick" value="11/2 AI 入門"> 11/2 AI 入門＋安全紅線</label>
+          <label class="opt"><input type="checkbox" name="pick" value="11/9 形象照"> 11/9 多場景形象照＋電子名片</label>
+          <label class="opt"><input type="checkbox" name="pick" value="11/16 年節祝福"> 11/16 年節祝福影片</label>
+          <label class="opt"><input type="checkbox" name="pick" value="11/24 自己拍短片"> 11/24 AI 寫稿、自己拍短片</label>
+          <label class="opt"><input type="checkbox" name="pick" value="12/4 招生海報"> 12/4 招生海報與圖卡</label>
+          <label class="opt"><input type="checkbox" name="pick" value="12/11 一鍵成片"> 12/11 一鍵成片入門</label>
+          <label class="opt"><input type="checkbox" name="pick" value="12/22 AI 小助理"> 12/22 打造你的 AI 小助理</label>
+          <label class="opt"><input type="checkbox" name="pick" value="12/29 網站簡報"> 12/29 一頁式網站＋簡報</label>
+          <label class="opt"><input type="checkbox" name="pick" value="1/18 官方帳號結業"> 1/18 LINE 官方帳號入門＋品牌上線發表</label>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h2>2．關於你</h2>
+      <div class="q"><label class="ql" for="name">怎麼稱呼你<em>必填</em></label><input type="text" id="name" placeholder="例：小芸"></div>
+      <div class="q"><span class="ql">你的工作或身分</span>
+        <div class="opts two" id="job">
+          <label class="opt"><input type="radio" name="job" value="財顧／保險"> 財顧／保險</label>
+          <label class="opt"><input type="radio" name="job" value="老師"> 老師</label>
+          <label class="opt"><input type="radio" name="job" value="上班族"> 上班族</label>
+          <label class="opt"><input type="radio" name="job" value="小店主／自媒體"> 小店主／自媒體</label>
+          <label class="opt"><input type="radio" name="job" value="家管"> 家管</label>
+          <label class="opt"><input type="radio" name="job" value="退休"> 退休</label>
+        </div>
+      </div>
+      <div class="q"><span class="ql">想用 AI 做什麼（可複選）</span>
+        <div class="opts two">
+          <label class="opt"><input type="checkbox" name="goal" value="經營客戶"> 經營客戶</label>
+          <label class="opt"><input type="checkbox" name="goal" value="做個人品牌"> 做個人品牌</label>
+          <label class="opt"><input type="checkbox" name="goal" value="招生或賣東西"> 招生或賣東西</label>
+          <label class="opt"><input type="checkbox" name="goal" value="節省工作時間"> 節省工作時間</label>
+          <label class="opt"><input type="checkbox" name="goal" value="做給家人朋友"> 做給家人朋友</label>
+          <label class="opt"><input type="checkbox" name="goal" value="純粹好奇"> 純粹好奇</label>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h2>3．手機與 3C 配備</h2>
+      <p class="hint">老師會依這裡分「手機組」或「電腦組」。</p>
+      <div class="q"><span class="ql">你的手機<em>必填</em></span>
+        <div class="opts two">
+          <label class="opt"><input type="radio" name="phone" value="iPhone"> iPhone</label>
+          <label class="opt"><input type="radio" name="phone" value="Android"> Android（三星、OPPO 等）</label>
+        </div>
+      </div>
+      <div class="q"><span class="ql">手機還剩多少空間</span><span class="qhint">怎麼看：iPhone 到「設定 → 一般 → iPhone 儲存空間」；Android 到「設定 → 儲存空間」。AI 生圖和影片很佔空間，至少留 5GB。</span>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="space" value="很夠"> 很夠（10GB 以上）</label>
+          <label class="opt"><input type="radio" name="space" value="快滿了"> 快滿了，常跳出空間不足</label>
+          <label class="opt"><input type="radio" name="space" value="不知道"> 不知道怎麼看</label>
+        </div>
+      </div>
+      <div class="q"><span class="ql">上課會帶什麼（可複選）<em>必填</em></span><span class="qhint">有筆電的人分在電腦組，只帶手機的人分在手機組，老師會準備兩種操作步驟。</span>
+        <div class="opts two">
+          <label class="opt"><input type="checkbox" name="dev" value="Windows 筆電"> Windows 筆電</label>
+          <label class="opt"><input type="checkbox" name="dev" value="Mac 筆電"> Mac 筆電</label>
+          <label class="opt"><input type="checkbox" name="dev" value="平板"> 平板</label>
+          <label class="opt"><input type="checkbox" name="dev" value="只帶手機"> 只帶手機</label>
+          <label class="opt"><input type="checkbox" name="dev" value="行動電源"> 充電器或行動電源</label>
+        </div>
+      </div>
+      <div class="q"><span class="ql">已經有的帳號（可複選）</span><span class="qhint">沒有也沒關係，第 1 堂會現場帶你註冊；有帳號的話，課前先登入一次，確認記得密碼。</span>
+        <div class="opts two">
+          <label class="opt"><input type="checkbox" name="acc" value="ChatGPT"> ChatGPT</label>
+          <label class="opt"><input type="checkbox" name="acc" value="Gemini"> Gemini</label>
+          <label class="opt"><input type="checkbox" name="acc" value="豆包"> 豆包</label>
+          <label class="opt"><input type="checkbox" name="acc" value="Google 帳號"> Google 帳號（Gmail）</label>
+          <label class="opt"><input type="checkbox" name="acc" value="Canva"> Canva</label>
+          <label class="opt"><input type="checkbox" name="acc" value="都沒有"> 都沒有</label>
+        </div>
+      </div>
+      <div class="q"><span class="ql">課程會用到豆包（中國公司的 App）做影片，你可以接受嗎</span><span class="qhint">豆包是目前少數能免費把照片變成影片的工具；介意的話老師會準備其他工具，選哪個都可以上課。</span>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="cn" value="可以"> 可以</label>
+          <label class="opt"><input type="radio" name="cn" value="不想用"> 不想用，請給我其他工具</label>
+          <label class="opt"><input type="radio" name="cn" value="不確定"> 不確定，上課再說</label>
+        </div>
+      </div>
+      <div class="q"><span class="ql">11/24 拍短片那堂要用手機自己拍，你願意入鏡嗎</span><span class="qhint">AI 幫你寫稿、手機當提詞器，你只要照著唸。不想露臉也有方法，選哪個都可以上課。</span>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="cam" value="願意露臉"> <span>願意露臉<small>真人出鏡最有信任感</small></span></label>
+          <label class="opt"><input type="radio" name="cam" value="只露聲音"> <span>只想露聲音<small>拍手部、商品或風景，配上自己的聲音</small></span></label>
+          <label class="opt"><input type="radio" name="cam" value="還不確定"> 還不確定，上課再決定</label>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h2>4．學習狀況</h2>
+      <p class="hint">照實填就好，這不是考試，是讓老師知道要放慢還是加碼。</p>
+      <div class="q"><span class="ql">你目前使用 AI 的熟悉度<em>必填</em></span><span class="qhint">依你「現在」的狀況選，不用謙虛也不用勉強，老師只是用來安排座位和進度。</span>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="s1" value="0" data-lv="1"> <span>1．完全沒用過<small>還沒打開過 ChatGPT、Gemini 這類工具</small></span></label>
+          <label class="opt"><input type="radio" name="s1" value="1" data-lv="2"> <span>2．偶爾用，問問問題而已<small>像用 Google 一樣問問題、查資料</small></span></label>
+          <label class="opt"><input type="radio" name="s1" value="2" data-lv="3"> <span>3．會用一些，能寫指示詞、做基本產出<small>會請 AI 寫文案、整理重點或生一張圖</small></span></label>
+          <label class="opt"><input type="radio" name="s1" value="3" data-lv="4"> <span>4．常用，能整合到工作流程<small>每週都用它寫報告、整理資料、做簡報</small></span></label>
+          <label class="opt"><input type="radio" name="s1" value="3" data-lv="5"> <span>5．熟練，可以教別人、做模板與自動化<small>做過自己的 GPT、Skill 或自動化流程</small></span></label>
+        </div>
+      </div>
+      <div class="q"><span class="ql">用 AI 生過圖嗎<em>必填</em></span>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="s2" value="0"> 沒有</label>
+          <label class="opt"><input type="radio" name="s2" value="1"> <span>有，照別人給的指示詞做<small>複製老師或網路上的指示詞貼上</small></span></label>
+          <label class="opt"><input type="radio" name="s2" value="2"> <span>會自己寫指示詞<small>知道怎麼描述畫面、風格、尺寸</small></span></label>
+          <label class="opt"><input type="radio" name="s2" value="3"> <span>常常生圖做作品<small>做過海報、貼圖、形象照等作品</small></span></label>
+        </div>
+      </div>
+      <div class="q"><span class="ql">剪過影片嗎<em>必填</em></span>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="s3" value="0"> 沒有</label>
+          <label class="opt"><input type="radio" name="s3" value="1"> <span>用手機剪過簡單的<small>例如剪短片、加一段文字</small></span></label>
+          <label class="opt"><input type="radio" name="s3" value="2"> <span>會用剪映或 CapCut 加字幕、配樂<small>能自己完成一支有字幕和音樂的影片</small></span></label>
+        </div>
+      </div>
+      <div class="q"><span class="ql">電腦操作<em>必填</em></span>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="s4" value="0"> 很少用電腦</label>
+          <label class="opt"><input type="radio" name="s4" value="1"> <span>會上網、打字<small>能用電腦收信、上網查資料</small></span></label>
+          <label class="opt"><input type="radio" name="s4" value="2"> <span>會下載、找檔案、裝軟體<small>知道檔案存到哪、能自己安裝程式</small></span></label>
+        </div>
+      </div>
+      <div class="q"><span class="ql">手機下載、上傳照片和檔案<em>必填</em></span>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="s5" value="0"> 不太會</label>
+          <label class="opt"><input type="radio" name="s5" value="1"> <span>會，但常找不到存到哪<small>例如下載的圖片不知道在相簿還是檔案裡</small></span></label>
+          <label class="opt"><input type="radio" name="s5" value="2"> 很熟</label>
+        </div>
+      </div>
+      <div class="q"><label class="ql" for="worry">最擔心卡在哪裡</label><textarea id="worry" placeholder="例：打字很慢、怕跟不上"></textarea></div>
+      <div class="q"><label class="ql" for="want">上完課最想帶走什麼</label><textarea id="want" placeholder="例：一張好看的大頭照、會自己做貼圖"></textarea></div>
+    </section>
+
+    <section class="sec">
+      <h2>5．你喜歡怎麼學</h2>
+      <p class="hint">老師依這裡安排陪跑方式和課後任務。</p>
+      <div class="q"><span class="ql">你需要哪一種支持，比較容易完成（可複選）</span>
+        <div class="opts two">
+          <label class="opt"><input type="checkbox" name="sup" value="作業範例或模板"> 作業範例或模板</label>
+          <label class="opt"><input type="checkbox" name="sup" value="有人可問問題"> 有人可以問問題</label>
+          <label class="opt"><input type="checkbox" name="sup" value="同步共做時間"> 大家一起共做的時間</label>
+          <label class="opt"><input type="checkbox" name="sup" value="每週提醒"> 每週提醒</label>
+        </div>
+      </div>
+      <div class="q"><span class="ql">願意投入多少時間練習</span>
+        <div class="opts two">
+          <label class="opt"><input type="radio" name="time" value="每天10分鐘"> 每天 10 分鐘</label>
+          <label class="opt"><input type="radio" name="time" value="每天30分鐘"> 每天 30 分鐘</label>
+          <label class="opt"><input type="radio" name="time" value="每週1–2小時"> 每週 1–2 小時</label>
+          <label class="opt"><input type="radio" name="time" value="看成果再決定"> 看成果再決定</label>
+        </div>
+      </div>
+      <div class="q"><span class="ql">目前最想改善的狀況</span>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="pain" value="想讓更多人認識我"> 想讓更多人認識我（個人品牌、客源）</label>
+          <label class="opt"><input type="radio" name="pain" value="事情太多做不完"> 每天事情太多，做不完</label>
+          <label class="opt"><input type="radio" name="pain" value="工作流程很亂"> 工作流程很亂，沒有標準化</label>
+          <label class="opt"><input type="radio" name="pain" value="想多一個收入來源"> 想靠 AI 多一個收入來源</label>
+          <label class="opt"><input type="radio" name="pain" value="純粹想學會"> 純粹想學會、跟上趨勢</label>
+        </div>
+      </div>
+      <div class="q"><span class="ql">課後有「用手機就能做的小任務」，完成可以領懶人包，你能接受哪些（可複選）</span><span class="qhint">每堂課後一週會有一個小任務，例如把作品貼到社群；完成後在官方 LINE 輸入關鍵字，就能領這堂的懶人包（指示詞、模板合集）。</span>
+        <div class="opts two">
+          <label class="opt"><input type="checkbox" name="task" value="錄一小段語音"> 錄一小段語音</label>
+          <label class="opt"><input type="checkbox" name="task" value="簡單資料整理"> 做簡單的資料整理</label>
+          <label class="opt"><input type="checkbox" name="task" value="用手機拍短片"> 用手機拍短片</label>
+          <label class="opt"><input type="checkbox" name="task" value="把作品貼到社群"> 把作品貼到社群</label>
+          <label class="opt"><input type="checkbox" name="task" value="先不參加任務"> 先不參加任務</label>
+        </div>
+      </div>
+      <div class="q"><span class="ql">（選填）你對用 AI 經營個人品牌、從事財商方面的第二職涯有興趣嗎</span>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="career" value="有興趣，想聽說明"> 有興趣，想聽聽說明</label>
+          <label class="opt"><input type="radio" name="career" value="也許，之後再說"> 也許，之後再說</label>
+          <label class="opt"><input type="radio" name="career" value="目前沒有"> 目前沒有</label>
+        </div>
+      </div>
+      <div class="q"><span class="ql">共學約定<em>必填</em></span>
+        <p class="hint" style="margin:0 0 8px">本課程學習系列的訴求：以共學為主、不追求完美、分享所學。這裡沒有第一名，只有開始。先完成，再完美：作品不用完美，做出來、用出去，就是這堂課的成功。如果你想比第一名、期待每件作品都精緻完美，這系列課不適合你，請先不要報名。</p>
+        <div class="opts">
+          <label class="opt"><input type="checkbox" id="agree2"> 我接受本系列訴求：以共學為主、不追求完美、願意分享所學；先完成，再完美</label>
+          <label class="opt"><input type="checkbox" id="agree"> 我理解本共學是學習交流，不在群組隨意加好友或推銷</label>
+        </div>
+      </div>
+    </section>
+
+    <button class="go" type="submit">看我的程度和分組</button>
+    <div class="err" id="err" role="alert"></div>
+  </form>
+
+  <div id="result" hidden aria-live="polite"></div>
+
+  </section>
+
+  <section class="cta">
+    <h2>還有問題想先問？</h2>
+    <p>名額有限，6 人即開班。直接私訊財顧芸也可以。</p>
+    <a class="btn" href="https://lin.ee/oOvyuwU" target="_blank" rel="noopener">加入財顧芸官方 LINE</a>
+    <div class="sel">https://lin.ee/oOvyuwU</div>
+  </section>
+
+  <p class="foot">問卷內容只在你自己的手機或電腦裡，按「複製結果」傳給財顧芸才會送出。<br>財顧芸 Angie（陳芸琪）｜AI 財務建築師・馥芸財富學苑創辦人<br>課程內容與指示詞版權所有</p>
+</div>
+
+<script>
+(function(){
+  var f = document.getElementById("f");
+  function val(n){ var e = f.querySelector("input[name='" + n + "']:checked"); return e ? e.value : ""; }
+  function vals(n){ return Array.prototype.map.call(f.querySelectorAll("input[name='" + n + "']:checked"), function(e){ return e.value; }); }
+
+  var LV = [
+    {max:4, name:"新手", tip:"從零開始剛剛好，老師會一步一步帶。",
+     prep:["課前請先申請 Google 帳號（Gmail，已經有就跳過）","上課前一天把手機充飽電","挑一張清楚的正面照存在手機相簿"]},
+    {max:8, name:"入門", tip:"有一點基礎，照課程節奏走，作品會很完整。",
+     prep:["課前先登入 ChatGPT 或 Gemini，試問一個問題","挑一張清楚的正面照","想好你的行業和服務對象，指示詞會用到"]},
+    {max:12, name:"進階", tip:"你的底子不錯，課堂上會給你加分挑戰。",
+     prep:["課前先試一次 AI 生圖，帶一張作品來","想想你最想做的進階作品","願意的話可以當小老師，幫旁邊的同學"]}
+  ];
+
+  f.addEventListener("submit", function(e){
+    e.preventDefault();
+    var err = document.getElementById("err");
+    var name = document.getElementById("name").value.trim();
+    var miss = [];
+    if (!name) miss.push("稱呼");
+    if (!val("phone")) miss.push("手機");
+    if (!vals("dev").length) miss.push("上課會帶什麼");
+    if (!document.getElementById("agree").checked || !document.getElementById("agree2").checked) miss.push("共學約定（兩項都要勾）");
+    ["s1","s2","s3","s4","s5"].forEach(function(k, i){ if (val(k) === "") miss.push("學習狀況第 " + (i + 1) + " 題"); });
+    if (miss.length){ err.textContent = "還差：" + miss.join("、"); return; }
+    err.textContent = "";
+
+    var score = ["s1","s2","s3","s4","s5"].reduce(function(a, k){ return a + Number(val(k)); }, 0);
+    var lv = LV.filter(function(x){ return score <= x.max; })[0];
+    var dev = vals("dev");
+    var laptop = dev.indexOf("Windows 筆電") > -1 || dev.indexOf("Mac 筆電") > -1;
+    var group = laptop ? "電腦組" : "手機組";
+    var acc = vals("acc");
+    var prep = lv.prep.slice();
+    if (!laptop) prep.push("你分在手機組：上課以手機操作；12/22 AI 小助理那堂有平板或筆電會更順");
+    if (val("cam") === "只露聲音") prep.push("11/24 拍短片那堂：先想好要拍的畫面（手部、商品、工作環境）");
+    if (val("space") !== "很夠") prep.push("先清出手機空間（至少 5GB），刪掉不用的影片和 App");
+    if (val("cn") === "不想用") prep.push("影片那幾堂老師會提供豆包以外的工具");
+    if (vals("sup").indexOf("同步共做時間") > -1) prep.push("課後一週群組會安排共做時間，記得留意群組公告");
+    if (acc.indexOf("都沒有") > -1 || !acc.length) prep.push("你還沒有 AI 帳號，第 1 堂會現場帶你註冊，記得帶 Email 密碼");
+
+    var sum =
+      "【AI 個人品牌十堂課｜報名＋課前問卷】\n" +
+      "稱呼：" + name + "\n" +
+      "身分：" + (val("job") || "未填") + "\n" +
+      "想用 AI：" + (vals("goal").join("、") || "未填") + "\n" +
+      "程度：" + lv.name + "（" + score + "／12 分）\n" +
+      "分組：" + group + "\n" +
+      "手機：" + val("phone") + "，空間：" + (val("space") || "未填") + "\n" +
+      "會帶：" + dev.join("、") + "\n" +
+      "帳號：" + (acc.join("、") || "未填") + "\n" +
+      "豆包：" + (val("cn") || "未填") + "\n" +
+      "入鏡：" + (val("cam") || "未填") + "\n" +
+      "AI 熟悉度：" + ((f.querySelector("input[name='s1']:checked") || {}).dataset ? f.querySelector("input[name='s1']:checked").dataset.lv : "") + "／5\n" +
+      "報名方案：" + (val("plan") || "未填") + "\n" +
+      "想上的堂：" + (vals("pick").join("、") || "未填") + "\n" +
+      "需要支持：" + (vals("sup").join("、") || "未填") + "\n" +
+      "練習時間：" + (val("time") || "未填") + "\n" +
+      "最想改善：" + (val("pain") || "未填") + "\n" +
+      "可接受任務：" + (vals("task").join("、") || "未填") + "\n" +
+      "第二職涯：" + (val("career") || "未填") + "\n" +
+      "擔心：" + (document.getElementById("worry").value.trim() || "無") + "\n" +
+      "想帶走：" + (document.getElementById("want").value.trim() || "無");
+
+    var r = document.getElementById("result");
+    r.innerHTML =
+      "<div class='rc'><div class='eb'>你的結果</div><div class='lv'>" + lv.name + "</div>" +
+      "<div>" + lv.tip + "</div>" +
+      "<div class='badges'><span>" + score + "／12 分</span><span>" + group + "</span><span>" + val("phone") + "</span></div>" +
+      "<b>課前請先做</b><ul id='prepUl'></ul>" +
+      "<div class='sum' id='sum'></div>" +
+      "<div class='row'><button class='copy' type='button' id='cp'>1．複製結果</button><a class='line' href='https://lin.ee/oOvyuwU' target='_blank' rel='noopener'>2．貼到官方 LINE</a></div>" +
+      "<div class='msg' id='msg'></div></div>";
+    var ul = document.getElementById("prepUl");
+    prep.forEach(function(p){ var li = document.createElement("li"); li.textContent = p; ul.appendChild(li); });
+    document.getElementById("sum").textContent = sum;
+    r.hidden = false;
+    r.scrollIntoView({behavior:"smooth", block:"start"});
+    document.getElementById("cp").addEventListener("click", function(){
+      var msg = document.getElementById("msg"), box = document.getElementById("sum");
+      function fb(){ var rg = document.createRange(); rg.selectNodeContents(box); var s = getSelection(); s.removeAllRanges(); s.addRange(rg); msg.textContent = "已選取文字，請長按或按 Ctrl+C 複製。"; }
+      if (navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(sum).then(function(){ msg.textContent = "已複製！打開官方 LINE，貼上後送出就完成了。"; }, fb);
+      } else fb();
+    });
+  });
+})();
+</script>
+</body>
+</html>
