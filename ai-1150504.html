@@ -146,6 +146,37 @@
       border-color: var(--herbal-green);
       box-shadow: 0 0 0 4px rgba(95, 127, 104, 0.12);
     }
+    /* ===== 密碼顯示／隱藏切換 ===== */
+    .password-field {
+      position: relative;
+      display: block;
+    }
+    .password-field input {
+      padding-right: 58px;
+    }
+    .password-toggle {
+      position: absolute;
+      right: 9px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 50%;
+      background: transparent;
+      color: var(--medium-gray);
+      font-size: 19px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.2s ease;
+    }
+    .password-toggle:hover {
+      background: rgba(95, 127, 104, 0.12);
+      color: var(--deep-green);
+    }
     .login-button {
       border: none;
       cursor: pointer;
@@ -1512,6 +1543,43 @@
       opacity: .7;
     }
     .board-delete:hover { color: #b64545; opacity: 1; }
+    /* ===== 更新網頁浮動按鈕 ===== */
+    .refresh-fab {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 50;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px 13px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--forest), var(--herbal-green));
+      color: #fff;
+      font-size: 14.5px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      box-shadow: 0 10px 26px rgba(39, 66, 52, 0.3);
+      transition: 0.25s ease;
+    }
+    .refresh-fab:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.06);
+    }
+    .refresh-fab .fab-icon {
+      font-size: 16px;
+      line-height: 1;
+    }
+    @media (max-width: 620px) {
+      .refresh-fab {
+        right: 14px;
+        bottom: 14px;
+        padding: 11px 16px 12px;
+        font-size: 13.5px;
+      }
+    }
     .logout-area {
       text-align: center;
       margin: 12px 0 30px;
@@ -1540,6 +1608,21 @@
     footer strong {
       color: var(--deep-green);
       font-weight: 900;
+    }
+    /* ===== 禁止選取（輸入框與複製暫存區除外） ===== */
+    body {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+    input,
+    textarea {
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+      user-select: text;
     }
     .hide {
       display: none !important;
@@ -1642,12 +1725,15 @@
       <h2>財顧芸｜AI學習成果入口</h2>
       <p>公勝包班｜浩茂AI科技｜學員作品展示牆</p>
       <div class="password-box">
-        <input
-          type="password"
-          id="passwordInput"
-          placeholder="請輸入課程密碼"
-          autocomplete="off"
-        />
+        <div class="password-field">
+          <input
+            type="password"
+            id="passwordInput"
+            placeholder="請輸入課程密碼"
+            autocomplete="off"
+          />
+          <button type="button" class="password-toggle" id="passwordToggle" aria-label="顯示密碼">👁</button>
+        </div>
         <button type="button" class="login-button" id="loginButton">進入學習成果入口</button>
       </div>
       <div id="errorMessage" class="error-message"></div>
@@ -1734,6 +1820,43 @@
           <span>Latest Event</span>
           <h2>最新活動｜課程預告與紀錄</h2>
           <p>掌握下一場課程預告，並保留近期活動紀錄。</p>
+        </div>
+        <!-- 人生金錢偵探（最新招生） -->
+        <div class="event-card" style="margin-bottom:22px;">
+          <div class="event-main">
+            <div class="event-tag">🔍 最新開課．招生中</div>
+            <h3>人生金錢偵探<br>破解學校沒教的 10 個金錢秘密</h3>
+            <div class="event-meta">
+              <span>🗓️ 五堂課</span>
+              <span>📍 台北・西門雷神基地（捷運西門站）</span>
+              <span>👥 滿 6 人開班</span>
+            </div>
+            <p style="color:var(--medium-gray);font-size:15px;margin-bottom:18px;">
+              五堂課、十個秘密，每堂都有桌遊，每堂帶走一份自己的財務表。完全零基礎也可以參加。
+            </p>
+            <ul class="event-points">
+              <li><b>第一堂　金錢偵探入門</b>｜資產負債大搜查</li>
+              <li><b>第二堂　時間的祕密</b>｜複利雪球賽</li>
+              <li><b>第三堂　金錢流向調查</b>｜一個月的生活・黑洞獵人</li>
+              <li><b>第四堂　工具寶庫</b>｜需求配對戰</li>
+              <li><b>第五堂　結案報告</b>｜財務健檢五關</li>
+            </ul>
+            <div class="normal-note">
+              🧭 理財先於投資，課程不推薦任何金融商品。這場尋寶，缺你一位偵探。
+            </div>
+          </div>
+          <aside class="event-side">
+            <h4>課程費用</h4>
+            <div class="event-fee">
+              <div>🐦 早鳥優惠：<b>12,000 元</b>（原價 15,000 元）<br />加贈 60 分鐘個人財務諮詢</div>
+              <div>🎟️ 首堂體驗：<b>2,500 元</b><br />14 天內升級可全額折抵</div>
+            </div>
+            <div class="event-note">
+              👩‍🏫 講師：財顧芸 Angie（陳芸琪）<br />
+              🏛️ 主辦：人生金錢偵探社 × 馥芸財富學苑<br />
+              📝 開課日期與報名方式，請私訊芸琪
+            </div>
+          </aside>
         </div>
         <div class="event-preview">
           <div>
@@ -2377,6 +2500,20 @@
             <a class="watch-button gold" href="https://aihb.zeabur.app/?openExternalBrowser=1" target="_blank" rel="noopener noreferrer">開啟一鍵海報</a>
           </article>
         </div>
+        <div class="course-subhead" style="margin-top:30px;">🔎 財顧芸自製工具</div>
+        <div class="tool-grid">
+          <article class="link-card tool-card">
+            <div>
+              <div class="link-icon">雷達</div>
+              <h3>壽險商品雷達</h3>
+              <p>快速查找八家壽險公司商品，可依公司與保障類型篩選，資料由 AI 每日整理。</p>
+            </div>
+            <a class="watch-button" href="https://reurl.cc/rkVWmx" target="_blank" rel="noopener noreferrer">開啟商品雷達</a>
+          </article>
+        </div>
+        <div class="warning-note" style="margin-top:18px;">
+          ⚠️ 商品雷達提醒：標示「第三方來源」的商品尚未對照官方文件。投保年齡、保額與現售狀態，請以保險公司正式條款與投保規則為準。
+        </div>
       </section>
       <section id="prompt0910" class="section">
         <div class="section-header">
@@ -2831,6 +2968,9 @@
         </div>
       </section>
       <!-- 學員提問留言板：依需求暫時停用，晚點再啟用（程式碼保留於下方 script） -->
+      <button type="button" class="refresh-fab" id="refreshButton">
+        <span class="fab-icon">🔄</span>更新網頁
+      </button>
       <div class="logout-area">
         <button type="button" class="logout-button" id="logoutButton">登出學習成果入口</button>
       </div>
@@ -2908,6 +3048,7 @@
             };
             const fallback = function () {
               const ta = document.createElement("textarea");
+              ta.className = "copy-proxy";
               ta.value = text;
               ta.style.position = "fixed";
               ta.style.opacity = "0";
@@ -3063,6 +3204,38 @@
           const href = a.getAttribute("href") || "";
           if (href.length > 1) expandSection(href.slice(1));
         });
+      });
+
+      /* ===== 切換檢視密碼 ===== */
+      const passwordToggle = document.getElementById("passwordToggle");
+      if (passwordToggle) {
+        passwordToggle.addEventListener("click", function () {
+          const hidden = passwordInput.getAttribute("type") === "password";
+          passwordInput.setAttribute("type", hidden ? "text" : "password");
+          passwordToggle.textContent = hidden ? "🙈" : "👁";
+          passwordToggle.setAttribute("aria-label", hidden ? "隱藏密碼" : "顯示密碼");
+          passwordInput.focus();
+        });
+      }
+
+      /* ===== 更新網頁（強制取得最新版本） ===== */
+      const refreshButton = document.getElementById("refreshButton");
+      if (refreshButton) {
+        refreshButton.addEventListener("click", function () {
+          refreshButton.innerHTML = '<span class="fab-icon">⏳</span>更新中…';
+          location.replace(location.origin + location.pathname + "?v=" + Date.now() + location.hash);
+        });
+      }
+
+      /* ===== 禁止右鍵與複製 ===== */
+      document.addEventListener("contextmenu", function (e) { e.preventDefault(); });
+      document.addEventListener("dragstart", function (e) { e.preventDefault(); });
+      document.addEventListener("cut", function (e) { e.preventDefault(); });
+      document.addEventListener("copy", function (e) {
+        const t = e.target;
+        if (t && t.classList && t.classList.contains("copy-proxy")) return;
+        if (t && t.closest && t.closest(".copy-proxy")) return;
+        e.preventDefault();
       });
 
       loginButton.addEventListener("click", checkPassword);
