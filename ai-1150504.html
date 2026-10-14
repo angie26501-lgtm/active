@@ -1769,6 +1769,7 @@
       -moz-user-select: text;
       -ms-user-select: text;
       user-select: text;
+      -webkit-touch-callout: default;
     }
     .hide {
       display: none !important;
@@ -1893,7 +1894,11 @@
             type="password"
             id="passwordInput"
             placeholder="請輸入課程密碼"
-            autocomplete="off"
+            autocomplete="current-password"
+            autocapitalize="off"
+            autocorrect="off"
+            spellcheck="false"
+            inputmode="text"
           />
           <button type="button" class="password-toggle" id="passwordToggle" aria-label="顯示密碼">👁</button>
         </div>
@@ -3460,11 +3465,24 @@
       }
 
       /* ===== 禁止右鍵與複製 ===== */
-      document.addEventListener("contextmenu", function (e) { e.preventDefault(); });
-      document.addEventListener("dragstart", function (e) { e.preventDefault(); });
-      document.addEventListener("cut", function (e) { e.preventDefault(); });
+      function isField(t) {
+        return !!(t && t.closest && t.closest("input, textarea"));
+      }
+      document.addEventListener("contextmenu", function (e) {
+        if (isField(e.target)) return;   // 輸入框放行，手機長按才叫得出「貼上」
+        e.preventDefault();
+      });
+      document.addEventListener("dragstart", function (e) {
+        if (isField(e.target)) return;
+        e.preventDefault();
+      });
+      document.addEventListener("cut", function (e) {
+        if (isField(e.target)) return;
+        e.preventDefault();
+      });
       document.addEventListener("copy", function (e) {
         const t = e.target;
+        if (isField(t)) return;
         if (t && t.classList && t.classList.contains("copy-proxy")) return;
         if (t && t.closest && t.closest(".copy-proxy")) return;
         e.preventDefault();
