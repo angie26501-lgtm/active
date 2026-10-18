@@ -1280,7 +1280,7 @@
     }
     .link-card.tool-card { min-height: 218px; }
     .own-grid {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
     }
     @media (max-width: 920px) {
       .own-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1638,6 +1638,9 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
+      max-height: min(56vh, 430px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
     .work-item {
       display: flex;
@@ -2697,6 +2700,14 @@
             </div>
             <a class="watch-button" href="https://reurl.cc/GgRemA" target="_blank" rel="noopener noreferrer">開始闖關</a>
           </article>
+          <article class="link-card tool-card">
+            <div>
+              <div class="link-icon">千問</div>
+              <h3>365 夜・千問修煉秘境</h3>
+              <p>顧問式銷售 AI 陪練室，用情境題一題一題練，把客戶的問題變成你的答案。</p>
+            </div>
+            <a class="watch-button gold" href="https://reurl.cc/yWjy4l" target="_blank" rel="noopener noreferrer">進入修煉秘境</a>
+          </article>
         </div>
         <div class="warning-note" style="margin-top:18px;">
           ⚠️ 商品雷達提醒：標示「第三方來源」的商品尚未對照官方文件。投保年齡、保額與現售狀態，請以保險公司正式條款與投保規則為準。
@@ -3182,6 +3193,13 @@
               <div class="work-text">
                 <b>車禍現場應變闖關</b>
                 <span>三階版情境演練，練會車禍當下的正確處理步驟</span>
+              </div>
+            </a>
+            <a class="work-item" href="https://reurl.cc/yWjy4l" target="_blank" rel="noopener noreferrer">
+              <div class="work-emoji">🌙</div>
+              <div class="work-text">
+                <b>365 夜・千問修煉秘境</b>
+                <span>顧問式銷售 AI 陪練，一題一題把話術練起來</span>
               </div>
             </a>
           </div>
